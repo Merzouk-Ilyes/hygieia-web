@@ -1,0 +1,267 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&family=Poppins:wght@300&display=swap');
+@import url('https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css');
+
+:root{
+--font-poppins: 'Poppins', sans-serif;
+--font-archivo: 'Archivo', sans-serif;
+}
+
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+.pic{
+    display : inline-block;
+}
+.img{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: -1;
+	min-width: 50%;
+	height: 100%;
+}
+
+.container{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    justify-content: space-between;
+   
+}
+
+.login-content{
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+form{
+	width: 520px;
+    padding:100px 0;
+	margin-bottom: 10px;
+}
+
+.login-content h2{
+	margin-top: 0;
+    margin-bottom: 70px;
+	color: black;
+    font-family: var(--font-archivo);
+	font-size: 2.9rem;
+    font-weight: bold;
+}
+
+.input-field.one{
+	margin-bottom:30px;
+	grid-template-columns: 10% 90%;
+}
+.input-field.two{
+	margin-bottom:8px;
+	grid-template-columns: 10% 80% 10%;
+}
+.input-field {
+	max-width: 650px;
+	width: 100%;
+	background-color: #F4F6F7;
+	
+	margin: auto;
+	height: 55px;
+	border-radius: 20px;
+	display: grid;
+	position: relative;
+  }
+  
+  .input-field i {
+	line-height: 55px;
+	color: #B3B6B7;
+	font-size: 1.3rem;
+	margin: auto;
+  }
+
+  #eye{
+	  cursor: pointer;
+  }
+  .input-field input {
+	background: none;
+	outline: none;
+	border: none;
+	line-height: 1;
+	font-weight: 600;
+	font-size: 1.1rem;
+	color:black;
+  }
+  
+  .input-field input::placeholder {
+	color: #B3B6B7;
+	font-weight: 400;
+	font-size: 1rem;
+  }
+
+
+h5{
+	display: block;
+	text-align: left;
+	text-decoration: none;
+	color:black;
+	font-size: 0.9rem;
+    margin-bottom: 4px;
+
+}
+a{
+	display: block;
+	text-align: right;
+	text-decoration: none;
+	color:black;
+	font-size: 0.9rem;
+	transition: .3s;
+}
+/* input, select, textarea{
+    color : black;
+}
+
+textarea:focus, input:focus {
+    color: black;
+} */
+a:hover{
+	color: #1b38a5 ;
+}
+
+.btn{
+	display: block;
+	width: 50%;
+	height: 60px;
+	border-radius: 18px;
+	outline: none;
+	border: none;
+	background-size: 200%;
+	font-size: 1.2rem;
+    background-color :#1b38a5 ;
+	color:white;
+	font-family: var(--font-archivo);
+    font-weight: 400;
+	margin: 60px auto;
+	cursor: pointer;
+	transition: .5s;
+}
+.btn:hover{
+	background-color: white;
+    color: #1b38a5 ;
+	border: 2px solid  #1b38a5;
+}
+
+
+@media screen and (max-width: 1200px){
+	.container{
+		display: block;
+		margin: auto;
+		position: relative;
+	}
+	.img{
+		display: none;
+	}
+	
+}
+
+
+
+@media screen and (max-width: 900px){
+	.container{
+		display: block;
+		margin: auto;
+	   
+	}
+	.login-content h2{
+		margin-top: 0;
+		margin-bottom: 70px;
+		font-size: 2.7rem;
+	}
+	.input-field {
+		max-width: 600px;
+		width: 100%;
+		height: 55px;
+		display: grid;
+		position: relative;
+		margin: auto;
+	  }
+	.input-field input {
+		line-height: 1;
+		font-weight: 600;
+		font-size: .7rem;
+		
+	  }
+	  
+	  .input-field input::placeholder {
+	
+		font-size: .7rem;
+	  }
+	  .input-field.one{
+		margin-bottom:30px;
+		grid-template-columns: 20% 80%;
+	}
+	.input-field.two{
+		margin-bottom:8px;
+		grid-template-columns: 20% 60% 20%;
+	}
+	.btn{
+		font-size: 1rem;
+	}
+	.img{
+		display: none;
+	}
+	.input-field i {
+		font-size: 1rem;
+	  }
+	  form{
+		width: 600px;
+	
+		margin-bottom: 10px;
+	}
+	  .login-content{
+		padding: 20px;
+	
+	}
+	
+}
+
+
+
+@media screen and (max-width: 400px){
+	
+	.login-content h2{
+		font-size: 1.5rem;
+	}
+	.input-field {
+		max-width: 3300px;
+		height: 45px;
+	  }
+	
+	
+	.btn{
+		font-size: .9rem;
+		margin: 50px auto;
+	}
+	.img{
+		display: none;
+	}
+	.input-field i {
+		font-size: .8rem;
+	  }
+
+	  .login-content{
+		  padding: 20px;
+	  }
+
+	h5{
+		font-size: 0.7rem;
+		margin-bottom: 3px;
+	
+	}
+}
