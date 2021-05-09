@@ -18,6 +18,7 @@ app.use("/users",usersRoutes)
 
 //Syncing the database for changes & listening to the server 
 sequelize.sync().then(result => {
+ 
  app.listen(PORT)
 }).catch(err => {
     console.log(err)

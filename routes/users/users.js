@@ -4,10 +4,10 @@ const adminRoutes = require('./admin')
 const patientRoutes = require('./patient')
 
 // redirected to the patient route 
-router.get("/patient" ,patientRoutes)
+router.use("/patient" ,patientRoutes)
 
 //redirected to the admin route
-router.get("/admin" ,adminRoutes)
+router.use("/admin" ,adminRoutes)
    
 
 // functions that are the same for all users 
