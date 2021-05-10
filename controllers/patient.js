@@ -2,6 +2,9 @@ require('dotenv').config();
 const db = require('../util/db').db;
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+var passwordHash = require('password-hash');
+
+
 const signupPatient = async (req,res) =>  {
 
     const url = 'http://localhost:3000/' ; 
@@ -12,7 +15,7 @@ const signupPatient = async (req,res) =>  {
     }else {
     // Insert information into Account table 
     db.query("INSERT INTO account (Email,Pass_word,active) VALUES (?,?,?)",
-    [req.body.email,req.body.password,0],(err,result)=> {
+    [req.body.email,passwordHash.generate(req.body.password),0],(err,result)=> {
         if(err) {
           console.log('error',err); 
         }else {
