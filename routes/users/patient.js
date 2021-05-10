@@ -6,7 +6,7 @@ const patientController =require('../../controllers/patient');
 
 // executing signup controller POST request (postSignup)
 router.post("/signup",  patientController.signupPatient);
-// executing signup controller POST request (postSignup)
+// executing activate controller POST request (postActivate)
 router.post("/activate", patientController.activatePatientAccount); 
 
 
