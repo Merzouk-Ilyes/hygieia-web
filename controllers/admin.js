@@ -10,7 +10,7 @@ const addNewUser = (req, res, next) => {
                 return res.status(404).send('ERROR');
             } else {
                 if (req.body.role == "administrateur") {
-                    db.query("INSERT INTO account (Email,Pass_word,active) VALUES (?,?,?)",
+                    db.query("INSERT INTO account (Email,Password,active) VALUES (?,?,?)",
                         [req.body.email, passwordHash.generate(req.body.password), 1],
                         (err, result) => {
                             if (err) {

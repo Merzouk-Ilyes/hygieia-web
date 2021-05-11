@@ -2,7 +2,7 @@ require('dotenv').config();
 const db = require('../util/db').db;
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
-var passwordHash = require('password-hash');
+const passwordHash = require('password-hash');
 
 
 const signupPatient = async (req,res) =>  {
@@ -14,7 +14,7 @@ const signupPatient = async (req,res) =>  {
         return  res.status(404).send("Ce compte existe déja");
     }else {
     // Insert information into Account table 
-    db.query("INSERT INTO account (Email,Pass_word,active) VALUES (?,?,?)",
+    db.query("INSERT INTO account (Email,Password,active) VALUES (?,?,?)",
     [req.body.email,passwordHash.generate(req.body.password),0],(err,result)=> {
         if(err) {
           console.log('error',err); 
@@ -78,6 +78,7 @@ jwt.verify(token,process.env.JWT_SECRET_CODE,(err,decodedToken)=> {
     [decodedToken.email],(err,result)=> {
         if(err) {
             console.log('error',err);
+            res.status(404).send('ERROR');
         }else {
             res.send('Votre compte a été activé avec succès');
         }
