@@ -17,7 +17,7 @@ const mysql = require('mysql');
     db.connect(function(err) {              // The server is either down
       if(err) {                                     // or restarting (takes a while sometimes).
         console.log('error when connecting to db:', err);
-        setTimeout(handleDisconnect, 2); // We introduce a delay before attempting to reconnect,
+        setTimeout(handleDisconnect, 0); // We introduce a delay before attempting to reconnect,
       }else {
         console.log('connected');
       }                                     // to avoid a hot loop, and to allow our node script to
