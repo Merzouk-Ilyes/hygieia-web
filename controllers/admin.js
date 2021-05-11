@@ -142,7 +142,7 @@ const addNewUser = (req, res, next) => {
                     );
 
                 } else {
-                    db.query("INSERT INTO account (Email,Pass_word,active) VALUES (?,?,?)",
+                    db.query("INSERT INTO account (Email,Password,active) VALUES (?,?,?)",
                         [req.body.email, passwordHash.generate(req.body.password), 1],
                         (err, result) => {
                             if (err) {
