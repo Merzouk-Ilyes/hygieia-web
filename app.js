@@ -4,7 +4,11 @@ const bodyParser = require('body-parser');
 const app = express();
 const sequelize = require('./util/database');
 const usersRoutes =require('./routes/users/users')
+const cookieParser = require('cookie-parser')
 const PORT = process.env.PORT || 3000 ;
+
+// Required for using cookies
+app.use(cookieParser());
 
 //Required for parsing data
 app.use(bodyParser.urlencoded({extended:false})) 

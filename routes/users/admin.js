@@ -1,12 +1,14 @@
 const express = require('express')
 const router =express.Router()
 
+const adminController =require('../../controllers/admin');
 
-// executing add controller GET request (getAdd)
-router.get("/add")
+
+
+
 
 // executing add  controller POST request (postAdd)
-router.post("/add")
+router.post("/add",adminController.addNewUser);
 
  // executing archive controller POST request (postArchive)
 router.post("/archive")
