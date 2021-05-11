@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser')
 const sequelize = require('./util/database');
 const usersRoutes =require('./routes/users/users')
 const {verifyToken} = require('./middleware/verifyToken')
-const PORT = process.env.PORT || 3000 ;
+
 app.set("views", "views");
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
