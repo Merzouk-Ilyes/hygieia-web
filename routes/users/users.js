@@ -18,7 +18,7 @@ router.use("/admin" ,adminRoutes)
 router.get("/login" ,usersController.getLogin)
 
 //executing  the forget password controller GET request (getForget)
-router.get("/forget" ,)
+router.get("/forget" ,usersController.getForget)
 
 //executing  the login controller POST request (postLogin)
 router.post("/login" ,adminController.login)
