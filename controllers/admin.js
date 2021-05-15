@@ -4,6 +4,7 @@ const { Account, User, Admin } = require("../models/user");
 const passwordHash = require("password-hash");
 const jwt = require("jsonwebtoken");
 const db = require('../util/db').db;
+ 
 
 // cookie will expire in 3 days
 const maxAge = 3 * 24 * 60 * 60;
@@ -12,9 +13,9 @@ function login(req, res) {
   Account.findOne({ where: { email: req.body.email } })
     .then((account) => {
       if (account === null) {
-        res.status(401).json({
-          message: "Invalid email!",
-        });
+        res.render('auth/index' ,{
+          error :"Email incorrect!"
+        })
       } else {
     
         if (account.active) {
@@ -40,7 +41,7 @@ function login(req, res) {
                         httpOnly: true,
                         maxAge: maxAge * 1000,
                       });
-    
+                      //here happens the redirection
                       res.status(200).json({
                         message: "Authentication successful! you are " + user.Role,
                         token: token,
@@ -84,22 +85,22 @@ function login(req, res) {
             
 
           } else {
-            res.status(401).json({
-              message: "Invalid password!",
-            });
+            res.render('auth/index' ,{
+              error :"Mot de passe incorrect"
+            })
+           
           }
         } else {
-          res.json({
-            message: "ACCOUNT NOT ACTIVE",
-          });
+          res.render('auth/index' ,{
+            error :"Votre compte est bloqué"
+          })
         }
       }
     })
     .catch((error) => {
-      res.json({
-        message: "Something went wrong!",
-        error: error,
-      });
+      res.render('auth/index' ,{
+        error :"error"
+      })
     });
 }
 

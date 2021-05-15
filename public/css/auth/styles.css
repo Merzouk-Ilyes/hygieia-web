@@ -43,6 +43,11 @@ body{
 	align-items: center;
 	text-align: center;
 }
+.error {
+	background-color: #ef233c;
+	color: white;
+	border-radius: 10px;
+}
 
 form{
 	width: 520px;
