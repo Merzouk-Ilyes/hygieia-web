@@ -152,7 +152,7 @@ function login(req, res) {
                       } else {
                         res.status(200).json({
                           message:
-                            "Authentication successful!",
+                            "Authentification réussie!",
                           token: token,
                         });
                       }
@@ -160,19 +160,19 @@ function login(req, res) {
                   );
                 } else {
                   res.json({
-                    message: "Patient doesn't exist !!",
+                    message: "Ce compte n'existe pas !!",
                   });
                 }
               })
               .catch((err) => console.log(err));
           } else {
             res.status(401).json({
-              message: "Invalid password!",
+              message: "Mot de passe incorrect!",
             });
           }
         } else {
           res.json({
-            message: "ACCOUNT NOT ACTIVE",
+            message: "Ce compte est désactivé",
           });
         }
       }
