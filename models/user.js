@@ -65,7 +65,7 @@ const Patient = sequelize.define('patient' ,{
     Lastname:Sequelize.STRING ,
     Birthday :Sequelize.DATE ,
     Sexe :Sequelize.STRING ,
-    Promotion:Sequelize.STRING ,
+    Birthplace:Sequelize.STRING ,
     Phonenumber:Sequelize.INTEGER ,
     Role:Sequelize.STRING,
     Email:Sequelize.STRING ,
