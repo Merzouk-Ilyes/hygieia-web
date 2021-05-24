@@ -6,6 +6,7 @@ const passwordHash = require("password-hash");
 const {Patient ,Account} = require('../models/user')
 
 const signupPatient = async (req, res) => {
+  console.log(req.body);
   const url = "http://localhost:3000/";
   // check if user already exist
   var exist = await checkIfUserAlreadyexists(req.body.email);
@@ -22,12 +23,12 @@ const signupPatient = async (req, res) => {
         } else {
           // Insert information into Patient table
           db.query(
-            "INSERT INTO patient (Firstname,Lastname,Birthday,Promotion,Phonenumber,Email,Role,Sexe) VALUES (?,?,?,?,?,?,?,?)",
+            "INSERT INTO patient (Firstname,Lastname,Birthday,Birthplace,Phonenumber,Email,Role,Sexe) VALUES (?,?,?,?,?,?,?,?)",
             [
               req.body.name,
               req.body.lastname,
               req.body.birthday,
-              req.body.promotion,
+              req.body.birthplace,
               req.body.phonenumber,
               req.body.email,
               req.body.role,
@@ -42,7 +43,7 @@ const signupPatient = async (req, res) => {
                 const token = jwt.sign(
                   { email, password },
                   process.env.JWT_SECRET_CODE,
-                  { expiresIn: "1m" }
+                  { expiresIn: "3d" }
                 );
                 // create transporter
                 var transporter = nodemailer.createTransport({
@@ -91,6 +92,7 @@ const activatePatientAccount = async (req, res) => {
   jwt.verify(token, process.env.JWT_SECRET_CODE, (err, decodedToken) => {
     if (err) {
       console.log("error", err);
+      res.send("Lien expire, vous devez demander un autre lien d'activation.")
     } else {
       db.query(
         "UPDATE account SET active = 1 WHERE Email = ?",
