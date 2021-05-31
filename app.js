@@ -8,6 +8,7 @@ const sequelize = require('./util/database');
 const usersRoutes =require('./routes/users/users')
 const {verifyToken} = require('./middleware/verifyToken')
 
+
 app.set("views", "views");
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
@@ -35,6 +36,7 @@ app.get("/protected" ,verifyToken , (req,res)=> {
 sequelize.sync().then(result => {
  
  app.listen(PORT)
+
 }).catch(err => {
     console.log(err)
 })

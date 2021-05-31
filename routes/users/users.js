@@ -2,7 +2,6 @@ const express =require('express')
 const router = express.Router()
 const adminRoutes = require('./admin')
 const patientRoutes = require('./patient')
-const adminController = require('../../controllers/admin')
 const usersController = require('../../controllers/users')
 
 // redirected to the patient route 

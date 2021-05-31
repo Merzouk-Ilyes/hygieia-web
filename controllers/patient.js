@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const passwordHash = require("password-hash");
 const {Patient ,Account} = require('../models/user')
+const {Medical_File}=require('../models/dossier')
 
 const signupPatient = async (req, res) => {
   console.log(req.body);
@@ -80,6 +81,22 @@ const signupPatient = async (req, res) => {
               }
             }
           );
+          //// creation du dossier médical
+          Patient.findOne({where : {Email :req.body.email}}).then(patient => {
+            if(patient !==null) {
+              Medical_File.create({IdPatient :patient.IdPatient ,
+                 Adddate: Date.now()}).then(result => {
+                   console.log(result.toJSON())
+                 }).catch(err => {
+                   console.log(err)
+                 })
+        
+        
+            }
+          }).catch(err => {
+            console.log(err)
+          })
+
         }
       }
     );
