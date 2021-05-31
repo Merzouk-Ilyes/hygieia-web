@@ -25,4 +25,9 @@ router.post("/login" ,usersController.login)
 //executing  the forget password controller POST  request (postForget)
 router.post("/forget" ,)
 
+router.get('/changePassword',usersController.changePassword);
+router.post('/changePassword',usersController.changePasswordPost);
+
+
+
 module.exports = router 
