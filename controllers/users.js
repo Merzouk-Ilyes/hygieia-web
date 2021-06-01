@@ -3,6 +3,8 @@ const { Account, User, Admin } = require("../models/user");
 const passwordHash = require("password-hash");
 const jwt = require("jsonwebtoken");
 const { db } = require("../util/db");
+const nodemailer  = require('nodemailer');
+
 
 
 exports.getLogin = (req, res, next) => {
@@ -166,3 +168,82 @@ db.query("SELECT * FROM ACCOUNT WHERE Email = ?",
 )
  }
 }
+exports.postForget = (req,res , next) => {
+  const url = "http://localhost:3000";
+
+  db.query("SELECT * FROM Account WHERE email = ?",[req.body.email],(err,result) => {
+      if(err){
+          console.log('error:',err);
+      }else{
+          const email = req.body.email ; 
+          const token = jwt.sign(
+              {email},
+              process.env.JWT_SECRET_CODE,
+              { expiresIn: "3d" }
+            );      
+            var transporter = nodemailer.createTransport({
+              service: "gmail",
+              auth: {
+                user: process.env.HYGIEA_EMAIL,
+                pass: process.env.HYGIEA_EMAIL_PASSWORD,
+              },
+            }); 
+            var mailOptions = {
+              from: process.env.HYGIEA_EMAIL,
+              to: req.body.email,
+              subject: "Email de recuperation",
+              html: `
+              <h1>Please click on the given link  to activate your 
+              account</h1>
+              <form method="POST" action="${url}/users/Confirm?token=${token}">
+              <button type="submit"  name="token" value='${token}'>Confirmer</button>
+              </form>
+              `
+            };
+            transporter.sendMail(mailOptions, function (error, info) {
+              if (error) {
+                console.log(error);
+              } else {
+                  return res
+                  //.status(200)
+                  .forgetAlert.call();                   
+              }
+            });
+          
+      }
+        
+  })
+}
+exports.postConfirm = (req,res, next)=> {
+
+const token = req.query.token;           
+return res.render('auth/resetPassword',{token : token}); 
+}
+
+exports.postReset = (req,res, next)=> {
+
+  const token = req.query.token;
+  console.log(req.body.password); 
+  console.log(token)
+  jwt.verify(token, process.env.JWT_SECRET_CODE,
+      (err,decodedToken)=> {
+          if (err) {
+              console.log('error',err); 
+          } else {
+              const email = decodedToken.email ; 
+              const password = passwordHash.generate(req.body.password)
+              db.query("Update Account set password = ? where email = ? ",
+              [password,email],(err,result)=> {
+                  if(err) {
+                    console.log('error',err); 
+                  }else {
+                    res.send("Votre mot de passe est changé");
+                  }
+
+              })
+          }
+
+  }); 
+
+}
+

@@ -58,6 +58,10 @@ form{
 	width: 630px;
 	padding:70px 0 30px 0;
 }
+.form3{
+	width: 540px;
+	padding:100px 10px 0 20px;
+}
 .img2{
 height: 80px ;
 width: 140px;
@@ -106,7 +110,7 @@ margin-top: 30px;
 	margin: auto;
   }
 
-  #eye{
+  #eye ,#eye2{
 	  cursor: pointer;
   }
   .input-field input {
@@ -252,7 +256,7 @@ a:hover{
 	.input-field i {
 		font-size: 1rem;
 	  }
-	  form{
+	form{
 		width: 600px;
 	
 		margin-bottom: 10px;

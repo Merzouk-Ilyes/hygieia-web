@@ -2,9 +2,6 @@ require("dotenv").config();
 const passwordHash = require("password-hash");
 const jwt = require("jsonwebtoken");
 const db = require("../util/db").db;
-
-
-
 const addNewUser = (req, res, next) => {
   const token = req.cookies.token;
   jwt.verify(token, process.env.JWT_SECRET_CODE, (err, decodedToken) => {

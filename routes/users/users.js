@@ -23,10 +23,17 @@ router.get("/forget" ,usersController.getForget)
 router.post("/login" ,usersController.login)
 
 //executing  the forget password controller POST  request (postForget)
-router.post("/forget" ,)
+
 
 router.get('/changePassword',usersController.changePassword);
 router.post('/changePassword',usersController.changePasswordPost);
+router.post("/forget" ,usersController.postForget);
+
+//executing  the forget password controller POST  request (postForget)
+//router.post("/postConfirm" ,usersController.postForget);
+router.post("/Confirm", usersController.postConfirm);
+router.post("/reset", usersController.postReset);
+
 
 
 

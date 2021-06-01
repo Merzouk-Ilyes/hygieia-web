@@ -8,7 +8,6 @@ const passwordnew2 = document.getElementById('npassword2');
 
 if (btn)
 	btn.addEventListener('click', e => {
-
 		e.preventDefault();
 		checkInputs();
 	});
