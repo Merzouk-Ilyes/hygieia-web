@@ -67,8 +67,8 @@ const signupPatient = async (req, res) => {
                 const html = ejs.render(template,{
                     "name": req.body.name, 
                     "lastname":req.body.lastname, 
-                    "title": "Bienvenue a hygeia",
-                    "text": "Vous avez enregistré un compte sur Hygieia, avant de pouvoir utiliser votre compte, vous devez vérifier qu'il s'agit bien de votre adresse e-mail" , 
+                    "title": "Bienvenue a hygieia",
+                    "text": "Vous avez enregistré un compte sur Hygieia, avant de pouvoir utiliser votre compte,vous devez vérifier qu'il s'agit bien de votre adresse e-mail" , 
                     "action": url+"users/patient/activate?token="+token, 
                     "value" : token,
                 });
