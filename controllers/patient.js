@@ -20,12 +20,10 @@ const signupPatient = async (req, res) => {
     return res.status(404).send("Ce compte existe déja");
   } else {
     // Insert information into Account table
- 
     db.query(
       "INSERT INTO Account (Email,Password,active) VALUES (?,?,?)",
       [req.body.email, passwordHash.generate(req.body.password), 0],
       (err, result) => {
-        console.log("we are here 3")
         if (err) {
           console.log("error", err);
         } else {
@@ -222,4 +220,50 @@ function login(req, res) {
       });
     });
 }
-module.exports = { signupPatient, activatePatientAccount, login };
+const getProfile = (req,res) => {
+  const email = req.body.email ; 
+  console.log(req.body.email);
+  db.query("SELECT * FROM patient where email = ? ",
+  [email],(err,result)=> {
+    if(err) {
+      console.log('err',err)
+    }else {
+      return res.send(result);
+    }
+  })
+}
+const updateProfile = (req,res)=> {
+  const email = req.body.email ; 
+  db.query(
+    "Update patient set Firstname = ? ,Lastname = ? ,Birthday = ?,Birthplace = ? ,Phonenumber = ? ,Email = ? ,Role = ?,Sexe = ?,Picture = ? ,Bloodgroup = ?,NSS = ? ,Wilaya = ? ,Token = ?,Address = ? ,Situation = ?",
+    [
+      req.body.name,
+      req.body.lastname,
+      req.body.birthday,
+      req.body.birthplace,
+      req.body.phonenumber,
+      req.body.email,
+      req.body.role,
+      req.body.sexe,
+      req.body.photo , 
+      req.body.bloodgroupe, 
+      "", 
+      req.body.wilaya , 
+      "", 
+      req.body.adresse, 
+      req.body.situation, 
+    ],(err,result)=> {
+      if(err) {
+        console.log(err,"error"); 
+      } else {
+         res.send("Changements effectué avec succée");
+      }
+
+    }); 
+
+
+
+  
+
+}
+module.exports = { signupPatient, activatePatientAccount, login,getProfile ,updateProfile};

@@ -152,7 +152,7 @@ db.query("SELECT * FROM ACCOUNT WHERE Email = ?",
      
     }else {
       db.query("UPDATE Account SET Password = ?   where Email = ? ",
-      [req.body.password2,"f.djellali@esi-sba.dz"],(err,result) =>{
+      [req.body.password2,req.body.email],(err,result) =>{
         console.log(err);
         return res.send({
           "message" :"success", 
@@ -223,8 +223,6 @@ return res.render('auth/resetPassword',{token : token});
 exports.postReset = (req,res, next)=> {
 
   const token = req.query.token;
-  console.log(req.body.password); 
-  console.log(token)
   jwt.verify(token, process.env.JWT_SECRET_CODE,
       (err,decodedToken)=> {
           if (err) {
