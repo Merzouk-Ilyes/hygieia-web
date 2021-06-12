@@ -1,30 +1,37 @@
 require("dotenv").config();
+const fs = require('fs');
 const db = require("../util/db").db;
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const passwordHash = require("password-hash");
 const {Patient ,Account} = require('../models/user')
-const {Medical_File}=require('../models/dossier')
+const {Medical_File}=require('../models/dossier');
+const ejs = require('ejs');
+
 
 const signupPatient = async (req, res) => {
   console.log(req.body);
-  const url = "http://localhost:3000/";
+  console.log("we are here");
+
   // check if user already exist
+
   var exist = await checkIfUserAlreadyexists(req.body.email);
   if (!exist) {
     return res.status(404).send("Ce compte existe déja");
   } else {
     // Insert information into Account table
+ 
     db.query(
-      "INSERT INTO account (Email,Password,active) VALUES (?,?,?)",
+      "INSERT INTO Account (Email,Password,active) VALUES (?,?,?)",
       [req.body.email, passwordHash.generate(req.body.password), 0],
       (err, result) => {
+        console.log("we are here 3")
         if (err) {
           console.log("error", err);
         } else {
           // Insert information into Patient table
           db.query(
-            "INSERT INTO patient (Firstname,Lastname,Birthday,Birthplace,Phonenumber,Email,Role,Sexe) VALUES (?,?,?,?,?,?,?,?)",
+            "INSERT INTO patient (Firstname,Lastname,Birthday,Birthplace,Phonenumber,Email,Role,Sexe,IdEstablishment,Picture,Bloodgroup,NSS,Wilaya,Token,Address,Situation) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             [
               req.body.name,
               req.body.lastname,
@@ -34,8 +41,17 @@ const signupPatient = async (req, res) => {
               req.body.email,
               req.body.role,
               req.body.sexe,
+              5, 
+              "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg", 
+              req.body.bloodgroupe, 
+              "", 
+              req.body.wilaya , 
+              "", 
+              req.body.adresse, 
+              req.body.situation, 
             ],
             (err, result) => {
+              console.log(result);
               if (err) {
                 console.log("error", err);
               } else {
@@ -46,6 +62,16 @@ const signupPatient = async (req, res) => {
                   process.env.JWT_SECRET_CODE,
                   { expiresIn: "3d" }
                 );
+                const template = fs.readFileSync("views/mail/mailTemplate.ejs").toString();
+                const url = "http://localhost:3000/";
+                const html = ejs.render(template,{
+                    "name": req.body.name, 
+                    "lastname":req.body.lastname, 
+                    "title": "Bienvenue a hygeia",
+                    "text": "Vous avez enregistré un compte sur Hygieia, avant de pouvoir utiliser votre compte, vous devez vérifier qu'il s'agit bien de votre adresse e-mail" , 
+                    "action": url+"users/patient/activate?token="+token, 
+                    "value" : token,
+                });
                 // create transporter
                 var transporter = nodemailer.createTransport({
                   service: "gmail",
@@ -59,14 +85,7 @@ const signupPatient = async (req, res) => {
                   from: process.env.HYGIEA_EMAIL,
                   to: req.body.email,
                   subject: "Email de confirmation",
-                  html: `
-                  <h1>Please click on the given link  to activate your 
-                  account</h1>
-                  <form method="POST" action="${url}users/patient/activate?token=${token}">
-                  <button type="submit"  name="token" value='${token}'>Confirmer</button>
-                  </form>
-                
-                  `,
+                  html: html, 
                 };
                 // send confirmation email using transporter and mailOptions
                 transporter.sendMail(mailOptions, function (error, info) {
