@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/css/medicalfile/list.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
+  />
+    <title>Document</title>
+</head>
+<body>
+    <div class="top">
+        <div class="mainTitle">Patients</div>
+        <div class="searchItems">
+            <div class="field">
+                <input placeholder="Trouver un patient" id="myInput" onkeyup="myFunction()">
+            </input>
+            <i class="fa fa-search" style="font-size: 14px;"></i>
+        </div>
+            <select name="Category" id="category" onChange="myFunction2()">
+              <option value="Tous" >Tous</option>
+              <option value="Etudiant">Etudiant</option>
+              <option value="Ats">Ats</option>
+              <option value="Professeur">Professeur</option>
+            </select>
+        </div>
+    </div>
+<div class="container">
+    <table id="table">
+        <tr>
+          <th class="pictureAtt">Photo</th>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>D.naissance</th>
+          <th>Email</th>
+          <th>Rôle</th>
+          <th></th>
+        </tr>
+        <% for (var i = 0; i < listitems.length; i++) { %>
+          <tr>
+            <td><img src= <%= listitems[i].Picture %>/></td>
+            <td><%= listitems[i].Firstname %></td>
+            <td><%= listitems[i].Lastname %></td>
+            <td> <%= listitems[i].Birthday.toString().substring(0,15) %></td>
+            <td><%= listitems[i].Email %></td>
+            <td><%= listitems[i].Role %></td>
+            <td> <i class="fas fa-ellipsis-v"></i></td>
+          </tr>
+          <tr>    
+      <% } %> 
+    </table>
+</div>
+<script src="/js/listPatients.js"></script>
+</body>
+</html>
