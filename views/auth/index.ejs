@@ -5,13 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Se connecter</title>
 
-
-    <!-- FONTS -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&family=Poppins:wght@300&display=swap"
-      rel="stylesheet"
-    />
     <!-- =====  ICONS ===== -->
     <link
       rel="stylesheet"
@@ -20,32 +13,28 @@
     <!-- === CSS ===-->
     <link rel="stylesheet" href="/css/auth/styles.css" />
   </head>
-  <body>
+  <body> 
     <div class="container">
-      <div class="pic">
-        <img class="img" src="/assets/web png.png" />
-      </div>
-      <div class="login-content">
-        <form action="/users/login" method="POST">
-          <h2 class="title">Se connecter</h2>
-          <div class="error">
-            <%= error%>
-          </div>
-       
-          <h5>Adresse email</h5>
+      <form action="/users/login" method="POST">
+        <img src="/assets/logo_login.png" alt="UTF-8">
+        <div class="error">
+          <%= error%>
+        </div>
+        
+        <p>Adresse email</p>
+        <div class="input-field one">
+          <i class="fi-rr-envelope"></i>
+          <input
+            type="email"
+            name="email"
+            placeholder="Entrez votre email"
+            required
+          />
+        </div>
 
-          <div class="input-field one">
-            <i class="fi-rs-envelope"></i>
-            <input
-              type="email"
-              name="email"
-              placeholder="Entrez votre email"
-              required
-            />
-          </div>
-          <h5>Mot de passe</h5>
+        <p>Mot de passe</p>
           <div class="input-field two">
-            <i class="fi-rs-lock"></i>
+            <i class="fi-rr-lock"></i>
             <input
               type="password"
               placeholder="Entrez votre mot de passe"
@@ -53,12 +42,12 @@
               name="password"
               required
             />
-            <i class="fi-rs-eye" id="eye"></i>
+            <i class="fi-rr-eye" id="eye"></i>
           </div>
-          <a href="/users/forget">mot de passe oubliée ?</a>
+        
           <button type="submit" class="btn">Se connecter</button>
-        </form>
-      </div>
+          <a href="/users/forget">mot de passe oublié ?</a>
+      </form>
     </div>
     <script src="/js/views.js"></script>
   </body>
