@@ -204,9 +204,7 @@ exports.postForget = (req,res , next) => {
               if (error) {
                 console.log(error);
               } else {
-                  return res
-                  //.status(200)
-                  .forgetAlert.call();                   
+                  return res.forgetAlert.call();                  
               }
             });
           
