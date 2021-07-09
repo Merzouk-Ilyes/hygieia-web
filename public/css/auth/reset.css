@@ -38,11 +38,7 @@ body{
   text-align: center;
 }
 
-.error {
-background-color: #ef233c;
-color: white;
-border-radius: 10px;
-}
+
 
 #marge{
   margin-top: 18px;
@@ -155,3 +151,16 @@ p {
   font-family: SegoeUI;
   font-weight: 500;
 }
+.field1 small 
+{
+  text-align: left;
+  color: red;
+background-color: white
+
+}
+
+.error {
+  color: red;
+  background-color: white;
+}
+

@@ -6,6 +6,7 @@ const { db } = require("../util/db");
 const nodemailer  = require('nodemailer');
 const fs = require('fs');
 const ejs = require('ejs');
+const { decode } = require("querystring");
 
 
 
@@ -301,26 +302,47 @@ exports.postForget = (req,res , next) => {
 }
 exports.postConfirm = (req,res, next)=> {
 
-const token = req.query.token;           
-return res.render('auth/resetPassword',{token : token}); 
+const token = req.query.token;  
+console.log(token);    
+jwt.verify(token, process.env.JWT_SECRET_CODE,
+  (err,decodedToken)=> {
+    if(err) {
+      return res.send("ce lien de récupération est expiré.")
+    }else {
+      console.log(decodedToken);
+      return res.render('auth/resetPassword',{token : token}); 
+    }
+  })  
+
 }
 
 exports.postReset = (req,res, next)=> {
-
   const token = req.query.token;
   jwt.verify(token, process.env.JWT_SECRET_CODE,
       (err,decodedToken)=> {
           if (err) {
               console.log('error',err); 
+              return res.send(
+                {
+                  error : "erreur" ,
+                }
+              )
           } else {
               const email = decodedToken.email ; 
               const password = passwordHash.generate(req.body.password)
               db.query("Update Account set password = ? where email = ? ",
               [password,email],(err,result)=> {
                   if(err) {
+
+                    return res.send({
+                      error : 'erreur' 
+                    })
                     console.log('error',err); 
                   }else {
-                    res.send("Votre mot de passe est changé");
+                    return res.send({
+                      message : "Votre mot de passe est changé", 
+                    })
+               
                   }
 
               })

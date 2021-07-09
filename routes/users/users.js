@@ -32,8 +32,6 @@ router.get("/forget" ,usersController.getForget)
 router.post("/login" ,usersController.login)
 
 //executing  the forget password controller POST  request (postForget)
-
-
 router.get('/changePassword',usersController.changePassword);
 router.post('/changePassword',usersController.changePasswordPost);
 router.post("/forget" ,usersController.postForget);

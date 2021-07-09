@@ -7,7 +7,6 @@ const email_login = document.getElementById('email');
 
 const password_login = document.getElementById('password');
 
-
 eye.addEventListener('click', (e) => {
     // toggle the type attribute
     const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
