@@ -36,7 +36,7 @@
           <th>Prénom</th>
           <th>D.naissance</th>
           <th>Email</th>
-          <th>Rôle</th>
+          <th style="width: 15%;">Rôle</th>
           <th></th>
         </tr>
         <% for (var i = 0; i < listitems.length; i++) { %>
@@ -47,7 +47,21 @@
             <td> <%= listitems[i].Birthday.toString().substring(0,15) %></td>
             <td><%= listitems[i].Email %></td>
             <td><%= listitems[i].Role %></td>
-            <td> <i class="fas fa-ellipsis-v"></i></td>
+            <td>
+      
+              <div class="dropdown">
+                <button class="dropbtn">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a href="#">Consulter dossier médical</a>
+                  <a href="#">Modifier dossier médical</a>
+                  <a href="#">Programer un rendez-vous</a>
+                  <a href="#">Faire un examen médical</a>
+                </div>
+              </div>
+        
+              </td>
           </tr>
           <tr>    
       <% } %> 
