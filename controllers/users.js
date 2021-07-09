@@ -8,12 +8,82 @@ const nodemailer  = require('nodemailer');
 
 
 exports.getLogin = (req, res, next) => {
-  res.render("auth/index", { error: "" });
+  
+  if(req.headers.cookie == null ) {
+    res.render("auth/index", {error : ""}); 
+    return; 
+  }
+  const rawCookies = req.headers.cookie.split('; ');
+  const parsedCookie = rawCookies[0].split('=')[1];
+  // user not connected ; 
+  if(parsedCookie == null ) {
+    res.render("auth/index", {error : ""}); 
+    return; 
+  }
+  // user connected ;
+
+  jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
+    (err,decodedToken)=> {
+      console.log(decodedToken);
+    if(decodedToken.role == "administrateur")  {
+    // res.redirect('/users/home'); admin home 
+      res.send('<h1> interface administrateur</h1>')
+    }else if (decodedToken.role == "medecin") {
+      // medecin home provisoire ; 
+          res.redirect('/users/medecin/list'); 
+    }else if(decodedToken.role =="rh" ) {
+      // redirect home rh 
+          res.send('<h1> interface rh</h1>'); 
+    }else if(decodedToken.role = "aide") {
+      // redirect home aide 
+      res.send('<h1> interface aide soignant</h1>'); 
+    }else {
+      res.render("auth/index", {error : ""}); 
+ 
+    }
+
+        if (err) {
+            console.log('error',err); 
+            res.render("auth/index", {error : ""}); 
+        }}); 
+
+
 };
 
 exports.getForget = (req, res, next) => {
   res.render("auth/forgot");
 };
+
+exports.getHome = (req,res,next) => {
+  
+  const rawCookies = req.headers.cookie.split('; ');
+  const parsedCookie = rawCookies[0].split('=')[1];
+  // user not connected ; 
+  if(parsedCookie == null ) {
+    res.render("auth/index", {error : ""}); 
+    return; 
+  }
+  // user connected ;
+
+  jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
+    (err,decodedToken)=> {
+      console.log(decodedToken);
+    if(decodedToken.role == "administrateur")  {
+      res.send('<h1> interface administrateur</h1>')
+    }else if (decodedToken.role == "medecin") {
+          res.redirect('/users/medecin/list'); 
+    }else if(decodedToken.role =="rh" ) {
+          res.send('<h1> interface rh</h1>'); 
+    }else if(decodedToken.role = "aide") {
+      res.send('<h1> interface aide soignant</h1>'); 
+    }else {
+      res.redirect('/users/login'); 
+    }
+
+        if (err) {
+            console.log('error',err); 
+        }}); 
+}
 
 // cookie will expire in 3 days
 const maxAge = 3 * 24 * 60 * 60;
@@ -24,21 +94,21 @@ exports.login = (req, res) => {
     Account.findOne({ where: { email: req.body.email } }).then((account) => {
       account.active = false;
       account.save();
-      return res.render("auth/index", {
-        error:
-          "votre compte a été désactivé, contactez l'administrateur pour le réactiver",
-      });
+      return res.status(200).json({
+        error: "votre compte a été désactivé",
+        });
     });
   }
   Account.findOne({ where: { email: req.body.email } })
     .then((account) => {
       if (account === null) {
-        res.render("auth/index", {
-          error: "Email incorrect!",
+       return res.status(200).json({
+        error: "Email incorrect!",
         });
       } else {
         if (account.active) {
-          let result = passwordHash.verify(req.body.password, account.Password);
+         // let result = passwordHash.verify(req.body.password, account.Password);
+          let result = req.body.password == account.Password ; 
           if (result) {
             // check if it's a normal user (médecin ,aide-soignant ou RH)
             User.findOne({ where: { Email: account.Email } })
@@ -49,6 +119,7 @@ exports.login = (req, res) => {
                     {
                       email: user.Email,
                       IdUser: user.IdUser,
+                      role: user.Role, 
                     },
                     process.env.JWT_SECRET_CODE,
                     { expiresIn: maxAge },
@@ -61,11 +132,9 @@ exports.login = (req, res) => {
                           maxAge: maxAge * 1000,
                         });
                         //here happens the redirection
-                        res.status(200).json({
-                          message:
-                            "Authentication successful! you are " + user.Role,
-                          token: token,
-                        });
+                        return res.status(200).json({
+                          message: "Authentication successful!",
+                          });
                       }
                     }
                   );
@@ -78,6 +147,7 @@ exports.login = (req, res) => {
                           {
                             email: admin.Email,
                             IdAdmin: admin.IdAdmin,
+                            role: "administrateur",
                           },
                           process.env.JWT_SECRET_CODE,
                           { expiresIn: maxAge },
@@ -89,12 +159,9 @@ exports.login = (req, res) => {
                                 httpOnly: true,
                                 maxAge: maxAge * 1000,
                               });
-
-                              res.status(200).json({
-                                message:
-                                  "Authentication successful! ur an admin",
-                                token: token,
-                              });
+                              return res.status(200).json({
+                                message: "Authentication successful!",
+                                });
                             }
                           }
                         );
@@ -107,14 +174,14 @@ exports.login = (req, res) => {
           } else {
             cpt = ++cpt;
             console.log("cpt ==>>", cpt);
-            res.render("auth/index", {
+            return res.status(200).json({
               error: "Mot de passe incorrect",
-            });
+              });
           }
         } else {
-          res.render("auth/index", {
-            error: "Votre compte est bloqué",
-          });
+          return res.status(200).json({
+            error: "Votre compte est désactivé",
+            });
         }
       }
     })
@@ -159,18 +226,14 @@ db.query("SELECT * FROM ACCOUNT WHERE Email = ?",
           "error": "mot de passe changé avec succées", 
         });
       })
-
-
     }
   }
-
 }
 )
  }
 }
 exports.postForget = (req,res , next) => {
   const url = "http://localhost:3000";
-
   db.query("SELECT * FROM Account WHERE email = ?",[req.body.email],(err,result) => {
       if(err){
           console.log('error:',err);

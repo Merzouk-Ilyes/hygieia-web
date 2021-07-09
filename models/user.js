@@ -48,19 +48,16 @@ const Admin = sequelize.define('administrator' ,{
     Sexe :Sequelize.STRING ,
     Phonenumber:Sequelize.INTEGER ,
     Email:Sequelize.STRING ,
-    IdAdmin_Second :Sequelize.INTEGER
-
 }, {
     tableName: 'administrator'
   }) ;
-
 const Patient = sequelize.define('patient' ,{
     IdPatient:{
         type:Sequelize.INTEGER ,
         allowNull:false ,
         primaryKey :true,
         autoIncrement: true ,
-    } ,
+    },
     Firstname:Sequelize.STRING ,
     Lastname:Sequelize.STRING ,
     Birthday :Sequelize.DATE ,
@@ -68,9 +65,7 @@ const Patient = sequelize.define('patient' ,{
     Birthplace:Sequelize.STRING ,
     Phonenumber:Sequelize.INTEGER ,
     Role:Sequelize.STRING,
-    Email:Sequelize.STRING ,
-  
-
+    Email:Sequelize.STRING,
 }, {
     tableName: 'patient'
   })

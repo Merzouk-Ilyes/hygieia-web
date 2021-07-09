@@ -21,7 +21,9 @@ router.use("/admin" ,adminRoutes)
 router.use('/medecin',medecinRoutes)
 // functions that are the same for all users 
 //executing  the login controller GET request (getLogin)
+
 router.get("/login" ,usersController.getLogin)
+router.get("/home",usersController.getHome);
 
 //executing  the forget password controller GET request (getForget)
 router.get("/forget" ,usersController.getForget)
@@ -40,6 +42,7 @@ router.post("/forget" ,usersController.postForget);
 //router.post("/postConfirm" ,usersController.postForget);
 router.post("/Confirm", usersController.postConfirm);
 router.post("/reset", usersController.postReset);
+
 
 
 

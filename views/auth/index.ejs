@@ -1,10 +1,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Se connecter</title>
-
     <!-- =====  ICONS ===== -->
     <link
       rel="stylesheet"
@@ -20,33 +21,45 @@
         <div class="error">
           <%= error%>
         </div>
-        
+        <div class="inputone">
         <p>Adresse email</p>
         <div class="input-field one">
           <i class="fi-rr-envelope"></i>
           <input
+          id="email"
             type="email"
             name="email"
             placeholder="Entrez votre email"
             required
           />
         </div>
+        <small class="noterror">
 
+          <i class="fi-rs-exclamation" ></i>
+        </small>
+      </div>
+      <div class="inputtwo">
         <p>Mot de passe</p>
           <div class="input-field two">
             <i class="fi-rr-lock"></i>
             <input
+            id="password"
               type="password"
               placeholder="Entrez votre mot de passe"
               id="password"
               name="password"
               required
             />
+         
+
             <i class="fi-rr-eye" id="eye"></i>
           </div>
-        
-          <button type="submit" class="btn">Se connecter</button>
-          <a href="/users/forget">mot de passe oublié ?</a>
+          <small class="noterror">
+         
+          </small>
+          </div>
+          <button  class="btn" id="btn">Se connecter</button>
+          <a href="/users/forget">Mot de passe oublié ?</a>
       </form>
     </div>
     <script src="/js/views.js"></script>

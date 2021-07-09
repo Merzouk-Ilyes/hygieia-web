@@ -1,6 +1,12 @@
-@font-face {
-  font-family: SegoeUI;
-  src: url(/public/font/SegoeUI.ttf);
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&family=Poppins:wght@300&display=swap');
+:root{
+--font-archivo: 'Archivo', sans-serif;
+}
+
+
+body {
+    font-family: 'Archivo', sans-serif;
 }
 
 * {
@@ -9,9 +15,7 @@
   box-sizing: border-box;
 }
 
-input{
-  font-family: SegoeUI;
-}
+
 
 img{
   padding-top: 15px;
@@ -19,13 +23,12 @@ img{
 }
 
 body {
-  font-family: SegoeUI;
+
   overflow: hidden;
   background-image: url("/assets/background_login.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  font-family: SegoeUI;
 }
 
 .container {
@@ -35,7 +38,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 459px;
-  height: 436px;
+  height: 450px;
   background-color: white;
   border-radius: 12px;
   box-shadow: 0px 3px 6px #707070;
@@ -45,11 +48,7 @@ body {
   text-align: center;
 }
 
-.error {
-  background-color: #ef233c;
-  color: white;
-  border-radius: 10px;
-}
+
 .input-field.one{
 	margin-bottom:15px;
 	grid-template-columns: 10% 90%;
@@ -101,9 +100,7 @@ body {
   padding-right: 10px;
 }
 
-input {
-  font-family: SegoeUI;
-}
+
 
 .input-field input {
 	background: none;
@@ -114,14 +111,14 @@ input {
 	font-size: 1.1rem;
 	color:black;
 	padding-left: 30px;
-  font-family: SegoeUI;
+
   }
 
 .input-field input::placeholder {
   color: #b3b6b7;
   font-weight: 400;
   font-size: 1.05rem;
-  font-family: SegoeUI;
+
   
 }
 
@@ -161,7 +158,7 @@ a:hover {
   font-size: 1.18rem;
   background-color: #01559c;
   color: white;
-  font-family: SegoeUI;
+
   font-weight: 400;
   margin: 60px auto;
   cursor: pointer;
@@ -174,4 +171,26 @@ a:hover {
   background-color: white;
   color: #01559c;
   border: 2px solid #01559c;
+}
+.inputone small 
+{
+  text-align: left;
+  color: red;
+background-color: white
+
+}
+
+.inputtwo small  {
+  text-align: left; 
+color: red;
+background-color: white;
+}
+.inputone small .noterror
+{
+  text-align: left;
+  display: none;
+}
+.inputtwo small .noterror {
+  text-align: left;
+display: none;
 }
