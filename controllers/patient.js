@@ -91,17 +91,6 @@ const signupPatient = async (req, res) => {
                   if (error) {
                     console.log(error);
                   } else {
-                    console.log("Connected succesfully to the socket ...");
-
-    var news = [
-        { title: 'The cure of the Sadness is to play Videogames',date:'04.10.2016'},
-        { title: 'Batman saves Racoon City, the Joker is infected once again',date:'05.10.2016'},
-        { title: "Deadpool doesn't want to do a third part of the franchise",date:'05.10.2016'},
-        { title: 'Quicksilver demand Warner Bros. due to plagiarism with Speedy Gonzales',date:'04.10.2016'},
-    ];
-
-    // Send news on the socket
-    socket.emit('news', news);
                     return res
                       .status(200)
                       .send("Votre compte a été créé avec succès");

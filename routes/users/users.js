@@ -40,7 +40,7 @@ router.post("/forget" ,usersController.postForget);
 
 //executing  the forget password controller POST  request (postForget)
 //router.post("/postConfirm" ,usersController.postForget);
-router.post("/Confirm", usersController.postConfirm);
+router.get("/Confirm", usersController.postConfirm);
 router.post("/reset", usersController.postReset);
 
 

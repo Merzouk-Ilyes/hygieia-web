@@ -4,6 +4,8 @@ const passwordHash = require("password-hash");
 const jwt = require("jsonwebtoken");
 const { db } = require("../util/db");
 const nodemailer  = require('nodemailer');
+const fs = require('fs');
+const ejs = require('ejs');
 
 
 
@@ -233,38 +235,65 @@ exports.postForget = (req,res , next) => {
       if(err){
           console.log('error:',err);
       }else{
-          const email = req.body.email ; 
-          const token = jwt.sign(
-              {email},
-              process.env.JWT_SECRET_CODE,
-              { expiresIn: "3d" }
-            );      
-            var transporter = nodemailer.createTransport({
-              service: "gmail",
-              auth: {
-                user: process.env.HYGIEA_EMAIL,
-                pass: process.env.HYGIEA_EMAIL_PASSWORD,
-              },
-            }); 
-            var mailOptions = {
-              from: process.env.HYGIEA_EMAIL,
-              to: req.body.email,
-              subject: "Email de recuperation",
-              html: `
-              <h1>Please click on the given link  to activate your 
-              account</h1>
-              <form method="POST" action="${url}/users/Confirm?token=${token}">
-              <button type="submit"  name="token" value='${token}'>Confirmer</button>
-              </form>
-              `
-            };
-            transporter.sendMail(mailOptions, function (error, info) {
-              if (error) {
-                console.log(error);
-              } else {
-                  return res.forgetAlert.call();                  
-              }
-            });
+        if(result.length == 0) {
+       return res.status(200).json({
+            error : "ce compte n'éxiste pas" , 
+          }); 
+          // check if it's not a << patient >> 
+        } else {
+     db.query("Select * from patient where email = ? ",
+     [req.body.email],(err,result2)=> {
+       if(result2.length == 0) {
+        const email = req.body.email ; 
+        const token = jwt.sign(
+            {email},
+            process.env.JWT_SECRET_CODE,
+            { expiresIn: "3d" }
+          );      
+          const template = fs.readFileSync("views/mail/mailTemplate.ejs").toString();
+          const url = "http://localhost:3000/";
+          const html = ejs.render(template,{
+              "name": req.body.email, 
+              "lastname":"", 
+              "title": "Mail de récupération",
+              "text": "Quelqu'un a demandé que le mot de passe soit réinitialisé pour votre compte , S'il s'agit d'une erreur, ignorez simplement cet e-mail et rien ne se passera." , 
+              "action": url+"users/Confirm?token="+token, 
+              "value" : token,
+          });
+          // create transporter
+          var transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+              user: process.env.HYGIEA_EMAIL,
+              pass: process.env.HYGIEA_EMAIL_PASSWORD,
+            },
+          });
+      
+          // adding mailOptions
+          var mailOptions = {
+            from: process.env.HYGIEA_EMAIL,
+            to: req.body.email,
+            subject: "Email de récupération",
+            html: html, 
+          };
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+            } else {
+            return  res.status(200).json({
+                message : "Un mail de récupération vous a été envoyé" , 
+              });
+            }
+          });
+       }else {
+        res.status(200).json({
+          error : "Ce compte n'éxiste pas" , 
+        })
+       }
+     }
+     )
+        }
+        
           
       }
         

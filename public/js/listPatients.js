@@ -16,8 +16,6 @@ for (i = 0; i < tr.length; i++) {
   if (td) {
     txtValue = td.textContent || td.innerText;
     txtValue2 = td2.textContent || td2.innerText ; 
-    
-
     if (txtValue.toUpperCase().indexOf(filter) > -1 && ( txtValue2.toUpperCase() === filter2 
      || filter2 === "TOUS"
     )) {
@@ -27,11 +25,9 @@ for (i = 0; i < tr.length; i++) {
     }
   }
 }
-
   }
   function myFunction2() {
     // Declare variables
-
 var input, filter, table, tr, td, i, txtValue;
 input = document.getElementById("category");
 filter = input.value.toUpperCase();
@@ -49,10 +45,8 @@ return;
 }
 for (i = 0; i < tr.length; i++) {
   td = tr[i].getElementsByTagName("td")[5];
-
   if (td) {
     txtValue = td.textContent || td.innerText;
-  
     if (txtValue.toUpperCase().indexOf(filter) > -1) {
       tr[i].style.display = "";
     } else {

@@ -94,7 +94,7 @@ function checkInputs() {
                 const small = parent.querySelector('small');
                 small.className = 'error';
                 small.innerText = "Mot de passe incorrect";
-                return; 
+                return;
             }else if(result.message == "Authentication successful!") {
                 window.location.replace("/users/home");
             }

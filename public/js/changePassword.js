@@ -25,15 +25,13 @@ function checkInputs() {
 	if (passwordn.length < 8) {
 		setErrorFor(passwordnew1, 'Vous devez remplir votre nouveau mot de passe');
 		return; 
-
 	} else {
 		setSuccessFor(passwordnew1);
 	}
-	if (passwordn2 !== passwordn || passwordn2.length == 0) {
+	if ( passwordn2 !== passwordn || passwordn2.length == 0) {
 		setErrorFor(passwordnew2, 'Entrer le mème mot de passe');
 	} else {
 		setSuccessFor(passwordnew2);
-
 		const loadingElement = document.querySelector('#loader');
 		loadingElement.className = 'lds-facebook run';
 		btn.className = "btn notshow";
@@ -55,7 +53,6 @@ function checkInputs() {
 							"invalid old password") {
 								setErrorFor(passwordnew2, 'Mot de passe incorrect,vous devez Réssayer');
 						} 
-
 					} else {
 						$('.alert').addClass("show");
 	$('.alert').removeClass("hide");
