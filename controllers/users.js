@@ -39,23 +39,20 @@ exports.getLogin = (req, res, next) => {
       res.send('<h1> interface aide soignant</h1>'); 
     }else {
       res.render("auth/index", {error : ""}); 
- 
     }
-
         if (err) {
             console.log('error',err); 
             res.render("auth/index", {error : ""}); 
         }}); 
-
-
 };
-
 exports.getForget = (req, res, next) => {
   res.render("auth/forgot");
 };
-
 exports.getHome = (req,res,next) => {
-  
+  if(req.headers.cookie == null ) {
+    res.render("auth/index", {error : ""}); 
+    return; 
+  }
   const rawCookies = req.headers.cookie.split('; ');
   const parsedCookie = rawCookies[0].split('=')[1];
   // user not connected ; 
@@ -64,7 +61,6 @@ exports.getHome = (req,res,next) => {
     return; 
   }
   // user connected ;
-
   jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     (err,decodedToken)=> {
       console.log(decodedToken);
@@ -79,7 +75,6 @@ exports.getHome = (req,res,next) => {
     }else {
       res.redirect('/users/login'); 
     }
-
         if (err) {
             console.log('error',err); 
         }}); 
