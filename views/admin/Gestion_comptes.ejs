@@ -116,11 +116,12 @@
             <table id="myTable">
               <tbody>
               
-                <%   if (meds.length > 0 ) { %> <% for (let med of meds) {  toggleId="#"+med.Firstname+med.Lastname ;
-                toggleIdd=med.Firstname+med.Lastname ;formId=med.Firstname+"form";inputId=med.Firstname+"input"; 
-                toggleId2="#"+med.Firstname+med.Lastname+"delete" ;
-                toggleIdd2=med.Firstname+med.Lastname+"delete" ;
-                formId2=med.Firstname+"deleteform";inputId2=med.Firstname+"deleteinput"; 
+                <%   if (meds.length > 0 ) { %> <% for (let med of meds) {  toggleId="#"+med.Firstname+med.Lastname+i ;
+                toggleIdd=med.Firstname+med.Lastname+i ;formId=med.Firstname+"form"+i;
+                inputId=med.Firstname+"input"+i; 
+                toggleId2="#"+med.Firstname+med.Lastname+"delete"+i ;
+                toggleIdd2=med.Firstname+med.Lastname+"delete"+i ;
+                formId2=med.Firstname+"deleteform"+i;inputId2=med.Firstname+"deleteinput"+i; 
                 
                 %>
                 <tr class="row100 body user">
@@ -164,8 +165,10 @@
                          
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="modalCloseBtn" data-bs-dismiss="modal">Non</button>
-                        <form id=<%=formId%>>
+                          <form>
+                            <button type="submit" class="modalCloseBtn" data-bs-dismiss="modal">Non</button>
+                          </form>
+                            <form id=<%=formId%>>
                           <input type="hidden" value="<%=med.Email%>" id=<%=inputId%>>
                             <button type="submit" class="modalSaveBtn" onclick="changeStatus('<%=med.Email%>' ,'<%=med.active%>','<%=formId%>')">Oui</button>
                             <script>
@@ -259,13 +262,13 @@
                 </tr>
 
                 <%}%> <%}%> <% if (patients.length > 0 ) { %> <% for (let
-                patient of patients) { toggleId="#"+patient.Firstname+patient.Lastname ;
-                toggleIdd=patient.Firstname+patient.Lastname ;
-                formId=patient.Firstname+"form";inputId=patient.Firstname+"input";
+                patient of patients) { toggleId="#"+patient.Firstname+patient.Lastname+i ;
+                toggleIdd=patient.Firstname+patient.Lastname+i ;
+                formId=patient.Firstname+"form"+i;inputId=patient.Firstname+"input"+i;
                 
-                toggleId2="#"+patient.Firstname+patient.Lastname+"delete" ;
-                toggleIdd2=patient.Firstname+patient.Lastname+"delete" ;
-                formId2=patient.Firstname+"deleteform";inputId2=patient.Firstname+"deleteinput"; 
+                toggleId2="#"+patient.Firstname+patient.Lastname+"delete"+i ;
+                toggleIdd2=patient.Firstname+patient.Lastname+"delete"+i ;
+                formId2=patient.Firstname+"deleteform"+i;inputId2=patient.Firstname+"deleteinput"+i; 
                 %>
                 <tr class="row100 body">
                   <td class="column1"><%=++i%></td>
@@ -305,7 +308,9 @@
                              
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="modalCloseBtn" data-bs-dismiss="modal">Non</button>
+                              <form>
+                                <button type="submit" class="modalCloseBtn" data-bs-dismiss="modal">Non</button>
+                              </form>
                             <form id=<%=formId%>>
                               <input type="hidden" value="<%=patient.Email%>" id=<%=inputId%>>
                                 <button type="submit" class="modalSaveBtn" onclick="changeStatus('<%=patient.Email%>' ,'<%=patient.active%>','<%=formId%>')">Oui</button>
@@ -401,14 +406,14 @@
 
                 <%}%> <%}%> <% if (admins.length > 0 ) { %> <% for (let admin of
                 admins) { 
-                  toggleId="#"+admin.Firstname+admin.Lastname ;
-                toggleIdd=admin.Firstname+admin.Lastname ;
-                formId=admin.Firstname+"form";inputId=admin.Firstname+"input"
+                  toggleId="#"+admin.Firstname+admin.Lastname+i ;
+                toggleIdd=admin.Firstname+admin.Lastname+i ;
+                formId=admin.Firstname+"form"+i;inputId=admin.Firstname+"input"+i
 
 
-                toggleId2="#"+admin.Firstname+admin.Lastname+"delete" ;
-                toggleIdd2=admin.Firstname+admin.Lastname+"delete" ;
-                formId2=admin.Firstname+"deleteform";inputId2=admin.Firstname+"deleteinput"; 
+                toggleId2="#"+admin.Firstname+admin.Lastname+"delete"+i ;
+                toggleIdd2=admin.Firstname+admin.Lastname+"delete"+i ;
+                formId2=admin.Firstname+"deleteform"+i;inputId2=admin.Firstname+"deleteinput"+i; 
                   %>
                 <tr class="row100 body">
                   <td class="column1"><%=++i%></td>
@@ -449,7 +454,9 @@
                              
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="modalCloseBtn" data-bs-dismiss="modal">Non</button>
+                              <form>
+                                <button type="submit" class="modalCloseBtn" data-bs-dismiss="modal">Non</button>
+                              </form>
                             <form id=<%=formId%>>
                               <input type="hidden" value="<%=admin.Email%>" id=<%=inputId%>>
                                 <button type="submit" class="modalSaveBtn" onclick="changeStatus('<%=admin.Email%>' ,'<%=admin.active%>','<%=formId%>')">Oui</button>
@@ -552,6 +559,7 @@
         </div>
       </div>
     </div>
+    
 
     <script src="/js/gestionCompteClient.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
