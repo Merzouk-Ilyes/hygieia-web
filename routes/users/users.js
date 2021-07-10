@@ -20,7 +20,7 @@ router.get("/login" ,usersController.getLogin)
 router.get("/forget" ,usersController.getForget)
 
 //executing  the login controller POST request (postLogin)
-router.post("/login" ,usersController.login)
+// router.post("/login" ,usersController.login)
 
 //executing  the forget password controller POST  request (postForget)
 

@@ -86,12 +86,12 @@ margin-top: 30px;
 	margin-bottom:8px;
 	grid-template-columns: 10% 80% 10%;
 }
-.input-field.three{
+/* .input-field.three{
 	width :90%;
 	margin-bottom:30px;
 	grid-template-columns: 10% 90%;
 	
-}
+} */
 .input-field {
 	max-width: 650px;
 	width: 100%;

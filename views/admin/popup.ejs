@@ -1,0 +1,61 @@
+
+    <div class="popup">
+      <div class="blocker" onclick="hidePopup()"></div>
+      <div class="bcontainer2">
+        <div class="container2">
+          <div class="text">Ajouter un compte</div>
+          <form action="#" id="form">
+            <div class="data">
+              <label>Nom </label>
+              <input type="text" required />
+            </div>
+            <div class="data">
+              <label>Prénom </label>
+              <input type="text" required />
+            </div>
+            <div class="data">
+              <label>Date de naissance </label>
+              <input type="date" required />
+            </div>
+            <div class="data">
+              <label>Sexe </label>
+              <input type="text" list="sexe"  required />
+                <datalist id="sexe">
+                  <option value="Homme">Homme</option>
+                  <option value="Femme">Femme</option>
+                </datalist>
+            </div>
+            <div class="data">
+              <label>Numéro de téléphone </label>
+              <input type="number" required />
+            </div>
+            <div class="data">
+              <label>Role </label>
+              <input type="text" list="role"  required />
+                <datalist id="role">
+                  <option value="administrateur">administrateur</option>
+                  <option value="médecin">médecin</option>
+                  <option value="ats">ats</option>
+                </datalist>
+            </div>
+            <div class="data">
+              <label>Email</label>
+              <input type="email" required />
+            </div>
+            <div class="data">
+              <label>Mot de passe</label>
+              <input type="text" required />
+            </div>
+            <div class="data">
+              <label>Confirmer mot de passe</label>
+              <input type="text" required />
+            </div>
+          </form>
+        </div>
+        <div class="circle" id="circle"></div>
+        <div class="btn2">
+          <button type="submit" form="form">Ajouter le compte</button>
+        </div>
+      </div>
+    </div>
+  
