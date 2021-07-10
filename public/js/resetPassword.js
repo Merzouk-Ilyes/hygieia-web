@@ -11,7 +11,7 @@ function onClickBtn() {
 
 
 
-    if( password.value.length < 9 ) {
+    if( password.value.length < 8 ) {
         const parent = password.parentElement.parentElement;
         const small = parent.querySelector('small');
         small.className = 'error';

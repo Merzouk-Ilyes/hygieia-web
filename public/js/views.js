@@ -54,7 +54,7 @@ function checkInputs() {
         small.innerText = null;
      
     }
-    if(password_login.value.length < 😎 {
+    if(password_login.value.length < 8) {
         const parent = password_login.parentElement.parentElement;
         const small = parent.querySelector('small');
         small.className = 'error';
