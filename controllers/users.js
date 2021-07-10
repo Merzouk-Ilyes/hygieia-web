@@ -3,12 +3,10 @@ const { Account, User, Admin } = require("../models/user");
 const passwordHash = require("password-hash");
 const jwt = require("jsonwebtoken");
 const { db } = require("../util/db");
-
-
 const nodemailer  = require('nodemailer');
 const fs = require('fs');
 const ejs = require('ejs');
-const { decode } = require("querystring");
+
 
 
 exports.getLogin = (req, res, next) => {
@@ -83,8 +81,6 @@ exports.getHome = (req,res,next) => {
             console.log('error',err); 
         }}); 
 }
-
-
 
 // cookie will expire in 3 days
 const maxAge = 3 * 24 * 60 * 60;
@@ -190,122 +186,26 @@ exports.login = (req, res) => {
       console.log(error);
     });
 };
-exports.changePassword = (req, res) => {
-  res.render("auth/changePassword");
-};
-exports.changePasswordPost = (req, res) => {
-  if (req.body.password.length == 0 || req.body.password2.length == 0) {
+exports.changePassword= (req,res)=> {
+
+  res.render('auth/changePassword');
+}
+exports.changePasswordPost = (req,res)=> {
+
+ if(req.body.password.length == 0  || req.body.password2.length == 0 ) {
+
+ return res.send({
+  "message" :"error", 
+  "error": "invalid input", 
+})
+ } else {
+db.query("SELECT * FROM ACCOUNT WHERE Email = ?",
+["f.djellali@esi-sba.dz"] , (err,result)=> {
+  if(result.length == 0) {
     return res.send({
-
-      message: "error",
-      error: "invalid input",
-    });
-  } else {
-    db.query(
-      "SELECT * FROM ACCOUNT WHERE Email = ?",
-      ["f.djellali@esi-sba.dz"],
-      (err, result) => {
-        if (result.length == 0) {
-          return res.send({
-            message: "error",
-            error: "Account don't exist",
-          });
-        } else {
-          const old_password = result[0].Password;
-          if (old_password != req.body.password) {
-            return res.send({
-              message: "error",
-              error: "invalid old password",
-            });
-          } else {
-            db.query(
-              "UPDATE Account SET Password = ?   where Email = ? ",
-              [req.body.password2, "f.djellali@esi-sba.dz"],
-              (err, result) => {
-                console.log(err);
-                return res.send({
-                  message: "success",
-                  error: "mot de passe changé avec succées",
-                });
-              }
-            );
-          }
-        }
-      }
-    );
-  }
-};
-exports.postForget = (req, res, next) => {
-  const url = "http://localhost:3000";
-
-  db.query(
-    "SELECT * FROM Account WHERE email = ?",
-    [req.body.email],
-    (err, result) => {
-      if (err) {
-        console.log("error:", err);
-      } else {
-        const email = req.body.email;
-        const token = jwt.sign({ email }, process.env.JWT_SECRET_CODE, {
-          expiresIn: "3d",
-        });
-        var transporter = nodemailer.createTransport({
-          service: "gmail",
-          auth: {
-            user: process.env.HYGIEA_EMAIL,
-            pass: process.env.HYGIEA_EMAIL_PASSWORD,
-          },
-        });
-        var mailOptions = {
-          from: process.env.HYGIEA_EMAIL,
-          to: req.body.email,
-          subject: "Email de recuperation",
-          html: `
-              <h1>Please click on the given link  to activate your 
-              account</h1>
-              <form method="POST" action="${url}/users/Confirm?token=${token}">
-              <button type="submit"  name="token" value='${token}'>Confirmer</button>
-              </form>
-              `,
-        };
-        transporter.sendMail(mailOptions, function (error, info) {
-          if (error) {
-            console.log(error);
-          } else {
-            return res.forgetAlert //.status(200)
-              .call();
-          }
-        });
-      }
-    }
-  );
-};
-exports.postConfirm = (req, res, next) => {
-  const token = req.query.token;
-  return res.render("auth/resetPassword", { token: token });
-};
-
-exports.postReset = (req, res, next) => {
-  const token = req.query.token;
-  console.log(req.body.password);
-  console.log(token);
-  jwt.verify(token, process.env.JWT_SECRET_CODE, (err, decodedToken) => {
-    if (err) {
-      console.log("error", err);
-    } else {
-      const email = decodedToken.email;
-      const password = passwordHash.generate(req.body.password);
-      db.query(
-        "Update Account set password = ? where email = ? ",
-        [password, email],
-        (err, result) => {
-          if (err) {
-            console.log("error", err);
-          } else {
-            res.send("Votre mot de passe est changé");
-
-     
-           } )
+      "message" :"error", 
+      "error": "Account d'ont exists", 
+    })
   }else {
     const old_password = result[0].Password ; 
     if(old_password != req.body.password) {
@@ -328,7 +228,7 @@ exports.postReset = (req, res, next) => {
 }
 )
  }
-
+}
 exports.postForget = (req,res , next) => {
   const url = "http://localhost:3000";
   db.query("SELECT * FROM Account WHERE email = ?",[req.body.email],(err,result) => {
@@ -401,54 +301,32 @@ exports.postForget = (req,res , next) => {
 }
 exports.postConfirm = (req,res, next)=> {
 
-const token = req.query.token;  
-console.log(token);    
-jwt.verify(token, process.env.JWT_SECRET_CODE,
-  (err,decodedToken)=> {
-    if(err) {
-      return res.send("ce lien de récupération est expiré.")
-    }else {
-      console.log(decodedToken);
-      return res.render('auth/resetPassword',{token : token}); 
-    }
-  })  
-
+const token = req.query.token;           
+return res.render('auth/resetPassword',{token : token}); 
 }
 
 exports.postReset = (req,res, next)=> {
+
   const token = req.query.token;
   jwt.verify(token, process.env.JWT_SECRET_CODE,
       (err,decodedToken)=> {
           if (err) {
               console.log('error',err); 
-              return res.send(
-                {
-                  error : "erreur" ,
-                }
-              )
           } else {
               const email = decodedToken.email ; 
               const password = passwordHash.generate(req.body.password)
               db.query("Update Account set password = ? where email = ? ",
               [password,email],(err,result)=> {
                   if(err) {
-
-                    return res.send({
-                      error : 'erreur' 
-                    })
                     console.log('error',err); 
                   }else {
-                    return res.send({
-                      message : "Votre mot de passe est changé", 
-                    })
-               
+                    res.send("Votre mot de passe est changé");
                   }
 
               })
-
           }
-        }
-      );
-    }
-  });
-};
+
+  }); 
+
+}
+

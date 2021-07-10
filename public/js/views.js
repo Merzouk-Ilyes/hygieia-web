@@ -1,24 +1,3 @@
-
-const eye = document.querySelector("#eye");
-const eye2 = document.querySelector("#eye2");
-const password = document.querySelector("#password");
-const confirmpassword = document.querySelector("#confirmpassword");
-function Validate() {
-  var password = document.getElementById("password").value;
-  var confirmPassword = document.getElementById("confirmpassword").value;
-  if (password != confirmPassword) {
-    alert("Passwords do not match.");
-    return false;
-  }
-  return true;
-}
-
-function forgetAlert() {
-  alert("Votre email est correct !! ");
-  window.open("//mail.google.com");
-}
-
-
 const eye = document.querySelector('#eye');
 const password = document.querySelector('#password');
 const confirmpassword = document.querySelector('#confirmpassword');
@@ -47,17 +26,18 @@ function Validate() {
     if (password != confirmPassword) {
         alert("Passwords do not match.");
         return false;
-    }}
-
-
-
-
-
+    }
+    return true;
+}
 function forgetAlert() {
     alert("Votre email est correct !!!!");
     window.open('//mail.google.com'); 
 }
-
+if (btn)
+	btn.addEventListener('click', e => {
+		e.preventDefault();
+		checkInputs();
+	});
 function checkInputs() {
     var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@esi-sba.dz/;
 // email incorrect ; 
@@ -74,7 +54,7 @@ function checkInputs() {
         small.innerText = null;
      
     }
-    if(password_login.value.length < 8) {
+    if(password_login.value.length < 😎 {
         const parent = password_login.parentElement.parentElement;
         const small = parent.querySelector('small');
         small.className = 'error';
@@ -119,9 +99,3 @@ function checkInputs() {
             }
         }}); 
 }
-
-if (btn)
-btn.addEventListener('click', e => {
-  e.preventDefault();
-  checkInputs();
-});

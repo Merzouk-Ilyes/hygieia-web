@@ -1,8 +1,9 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const db = require("../util/db").db;
 exports.getList = (req, res, next) => {
 
-  const db = require("../util/db").db;
+
   if(req.headers.cookie == null ) {
     res.redirect('/users/login');
     return; 
