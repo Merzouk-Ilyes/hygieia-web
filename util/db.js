@@ -48,5 +48,5 @@ const pool = mysql2.createPool({
   password: process.env.DB_PASS,
   database: process.env.MYSQL_DB,
 })
-module.exports = { db  };
-module.exports  = pool.promise() ;
+module.exports = { db,pool  };
+
