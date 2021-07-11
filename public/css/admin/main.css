@@ -198,7 +198,6 @@ td {
   background-color: greenyellow;
 }
 
-
 .cont {
   height: 50px;
   margin-top: 10px;
@@ -229,16 +228,15 @@ td {
   margin-right: 30px;
 }
 
-#category{
+#category {
   height: 32px;
   width: 18%;
 
-  border-radius:7px;
+  border-radius: 7px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  
+
   background-color: #fff;
   color: #000;
-
 }
 .dropdown {
   color: black;
@@ -317,7 +315,6 @@ td {
   justify-content: center;
 }
 .delete i {
-  
   color: #000;
 }
 
@@ -524,7 +521,6 @@ form .data label {
   cursor: pointer;
 }
 
-
 /* Modal */
 .modal-header {
   display: flex;
@@ -532,7 +528,7 @@ form .data label {
   color: white;
   align-items: center;
   justify-content: space-between;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
   border-bottom: 1px solid #dee2e6;
   border-top-left-radius: 9px;
@@ -541,7 +537,7 @@ form .data label {
 .modal-content {
   border-radius: 10px;
 }
-button.close{
+button.close {
   display: none;
 }
 .modal-body {
@@ -554,32 +550,54 @@ button.close{
   height: 40px;
 }
 .modal-body p {
-  margin : 20px 20px;
+  margin: 20px 20px;
   font-size: 20px;
   color: #000;
 }
-.modalSaveBtn{
+.modalSaveBtn {
   background-color: #fa384b;
   color: white;
   text-align: center;
-  padding: .3rem 2rem;
+  padding: 0.3rem 2rem;
   font-size: 1rem;
   border-radius: 8px;
   border: none;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
 }
-.modalCloseBtn{
+.modalCloseBtn {
   background-color: white;
   color: black;
   text-align: center;
-  padding: .3rem .8rem;
+  padding: 0.3rem 0.8rem;
   font-size: 1rem;
   border-radius: 8px;
   border: solid 1px grey;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
-.modal-footer{
-border:none;
-border-bottom-left-radius: 15px;
+.modal-footer {
+  border: none;
+  border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
 }
+small {
+  text-align: left;
+  color: red;
+  background-color: white;
+}
+small .noterror {
+  text-align: left;
+  display: none;
+}
+.alert{
+  display: none;
+  z-index: 333;
+  position: absolute;
+  right: 40px;
+  width: 30%;
+  text-align: center;
+  transition: .9s;
+}
+.showAlert {
+  display: block;
+}
+

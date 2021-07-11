@@ -3,23 +3,32 @@
       <div class="blocker" onclick="hidePopup()"></div>
       <div class="bcontainer2">
         <div class="container2">
+          
           <div class="text">Ajouter un compte</div>
           <form action="#" id="form">
             <div class="data">
               <label>Nom </label>
-              <input type="text" required />
+              <input type="text" id="nom"  required />
+              <small class="noterror">
+              </small>
             </div>
             <div class="data">
               <label>Prénom </label>
-              <input type="text" required />
+              <input type="text" id="prenom"  required />
+              <small class="noterror">
+              </small>
             </div>
             <div class="data">
               <label>Date de naissance </label>
-              <input type="date" required />
+              <input type="date"  id="date" required />
+            </div>
+            <div class="data">
+              <label>Lieu de naissance </label>
+              <input type="text"  id="lieu" required />
             </div>
             <div class="data">
               <label>Sexe </label>
-              <input type="text" list="sexe"  required />
+              <input type="text" list="sexe" id="sexeInput" required />
                 <datalist id="sexe">
                   <option value="Homme">Homme</option>
                   <option value="Femme">Femme</option>
@@ -27,11 +36,13 @@
             </div>
             <div class="data">
               <label>Numéro de téléphone </label>
-              <input type="number" required />
+              <input type="number" id="numero" required />
+              <small class="noterror">
+              </small>
             </div>
             <div class="data">
               <label>Role </label>
-              <input type="text" list="role"  required />
+              <input type="text" list="role"  id="roleInput" required />
                 <datalist id="role">
                   <option value="administrateur">administrateur</option>
                   <option value="médecin">médecin</option>
@@ -40,21 +51,27 @@
             </div>
             <div class="data">
               <label>Email</label>
-              <input type="email" required />
+              <input type="email" id="email" required />
+              <small class="noterror">
+              </small>
             </div>
             <div class="data">
               <label>Mot de passe</label>
-              <input type="text" required />
+              <input type="text" id="mdp" required />
+              <small class="noterror">
+              </small>
             </div>
             <div class="data">
               <label>Confirmer mot de passe</label>
-              <input type="text" required />
+              <input type="text" id="confirmerMdp" required />
+              <small class="noterror">
+              </small>
             </div>
           </form>
         </div>
         <div class="circle" id="circle"></div>
         <div class="btn2">
-          <button type="submit" form="form">Ajouter le compte</button>
+          <button type="submit" form="form" id="ajouterBtn">Ajouter le compte</button>
         </div>
       </div>
     </div>

@@ -27,10 +27,12 @@ const User = sequelize.define('users' ,{
     Firstname:Sequelize.STRING ,
     Lastname:Sequelize.STRING ,
     Birthday :Sequelize.DATE ,
+    Birthplace:Sequelize.STRING,
     Sexe :Sequelize.STRING ,
     Role:Sequelize.STRING ,
     Phonenumber:Sequelize.INTEGER ,
     Email:Sequelize.STRING ,
+    IdAdmin:Sequelize.INTEGER,
 }, {
     tableName: 'users'
   }) ;
@@ -47,6 +49,7 @@ const Admin = sequelize.define('administrator' ,{
     Firstname:Sequelize.STRING ,
     Lastname:Sequelize.STRING ,
     Birthday :Sequelize.DATE ,
+    Birthplace:Sequelize.STRING,
     Sexe :Sequelize.STRING ,
     Phonenumber:Sequelize.INTEGER ,
     Email:Sequelize.STRING ,
