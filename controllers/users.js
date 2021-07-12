@@ -104,8 +104,9 @@ exports.login = (req, res) => {
         });
       } else {
         if (account.active) {
-         // let result = passwordHash.verify(req.body.password, account.Password);
-          let result = req.body.password == account.Password ; 
+         let result = passwordHash.verify(req.body.password, account.Password);
+         console.log("result=> "+result)
+          // let result = req.body.password == account.Password ; 
           if (result) {
             // check if it's a normal user (médecin ,aide-soignant ou RH)
             User.findOne({ where: { Email: account.Email } })
