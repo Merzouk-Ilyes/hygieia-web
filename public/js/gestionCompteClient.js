@@ -79,10 +79,9 @@ const mdp = document.getElementById("mdp");
 const confirmerMdp = document.getElementById("confirmerMdp");
 const numero = document.getElementById("numero");
 const role = document.getElementById("roleInput");
-const sexe = document.getElementById("sexeInput");
+const sexe = document.getElementById("sexe");
 const date = document.getElementById("date");
 const lieu = document.getElementById("lieu");
-
 const ajouterBtn = document.getElementById("ajouterBtn");
 ajouterBtn.addEventListener("click" , (e) => {
   e.preventDefault()
@@ -110,6 +109,18 @@ function checkInputs() {
     return;
   } else {
     const parent = prenom.parentElement;
+    const small = parent.querySelector("small");
+    small.className = "noterror";
+    small.innerText = null;
+  }
+  if (date.value.length ==0 || date.value == null) {
+    const parent = date.parentElement;
+    const small = parent.querySelector("small");
+    small.className = "";
+    small.innerText = "Date de naissance n'éxiste pas" ;
+    return;
+  } else {
+    const parent = date.parentElement;
     const small = parent.querySelector("small");
     small.className = "noterror";
     small.innerText = null;

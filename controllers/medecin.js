@@ -19,7 +19,7 @@ exports.getList = (req, res, next) => {
     (err,decodedToken)=> {
       console.log(decodedToken);
     
-   if (decodedToken.role == "medecin") {
+   if (decodedToken.role == "médecin") {
       // medecin home provisoire ; 
       db.query("Select * from patient",(err,result)=> {
         if(err) {

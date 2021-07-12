@@ -21,6 +21,8 @@
             <div class="data">
               <label>Date de naissance </label>
               <input type="date"  id="date" required />
+              <small class="noterror">
+              </small>
             </div>
             <div class="data">
               <label>Lieu de naissance </label>
@@ -28,11 +30,10 @@
             </div>
             <div class="data">
               <label>Sexe </label>
-              <input type="text" list="sexe" id="sexeInput" required />
-                <datalist id="sexe">
+                <select id="sexe">
                   <option value="Homme">Homme</option>
                   <option value="Femme">Femme</option>
-                </datalist>
+                </select>
             </div>
             <div class="data">
               <label>Numéro de téléphone </label>
@@ -42,14 +43,15 @@
             </div>
             <div class="data">
               <label>Role </label>
-              <input type="text" list="role"  id="roleInput" required />
-                <datalist id="role">
-                  <option value="administrateur">administrateur</option>
+              <select id="roleInput">
+                <option value="administrateur">administrateur</option>
                   <option value="médecin">médecin</option>
                   <option value="aide-soignant">aide-soignant</option>
-                  <option value="ressources-humaines">ressources-humaines</option>
-                </datalist>
+                  <option value="rh">rh</option>
+              </select>
             </div>
+           
+            
             <div class="data">
               <label>Email</label>
               <input type="email" id="email" required />

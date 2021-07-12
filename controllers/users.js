@@ -29,14 +29,14 @@ exports.getLogin = (req, res, next) => {
       console.log(decodedToken);
     if(decodedToken.role == "administrateur")  {
     // res.redirect('/users/home'); admin home 
-      res.send('<h1> interface administrateur</h1>')
-    }else if (decodedToken.role == "medecin") {
+    res.redirect('/users/admin/gestion');
+      }else if (decodedToken.role == "médecin") {
       // medecin home provisoire ; 
           res.redirect('/users/medecin/list'); 
     }else if(decodedToken.role =="rh" ) {
       // redirect home rh 
           res.send('<h1> interface rh</h1>'); 
-    }else if(decodedToken.role = "aide") {
+    }else if(decodedToken.role = "aide-soignant") {
       // redirect home aide 
       res.send('<h1> interface aide soignant</h1>'); 
     }else {
@@ -67,12 +67,12 @@ exports.getHome = (req,res,next) => {
     (err,decodedToken)=> {
       console.log(decodedToken);
     if(decodedToken.role == "administrateur")  {
-      res.send('<h1> interface administrateur</h1>')
-    }else if (decodedToken.role == "medecin") {
+      res.redirect('/users/admin/gestion'); 
+    }else if (decodedToken.role == "médecin") {
           res.redirect('/users/medecin/list'); 
     }else if(decodedToken.role =="rh" ) {
           res.send('<h1> interface rh</h1>'); 
-    }else if(decodedToken.role = "aide") {
+    }else if(decodedToken.role = "aide-soignant") {
       res.send('<h1> interface aide soignant</h1>'); 
     }else {
       res.redirect('/users/login'); 
@@ -105,7 +105,6 @@ exports.login = (req, res) => {
       } else {
         if (account.active) {
          let result = passwordHash.verify(req.body.password, account.Password);
-         console.log("result=> "+result)
           // let result = req.body.password == account.Password ; 
           if (result) {
             // check if it's a normal user (médecin ,aide-soignant ou RH)

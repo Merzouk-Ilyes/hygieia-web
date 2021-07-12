@@ -301,7 +301,7 @@ td {
   align-items: center;
   justify-content: center;
 }
-.delete {
+.deleteAccount {
   margin-left: 10px;
   background-color: #d2cdcd;
   height: 35px;
@@ -313,9 +313,11 @@ td {
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none;
 }
-.delete i {
+.deleteAccount i {
   color: #000;
+  margin: auto;
 }
 
 /* The switch - the box around the slider */
@@ -459,6 +461,17 @@ form .data label {
   font-size: 0.8em;
   font-weight: 500;
 }
+#roleInput , #sexe{
+  height: 100%;
+  width: 100%;
+  font-size: 15px;
+  padding-left: 10px;
+  background-color: #f6f2f2;
+  border-radius: 5px;
+  border: solid 1px rgb(194, 188, 188);
+
+
+}
 .circle {
   position: absolute;
   bottom: 80px;
@@ -521,6 +534,11 @@ form .data label {
   cursor: pointer;
 }
 
+
+.editIcon img{
+  height: 45px;
+  width: 45px;
+}
 /* Modal */
 .modal-header {
   display: flex;
