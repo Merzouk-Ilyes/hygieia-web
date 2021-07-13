@@ -3,9 +3,13 @@
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+       
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>mot de passe oublié</title>
-
+        <!-- =====  FONT ===== -->
+        <link href="http://fonts.cdnfonts.com/css/segoe-ui-4" rel="stylesheet">
         <!-- =====  ICONS ===== -->
         <link
           rel="stylesheet"
@@ -16,25 +20,29 @@
     </head>
     <body>
         <div class="container">
-            <form action="/users/forget" method="POST" class="form2"> 
+            <div class="form2"> 
               <h2 class="title2">Récupérer mot de passe</h2>
               <p id="txt">Veuillez introduire votre e-mail puis <br>
-              consulter votre boîte e-mail pour la récupération <br>
-              de votre compte</p>
-                  <p>Adresse email</p>
+              consulter votre boîte e-mail pour <br>
+              la récupération de votre compte</p>
+                  <p id="adr">Adresse email</p>
+                  <div class="field">
                   <div class="input-field one">
                   <i class="fi-rr-envelope"></i>
                   <input
+                    id="email"
                     type="email"
                     name="email"
                     placeholder="Entrez votre email"
                     required
                   />
                   </div>
-              <button type="submit" class="btn btn2">Envoyer</button>
-            </form>
+                  <small class="noterror"></small>
+                </div>
+              <button id="btn" class="btn btn2">Envoyer</button>
+              </div>
           </div>
         </div>
-        <script src="/js/views.js"></script>
+        <script src="/js/forgetPassword.js"></script>
     </body>
 </html>
