@@ -1,0 +1,621 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400&display=swap");
+.container2::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border: 4px solid transparent;
+  border-radius: 20px;
+  background-clip: padding-box;
+}
+.container2::-webkit-scrollbar-track-piece {
+  height: 30px;
+}
+
+.container2::-webkit-scrollbar {
+  width: 12px;
+}
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  font-family: "Poppins", sans-serif;
+  background-color: #f5f5f5;
+}
+
+.container-table100 {
+  width: 100%;
+  height: 82vh;
+  background-color: #f5f5f5;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 33px 30px;
+}
+
+.wrap-table100 {
+  width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  top: 20vh;
+}
+
+.table100 {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+table {
+  width: 100%;
+}
+
+th,
+td {
+  padding-right: 10px;
+}
+
+.column1 {
+  width: 6%;
+  padding-left: 40px;
+}
+
+.column2 {
+  width: 9%;
+}
+
+.column3 {
+  width: 11%;
+}
+
+.column4 {
+  width: 11%;
+}
+
+.column5 {
+  width: 9%;
+}
+.column6 {
+  width: 5%;
+}
+.column7 {
+  width: 10%;
+}
+.column1-th {
+  width: 10%;
+  padding-left: 40px;
+}
+
+.column2-th {
+  width: 15%;
+}
+
+.column3-th {
+  width: 20%;
+}
+
+.column4-th {
+  width: 27%;
+}
+
+.column5-th {
+  width: 15%;
+}
+.column6-th {
+  width: 22%;
+}
+.column7-th {
+  width: 10%;
+}
+.table100-head th {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+.table100-body td {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.table100 {
+  position: relative;
+  padding-top: 65px;
+}
+
+.table100-head {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.table100-body {
+  height: 450px;
+  overflow: auto;
+}
+
+.table100.ver4 {
+  margin-right: -20px;
+}
+
+.table100.ver4 .table100-head {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.table100.ver4 th {
+  font-size: 18px;
+  color: #000;
+  line-height: 1.4;
+  background-color: transparent;
+  border-bottom: 2px solid #f2f2f2;
+}
+
+.table100.ver4 .column1 .column1-th {
+  padding-left: 7px;
+}
+.column7-th {
+  padding-right: 70px;
+}
+
+.table100.ver4 td {
+  font-size: 15px;
+  color: #808080;
+  line-height: 1.4;
+}
+
+.table100.ver4 .table100-body tr {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.table100.ver4 {
+  overflow: hidden;
+}
+
+.table100.ver4 .table100-body {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.table100.ver4 {
+  right: 0px;
+}
+
+.operations {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.activate {
+  background-color: greenyellow;
+}
+
+.cont {
+  height: 50px;
+  margin-top: 10px;
+  display: flex;
+  margin-left: 54px;
+  margin-right: 40px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+}
+.search-cont {
+  height: 50px;
+  width: 30%;
+  margin-left: 15px;
+}
+
+.filter-cont {
+  height: 50px;
+  width: 50%;
+  margin-right: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.add {
+  height: 40px;
+  width: 35%;
+  margin-right: 30px;
+}
+
+#category {
+  height: 32px;
+  width: 18%;
+
+  border-radius: 7px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+  background-color: #fff;
+  color: #000;
+}
+.dropdown {
+  color: black;
+}
+.nav {
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.navbar-brand {
+  font-weight: 700;
+}
+
+.ajouterbtn {
+  height: 90%;
+  width: 90%;
+  background-color: #01559c;
+
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  display: inline-block;
+  border-radius: 7px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.icon {
+  position: absolute;
+  top: 92px;
+  left: 430px;
+  color: grey;
+}
+
+.form-control {
+  border-radius: 10px;
+  padding: 4px 15px;
+}
+.form-outline {
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  margin-top: 4px;
+}
+.show {
+  display: block;
+}
+.nav-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.square {
+  background-color: #01559c;
+  height: 40px;
+  width: 44px;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.deleteAccount {
+  margin-left: 10px;
+  background-color: #d2cdcd;
+  height: 35px;
+  width: 35px;
+  border-radius: 20px;
+  color: black;
+  text-align: center;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+.deleteAccount i {
+  color: #000;
+  margin: auto;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: red;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #27ae60;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #27ae60;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Popup */
+.popup {
+  display: none;
+  z-index: 200;
+}
+.popup.open {
+  display: block;
+}
+.container2,
+.bcontainer2 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.container2 {
+  background-color: #fff;
+  padding: 30px;
+  height: 640px;
+  width: 420px;
+  overflow: auto;
+  border: solid 1px #01559c;
+  border-radius: 5px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  scroll-behavior: smooth;
+}
+.bcontainer2 {
+  background-color: red;
+  height: 640px;
+  width: 420px;
+  border-radius: 20px;
+}
+
+.btn2 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin-top: 10px;
+  border-radius: 0 0 5px 5px;
+  height: 80px;
+  overflow: hidden;
+  text-align: center;
+  background-color: #fff;
+  border-bottom: solid 1px #01559c;
+  border-right: solid 1px #01559c;
+  border-left: solid 1px #01559c;
+}
+.container2 .text {
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #01559c;
+}
+.container2 form {
+  margin-bottom: 100px;
+}
+.container2 form .data {
+  height: 45px;
+  width: 100%;
+  margin-bottom: 45px;
+}
+form .data input {
+  height: 100%;
+  width: 100%;
+  font-size: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #f6f2f2;
+  border-radius: 5px;
+  border: solid 1px rgb(194, 188, 188);
+}
+form .data label {
+  font-size: 0.8em;
+  font-weight: 500;
+}
+#roleInput , #sexe{
+  height: 100%;
+  width: 100%;
+  font-size: 15px;
+  padding-left: 10px;
+  background-color: #f6f2f2;
+  border-radius: 5px;
+  border: solid 1px rgb(194, 188, 188);
+
+
+}
+.circle {
+  position: absolute;
+  bottom: 80px;
+  width: 420px;
+  height: 10px;
+  opacity: 0.3;
+  border-top-left-radius: 100% 200%;
+  border-top-right-radius: 100% 200%;
+  border-bottom: 0;
+  background-image: linear-gradient(to top, grey, white);
+}
+.btn2 button {
+  height: 50%;
+  width: 40%;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 10px;
+  background: #01559c;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.blocker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  content: " ";
+}
+
+.input-field {
+  display: grid;
+  max-width: 650px;
+  width: 100%;
+  background-color: #f6f2f2;
+  margin: auto;
+  height: 100%;
+  border-radius: 10px;
+  grid-template-columns: 90% 10%;
+  position: relative;
+}
+
+.input-field i {
+  line-height: 55px;
+  color: #b3b6b7;
+  background-color: #f6f2f2;
+  font-size: 1.3rem;
+  margin: auto;
+  right: 10px;
+  position: relative;
+}
+
+#eye,
+#eye2 {
+  cursor: pointer;
+}
+
+
+.editIcon img{
+  height: 45px;
+  width: 45px;
+}
+/* Modal */
+.modal-header {
+  display: flex;
+  background-color: #fa384b;
+  color: white;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid #dee2e6;
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
+}
+.modal-content {
+  border-radius: 10px;
+}
+button.close {
+  display: none;
+}
+.modal-body {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 1rem;
+}
+.modal-body img {
+  height: 40px;
+}
+.modal-body p {
+  margin: 20px 20px;
+  font-size: 20px;
+  color: #000;
+}
+.modalSaveBtn {
+  background-color: #fa384b;
+  color: white;
+  text-align: center;
+  padding: 0.3rem 2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+}
+.modalCloseBtn {
+  background-color: white;
+  color: black;
+  text-align: center;
+  padding: 0.3rem 0.8rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: solid 1px grey;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+.modal-footer {
+  border: none;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+small {
+  text-align: left;
+  color: red;
+  background-color: white;
+}
+small .noterror {
+  text-align: left;
+  display: none;
+}
+.alert{
+  display: none;
+  z-index: 333;
+  position: absolute;
+  right: 40px;
+  width: 30%;
+  text-align: center;
+  transition: .9s;
+}
+.showAlert {
+  display: block;
+}
+

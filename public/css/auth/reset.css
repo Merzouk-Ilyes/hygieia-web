@@ -1,6 +1,12 @@
-@font-face {
-  font-family: SegoeUI;
-  src: url(/public/font/SegoeUI.ttf);
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&family=Poppins:wght@300&display=swap');
+:root{
+--font-archivo: 'Archivo', sans-serif;
+}
+
+
+body {
+    font-family: 'Archivo', sans-serif;
 }
 
 * {
@@ -32,11 +38,7 @@ body{
   text-align: center;
 }
 
-.error {
-background-color: #ef233c;
-color: white;
-border-radius: 10px;
-}
+
 
 #marge{
   margin-top: 18px;
@@ -149,3 +151,16 @@ p {
   font-family: SegoeUI;
   font-weight: 500;
 }
+.field1 small 
+{
+  text-align: left;
+  color: red;
+background-color: white
+
+}
+
+.error {
+  color: red;
+  background-color: white;
+}
+
