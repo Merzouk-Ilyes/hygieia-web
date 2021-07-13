@@ -114,6 +114,7 @@ exports.login = (req, res) => {
                   //this is a normal user
                   const token = jwt.sign(
                     {
+                      firstname:user.Firstname,
                       email: user.Email,
                       IdUser: user.IdUser,
                       role: user.Role, 
@@ -142,6 +143,7 @@ exports.login = (req, res) => {
                       if (admin !== null) {
                         const token = jwt.sign(
                           {
+                            firstname:admin.Firstname,
                             email: admin.Email,
                             IdAdmin: admin.IdAdmin,
                             role: "administrateur",
