@@ -1,4 +1,13 @@
 
+@import url('http://fonts.cdnfonts.com/css/segoe-ui-4');
+:root{
+font-family: 'Segoe UI', sans-serif;
+}           
+                
+body {
+    font-family: 'Segoe UI', sans-serif;
+
+
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&family=Poppins:wght@300&display=swap');
 :root{
 --font-archivo: 'Archivo', sans-serif;
@@ -7,6 +16,7 @@
 
 body {
     font-family: 'Archivo', sans-serif;
+
 }
 
 * {
@@ -17,9 +27,10 @@ body {
 
 
 
-img{
-  padding-top: 15px;
+
+img {
   width: 52%;
+  padding-bottom: 10px;
 }
 
 body {
@@ -105,7 +116,7 @@ body {
 
 #eye {
   cursor: pointer;
-  color: #b3b6b7;
+  color: #707070;
   padding-right: 10px;
 }
 
@@ -121,14 +132,26 @@ body {
 	color:black;
 	padding-left: 30px;
 
+  font-family: 'Segoe UI', sans-serif;
+}
+
+
   }
+
 
 .input-field input::placeholder {
   color: #b3b6b7;
   font-weight: 400;
+
+  font-size: 1rem;
+  top: 50%;
+  left: 50%;
+  font-family: 'Segoe UI', sans-serif;
+
   font-size: 1.05rem;
 
   
+
 }
 
 p {
@@ -136,7 +159,7 @@ p {
   text-align: left;
   text-decoration: none;
   color: black;
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 500;
   margin-bottom: 4px;
   padding-left: 7px;
@@ -147,7 +170,7 @@ a {
   display: center;
   text-align: right;
   color: black;
-  font-size: 0.9rem;
+  font-size: 13px;
   transition: 0.3s;
   margin-bottom: 50px;
   font-weight: 400;
@@ -159,23 +182,24 @@ a:hover {
 
 .btn {
   display: block;
-  width: 201px;
-  height: 47px;
+  width: 191px;
+  height: 44px;
   border-radius: 12px;
   outline: none;
   border: none;
-  font-size: 1.18rem;
+  font-size: 1.0625rem;
   background-color: #01559c;
   color: white;
-
   font-weight: 400;
   margin: 60px auto;
   cursor: pointer;
   transition: 0.5s;
   box-shadow: 4px 4px 6px #b1b0b0;
-  margin-bottom: 13px;
-  margin-top: 22px;
+  margin-bottom: 15px;
+  margin-top: 40px;
+  font-family: 'Segoe UI', sans-serif;
 }
+
 .btn:hover {
   background-color: white;
   color: #01559c;
@@ -202,4 +226,7 @@ background-color: white;
 .inputtwo small .noterror {
   text-align: left;
 display: none;
+
 }
+
+
