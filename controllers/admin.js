@@ -155,6 +155,15 @@ const addUser = (req, res, next) => {
 
 let patients, admins, users;
 const getGestion = (req, res, next) => {
+
+  const token = req.cookies.jwt;
+jwt.verify(token, process.env.JWT_SECRET_CODE, (err, decodedToken) => {
+        if (err) {
+          console.log("error=>", err);
+          return res.status(404).send("ERROR");
+        }else {
+        console.log("token=>",decodedToken.firstname)
+     
   pool
     .execute(
       "SELECT * FROM account , patient  where account.Email = patient.Email"
@@ -177,6 +186,7 @@ const getGestion = (req, res, next) => {
                 patients: patients,
                 admins: admins,
                 meds: users,
+                first:decodedToken.firstname,
               });
             })
             .catch((err) => {
@@ -190,10 +200,9 @@ const getGestion = (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
+  }})
 };
-const getTest=(req,res,next) => {
- return res.render("admin/popuptest")
-}
+
 const postChangeStatus = (req, res, next) => {
   let email = req.body.email;
   let status = req.body.status;
@@ -223,11 +232,16 @@ const postDeleteAccount = (req, res, next) => {
       console.log(err);
     });
 };
+
+const logout = (req,res,next) => {
+  res.cookie('jwt' ,'' ,{maxAge:1})
+  return res.redirect("/users/login")
+}
 module.exports = {
   
   getGestion,
   postChangeStatus,
   postDeleteAccount,
   addUser,
-  getTest
+  logout
 };

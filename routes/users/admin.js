@@ -8,7 +8,7 @@ router.post("/add", adminController.addUser);
  // executing archive controller POST request (postArchive)
 router.post("/archive")
  
-
+router.get("/logout" , adminController.logout)
 
 // executing status controller POST request (postStatus)
 router.post("/status",adminController.postChangeStatus)
