@@ -3,7 +3,8 @@ const passwordHash = require("password-hash");
 const jwt = require("jsonwebtoken");
 const db = require("../util/db").db;
 const pool = require("../util/pool");
-const { Account, User, Admin } = require("../models/user");
+const { Account, User, Admin ,Patient} = require("../models/user");
+const bodyParser = require("body-parser");
 
 // const addNewUser = (req, res, next) => {
 //   const token = req.cookies.token;
@@ -81,7 +82,7 @@ const { Account, User, Admin } = require("../models/user");
 // };
 const addUser = (req, res, next) => {
   // const token = req.cookies.token;
-   const status = req.body.role == "administrateur" ? 1:0;
+  const status = req.body.role == "administrateur" ? 1:0;
   Account.findOne({ where: { email: req.body.email } }).then((account) => {
     if (account !== null) {
       return res.status(200).json({
@@ -233,12 +234,145 @@ const postDeleteAccount = (req, res, next) => {
     });
 };
 
+
+
+const getData = (req,res,next) => {
+
+  Admin.findOne({ where: { email: req.body.email } }).then((admin) => {
+    if (admin !== null) {
+      
+      return  res.json({ 
+        firstname:admin.Firstname,
+        lastname:admin.Lastname ,
+        birthday :admin.Birthday,
+        birthplace:admin.Birthplace,
+        sexe :admin.Sexe,
+        role:"administrateur",
+        phonenumber:admin.Phonenumber,
+        email:admin.Email,
+      }) ;
+    } else {
+      User.findOne({ where: { email: req.body.email } }).then((user) => {
+        if (user !== null) {
+          return  res.json({
+            firstname:user.Firstname,
+            lastname:user.Lastname ,
+            birthday :user.Birthday,
+            birthplace:user.Birthplace,
+            sexe :user.Sexe,
+            role:user.Role,
+            phonenumber:user.Phonenumber,
+            email:user.Email,
+          }) ;
+        }else{
+          Patient.findOne({ where: { email: req.body.email } }).then((user) => {
+            if (user !== null) {
+              return  res.json({
+                firstname:user.Firstname,
+                lastname:user.Lastname ,
+                birthday :user.Birthday,
+                birthplace:user.Birthplace,
+                sexe :user.Sexe,
+                role:user.Role,
+                phonenumber:user.Phonenumber,
+                email:user.Email,
+              });
+            }
+          });
+        }
+      }); 
+    }
+  });
+};
+
+const postUpdate = (req,res,next) => {
+  console.log(req.body.lastname,
+    req.body.firstname,
+    req.body.birthday,
+    req.body.birthplace,
+    req.body.sexe,
+    req.body.phone,
+    req.body.role,
+    req.body.email,);
+  if (req.body.role == "administrateur") {
+    db.query("UPDATE administrator set Firstname=? and Lastname =? and Birthday=? and Birthplace=? and Sexe=? and Phonenumber =?  where Email = ?  ",
+      [
+        req.body.firstname,
+        req.body.lastname,      
+        req.body.birthday,
+        req.body.birthplace,
+        req.body.sexe,
+        req.body.phone,
+        req.body.email,
+      ],(err, result) => {
+        if (err) {
+          console.log("error", err);
+          return res.status(404).send("ERROR");
+        }else{
+          return res.json({
+            message:"Le compte a etait bien modifier !"
+            })  
+        }
+      }
+    );
+  }else{
+    if(req.body.role == "médecin" || req.body.role == "aide-soignant" || req.body.role == "rh"){
+      db.query("UPDATE users set Firstname=? and Lastname =? and Birthday=? and Birthplace=? and Sexe=? and Phonenumber =? where Email = ?   ",
+      [
+        req.body.firstname,
+        req.body.lastname,    
+        req.body.birthday,
+        req.body.birthplace,
+        req.body.sexe,
+        req.body.phone,
+        req.body.email,
+      ],(err, result) => {
+        if (err) {
+          console.log("error", err);
+          return res.status(404).send("ERROR");
+        }else{
+          return res.json({
+            message:"Le compte a etait bien modifier !"
+            })  
+        }
+      }
+    );
+  }else{
+    db.query("UPDATE patient set Firstname=? and Lastname =? and Birthday=? and Birthplace=? and Sexe=? and Phonenumber =? where Email = ?   ",
+    [
+      req.body.firstname,
+      req.body.lastname,    
+      req.body.birthday,
+      req.body.birthplace,
+      req.body.sexe,
+      req.body.phone,
+      req.body.email,
+    ],(err, result) => {
+      if (err) {
+        console.log("error", err);
+        return res.status(404).send("ERROR");
+      }else{
+        return res.json({
+          message:"Le compte a etait bien modifier !"
+          })  
+      }
+      }
+    );
+  }   
+  }      
+    
+  
+};
+
 const logout = (req,res,next) => {
   res.cookie('jwt' ,'' ,{maxAge:1})
   return res.redirect("/users/login")
-}
+};
+
 module.exports = {
   
+  postUpdate,
+  getData,
   getGestion,
   postChangeStatus,
   postDeleteAccount,

@@ -59,6 +59,9 @@
         </div>
       </div>
     </div>
+    <div class="alert alert-success " id="alertup" role="alert">
+      Compte modifie avec succès!
+    </div>
     <div class="alert alert-success " id="alertId" role="alert">
       Compte créé avec succès !
     </div>
@@ -82,6 +85,7 @@
         </div>
         
         <%- include('./popup.ejs')%>
+        <%- include('./popupupdate.ejs')%>
         <select name="Category" id="category" onChange="myFunction2()">
           <option value="Tous">Tous</option>
           <option value="Etudiant">Etudiant</option>
@@ -131,7 +135,7 @@
                   <td class="column1"><%=++i%></td>
                   <td class="column2"><%=med.Firstname%></td>
                   <td class="column3"><%=med.Lastname %></td>
-                  <td class="column4"><%=med.Email%></td>
+                  <td class="column4" ><%=med.Email%></td>
                   <td class="column5"><%=med.Role%></td>
                   <td class="column6">
                     <%if(med.active){%>Activé<%}else {%> Désactivé <%}%>
@@ -258,10 +262,10 @@
                         </div>
                       </div>
                     </div>
-                    <div class="editIcon">
-                    <img src="/assets/edit.svg" alt="icon">
 
-                    </div>
+                    <button class="updateAccount" type="button" id="update" onclick="showPopup('<%=med.Email%>')">
+                    </button>
+                    
 
                     </div>
                   </td>
@@ -405,10 +409,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="editIcon">
-                      <img src="/assets/edit.svg" alt="icon">
-  
-                      </div>
+                    <button class="updateAccount" type="button" id="update" onclick="showPopup('<%=patient.Email%>')">
+                    </button>
 
                     </div>
                   </td>
@@ -555,12 +557,9 @@
                         </div>
                       </div>
                     </div>
-                    <div class="editIcon">
-                      <img src="/assets/edit.svg" alt="icon">
-  
-                      </div>
-                    
-
+                    <button class="updateAccount" type="button" id="update" onclick="showPopup('<%=admin.Email%>')">
+                    </button> 
+                    </div>
                     </div>
                   </td>
                 </tr>

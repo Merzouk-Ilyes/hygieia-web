@@ -320,6 +320,29 @@ td {
   margin: auto;
 }
 
+.updateAccount {
+  margin-left: 10px;
+  background-color: #d2cdcd;
+  height: 35px;
+  width: 35px;
+  border-radius: 20px;
+  color: black;
+  text-align: center;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: url('/assets/edit.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.updateAccount i {
+  color: #000;
+  margin: auto;
+}
+
+
 /* The switch - the box around the slider */
 .switch {
   position: relative;
@@ -384,6 +407,14 @@ input:checked + .slider:before {
 }
 
 /* Popup */
+.popupupdate{
+  display: none;
+  z-index: 200;
+}
+.popupupdate.open {
+  display: block;
+}
+
 .popup {
   display: none;
   z-index: 200;
@@ -461,7 +492,7 @@ form .data label {
   font-size: 0.8em;
   font-weight: 500;
 }
-#roleInput , #sexe{
+#roleInput , #sexe , #sexeup{
   height: 100%;
   width: 100%;
   font-size: 15px;
