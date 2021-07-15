@@ -43,6 +43,9 @@ router.post("/forget" ,usersController.postForget);
 router.get("/Confirm", usersController.postConfirm);
 router.post("/reset", usersController.postReset);
 
+router.post("/logout", usersController.logOut);
+
+
 
 
 

@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
+    rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
   />
     <title>Liste des Patients</title>
 </head>
@@ -41,20 +40,19 @@
         </tr>
         <% for (var i = 0; i < listitems.length; i++) { %>
           <tr>
-            <td><img src= <%= listitems[i].Picture %>/></td>
+            <td><img src= "<%=listitems[i].Picture %>"></td>
             <td><%= listitems[i].Firstname %></td>
             <td><%= listitems[i].Lastname %></td>
             <td> <%= listitems[i].Birthday.toString().substring(0,15) %></td>
             <td><%= listitems[i].Email %></td>
             <td><%= listitems[i].Role %></td>
             <td>
-      
               <div class="dropdown">
                 <button class="dropbtn">
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <div class="dropdown-content">
-                  <a href="#">Consulter dossier médical</a>
+                  <a href="/users/medecin/medicalFile/?id=<%= listitems[i].IdPatient%>">Consulter dossier médical</a>
                   <a href="#">Modifier dossier médical</a>
                   <a href="#">Programer un rendez-vous</a>
                   <a href="#">Faire un examen médical</a>

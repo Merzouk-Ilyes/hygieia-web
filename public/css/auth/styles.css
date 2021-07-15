@@ -1,13 +1,4 @@
 
-@import url('http://fonts.cdnfonts.com/css/segoe-ui-4');
-:root{
-font-family: 'Segoe UI', sans-serif;
-}           
-                
-body {
-    font-family: 'Segoe UI', sans-serif;
-
-
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&family=Poppins:wght@300&display=swap');
 :root{
 --font-archivo: 'Archivo', sans-serif;
@@ -16,7 +7,6 @@ body {
 
 body {
     font-family: 'Archivo', sans-serif;
-
 }
 
 * {
@@ -27,10 +17,9 @@ body {
 
 
 
-
-img {
+img{
+  padding-top: 15px;
   width: 52%;
-  padding-bottom: 10px;
 }
 
 body {
@@ -65,16 +54,7 @@ body {
 	grid-template-columns: 10% 90%;
 }
 
-.input-field.two{
-	margin-bottom:8px;
-	grid-template-columns: 10% 80% 10%;
-}
-/* .input-field.three{
-	width :90%;
-	margin-bottom:30px;
-	grid-template-columns: 10% 90%;
-	
-} */
+
 
 .input-field {
   max-width: 335px;
@@ -116,7 +96,7 @@ body {
 
 #eye {
   cursor: pointer;
-  color: #707070;
+  color: #b3b6b7;
   padding-right: 10px;
 }
 
@@ -132,26 +112,14 @@ body {
 	color:black;
 	padding-left: 30px;
 
-  font-family: 'Segoe UI', sans-serif;
-}
-
-
   }
-
 
 .input-field input::placeholder {
   color: #b3b6b7;
   font-weight: 400;
-
-  font-size: 1rem;
-  top: 50%;
-  left: 50%;
-  font-family: 'Segoe UI', sans-serif;
-
   font-size: 1.05rem;
 
   
-
 }
 
 p {
@@ -159,7 +127,7 @@ p {
   text-align: left;
   text-decoration: none;
   color: black;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 500;
   margin-bottom: 4px;
   padding-left: 7px;
@@ -170,7 +138,7 @@ a {
   display: center;
   text-align: right;
   color: black;
-  font-size: 13px;
+  font-size: 0.9rem;
   transition: 0.3s;
   margin-bottom: 50px;
   font-weight: 400;
@@ -182,24 +150,23 @@ a:hover {
 
 .btn {
   display: block;
-  width: 191px;
-  height: 44px;
+  width: 201px;
+  height: 47px;
   border-radius: 12px;
   outline: none;
   border: none;
-  font-size: 1.0625rem;
+  font-size: 1.18rem;
   background-color: #01559c;
   color: white;
+
   font-weight: 400;
   margin: 60px auto;
   cursor: pointer;
   transition: 0.5s;
   box-shadow: 4px 4px 6px #b1b0b0;
-  margin-bottom: 15px;
-  margin-top: 40px;
-  font-family: 'Segoe UI', sans-serif;
+  margin-bottom: 13px;
+  margin-top: 22px;
 }
-
 .btn:hover {
   background-color: white;
   color: #01559c;
@@ -226,7 +193,4 @@ background-color: white;
 .inputtwo small .noterror {
   text-align: left;
 display: none;
-
 }
-
-

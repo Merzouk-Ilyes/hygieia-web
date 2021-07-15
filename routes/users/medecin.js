@@ -5,5 +5,6 @@ const router =express.Router()
 
 
 router.get('/list',medecinControler.getList);
+router.get('/medicalFile',medecinControler.getMedicalFile); 
 
 module.exports = router ; 

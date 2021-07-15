@@ -235,6 +235,7 @@ const postDeleteAccount = (req, res, next) => {
 };
 
 
+
 const getData = (req,res,next) => {
 
   Admin.findOne({ where: { email: req.body.email } }).then((admin) => {
@@ -367,6 +368,7 @@ const logout = (req,res,next) => {
   res.cookie('jwt' ,'' ,{maxAge:1})
   return res.redirect("/users/login")
 };
+
 module.exports = {
   
   postUpdate,

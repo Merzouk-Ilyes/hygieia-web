@@ -1,12 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="/css/medicalfile/medicalfile.css" />
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
+  />
+    <title>Dossier Médical</title>
 </head>
 <body>
+    <div class="b-container">
+        <div class="h-container">
+          <div class="i-item-active" id="item1">
+              <h3>Bibliographie</h3>
+              <div class="sub-container"></div>
+          </div>
+          <div class="i-item" id="item2">
+            <h3>A.personnelles</h3>
+            <div class="sub-container"></div>
+        </div>
+        <div class="i-item" id="item3">
+            <h3>A.MEDICO-chirugical</h3>
+            <div class="sub-container"></div>
+        </div>
+        <div class="i-item" id="item4">
+            <h3>Examen médicaux</h3>
+            <div class="sub-container"></div>
+        </div>
+        </div>
+            <div class="row1">
+                <div class="text1">
+                    Dossier médical du patient : 
+                </div>
+                <div class="nameDossier">
+                  <%= dataB.Firstname %>
+                  <%= dataB.Lastname %>
+                </div>
+                <div class="typeDossier">
+                  ( <%= dataB.Role %> )
+             
+                </div>
+            </div>
     
+
+            <div class="w-container">
+
+                <div class="bio-container">
+                 <div class="info">
+                     <div class="row2">
+                         <div class="titre">Nom </div>
+                         <div class="valeur"> <%= dataB.Lastname %></div>
+                     </div>
+                     <div class="row2">
+                        <div class="titre">Prénom :</div>
+                        <div class="valeur"> <%= dataB.Firstname %></div>
+                    </div>
+                    <div class="row2">
+                        <div class="titre">née le :</div>
+                        <div class="valeur"><%= dataB.Birthday.toString().substring(0,15) %></div>
+                    </div>
+                    <div class="row2">
+                        <div class="titre">Adresse :</div>
+                        <div class="valeur"><%= dataB.Wilaya %></div>
+                    </div>
+                    <div class="row2">
+                        <div class="titre">Situation familiale : </div>
+                        <div class="valeur"><%= dataB.Situation %></div>
+                    </div>
+                    <div class="row2">
+                        <div class="titre">Téléphone :</div>
+                        <div class="valeur"><%= dataB.Phonenumber %></div>
+                    </div>
+                    <div class="row2">
+                        <div class="titre">Sexe :</div>
+                        <div class="valeur"><%= dataB.Sexe %></div>
+                    </div>
+                    <div class="row2">
+                        <div class="titre">Groupe sanguin :</div>
+                        <div class="valeur"><%= dataB.Bloodgroup %></div>
+                    </div>
+                    
+
+
+                 </div>
+                 <div class="info2">
+                    <div class="row2">
+                        <div class="titre">N dossier :</div>
+                        <div class="valeur"><%= dataB.IdPatient %></div>
+                    </div>
+                    <div class="row2">
+                        <div class="titre">N sécurité social :</div>
+                        <div class="valeur"><%= dataB.NSS %></div>
+                    </div>
+                    <img src= "<%=dataB.Picture %>"></img>
+                 </div>
+                </div>
+
+                <div class="title-container" id="place1">
+                    <p >Bibliographie</p></div>
+
+
+                    <div class="ant-container">
+                        <div class="title2-container"id="place2">
+                            <p >Antécédent</p>
+                   
+                        </div>
+                        <div class="row1-ant">
+                        <div class="titre">
+                            Intoxication : 
+                        </div>
+
+                            <div>
+
+                                <table class="table-consulter-1">
+                                    <tr>
+                                      <th>Type</th>
+                                      <th>Degré</th>
+                                    </tr>
+                                    
+                                    <% for (var i = 0; i < dataC.length; i++) { %>
+                                      <tr>
+                                        <td><%= dataC[i].name_intoxication %></td>
+                                        <td><%= dataC[i].degree_intoxication %></td>            
+                                    </tr>
+                                    <% } %>
+
+                                  </table>
+                          
+                        </div>
+                        </div>
+                        <div class="row1-ant">
+                            <div class="titre">
+                               Tabacs :
+                            </div>
+                            <div class="info-column">
+                                <div class="valeur">
+                                    A fumer : 
+                                    <span class="value"><% if (dataB.Smoke == 0) { %>
+                                      Non                                      
+                                      <% } else { %>
+                                      Oui
+                                      <% } %>
+                                      </span>
+                                  </div>
+                                  <div class="valeur">
+                                      à chiquer  
+                                      <span class="value"><% if (dataB.Chiquer == 0) { %>
+                                        Non                                      
+                                        <% } else { %>
+                                        Oui
+                                        <% } %></span>
+                                    </div>
+                                    <div class="valeur">
+                                        à prise : 
+                                        <span class="value"><% if (dataB.Token == 0) { %>
+                                          Non                                      
+                                          <% } else { %>
+                                          Oui
+                                          <% } %></span>
+                                      </div>
+                                      <div class="valeur">
+                                        ancien fumeur :
+                                        <span class="value">
+
+                                          <% if (dataB.Smoked == 0) { %>
+                                            Non                                      
+                                            <% } else { %>
+                                            Oui
+                                            <% } %>
+                                        </span> 
+                                      </div>
+                            </div>
+                            <div class="info-column">
+                                <div class="valeur">
+                                    Nombre de cigarette /j : 
+                                    <span class="value">    <%= dataB.Cigarette %></span>
+                                  </div>
+                                  <div class="valeur">
+                                    Nombre de boites /j : 
+                                    <span class="value"><%= dataB.Boxchique %></span>
+                                    </div>
+                                    <div class="valeur">
+                                        Nombre de boites /j :
+                                        <span class="value"><%= dataB.Boxtoken %></span>
+                                      </div> 
+                            </div>
+                            <div class="info-column2">
+                                <div class="valeur">
+                                    age de la prise : <span class="value">
+                                      <%= dataB.Ageoftoken %>
+
+                                    </span> 
+                                  </div>
+                                  <div class="valeur">
+                                    période : <span class="value">          <%= dataB.duration %></span>
+                                    </div>  
+                            </div>
+                        </div>
+                        <div class="row2-ant">
+                            <div class="titre">
+                               Alcool :
+                               <span class="value2">  <% if (dataB.alcohol == 0) { %>
+                                Non                                      
+                                <% } else { %>
+                                Oui
+                                <% } %></span>
+                            </div>
+                        </div>
+                        <div class="row2-ant">
+                            <div class="titre">
+                               Médicament :
+                               <span class="value2">oui</span>
+                            </div>
+                        </div>
+                        <div class="row2-ant">
+                            <div class="titre">
+                               Autre :
+                               <% if (dataB.other == "Rien ") { %>
+                                /                                     
+                                <% } else { %>
+                                  
+                                <% } %>
+                              
+                            </div>
+                        </div>
+                       </div>
+                       <div class="antm-container">
+                        <div class="title2-container" id="place3">
+                            <p >Antécédant Médico-chirurgicaux</p>
+                        </div>
+                        <div>
+                            <div class="info3">
+                                <div class="titre">
+                                    affection congénitale :
+                                </div>
+                                <table class="table-antm1">
+                                    <tr>
+                                      <th>Type</th>
+                                      <th>Date finie</th>
+                                    </tr>
+                                    <tr>
+                                      <td>Jill</td>
+                                      <td>Smith</td>
+                                   
+                                    </tr>
+                                    <tr>
+                                      <td>Eve</td>
+                                      <td>Jackson</td>
+                                
+                                    </tr>
+                                  </table>
+                            </div> 
+                    </div>
+                    <div>
+                        <div class="info3">
+                            <div class="titre">
+                                Maladie générales :
+                            </div>
+                            <table class="table-antm1">
+                                <tr>
+                                  <th>Type</th>
+                                  <th>Date début</th>
+                                </tr>
+                                <tr>
+                                  <td>Jill</td>
+                                  <td>Smith</td>
+                               
+                                </tr>
+                                <tr>
+                                  <td>Eve</td>
+                                  <td>Jackson</td>
+                            
+                                </tr>
+                              </table>
+                        </div>
+                        
+                  
+                </div>
+                <div>
+                    <div class="info3">
+                        <div class="titre">
+                            Intervention chirurgicales  :
+                        </div>
+                        <table class="table-antm1">
+                            <tr>
+                              <th>Description</th>
+                              <th>Date</th>
+                            </tr>
+                            <tr>
+                              <td>Jill</td>
+                              <td>Smith</td>
+                           
+                            </tr>
+                            <tr>
+                              <td>Eve</td>
+                              <td>Jackson</td>
+                        
+                            </tr>
+                          </table>
+                    </div>
+                    
+              
+            </div>
+            <div>
+                <div class="info3">
+                    <div class="titre">
+                        Allergie médical :
+                    </div>
+                    <table class="table-antm1">
+                        <tr>
+                          <th>Nom</th>
+                  
+                        </tr>
+                        <tr>
+                          <td>Jill</td>
+             
+                       
+                        </tr>
+                     
+                      </table>
+                </div>
+       
+          
+        </div>
+
+                       
+       
+                    
+                       </div>
+                       <button class="btn"  id="btn">Modifier</button>
+                      
+                
+
+            </div>
+     
+    </div>
+   
 </body>
+<script src="/js/medicalfile.js"></script>
+
 </html>
