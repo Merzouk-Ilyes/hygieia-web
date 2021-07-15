@@ -4,16 +4,83 @@ const passwordHash = require("password-hash");
 const jwt = require("jsonwebtoken");
 const { db } = require("../util/db");
 const nodemailer  = require('nodemailer');
+const fs = require('fs');
+const ejs = require('ejs');
 
 
 
 exports.getLogin = (req, res, next) => {
-  res.render("auth/index", { error: "" });
-};
+  
+  if(req.headers.cookie == null ) {
+    res.render("auth/index", {error : ""}); 
+    return; 
+  }
+  const rawCookies = req.headers.cookie.split('; ');
+  const parsedCookie = rawCookies[0].split('=')[1];
+  // user not connected ; 
+  if(parsedCookie == null ) {
+    res.render("auth/index", {error : ""}); 
+    return; 
+  }
+  // user connected ;
 
+  jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
+    (err,decodedToken)=> {
+      console.log(decodedToken);
+    if(decodedToken.role == "administrateur")  {
+    // res.redirect('/users/home'); admin home 
+    res.redirect('/users/admin/gestion');
+      }else if (decodedToken.role == "médecin") {
+      // medecin home provisoire ; 
+          res.redirect('/users/medecin/list'); 
+    }else if(decodedToken.role =="rh" ) {
+      // redirect home rh 
+          res.send('<h1> interface rh</h1>'); 
+    }else if(decodedToken.role = "aide-soignant") {
+      // redirect home aide 
+      res.send('<h1> interface aide soignant</h1>'); 
+    }else {
+      res.render("auth/index", {error : ""}); 
+    }
+        if (err) {
+            console.log('error',err); 
+            res.render("auth/index", {error : ""}); 
+        }}); 
+};
 exports.getForget = (req, res, next) => {
   res.render("auth/forgot");
 };
+exports.getHome = (req,res,next) => {
+  if(req.headers.cookie == null ) {
+    res.render("auth/index", {error : ""}); 
+    return; 
+  }
+  const rawCookies = req.headers.cookie.split('; ');
+  const parsedCookie = rawCookies[0].split('=')[1];
+  // user not connected ; 
+  if(parsedCookie == null ) {
+    res.render("auth/index", {error : ""}); 
+    return; 
+  }
+  // user connected ;
+  jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
+    (err,decodedToken)=> {
+      console.log(decodedToken);
+    if(decodedToken.role == "administrateur")  {
+      res.redirect('/users/admin/gestion'); 
+    }else if (decodedToken.role == "médecin") {
+          res.redirect('/users/medecin/list'); 
+    }else if(decodedToken.role =="rh" ) {
+          res.send('<h1> interface rh</h1>'); 
+    }else if(decodedToken.role = "aide-soignant") {
+      res.send('<h1> interface aide soignant</h1>'); 
+    }else {
+      res.redirect('/users/login'); 
+    }
+        if (err) {
+            console.log('error',err); 
+        }}); 
+}
 
 // cookie will expire in 3 days
 const maxAge = 3 * 24 * 60 * 60;
@@ -24,21 +91,21 @@ exports.login = (req, res) => {
     Account.findOne({ where: { email: req.body.email } }).then((account) => {
       account.active = false;
       account.save();
-      return res.render("auth/index", {
-        error:
-          "votre compte a été désactivé, contactez l'administrateur pour le réactiver",
-      });
+      return res.status(200).json({
+        error: "votre compte a été désactivé",
+        });
     });
   }
   Account.findOne({ where: { email: req.body.email } })
     .then((account) => {
       if (account === null) {
-        res.render("auth/index", {
-          error: "Email incorrect!",
+       return res.status(200).json({
+        error: "Email incorrect!",
         });
       } else {
         if (account.active) {
-          let result = passwordHash.verify(req.body.password, account.Password);
+         let result = passwordHash.verify(req.body.password, account.Password);
+          // let result = req.body.password == account.Password ; 
           if (result) {
             // check if it's a normal user (médecin ,aide-soignant ou RH)
             User.findOne({ where: { Email: account.Email } })
@@ -47,8 +114,10 @@ exports.login = (req, res) => {
                   //this is a normal user
                   const token = jwt.sign(
                     {
+                      firstname:user.Firstname,
                       email: user.Email,
                       IdUser: user.IdUser,
+                      role: user.Role, 
                     },
                     process.env.JWT_SECRET_CODE,
                     { expiresIn: maxAge },
@@ -61,11 +130,9 @@ exports.login = (req, res) => {
                           maxAge: maxAge * 1000,
                         });
                         //here happens the redirection
-                        res.status(200).json({
-                          message:
-                            "Authentication successful! you are " + user.Role,
-                          token: token,
-                        });
+                        return res.status(200).json({
+                          message: "Authentication successful!",
+                          });
                       }
                     }
                   );
@@ -76,8 +143,10 @@ exports.login = (req, res) => {
                       if (admin !== null) {
                         const token = jwt.sign(
                           {
+                            firstname:admin.Firstname,
                             email: admin.Email,
                             IdAdmin: admin.IdAdmin,
+                            role: "administrateur",
                           },
                           process.env.JWT_SECRET_CODE,
                           { expiresIn: maxAge },
@@ -89,12 +158,9 @@ exports.login = (req, res) => {
                                 httpOnly: true,
                                 maxAge: maxAge * 1000,
                               });
-
-                              res.status(200).json({
-                                message:
-                                  "Authentication successful! ur an admin",
-                                token: token,
-                              });
+                              return res.status(200).json({
+                                message: "Authentication successful!",
+                                });
                             }
                           }
                         );
@@ -107,14 +173,14 @@ exports.login = (req, res) => {
           } else {
             cpt = ++cpt;
             console.log("cpt ==>>", cpt);
-            res.render("auth/index", {
+            return res.status(200).json({
               error: "Mot de passe incorrect",
-            });
+              });
           }
         } else {
-          res.render("auth/index", {
-            error: "Votre compte est bloqué",
-          });
+          return res.status(200).json({
+            error: "Votre compte est désactivé",
+            });
         }
       }
     })
@@ -152,61 +218,84 @@ db.query("SELECT * FROM ACCOUNT WHERE Email = ?",
      
     }else {
       db.query("UPDATE Account SET Password = ?   where Email = ? ",
-      [req.body.password2,"f.djellali@esi-sba.dz"],(err,result) =>{
+      [req.body.password2,req.body.email],(err,result) =>{
         console.log(err);
         return res.send({
           "message" :"success", 
           "error": "mot de passe changé avec succées", 
         });
       })
-
-
     }
   }
-
 }
 )
  }
 }
 exports.postForget = (req,res , next) => {
   const url = "http://localhost:3000";
-
   db.query("SELECT * FROM Account WHERE email = ?",[req.body.email],(err,result) => {
       if(err){
           console.log('error:',err);
       }else{
-          const email = req.body.email ; 
-          const token = jwt.sign(
-              {email},
-              process.env.JWT_SECRET_CODE,
-              { expiresIn: "3d" }
-            );      
-            var transporter = nodemailer.createTransport({
-              service: "gmail",
-              auth: {
-                user: process.env.HYGIEA_EMAIL,
-                pass: process.env.HYGIEA_EMAIL_PASSWORD,
-              },
-            }); 
-            var mailOptions = {
-              from: process.env.HYGIEA_EMAIL,
-              to: req.body.email,
-              subject: "Email de recuperation",
-              html: `
-              <h1>Please click on the given link  to activate your 
-              account</h1>
-              <form method="POST" action="${url}/users/Confirm?token=${token}">
-              <button type="submit"  name="token" value='${token}'>Confirmer</button>
-              </form>
-              `
-            };
-            transporter.sendMail(mailOptions, function (error, info) {
-              if (error) {
-                console.log(error);
-              } else {
-                  return res.forgetAlert.call();                  
-              }
-            });
+        if(result.length == 0) {
+       return res.status(200).json({
+            error : "ce compte n'éxiste pas" , 
+          }); 
+          // check if it's not a << patient >> 
+        } else {
+     db.query("Select * from patient where email = ? ",
+     [req.body.email],(err,result2)=> {
+       if(result2.length == 0) {
+        const email = req.body.email ; 
+        const token = jwt.sign(
+            {email},
+            process.env.JWT_SECRET_CODE,
+            { expiresIn: "3d" }
+          );      
+          const template = fs.readFileSync("views/mail/mailTemplate.ejs").toString();
+          const url = "http://localhost:3000/";
+          const html = ejs.render(template,{
+              "name": req.body.email, 
+              "lastname":"", 
+              "title": "Mail de récupération",
+              "text": "Quelqu'un a demandé que le mot de passe soit réinitialisé pour votre compte , S'il s'agit d'une erreur, ignorez simplement cet e-mail et rien ne se passera." , 
+              "action": url+"users/Confirm?token="+token, 
+              "value" : token,
+          });
+          // create transporter
+          var transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+              user: process.env.HYGIEA_EMAIL,
+              pass: process.env.HYGIEA_EMAIL_PASSWORD,
+            },
+          });
+      
+          // adding mailOptions
+          var mailOptions = {
+            from: process.env.HYGIEA_EMAIL,
+            to: req.body.email,
+            subject: "Email de récupération",
+            html: html, 
+          };
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+            } else {
+            return  res.status(200).json({
+                message : "Un mail de récupération vous a été envoyé" , 
+              });
+            }
+          });
+       }else {
+        res.status(200).json({
+          error : "Ce compte n'éxiste pas" , 
+        })
+       }
+     }
+     )
+        }
+        
           
       }
         
@@ -221,8 +310,6 @@ return res.render('auth/resetPassword',{token : token});
 exports.postReset = (req,res, next)=> {
 
   const token = req.query.token;
-  console.log(req.body.password); 
-  console.log(token)
   jwt.verify(token, process.env.JWT_SECRET_CODE,
       (err,decodedToken)=> {
           if (err) {

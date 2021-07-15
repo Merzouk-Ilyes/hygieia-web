@@ -1,0 +1,52 @@
+<div class="popupupdate">
+    <div class="blocker" onclick="hidePopupupdate()"></div>
+    <div class="bcontainer2">
+      <div class="container2">
+        
+        <div class="text">Modifier un compte</div>
+        <form action="#" >
+            <div class="data">
+              <label>Nom </label>
+              <input type="text" id="nomup"  required />
+              <small class="noterror">
+              </small>
+            </div>
+            <div class="data">
+              <label>Prénom </label>
+              <input type="text" id="prenomup"  required />
+              <small class="noterror">
+              </small>
+            </div>
+            <div class="data">
+              <label>Date de naissance </label>
+              <input type="date"  id="dateup" required />
+              <small class="noterror">
+              </small>
+            </div>
+            <div class="data">
+              <label>Lieu de naissance </label>
+              <input type="text"  id="lieuup" required />
+            </div>
+            <div class="data">
+              <label>Sexe </label>
+                <select id="sexeup">
+                  <option value="Homme">Homme</option>
+                  <option value="Femme">Femme</option>
+                </select>
+            </div>
+            <div class="data">
+              <label>Numéro de téléphone </label>
+              <input type="number" id="numeroup" required />
+              <small class="noterror">
+              </small>
+            </div>
+              <input type="hidden" id="roleInputup" />
+              <input type="hidden" id="emailup" required />
+          </form>
+        </div>
+        <div class="circle" id="circle"></div>
+      <div class="btn2">
+        <button type="submit" onclick="updatedatabtn()" id='modifier'> Modifier le compte</button>
+      </div>
+    </div>
+  </div>

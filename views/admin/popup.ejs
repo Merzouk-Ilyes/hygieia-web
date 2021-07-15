@@ -1,0 +1,81 @@
+
+    <div class="popup">
+      <div class="blocker" onclick="hidePopup()"></div>
+      <div class="bcontainer2">
+        <div class="container2">
+          
+          <div class="text">Ajouter un compte</div>
+          <form action="#" id="form">
+            <div class="data">
+              <label>Nom </label>
+              <input type="text" id="nom"  required />
+              <small class="noterror">
+              </small>
+            </div>
+            <div class="data">
+              <label>Prénom </label>
+              <input type="text" id="prenom"  required />
+              <small class="noterror">
+              </small>
+            </div>
+            <div class="data">
+              <label>Date de naissance </label>
+              <input type="date"  id="date" required />
+              <small class="noterror">
+              </small>
+            </div>
+            <div class="data">
+              <label>Lieu de naissance </label>
+              <input type="text"  id="lieu" required />
+            </div>
+            <div class="data">
+              <label>Sexe </label>
+                <select id="sexe">
+                  <option value="Homme">Homme</option>
+                  <option value="Femme">Femme</option>
+                </select>
+            </div>
+            <div class="data">
+              <label>Numéro de téléphone </label>
+              <input type="number" id="numero" required />
+              <small class="noterror">
+              </small>
+            </div>
+            <div class="data">
+              <label>Role </label>
+              <select id="roleInput">
+                <option value="administrateur">administrateur</option>
+                  <option value="médecin">médecin</option>
+                  <option value="aide-soignant">aide-soignant</option>
+                  <option value="rh">rh</option>
+              </select>
+            </div>
+           
+            
+            <div class="data">
+              <label>Email</label>
+              <input type="email" id="email" required />
+              <small class="noterror">
+              </small>
+            </div>
+            <div class="data">
+              <label>Mot de passe</label>
+              <input type="text" id="mdp" required />
+              <small class="noterror">
+              </small>
+            </div>
+            <div class="data">
+              <label>Confirmer mot de passe</label>
+              <input type="text" id="confirmerMdp" required />
+              <small class="noterror">
+              </small>
+            </div>
+          </form>
+        </div>
+        <div class="circle" id="circle"></div>
+        <div class="btn2">
+          <button type="submit" form="form" id="ajouterBtn">Ajouter le compte</button>
+        </div>
+      </div>
+    </div>
+  
