@@ -2,6 +2,11 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const db = require("../util/db").db;
 
+
+exports.getUpdateMedicalFile = (req,res,next)=> {
+res.render('medicalfile/updateMedicalFile');
+
+}
 exports.getMedicalFile = (req,res,next)=> {
   
   console.log(req.query.id);
@@ -55,7 +60,7 @@ exports.getList = (req, res, next) => {
     (err,decodedToken)=> {
       console.log(decodedToken);
     
-   if (decodedToken.role == "medecin") {
+   if (decodedToken.role == "médecin") {
       // medecin home provisoire ; 
       db.query("Select * from patient",(err,result)=> {
         if(err) {
@@ -63,7 +68,7 @@ exports.getList = (req, res, next) => {
     
         }else {
           res.render("medicalfile/list", { listitems: result });
-    
+  
         }
       })
     }else {
