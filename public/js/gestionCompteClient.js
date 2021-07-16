@@ -62,7 +62,6 @@ show.addEventListener("click", () => {
 function hidePopup() {
   popup.classList.remove("open");
 }
-
 document.querySelector(".container2").addEventListener("scroll", function (e) {
   if (document.body.scrollTop < 10)
     document.getElementById("circle").style.opacity = 0;
@@ -198,7 +197,7 @@ function checkInputs() {
         return;
       } 
       
-         document.getElementById('alertId').classList.add('showAlert');
+      document.getElementById('alertId').classList.add('showAlert');
 
       setTimeout(function(){
       document.getElementById('alertId').classList.remove('showAlert');
@@ -208,3 +207,127 @@ function checkInputs() {
     },
   });
 }
+
+//Form up date validation
+const nomup = document.getElementById("nomup");
+const prenomup = document.getElementById("prenomup");
+const numeroup = document.getElementById("numeroup");
+const roleInputup = document.getElementById("roleInputup");
+const sexeup = document.getElementById("sexeup");
+const dateup = document.getElementById("dateup");
+const lieuup = document.getElementById("lieuup");
+const emailup = document.getElementById("emailup");
+
+const popupupdate = document.querySelector(".popupupdate");
+function showPopup(email){
+  var data = {
+    email :email,
+  }
+  $.ajax({
+    method: "POST",
+    url: "/users/admin/update",
+    contentType: "application/json",
+    data: JSON.stringify(data),
+    success: function(user){
+      nomup.value=user.firstname;
+      prenomup.value=user.lastname;
+      numeroup.value=user.phonenumber;
+      roleInputup.value=user.role;
+      sexeup.value=user.sexe;
+      dateup.value=user.birthday;
+      lieuup.value=user.birthplace;
+      emailup.value=user.email;
+      popupupdate.classList.add("open");
+     
+    },
+  });
+ 
+}
+function hidePopupupdate() {
+  popupupdate.classList.remove("open");
+}
+
+
+function updatedatabtn(){
+  checkInputsup()
+}
+function checkInputsup() {
+
+  if (nomup.value.length < 4) {
+    const parent = nomup.parentElement;
+    const small = parent.querySelector("small");
+    small.className = "";
+    small.innerText = "Nom doit être >= 4";
+    return;
+  } else {
+    const parent = nomup.parentElement;
+    const small = parent.querySelector("small");
+    small.className = "noterror";
+    small.innerText = null;
+  }
+  if (prenomup.value.length < 4) {
+    const parent = prenomup.parentElement;
+    const small = parent.querySelector("small");
+    small.className = "";
+    small.innerText = "Prénom doit être >= 4";
+    return;
+  } else {
+    const parent = prenomup.parentElement;
+    const small = parent.querySelector("small");
+    small.className = "noterror";
+    small.innerText = null;
+  }
+  if (dateup.value.length ==0 || dateup.value == null) {
+    const parent = dateup.parentElement;
+    const small = parent.querySelector("small");
+    small.className = "";
+    small.innerText = "Date de naissance n'éxiste pas" ;
+    return;
+  } else {
+    const parent = dateup.parentElement;
+    const small = parent.querySelector("small");
+    small.className = "noterror";
+    small.innerText = null;
+  }
+  if (numeroup.value.length < 9) {
+    const parent = numeroup.parentElement;
+    const small = parent.querySelector("small");
+    small.className = "";
+    small.innerText = "Numéro incorrecte.";
+    return;
+  } else {
+    const parent = numeroup.parentElement;
+    const small = parent.querySelector("small");
+    small.className = "noterror";
+    small.innerText = null;
+  }
+  
+  $.ajax({
+    method: "POST",
+    url: "/users/admin/modifier",
+    data: {
+      "firstname":prenomup.value,
+      "lastname":nomup.value,
+      "birthday":dateup.value,
+      "birthplace":lieuup.value,
+      "sexe":sexeup.value,
+      "role":roleInputup.value,
+      "phone":numeroup.value,
+      "email":emailup.value,
+    },
+    success: function (update) {
+      document.getElementById('alertup').classList.add('showAlert');
+
+      setTimeout(function(){
+      document.getElementById('alertup').classList.remove('showAlert');
+      }, 15000);
+      document.location.reload()
+
+    },
+  }); 
+}
+
+
+
+
+

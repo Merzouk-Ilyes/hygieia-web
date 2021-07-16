@@ -2,6 +2,12 @@ const express = require('express')
 const router =express.Router()
 const adminController =require('../../controllers/admin');
 
+//POST data of account 
+router.post("/update",adminController.getData)
+
+//POST updata an account 
+router.post("/modifier",adminController.postUpdate)
+
 // executing add  controller POST request (postAdd)
 router.post("/add", adminController.addUser);
 
@@ -18,6 +24,8 @@ router.get("/gestion",adminController.getGestion)
 
 //POST request to delete an account 
 router.post("/delete",adminController.postDeleteAccount)
+
+
 
 
 module.exports = router ;

@@ -6,11 +6,15 @@ const { db } = require("../util/db");
 const nodemailer  = require('nodemailer');
 const fs = require('fs');
 const ejs = require('ejs');
+exports.logOut = (req,res,next)=> {
+  res.clearCookie("jwt"); 
+  return res.status(200).json({
+    msg: "Disconnected",
+    });
+}
 
 
-
-exports.getLogin = (req, res, next) => {
-  
+exports.getLogin = (req, res, next) => {  
   if(req.headers.cookie == null ) {
     res.render("auth/index", {error : ""}); 
     return; 
@@ -23,16 +27,14 @@ exports.getLogin = (req, res, next) => {
     return; 
   }
   // user connected ;
-
   jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     (err,decodedToken)=> {
       console.log(decodedToken);
     if(decodedToken.role == "administrateur")  {
     // res.redirect('/users/home'); admin home 
-    res.redirect('/users/admin/gestion');
+ return   res.redirect('/users/admin/gestion');
       }else if (decodedToken.role == "médecin") {
-      // medecin home provisoire ; 
-          res.redirect('/users/medecin/list'); 
+   return     res.redirect('/users/medecin/list'); 
     }else if(decodedToken.role =="rh" ) {
       // redirect home rh 
           res.send('<h1> interface rh</h1>'); 
@@ -69,7 +71,7 @@ exports.getHome = (req,res,next) => {
     if(decodedToken.role == "administrateur")  {
       res.redirect('/users/admin/gestion'); 
     }else if (decodedToken.role == "médecin") {
-          res.redirect('/users/medecin/list'); 
+     res.redirect('/users/medecin/list'); 
     }else if(decodedToken.role =="rh" ) {
           res.send('<h1> interface rh</h1>'); 
     }else if(decodedToken.role = "aide-soignant") {
@@ -104,8 +106,16 @@ exports.login = (req, res) => {
         });
       } else {
         if (account.active) {
-         let result = passwordHash.verify(req.body.password, account.Password);
-          // let result = req.body.password == account.Password ; 
+
+         
+          
+
+          
+          let result = req.body.password == account.Password ; 
+         if(!result ) {
+          result = passwordHash.verify(req.body.password, account.Password);
+         }
+
           if (result) {
             // check if it's a normal user (médecin ,aide-soignant ou RH)
             User.findOne({ where: { Email: account.Email } })
