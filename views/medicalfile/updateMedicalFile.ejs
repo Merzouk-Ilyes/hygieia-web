@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="/css/medicalfile/medicalfile.css" />
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
     <link rel="stylesheet" href="/css/medicalfile/updatemedicalfile.css" />
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,10 +13,125 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
   />
-  <title>Document</title>
+  <title>Modifier dossier médical</title>
 </head>
-<body>
-    <div class="h-container">
+<style>
+button {
+  border: none;
+}
+
+     .vertical-nav {
+  
+
+       margin-top: 115px;
+  min-width: 17rem;
+  width: 17rem;
+  height: 90vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  
+   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1); 
+  transition: all 0.4s;
+}
+.page-content {
+  width: calc(100% - 17rem);
+  margin-left: 17rem;
+  transition: all 0.4s;
+} 
+
+#sidebar.active {
+  margin-left: -17rem;
+}
+
+#content.active {
+  width: 100%;
+  margin: 0;
+}
+.fa-bars {
+  background-color: #F5F5F5;
+
+}
+.separator {
+  margin: 3rem 0;
+  border-bottom: 1px dashed #fff;
+}
+.btn-nav {
+
+  display: flex; 
+  align-self: flex-start;
+  
+}
+
+.spa {
+  margin-left: 17em;
+}
+.text-uppercase {
+  letter-spacing: 0.1em;
+}
+.text-gray {
+  color: #aaa;
+}
+.nav-link{
+    text-transform: capitalize;
+}
+.nav-link:hover{
+    background:#f3f2f2;
+}
+.text-primary{
+    color:#7579e7 !important;
+}
+@media (max-width: 768px) {
+  #sidebar {
+    margin-left: -17rem;
+  }
+  #sidebar.active {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+  #content {
+    width: 100%;
+    margin: 0;
+  }
+  #content.active {
+    margin-left: 17rem;
+    width: calc(100% - 17rem);
+  }
+}
+
+.row-h {
+  
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: row;
+}
+
+</style>
+<script>
+    
+   
+
+    $(function() { 
+
+  $('#sidebarCollapse').on('click', function() {
+    $('#sidebar, #content').toggleClass('active');
+    $('.alert').addClass("show");
+         
+
+  });
+});
+
+</script>
+<body id="allb">
+  
+    <!-- Vertical navbar -->
+    <div class="row-h">
+      <button id="sidebarCollapse" type="button" class="btn-nav" style="margin-right: 20px;"><i class="fa fa-bars fa-2x"></i></button>
+      <img src="/assets/logo.png" height="70px" width="120px" style="margin-right: 8px;"/>
+    </div>
+
+  <%- include('./popupupdate.ejs')%>
+    <div class="h-container2" id="all">
         <div class="i-item-active" id="item1">
             <h3>Bibliographie</h3>
             <div class="sub-container"></div>
@@ -31,106 +149,485 @@
           <div class="sub-container"></div>
       </div>
       </div>
-      <div class="row2">
+      <div class="row3">
         <div class="text1">
-            Dossier médical du patient : 
+            Dossier médical du patient : &nbsp; 
         </div>
         <div class="nameDossier">
-      DJELLALI
-        FOUAD
+          <%= data.Firstname %>
+          <%= data.Lastname %>
+        &nbsp;  
         </div>
         <div class="typeDossier">
-      Etudiant
+        (  <%= data.Role %> ) 
         </div>
     </div>
-
-
     <div class="w-container1">
         <div class="w-container2">
-            <div class="re-title"></div>
+            <div class="re-title">
+                Biographie
+            </div>
             <div class="column1">
-                <div class="row">
+                <div class="row2">
                     <div class="titre">N sécurité social</div>
                     <div class="data">
-                        <input type="text" id="nom"  required />
+                      <input type="text" id="nom" value="<%= data.NSS %>" required readonly />
                       </div>
                   </div>
-                  <div class="row">     
+                  <div class="row2">     
                     <div class="titre">N dossier :</div>
                     <div class="data">
-                        <input type="text" id="nom"  required />
+                      <input type="text" id="nom" value="<%= data.IdPatient %>" required readonly />
+
     
                       </div>
                   </div>
-                  <div class="row">
+                  <div class="row2">
                     <div class="titre">Nom : </div>
                 
                     <div class="data">
               
-                        <input type="text" id="nom"  required />
+                        <input type="text" id="nom" value="<%= data.Lastname %>" required readonly />
                      
                       </div>
                   </div>
-                  <div class="row">
+                  <div class="row2">
                     <div class="titre">Prénom :</div>
                     <div class="data">
-                        <input type="text" id="nom"  required />
+                        <input type="text" id="prenom" value="<%= data.Firstname %>" required readonly/>
                      
                       </div>
                   </div>
-                  <div class="row">
+                  <div class="row2">
                     <div class="titre">Date de naissance :</div>
                
                     <div class="data">
-                        <input type="text" id="nom"  required />
+                        <input type="text" id="datedenaissance" value="<%= data.Birthday.toString().substring(0,16) %>"  required readonly/>
                      
                       </div>
                   </div>
-                  <div class="row">
+                  <div class="row2">
                     <div class="titre">Adresse :</div>
          
                     <div class="data">
-                        <input type="text" id="nom"  required />
+                        <input type="text" id="nom"  value="<%= data.Address %>" required  readonly/>
                      
                       </div>
                   </div>
-                  <div class="row">
+                  <div class="row2">
                     <div class="titre">Situation familiale : </div>
                     <div class="data">
-                        <input type="text" id="nom"  required />
+                      <input type="text" id="nom"  value="<%= data.Situation %>" required  readonly/>
                      
                       </div>
                   </div>
-                  <div class="row">
+                  <div class="row2">
                     <div class="titre">Numéro de téléphone :</div>
+
             
                     <div class="data">
-                        <input type="text" id="nom"  required />
+                      <input type="text" id="nom"  value="<%= data.Phonenumber %>" required readonly/>
+
                      
                       </div>
                   </div>
-                  <div class="row">
+                  <div class="row2">
                     <div class="titre">Sexe : </div>
                     <div class="titre"></div>
                     <div class="data">
-                        <input type="text" id="nom"  required />
-                     
+                      <input type="text" id="nom"  value="<%= data.Sexe %>" required readonly/>
                       </div>
                   </div>
-                  <div class="row">
+                  <div class="row2">
                     <div class="titre">Groupe sanguin : </div>
                     <div class="data">
-                        <input type="text" id="nom"  required />
+                      <input type="text" id="nom"  value="<%= data.Bloodgroup%>" required readonly/>
+
                       </div>
                     
                   </div>
             </div>
            
               
-            
-           
+        
         
         </div>
+        <div class="w-container22">
+            <div class="re-title2">
+                Antécédent personnelles
+            </div>
+            <div class="titre">Intoxication :</div>
+            <div class="row2">
+                <div class="data">
+                  <select  id="name-intoxication"  required>
+                    <option value="" selected disabled hidden>Choisir l'intoxication</option>
+
+                    <% for (var i = 0; i < intoxications.length; i++) { %>
+                      <option value="<%= intoxications[i].name_intoxication %>"><%= intoxications[i].name_intoxication %></option>
+                    <% } %>
+                   
+                   
+                  </select>
+                  </div>
+                  <div class="data2">
+                    <input type="text" id="degree-intoxication" placeholder="Degré" type="number" min="0" max="10"   required />
+                  </div>
+                  <div class="btn-add-into">
+                    <button type="button" class="btn btn-primary" id="btn-intoxication">Ajouter</button>
+
+                  </div>
+              </div>
+              <table id="myTable" class="table table-hover" style="width:90%">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Degré</th>
+                    <th scope="col-md-3">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for (var i = 0; i < intoxicationPatient.length; i++) { %>
+                    <tr>
+                      <td><%= i+1%></td>
+                      <td><%= intoxicationPatient[i].name_intoxication %></td>
+                      <td><%= intoxicationPatient[i].degree_intoxication %></td>    
+                      <td>
+                          <button type="button" class="btn btn-danger" id="btn-delete-intoxication" value="<%= intoxicationPatient[i].name_intoxication %>">Supprimer</button>
+                        </td>
+                             
+                  </tr>
+                  <% } %>
+                 
+            
+              
+                </tbody>
+              </table>
+
+
+              <div class="row-tabac">
+                <div class="titre">Tabacs :</div>
+                <div class="valeur">a fumer</div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input"  type="radio" name="fumer" id="a-fumer" value="true" <% if(data.Smoke == 1){ %> checked="checked" <% } %> />
+                    <label class="form-check-label" for="inlineRadio1">
+                        <div class="valeur">Oui</div>
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="fumer" id="inlineRadio2" value="false" <% if(data.Smoke == 0){ %> checked="checked" <% } %>>
+                    <label class="form-check-label" for="inlineRadio2">
+                        <div class="valeur">Non</div>
+                    </label>
+                  </div>
+              </div>
+              <div class="row-tabac2">
+                <div class="valeur">Nombre de cigarette par jour :</div>
+                <div class="data2">
+                    <input type="text" id="nombre-de-cigarette" value="<%= data.Cigarette %>"   required />
+                  </div>
+              </div>
+              <div class="row-tabac3">
+        
+                <div class="valeur">a Chiquer :</div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="chiquer" id="a-chiquer" value="option1" <% if(data.Chiquer == 1){ %> checked="checked" <% } %>>
+                    <label class="form-check-label" for="inlineRadio1">
+                        <div class="valeur">Oui</div>
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="chiquer" id="inlineRadio2" value="option2" <% if(data.Chiquer == 0){ %> checked="checked" <% } %>>
+                    <label class="form-check-label" for="inlineRadio2">
+                        <div class="valeur">Non</div>
+                    </label>
+                  </div>
+              </div>
+              <div class="row-tabac2">
+                <div class="valeur">Nombre de boite par jour : 		&nbsp;	&nbsp;	&nbsp;     </div>
+                <div class="data2">
+                    <input type="text" id="nombre-de-boite" value="<%= data.Boxchique %>"    required />
+                  </div>
+              </div>
+              <div class="row-tabac3">
+        
+                <div class="valeur">a prise :</div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="prise" id="a-prise" value="option1" <% if(data.Token == 1){ %> checked="checked" <% } %>>
+                    <label class="form-check-label" for="inlineRadio1" >
+                        <div class="valeur">Oui</div>
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="prise" id="inlineRadio2" value="option2" <% if(data.Token == 0){ %> checked="checked" <% } %>>
+                    <label class="form-check-label" for="inlineRadio2">
+                        <div class="valeur">Non</div>
+                    </label>
+                  </div>
+              </div>
+              <div class="row-tabac2">
+                <div class="valeur">Nombre de boite par jour : 		&nbsp;	&nbsp;	&nbsp;     </div>
+                <div class="data2">
+                    <input type="text" id="nombre-de-boite2" placeholder="Degré" value="<%= data.Boxtoken %>"   required />
+                  </div>
+              </div>
+              <div class="row-tabac2">
+                <div class="valeur">Age de prise  : 		&nbsp;	&nbsp;	&nbsp; 	&nbsp;	&nbsp;	&nbsp; 	&nbsp;	&nbsp;	&nbsp; 	&nbsp;	&nbsp;	&nbsp; 
+                		&nbsp;		&nbsp;		&nbsp;     
+                
+                </div>
+                <div class="data2">
+                    <input type="text" id="age-de-prise" value="<%= data.Ageoftoken %>"    required />
+                  </div>
+              </div>
+              <div class="row-tabac3">
+        
+                <div class="valeur">ancien fumeur:</div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ancien-fumeur" id="ancien-fumeur" value="option1" <% if(data.Smoked == 1 ){ %> checked="checked" <% } %>>
+                    <label class="form-check-label" for="ancien-fumeur">
+                        <div class="valeur">Oui</div>
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ancien-fumeur" id="inlineRadio2" value="option2" <% if(data.Smoked == 0){ %> checked="checked" <% } %>>
+                    <label class="form-check-label" for="ancien-fumeur">
+                        <div class="valeur">Non</div>
+                    </label>
+                  </div>
+              </div>
+              <div class="row-tabac2">
+                <div class="valeur">période  : 		&nbsp;	&nbsp;	&nbsp; 	&nbsp;	&nbsp;	&nbsp; 	&nbsp;	&nbsp;	&nbsp; 	&nbsp;	&nbsp;	&nbsp; 
+                		&nbsp;		&nbsp;		&nbsp;     
+                        &nbsp;		&nbsp;		&nbsp;  
+                        &nbsp;		
+                
+                </div>
+                <div class="data2">
+                    <input type="text" id="duration" value="<%= data.duration %>"  required />
+                  </div>
+              </div>
+              <div class="row-tabac">
+                <div class="titre">Alcool :</div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="a-alcool" id="a-alcool" value="option1" <% if(data.alcohol == 1){ %> checked="checked" <% } %>>
+                    <label class="form-check-label" for="inlineRadio1">
+                        <div class="valeur">Oui</div>
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="a-alcool" id="inlineRadio2" value="option2" <% if(data.alcohol == 0){ %> checked="checked" <% } %>>
+                    <label class="form-check-label" for="inlineRadio2">
+                        <div class="valeur">Non</div>
+                    </label>
+                  </div>
+              </div>
+              <button type="button" onclick="return false"  class="btn btn-primary" id="modifier-info">Modifer</button>
+ 
+          </div>  
+          <div
+           class="w-container22">
+           <div class="re-title3">
+            Antécédent Médico-chirugical
+        </div>
+           <div class="titre">affection congénitale :</div>
+           <div class="row2">
+            <div class="data2">
+              <select  id="name-affection"  required>
+                <option value="" selected disabled hidden>Choisir l'affection congénitale</option>
+
+                <% for (var i = 0; i < congenitalconditions.length; i++) { %>
+                  <option value="<%= congenitalconditions[i].name_CCondition %>"><%= congenitalconditions[i].name_CCondition %></option>
+                <% } %>
+              </select>
+              </div>
+        
+                 <div class="data2">
+
+                   <select id="degre-affection" placeholder="Degré"   required >
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                   </select>
+                 </div>
+                 <div class="btn-add-into">
+                   <button type="button" class="btn btn-primary" id="btn-add-affection">Ajouter</button>
+                 </div>
+             </div>
+             <table class="table table-hover" style="width:90%" id="myTable2">
+               <thead>
+                 <tr>
+                   <th scope="col">#</th>
+                   <th scope="col">Nom</th>
+                   <th scope="col">finie</th>
+                   <th scope="col-md-3">Action</th>
+                 </tr>
+               </thead>
+               
+               <tbody>
+                <% for (var i = 0; i < havecongenitalconditionPatient.length; i++) { %>
+                  <tr>
+                    <td><%= i+1%></td>
+                    <td><%= havecongenitalconditionPatient[i].name_CCondition %></td>
+                  
+                    <td>  <% if(havecongenitalconditionPatient[i].ended == 1){ %> Oui <% } else { %> Non <% } %></td>
+                    <td>
+                        <button type="button" class="btn btn-danger" id="btn-delete-affection" value="<%= havecongenitalconditionPatient[i].name_CCondition%>">Supprimer</button>
+                      </td>
+                           
+                </tr>
+                <% } %>
+              </tbody>
+             </table>
+             <div class="titre">Maladies générales :</div>
+               <div class="titre"></div>
+               <div class="row2">
+                <select  id="name-maladie"  required>
+                  <option value="" selected disabled hidden>Choisir la maladie générale</option>
+  
+                  <% for (var i = 0; i < generalillness.length; i++) { %>
+                    <option value="<%= generalillness[i].name_GIllness %>"><%= generalillness[i].name_GIllness %></option>
+                  <% } %>
+                </select>
+                  <div class="data2">
+                    <input type="date" id="date-maladie" placeholder="Date"   required />
+                  </div>
+                  <div class="btn-add-into">
+                    <button type="button" class="btn btn-primary" id="btn-add-maladie">Ajouter</button>
+
+                  </div>
+                     
+                 </div>
+                 <table class="table table-hover" style="width:90%" id="myTable3">
+                   <thead>
+                     <tr>
+                       <th scope="col">#</th>
+                       <th scope="col">Nom</th>
+                       <th scope="col">Date</th>
+                       <th scope="col-md-3">Action</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                    <% for (var i = 0; i < containgeneralillnessPatient.length; i++) { %>
+                      <tr>
+                        <td><%= i+1%></td>
+                        <td><%= containgeneralillnessPatient[i].name_GIllness %></td>
+                        <td><%= String(containgeneralillnessPatient[i].dateillness).substring(0,16) %></td>
+
+
+                        <td>
+                            <button type="button" class="btn btn-danger" id="btn-delete-containgeneralillness" value="<%= containgeneralillnessPatient[i].name_GIllness%>">Supprimer</button>
+                          </td>
+                               
+                    </tr>
+                    <% } %>
+                   
+              
+                
+                  </tbody>
+      
+                 </table>
+                 <div class="titre">Allergie médical :</div>
+                 <div class="row2">
+                    <select  id="name-drug"  required>
+                      <option value="" selected disabled hidden>Choisir l'allergie médical</option>
+      
+                      <% for (var i = 0; i < drugs.length; i++) { %>
+                        <option value="<%= drugs[i].name_drug %>"><%= drugs[i].name_drug %></option>
+                      <% } %>
+                      
+                     
+                    </select>      
+                 <div class="data2">
+                         <input type="text" id="type-drug" placeholder="Type"   required />
+                       </div>
+                       <div class="btn-add-into">
+                         <button type="button" class="btn btn-primary" id="btn-add-drug">Ajouter</button>
+                       </div>
+                   </div>
+                   <table class="table table-hover" style="width:90%" id="myTable4">
+                     <thead>
+                       <tr>
+                         <th scope="col">#</th>
+                         <th scope="col">Nom</th>
+                       <th scope="col">Type</th>
+                         <th scope="col-md-3">Action</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                      <% for (var i = 0; i < allergies.length; i++) { %>
+                        <tr>
+                          <td><%= i+1%></td>
+                          <td><%= allergies[i].name_drug %></td>
+                          <td><%= allergies[i].type %></td>
+                          <td>
+                              <button type="button" class="btn btn-danger" id="btn-delete-allergie" value="<%= allergies[i].name_drug  %>">Supprimer</button>
+                            </td>        
+                      </tr>
+                      <% } %>
+                    </tbody>
+                   </table>
+     
+   
+ 
+
+        </div>
     </div>
+    <div id="alert" class="alert hide">
+
+      <span class="msg" id="msg">Opération effectué avec succées</span>
+      <div class="close-btn">
+         <span id="icon-msg" class="fas fa-check"></span>
+      </div>
+   </div>
+   <div class="vertical-nav bg-white active" id="sidebar" style="position: absolute;">
+    <div class="py-4 px-3 mb-4" style="background-color: #F5F5F5;">
+      <div class="media d-flex align-items-center" style="display: flex; align-self: center; margin: auto;">
+        <img loading="lazy" src="images/p-1.png" style="margin-right: 25px; margin-left: 25px;" alt="..." width="80" height="80" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+        <div class="media-body">
+          <h4 class="m-0">Djellali</h4>
+          <p class="font-weight-normal text-muted mb-0">Médecin</p>
+        </div>
+      </div>
+    </div>
+    <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Menu</p>
+    <ul class="nav flex-column bg-white mb-0">
+      <li class="nav-item">
+        <a href="#" class="nav-link text-dark bg-light" style="font-size: 18px; height: 50px;">
+                  <i class="fa fa-home fa-lg" style="margin-right: 15px;"></i>
+                  Accueil
+              </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+                  <i class="fa fa-address-card fa-lg" style="margin-right: 15px;"></i></i>
+                  Liste des patients
+              </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+            <i class="fa fa-calendar-alt fa-lg" style="margin-right: 15px;"></i> </i>
+                 Liste des rendez-vous
+              </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+            <i class="fa fa-user fa-lg" style="margin-right: 15px;"></i></i>     
+                    Mon profile
+              </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+            <i class="fa fa-sign-out-alt fa-lg" style="margin-right: 15px;"></i>
+             Déconnexion
+              </a>
+      </li>
+    </ul>  
+  </div>
 </body>
+<script>
+    var parsed_data = '<%- JSON.stringify(data) %>'  ;
+</script>
+
+<script src="/js/updateMedicalFile.js"></script>
+
 </html>

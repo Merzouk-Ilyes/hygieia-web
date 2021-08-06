@@ -286,8 +286,8 @@ const getData = (req,res,next) => {
 };
 
 const postUpdate = (req,res,next) => {
-  console.log(req.body.lastname,
-    req.body.firstname,
+  console.log(req.body.lastname + "wow",
+    req.body.firstname + "wow2",
     req.body.birthday,
     req.body.birthplace,
     req.body.sexe,
@@ -295,7 +295,7 @@ const postUpdate = (req,res,next) => {
     req.body.role,
     req.body.email,);
   if (req.body.role == "administrateur") {
-    db.query("UPDATE administrator set Firstname=? and Lastname =? and Birthday=? and Birthplace=? and Sexe=? and Phonenumber =?  where Email = ?  ",
+    db.query("UPDATE administrator set Firstname = ? , Lastname = ? , Birthday = ?,  Birthplace = ? , Sexe = ? , Phonenumber = ? where Email = ?  ",
       [
         req.body.firstname,
         req.body.lastname,      
