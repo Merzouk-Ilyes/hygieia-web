@@ -1,29 +1,40 @@
 
+const {Storage} = require('@google-cloud/storage');
+const PDFDocument = require('pdfkit');
+const doc = new PDFDocument;
 
+const storage = new Storage({
+    keyFilename: "hygeia-312122-firebase-adminsdk-2d6g4-54fa815f71.json"
+});
+let bucketName = 'hygeia-312122.appspot.com';
+// trés important car aprés on va l'utiliser pour écraser ou supprimer il doit étre sauvgardé aussi dans la bdd pour la manipulation
 
+//let filename = 'IdPatient-typeDocument-date(AAAA-MM-JJ).pdf';
+//let filename = 'output.pdf'; 
 
+function uploadToStorage(filename) {
+    return new Promise(function (resolve, reject){
 
-
-var gcloud = require('gcloud')();
- var gcs = gcloud.storage();
-
-
-const pdfkit = require('pdfkit');
-const fs = require('fs');
-const admin = require('firebase-admin');
-
-
-const storage = new gcloud.Storage(
-       {
-         projectId: "hygeia-312122", 
-        keyFilename: "hygeia-312122-firebase-adminsdk-2d6g4-54fa815f71.json"
-      }
-);
-
-var bucket = gcs.bucket('hygeia-312122.appspot.com');
-
-  
-
+      storage.bucket(bucketName).upload(filename, {
+            metadata: {},
+              }).then((err)=> {
+                file = storage.bucket(bucketName).file(filename);
+                file.getSignedUrl({
+                  action: 'read',
+                  expires: '03-09-2491'
+                }).then(signedUrls => {
+                    console.log(signedUrls);
+                    resolve(signedUrls[0]);
+                  // signedUrls[0] contains the file's public URL
+                });
+                
+                console.log(`${filename} uploaded to ${bucketName}.`);
+                });
+              })
+    
+    // Uploads a local file to the bucket
+   
+}
 /* var firebaseConfig = {
     apiKey: "AIzaSyCRps879g4c-uNc0Yqicu5V31cYIweLP-M",
     authDomain: "hygeia-312122.firebaseapp.com",
@@ -34,30 +45,6 @@ var bucket = gcs.bucket('hygeia-312122.appspot.com');
   };
   */
   // Initialize Firebase
-  const uploadToStorage = async() => {
-    storage.createBucket('octocats', function(err, bucket) {
-
-        // Error: 403, accountDisabled
-        // The account for the specified project has been disabled.
-    
-        // Create a new blob in the bucket and upload the file data.
-        var blob = bucket.file("octofez.png");
-        var blobStream = blob.createWriteStream();
-    
-        blobStream.on('error', function (err) {
-            console.error(err);
-        });
-    
-        blobStream.on('finish', function () {
-            var publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
-            console.log(publicUrl);
-        });
-    
-        fs.createReadStream("octofez.png").pipe(blobStream);
-    });
-    
-    
-}
 
      
  
