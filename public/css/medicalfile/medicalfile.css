@@ -21,7 +21,7 @@ html , body {
      justify-content: space-around;
      display: flex;
      flex-direction: row;
-  
+     font-family: 'Poppins';
      background-color: white;
   
  }
@@ -200,7 +200,6 @@ img {
     display: flex;
     flex-direction: row;
 }
-
 table, th,td{
     border-radius: 10px;
     border-bottom-right-radius: 10px;

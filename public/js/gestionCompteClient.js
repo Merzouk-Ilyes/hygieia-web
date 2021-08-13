@@ -253,6 +253,7 @@ function updatedatabtn(){
 }
 function checkInputsup() {
 
+
   if (nomup.value.length < 4) {
     const parent = nomup.parentElement;
     const small = parent.querySelector("small");
@@ -300,8 +301,11 @@ function checkInputsup() {
     const small = parent.querySelector("small");
     small.className = "noterror";
     small.innerText = null;
-  }
-  
+  };
+  console.log(
+  "prenom " +  prenomup.value, 
+    "nom " + nomup.value
+  );
   $.ajax({
     method: "POST",
     url: "/users/admin/modifier",
@@ -321,7 +325,7 @@ function checkInputsup() {
       setTimeout(function(){
       document.getElementById('alertup').classList.remove('showAlert');
       }, 15000);
-      document.location.reload()
+   
 
     },
   }); 

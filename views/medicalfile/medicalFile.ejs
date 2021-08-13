@@ -44,10 +44,7 @@
              
                 </div>
             </div>
-    
-
             <div class="w-container">
-
                 <div class="bio-container">
                  <div class="info">
                      <div class="row2">
@@ -82,9 +79,6 @@
                         <div class="titre">Groupe sanguin :</div>
                         <div class="valeur"><%= dataB.Bloodgroup %></div>
                     </div>
-                    
-
-
                  </div>
                  <div class="info2">
                     <div class="row2">
@@ -101,12 +95,9 @@
 
                 <div class="title-container" id="place1">
                     <p >Bibliographie</p></div>
-
-
                     <div class="ant-container">
                         <div class="title2-container"id="place2">
-                            <p >Antécédent</p>
-                   
+                            <p>Antécédent</p>
                         </div>
                         <div class="row1-ant">
                         <div class="titre">
@@ -323,8 +314,56 @@
                      
                       </table>
                 </div>
-       
-          
+      
+                <table>
+
+                  <tr>
+            
+                      <td>Examen Médical</td>
+            
+                      <td>Date</td>
+            
+                      <td>Téléchager</td>
+            
+                      <td>Supprimer</td>
+            
+                  </tr>
+            
+                  <%
+            
+                  if(examdata.length!=0){
+            
+                  var i=1;
+            
+                  examdata.forEach(function(dataa){
+            
+                  %>
+            
+                  <tr>
+            
+                      <td><%=dataa.medical_exam %></td>
+            
+                      <td><%=dataa.date_medicalexam %></td>
+            
+                      <td>test</td>
+            
+                      <td>test</td>
+            
+                  </tr>
+            
+                  <%  i++; }) %>
+            
+                  <% } else{ %>
+            
+                  <tr>
+            
+                      <td colspan="7">Ce patient n'a aucun examen médical</td>
+            
+                  </tr>
+            
+                  <% } %>
+            
+              </table>
         </div>
 
                        
@@ -336,8 +375,10 @@
                 
 
             </div>
+          
      
     </div>
+  
    
 </body>
 <script src="/js/medicalfile.js"></script>
