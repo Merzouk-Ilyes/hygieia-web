@@ -1,7 +1,7 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const db = require("../util/db").db;
-
+const pool = require("../util/pool")
 
 exports.getUpdateMedicalFile = (req,res,next)=> {
 res.render('medicalfile/updateMedicalFile');
@@ -80,3 +80,7 @@ exports.getList = (req, res, next) => {
         }}); 
  
   };
+
+  exports.getExam = (req,res,next) => {
+    res.render("MedicalExam/MedicalExam")
+  }

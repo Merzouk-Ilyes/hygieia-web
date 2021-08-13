@@ -4,4 +4,6 @@ const router =express.Router();
 router.get('/list',medecinControler.getList);
 router.get('/medicalFile',medecinControler.getMedicalFile); 
 router.get('/medicalfileUpdate',medecinControler.getUpdateMedicalFile);
+
+router.get('/medicalExam' , medecinControler.getExam)
 module.exports = router ; 

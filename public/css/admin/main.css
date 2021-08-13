@@ -264,20 +264,31 @@ td {
 }
 
 .icon {
-  position: absolute;
-  top: 92px;
-  left: 430px;
+  position: relative;
   color: grey;
+  margin: auto;
 }
 
 .form-control {
   border-radius: 10px;
   padding: 4px 15px;
 }
+.form-outline input {
+  background: none;
+	outline: none;
+	border: none;
+}
+.form-outline input:focus{
+  box-shadow: none;
+  
+}
 .form-outline {
   border-radius: 10px;
+  background-color: white;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   margin-top: 4px;
+  display: grid;
+  grid-template-columns: 80% 20%;
 }
 .show {
   display: block;
