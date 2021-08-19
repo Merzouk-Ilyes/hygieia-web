@@ -1,7 +1,7 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const db = require("../util/db").db;
-const pool = require("../util/pool")
+
 
 const pool = require("../util/db").pool;
 
