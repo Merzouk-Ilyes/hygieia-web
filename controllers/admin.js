@@ -221,20 +221,20 @@ const postChangeStatus = (req, res, next) => {
     });
 };
 const postDeleteAccount = (req, res, next) => {
-  const email = req.body.email;
-  console.log(email);
-  const query = "DELETE FROM account WHERE Email=?";
+  let email = req.body.email;
+  let supprimer =req.body.supprimer;
+  if (supprimer == 0) supprimer = 1;
+  else supprimer = 0;
   pool
-    .execute(query, [email])
+    .execute("UPDATE  account SET Supprimer = ? WHERE Email = ? ", [supprimer, email])
     .then(([row, fieldData]) => {
-      console.log("ACCOUNT DELETED!!");
+      console.log("ACCOUNT DELETED !!! ");
     })
     .catch((err) => {
       console.log(err);
     });
-};
 
-
+  }
 
 const getData = (req,res,next) => {
 

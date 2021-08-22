@@ -133,6 +133,7 @@
                 formId2=med.Firstname+"deleteform"+i;inputId2=med.Firstname+"deleteinput"+i; 
                 
                 %>
+                <%if(!med.Supprimer) { %>
                 <tr class="row100 body user">
                   <td class="column1"><%=++i%></td>
                   <td class="column2"><%=med.Firstname%></td>
@@ -233,13 +234,15 @@
                             <button type="button" class="modalCloseBtn" data-bs-dismiss="modal">Non</button>
                           <form id=<%=formId2%>>
                             <input type="hidden" value="<%=med.Email%>" id=<%=inputId2%>>
-                              <button type="submit" class="modalSaveBtn" onclick="deleteAccount('<%=med.Email%>' ,'<%=formId2%>')">Oui</button>
+                              <button type="submit" class="modalSaveBtn" onclick="deleteAccount('<%=med.Email%>' ,'<%=formId2%>','<%=med.Supprimer%>')">Oui</button>
                               <script>
-                                function deleteAccount(email,formId){
+                                function deleteAccount(email,formId,supprimer){
                                 // var formId = "<%=formId%>"
                                 // var inputId = "<%=inputId%>"
                                  var data = {
                                      email :email,
+                                     supprimer:supprimer
+
                                    
                                    }
                                  $("#"+formId).submit(function(e) {
@@ -272,20 +275,22 @@
                     </div>
                   </td>
                 </tr>
+                <%}%>
 
                 <%}%> <%}%> <% if (patients.length > 0 ) { %> <% for (let
-                patient of patients) { toggleId="#"+patient.Firstname+patient.Lastname+i ;
-                toggleIdd=patient.Firstname+patient.Lastname+i ;
-                formId=patient.Firstname+"form"+i;inputId=patient.Firstname+"input"+i;
+                patient of patients) { toggleId="#"+patient.p_Firstname+patient.p_Lastname+i ;
+                toggleIdd=patient.p_Firstname+patient.p_Lastname+i ;
+                formId=patient.p_Firstname+"form"+i;inputId=patient.p_Firstname+"input"+i;
                 
-                toggleId2="#"+patient.Firstname+patient.Lastname+"delete"+i ;
-                toggleIdd2=patient.Firstname+patient.Lastname+"delete"+i ;
-                formId2=patient.Firstname+"deleteform"+i;inputId2=patient.Firstname+"deleteinput"+i; 
+                toggleId2="#"+patient.p_Firstname+patient.p_Lastname+"delete"+i ;
+                toggleIdd2=patient.p_Firstname+patient.p_Lastname+"delete"+i ;
+                formId2=patient.p_Firstname+"deleteform"+i;inputId2=patient.p_Firstname+"deleteinput"+i; 
                 %>
+                <%if(!patient.Supprimer) { %>
                 <tr class="row100 body">
                   <td class="column1"><%=++i%></td>
-                  <td class="column2"><%=patient.Firstname%></td>
-                  <td class="column3"><%=patient.Lastname %></td>
+                  <td class="column2"><%=patient.p_Firstname%></td>
+                  <td class="column3"><%=patient.p_Lastname %></td>
                   <td class="column4"><%=patient.Email%></td>
                   <td class="column5"><%=patient.Role%></td>
                   <td class="column6">
@@ -380,13 +385,14 @@
                             <button type="button" class="modalCloseBtn" data-bs-dismiss="modal">Non</button>
                           <form id=<%=formId2%>>
                             <input type="hidden" value="<%=patient.Email%>" id=<%=inputId2%>>
-                              <button type="submit" class="modalSaveBtn" onclick="deleteAccount('<%=patient.Email%>' ,'<%=formId2%>')">Oui</button>
+                              <button type="submit" class="modalSaveBtn" onclick="deleteAccount('<%=patient.Email%>' ,'<%=formId2%>','<%=patient.Supprimer%>')">Oui</button>
                               <script>
-                                function deleteAccount(email,formId){
+                                function deleteAccount(email,formId,supprimer){
                                 // var formId = "<%=formId%>"
                                 // var inputId = "<%=inputId%>"
                                  var data = {
                                      email :email,
+                                     supprimer:supprimer
                                    
                                    }
                                  $("#"+formId).submit(function(e) {
@@ -417,6 +423,7 @@
                     </div>
                   </td>
                 </tr>
+                <%}%>
 
                 <%}%> <%}%> <% if (admins.length > 0 ) { %> <% for (let admin of
                 admins) { 
@@ -429,6 +436,7 @@
                 toggleIdd2=admin.Firstname+admin.Lastname+"delete"+i ;
                 formId2=admin.Firstname+"deleteform"+i;inputId2=admin.Firstname+"deleteinput"+i; 
                   %>
+                  <%if(!admin.Supprimer) { %>
                 <tr class="row100 body">
                   <td class="column1"><%=++i%></td>
                   <td class="column2"><%=admin.Firstname%></td>
@@ -528,13 +536,14 @@
                             <button type="button" class="modalCloseBtn" data-bs-dismiss="modal">Non</button>
                           <form id=<%=formId2%>>
                             <input type="hidden" value="<%=admin.Email%>" id=<%=inputId2%>>
-                              <button type="submit" class="modalSaveBtn" onclick="deleteAccount('<%=admin.Email%>' ,'<%=formId2%>')">Oui</button>
+                              <button type="submit" class="modalSaveBtn" onclick="deleteAccount('<%=admin.Email%>' ,'<%=formId2%>','<%=admin.Supprimer%>')">Oui</button>
                               <script>
-                                function deleteAccount(email,formId){
+                                function deleteAccount(email,formId,supprimer){
                                 // var formId = "<%=formId%>"
                                 // var inputId = "<%=inputId%>"
                                  var data = {
                                      email :email,
+                                     supprimer:supprimer,
                                    
                                    }
                                  $("#"+formId).submit(function(e) {
@@ -565,6 +574,7 @@
                     </div>
                   </td>
                 </tr>
+                <%}%>
 
                 <%}%> <%}%>
               </tbody>
