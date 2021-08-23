@@ -75,11 +75,13 @@ input {
 .title-header {
   padding: 20px 0px;
   display: flex;
+  width: 100%;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   position: absolute;
   top: 4rem;
-  left: 20%;
+  
 }
 .interface-title {
   font-size: 25px;
@@ -93,7 +95,7 @@ input {
   font-size: 25px;
 }
 .patient-role {
-  padding-left: 4px;
+  padding-left: 8px;
   color: black;
   font-size: 25px;
 }
