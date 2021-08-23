@@ -10,6 +10,7 @@ li , ul {
 }
 html,
 body {
+  scroll-behavior: smooth;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -78,10 +79,10 @@ input {
   justify-content: center;
   position: absolute;
   top: 4rem;
-  left: 25%;
+  left: 20%;
 }
 .interface-title {
-  font-size: 32px;
+  font-size: 25px;
   font-weight: 800;
   color: #01559c;
 }
@@ -89,12 +90,12 @@ input {
   padding-left: 4px;
   color: black;
   font-weight: bold;
-  font-size: 32px;
+  font-size: 25px;
 }
 .patient-role {
   padding-left: 4px;
   color: black;
-  font-size: 29px;
+  font-size: 25px;
 }
 /* the big white container */
 .w-container {
@@ -102,7 +103,7 @@ input {
   background-color: white;
   color: #000;
   position: absolute;
-  height: 1250%;
+  height: 1400%;
   width: 80%;
   margin: 0% 10%;
   margin-top: 9rem;
@@ -498,7 +499,7 @@ margin-top: .4rem;
 .cardio-container {
   left: 5%;
   top: 152rem;
-  height: 24rem;
+  height: 30rem;
   display: block;
   /* position: relative; */
 }
@@ -507,8 +508,9 @@ margin-top: .4rem;
 .cardio-container > :nth-child(3),
 .cardio-container > :nth-child(4),
 .cardio-container > :nth-child(5),
-.cardio-container > :nth-child(6),
-.cardio-container > :nth-child(8) {
+.cardio-container > :nth-child(9),
+.cardio-container > :nth-child(10)
+ {
   padding: 0.5rem 2rem 0 2rem;
   display: flex;
   align-items: center;
@@ -519,6 +521,7 @@ margin-top: .4rem;
   padding-top: 2rem;
 }
 .cardio-container > :nth-child(3),
+
 .cardio-container > :nth-child(4) {
   padding-left: 3rem;
 }
@@ -527,14 +530,20 @@ margin-top: .4rem;
 .cardio-container > :nth-child(4) input,
 .cardio-container > :nth-child(5) input,
 .cardio-container > :nth-child(7) input,
-.cardio-container > :nth-child(8) input {
+.cardio-container > :nth-child(8) input ,
+.cardio-container > :nth-child(9) input
+{
   margin: 0 2rem;
 }
 
+.cardio-container > :nth-child(6),
+.cardio-container > :nth-child(8),
 .cardio-container > :nth-child(7) {
   padding-left: 2rem;
 }
-.cardio-container > :nth-child(7) input {
+.cardio-container > :nth-child(7) input ,
+.cardio-container > :nth-child(8) input 
+{
   padding: 0.3rem;
 }
 
@@ -542,13 +551,13 @@ margin-top: .4rem;
 
 .resp-title {
   left: 50%;
-  top: 180rem;
+  top: 187rem;
   width: 10rem;
 }
 .resp-container {
   left: 5%;
-  top: 180rem;
-  height: 26rem;
+  top: 187rem;
+  height: 29rem;
   display: block;
 }
 .resp-container > :nth-child(1),
@@ -585,16 +594,22 @@ margin-top: .4rem;
 .resp-container > :nth-child(6) input {
   padding: 0.3rem;
 }
+.resp-container > :nth-child(8) {
+  padding-bottom: 1rem;
+}
+.resp-container > :nth-child(9) {
+  padding-left: 2rem;
+}
 /* DIGESTIF */
 
 .dig-title {
   left: 50%;
-  top: 210rem;
+  top: 220rem;
   width: 10rem;
 }
 .dig-container {
   left: 5%;
-  top: 210rem;
+  top: 220rem;
   height: 42rem;
   display: block;
 }
@@ -609,13 +624,17 @@ margin-top: .4rem;
 .dig-container > :nth-child(9),
 .dig-container > :nth-child(10),
 .dig-container > :nth-child(11),
-.dig-container > :nth-child(13),
-.dig-container > :nth-child(14) {
+.dig-container > :nth-child(12),
+
+.dig-container > :nth-child(13) {
   padding: 0.5rem 2rem 0 2rem;
 }
 
 .dig-container > :nth-child(4),
 .dig-container > :nth-child(10),
+.dig-container > :nth-child(11),
+.dig-container > :nth-child(12),
+
 .dig-container > :nth-child(14),
 .dig-container > :nth-child(13) {
   display: flex;
@@ -624,9 +643,9 @@ margin-top: .4rem;
   justify-content: space-between;
 }
 
-.dig-container > :nth-child(12) {
+/* .dig-container > :nth-child(12) {
   margin-left: 3rem;
-}
+} */
 
 .dig-container > :nth-child(1) {
   padding-top: 2rem;
@@ -638,6 +657,8 @@ margin-top: .4rem;
 .dig-container > :nth-child(6) input,
 .dig-container > :nth-child(7) input,
 .dig-container > :nth-child(13) input,
+.dig-container > :nth-child(11) input,
+.dig-container > :nth-child(12) input,
 .dig-container > :nth-child(14) input {
   padding: 0.3rem;
   margin: 0 1.5rem;
@@ -649,18 +670,21 @@ margin-top: .4rem;
 .dig-container > :nth-child(10) input {
   margin: 0 1.5rem;
 }
+.dig-container > :nth-child(12) {
+  padding-bottom: 1rem;
+}
 
 /* GENITO */
 
 .gen-title {
   left: 50%;
-  top: 255rem;
+  top: 270rem;
   width: 10rem;
 }
 .gen-container {
   left: 5%;
-  top: 255rem;
-  height: 43rem;
+  top: 270rem;
+  height: 48rem;
   display: block;
   padding-top: 2rem;
 }
@@ -674,7 +698,8 @@ margin-top: .4rem;
 .gen-container > :nth-child(8),
 .gen-container > :nth-child(10),
 .gen-container > :nth-child(12),
-.gen-container > :nth-child(14) {
+.gen-container > :nth-child(16),
+.gen-container > :nth-child(14){
   padding: 0.5rem 2rem 0 2rem;
 }
 
@@ -722,13 +747,13 @@ margin-top: .4rem;
 /* NEUROLOGIQUE ET PSYCHISME */
 .neur-title {
   left: 50%;
-  top: 304rem;
+  top: 325rem;
   width: 18rem;
 }
 .neur-container {
   left: 5%;
-  top: 304rem;
-  height: 44rem;
+  top: 325rem;
+  height: 46rem;
   display: block;
   padding-top: 2rem;
 }
@@ -768,13 +793,13 @@ margin-top: .4rem;
 
 .hem-title {
   left: 50%;
-  top: 352rem;
+  top: 376rem;
   width: 18rem;
 }
 .hem-container {
   left: 5%;
-  top: 352rem;
-  height: 22rem;
+  top: 376rem;
+  height: 34rem;
   display: block;
   padding-top: 2rem;
 }
@@ -787,6 +812,8 @@ margin-top: .4rem;
 }
 
 .hem-container > :nth-child(8),
+.hem-container > :nth-child(10),
+.hem-container > :nth-child(8),
 .hem-container > :nth-child(9) {
   display: flex;
   align-items: center;
@@ -795,6 +822,7 @@ margin-top: .4rem;
 }
 .hem-container > :nth-child(4) input,
 .hem-container > :nth-child(5) input,
+.hem-container > :nth-child(7) input,
 .hem-container > :nth-child(6) input {
   padding: 0.3rem;
 }
@@ -803,13 +831,13 @@ margin-top: .4rem;
 
 .end-title {
   left: 50%;
-  top: 380rem;
+  top: 420rem;
   width: 13rem;
 }
 .end-container {
   left: 5%;
-  top: 380rem;
-  height: 17rem;
+  top: 420rem;
+  height: 22rem;
   display: block;
   padding-top: 2rem;
 }
@@ -823,6 +851,7 @@ margin-top: .4rem;
 }
 .end-container > :nth-child(4) input,
 .end-container > :nth-child(5) input,
+.end-container > :nth-child(6) input,
 .end-container > :nth-child(3) input {
   padding: 0.3rem;
 }
@@ -835,12 +864,12 @@ margin-top: .4rem;
 /* EXP */
 .exp-title {
   left: 50%;
-  top: 403rem;
+  top: 450rem;
   width: 17rem;
 }
 .exp-container {
   left: 5%;
-  top: 403rem;
+  top: 450rem;
   height: 23rem;
   display: block;
   padding-top: 2rem;
@@ -850,13 +879,13 @@ margin-top: .4rem;
 }
 
 .comp {
-  top: 395rem;
+  top: 480rem;
   position: absolute;
   margin: 3rem;
 }
 .final-inputs {
   width: 85%;
-  top: 430rem;
+  top: 480rem;
   position: absolute;
   margin: 3rem;
   height: 2rem;
@@ -912,25 +941,25 @@ margin-top: .4rem;
   height: 25rem;
   width: 80%;
   border-radius: 0.7rem;
-  top: 450rem;
+  top: 500rem;
   margin: 0% 10%;
   margin-top: 9rem;
 
 }
 .doc3-container {
-  top: 480rem;
+  top: 530rem;
 
 }
 .doc4-container {
-  top: 510rem;
+  top: 560rem;
 
 }
 .doc5-container {
-  top: 540rem;
+  top: 590rem;
 
 }
 .doc6-container {
-  top: 570rem;
+  top: 620rem;
 
 }
 
@@ -978,6 +1007,51 @@ margin-top: .4rem;
   left: 75%;
   top: 80%;
   padding: .6rem;
+
+}
+
+
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 85%;
+  position: absolute;
+  left: 2%;
+  top: 15%;
+  font-family: var(--font-poppins);
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #184b9b;
+  color: white;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4,20%);
+    column-gap: 5%; 
+    text-align: center;
+}
+.grid button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius:.2rem;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+
 
 }
 

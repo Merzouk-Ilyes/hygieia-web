@@ -20,7 +20,12 @@ item2.onclick = function() {
     item5.className = "i-item" ; 
     item6.className = "i-item" ; 
 
-    window.scrollTo(0, 8990);
+    window.scrollTo(0,document.getElementById('Ordonnance').offsetTop -150);
+    // document.getElementById('Ordonnance').scrollIntoView({
+    //     behavior: 'smooth'
+    //   });
+    
+
 
 
 }
@@ -32,7 +37,8 @@ item3.onclick = function() {
     item5.className = "i-item" ; 
     item6.className = "i-item" ; 
 
-    window.scrollTo(0, 9580);
+    window.scrollTo(0,document.getElementById('Ordonnance2').offsetTop -150);
+
     
 
 
@@ -45,7 +51,8 @@ item4.onclick = function() {
     item5.className = "i-item" ; 
     item6.className = "i-item" ; 
 
-    window.scrollTo(0, 10200);
+    window.scrollTo(0,document.getElementById('Ordonnance3').offsetTop -150);
+
     
 
 
@@ -57,7 +64,9 @@ item5.onclick = function() {
     item4.className = "i-item" ; 
     item5.className = "i-item-active" ; 
     item6.className = "i-item" ; 
-    window.scrollTo(0, 10800);
+    
+    window.scrollTo(0,document.getElementById('Ordonnance4').offsetTop -150);
+
     
 
 
@@ -69,7 +78,10 @@ item6.onclick = function() {
     item4.className = "i-item" ; 
     item5.className = "i-item" ; 
     item6.className = "i-item-active" ; 
-    window.scrollTo(0, 11800);
+    
+
+    window.scrollTo(0,document.getElementById('Ordonnance5').offsetTop -150);
+
     
 
 
