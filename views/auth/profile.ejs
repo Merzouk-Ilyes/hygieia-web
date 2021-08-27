@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Profile</title>
+  <meta charset="UTF-8" />
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
+/>
+
+  <!-- =====  ICONS ===== -->
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css" />
+  <!-- CSS -->
+ 
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- JQUERY   -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="/css/auth/profile.css" />
+
+</head>
+<style>
+  .btn-primary{
+background-color: #01559C;
+border: none;
+font-size: 15px;
+}
+.btn-danger {
+  background-color: #dc3545;
+    border-color: #dc3545;
+  font-size: 15px;
+border: none;
+}
+  select {
+    padding-right: 20px;
+    height: 150%;
+    width: 20%;
+    font-size: 15px;
+    padding-left: 10px;
+    background-color: #f6f2f2;
+    border-radius: 5px;
+    border: solid 1px rgb(194, 188, 188);
+  }
+  
+   .data2 input {
+    
+    height: 100%;
+    width: 200px;
+    font-size: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #f6f2f2;
+    border-radius: 5px;
+    border: solid 1px rgb(194, 188, 188);
+    margin-bottom: 10px;
+
+  }
+  button {
+  border: none;
+}
+
+     .vertical-nav {
+  
+
+       margin-top: 115px;
+  min-width: 17rem;
+  width: 17rem;
+  height: 90vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  
+   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1); 
+  transition: all 0.4s;
+}
+.page-content {
+  width: calc(100% - 17rem);
+  margin-left: 17rem;
+  transition: all 0.4s;
+} 
+
+#sidebar.active {
+  margin-left: -17rem;
+}
+
+#content.active {
+  width: 100%;
+  margin: 0;
+}
+.fa-bars {
+  background-color: #F5F5F5;
+
+}
+.separator {
+  margin: 3rem 0;
+  border-bottom: 1px dashed #fff;
+}
+.fa {
+    color:#01559C;
+}
+.btn-nav {
+
+  display: flex; 
+  align-self: flex-start;
+  
+}
+
+.spa {
+  margin-left: 17em;
+}
+.text-uppercase {
+  letter-spacing: 0.1em;
+}
+.text-gray {
+  color: #aaa;
+}
+.nav-link{
+    text-transform: capitalize;
+}
+.nav-link:hover{
+    background:#f3f2f2;
+}
+.text-primary{
+    color:#7579e7 !important;
+}
+@media (max-width: 768px) {
+  #sidebar {
+    margin-left: -17rem;
+  }
+  #sidebar.active {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+  #content {
+    width: 100%;
+    margin: 0;
+  }
+  #content.active {
+    margin-left: 17rem;
+    width: calc(100% - 17rem);
+  }
+}
+
+.row-h {
+  
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: row;
+}
+
+</style>
+
+<!-- TO ACCESS THIS VIEW /users/admin/gestion  , UR WELCOME :) -->
+<body>
+ 
+  <button id="sidebarCollapse" type="button" class="btn-nav" style="margin-right: 20px;"><i class="fa fa-bars fa-2x"></i></button>
+      <div class="big-card">
+        <div class="title2">Vos informations personnelles</div>
+        <hr style="width:100%;text-align:left;margin-left:0px;" ></hr>
+        <div class="column-info">
+          <div class="picture">
+            <input  id="ifile"type="file" name="ifile" style="display: none;visibility: hidden;">
+            <img src="/assets/black.jpeg" id="img" />
+          </div>      
+          <div class="info-per">
+            <div class="name"><%= infoPer.Firstname %> <%= infoPer.Lastname %></div>  
+            <div class="job"><%= infoPer.Role %></div>
+            <div class="date"><%= String(infoPer.Birthday).substring(0,16) %></div>
+            <button type="button" class="btn3 btn-primary">Changer la photo</button>
+          </div>   
+        </div>
+      
+        <div class="title3">Votre emploie du temps</div>
+        <hr style="width:100%;text-align:left;margin-left:0" ></hr>
+        <div class="column-info3">
+          <div class="insert-date">
+            <div class="date">  
+              <div class="date">
+                <select  id="jour"  required>
+                  <option value="" selected disabled hidden>Jour</option>
+    
+                  <% for (var i = 0; i < days.length; i++) { %>
+                    <option value="<%= days[i] %>"><%= days[i] %></option>
+                  <% } %>
+                   
+                 
+                </select>
+                <select  id="heured"  required>
+          <option value="" selected disabled hidden>heure début</option>
+    
+        <% for (var i = 0; i < heure.length; i++) { %>
+          <option value="<%= heure[i] %>"><%= heure[i] %></option>
+        <% } %>
+                 
+                </select>
+                <select  id="heuref"  required>
+                  <option value="" selected disabled hidden>Heure fin</option>
+                  <% for (var i = 0; i < heure.length; i++) { %>
+                    <option value="<%= heure[i] %>"><%= heure[i] %></option>
+                  <% } %>
+                           
+              
+                </select> 
+    
+            </div>       
+
+          </div>
+          <button type="button" id="btn-add-date" class="btn33 btn-primary">Ajouter</button>
+
+     
+       </div>
+        <table id="myTable" class="table table-hover" style="width:90%">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Jour</th>
+              <th scope="col">Début</th>
+              <th scope="col">Fin</th>
+              <th scope="col-md-3">Action</th>
+            </tr>
+          </thead>
+        
+            
+                <% for (var i = 0; i < workTime.length; i++) { %>
+                  <tr>
+                  <td><%= i+1 %></td>
+                  <td><%= workTime[i].work_date %></td>
+                  <td><%= workTime[i].starttime %></td>
+                  <td><%= workTime[i].endtime %></td>    
+                  <td>
+                      <button type="button" class="btn
+                      
+                      btn-danger" id="btn-delete-date" value="<%= workTime[i].work_date %>">Supprimer</button>
+                    </td>
+                  </tr>
+                
+                  
+                <% } %>
+              
+                       
+       
+        
+      
+        
+          </tbody>
+        </table>
+    
+
+      </div>
+      <div class="title2">Modifier votre mot de passe</div>
+      <hr style="width:100%;text-align:left;margin-left:0" ></hr>
+      <div class="column-info2">
+
+        <div style="display: flex;flex-direction: column;">
+          <div class="row">
+            <div class="title"> Votre mot de passe</div>
+            <div class="data">
+              <input type="text" id="password1" required />
+              </div>
+          </div>
+          <div class="row">
+            <div class="title">Nouveau mot de passe</div>
+            <div class="data">
+              <input type="text" id="password2" required  />
+              </div>
+          </div>
+          <div class="row">
+            <div class="row2">
+              <div class="title">Confirmer mot de passe</div>
+              <div class="data">
+                <input type="text" id="password3" required />
+                </div>
+            </div>
+           
+              <button type="button" id="update-password" class="btn2 btn-primary" id="btn-intoxication">Modifier mot de passe</button>
+
+
+          </div>
+        </div>
+      </div>
+    
+</body>
+<div class="vertical-nav bg-white active" id="sidebar" style="position: absolute;">
+  <div class="py-4 px-3 mb-4" style="background-color: #F5F5F5;">
+    <div class="media d-flex align-items-center" style="display: flex; align-self: center; margin: auto;">
+      <img loading="lazy" src="images/p-1.png" style="margin-right: 25px; margin-left: 25px;" alt="..." width="80" height="80" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+      <div class="media-body">
+        <h4 class="m-0"><%= infoPer.Firstname %> <%= infoPer.Lastname %></h4>
+        <p class="font-weight-normal text-muted mb-0"><%= infoPer.Role %></p>
+      </div>
+    </div>
+  </div>
+  <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Menu</p>
+  <ul class="nav flex-column bg-white mb-0">
+    <li class="nav-item">
+      <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+                <i class="fa fa-home fa-lg" style="margin-right: 15px;"></i>
+                Accueil
+            </a>
+    </li>
+    <li class="nav-item">
+      <a href="/users/medecin/list" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+                <i class="fa fa-address-card fa-lg" style="margin-right: 15px;"></i></i>
+                Liste des patients
+            </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+          <i class="fa fa-calendar-alt fa-lg" style="margin-right: 15px;"></i> </i>
+               Liste des rendez-vous
+            </a>
+    </li>
+    <li class="nav-item">
+
+      
+      <a href="#" class="nav-link text-dark bg-light" style="font-size: 18px; height: 50px;">
+          <i class="fa fa-user fa-lg" style="margin-right: 15px;"></i></i>     
+                  Mon profile
+            </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+          <i class="fa fa-sign-out-alt fa-lg" style="margin-right: 15px;"></i>
+           Déconnexion
+            </a>
+    </li>
+  </ul>  
+</div>
+<div id="alert" class="alert hide">
+
+  <span class="msg" id="msg">Opération effectué avec succées</span>
+  <div class="close-btn">
+     <span id="icon-msg" class="fas fa-check"></span>
+  </div>
+</div>
+<script>
+  const msg = document.getElementById("msg");
+const icon = document.getElementById("icon-msg"); 
+const btn3 = document.getElementById("update-password"); 
+btn3.onclick = function() {
+  const password1 = document.getElementById("password1"); 
+  const password2 = document.getElementById("password2");
+  const password3 = document.getElementById("password3");  
+  if(password1.value.length < 6) {
+    showMsg("vous devez entreer un mot de passe correct"); 
+    return ; 
+  }
+  if(password2.value.length < 6) {
+    showMsg("vous devez entrer votre nouveau mot de passe"); 
+    return;
+  }
+  if(password2.value != password3.value){
+    showMsg("vous devez confirmer votre nouveau mot de passe"); 
+    return; 
+  }
+  $.ajax({
+      method: 'POST',
+        url: '/users/medecin/changePassword',
+        data:    {
+          'password1': password1.value,
+          'password2': password2.value,
+          'password3': password3.value,
+        },
+        success: function (result) { 
+          showMsg(result.msg,!result.err);
+          setTimeout(function(){
+            window.location.reload();
+                },5000);
+     
+         
+
+        } 
+    }); 
+}
+  function showMsg(str,err) {
+    if(err == true) {
+        icon.className = "fas fa-check"
+    }else {
+        icon.className = "fas fa-exclamation" 
+    }
+    msg.innerHTML = str ;
+                $('.alert').addClass("show");
+                $('.alert').removeClass("hide");
+                $('.alert').addClass("showAlert");
+                setTimeout(function(){
+                  $('.alert').removeClass("show");
+                  $('.alert').addClass("hide");
+                },5000);
+
+}
+  var buttons = document.getElementsByTagName("button"); 
+  //returns a nodelist
+for (let i = 0; i < buttons.length; i++) {
+  buttons[i].addEventListener("click", function() {
+      
+ 
+    if(buttons[i].id == 'btn-delete-date'){
+      $.ajax({
+      method: 'POST',
+        url: '/users/medecin/deleteWork',
+        data:    {
+          'work_date' : buttons[i].value,
+        },
+        success: function (result) { 
+          showMsg(result.msg,!result.err);
+          setTimeout(function(){
+            window.location.reload();
+                },5000);
+     
+         
+
+        } 
+    }); 
+  
+  
+    }
+  }, false);
+}
+    $("body").on('change', 'input#ifile',function(){
+    let formData = new FormData(); 
+  formData.append("file", document.getElementById("ifile").files[0], document.getElementById("ifile").files[0].name);
+    formData.append("upload_file", true);
+    $.ajax({
+      method: 'POST',
+      headers: { 'Content-Type': 'multipart/form-data' },
+        url: '/users/medecin/changePictureFile',
+        data:    formData,
+        success: function (result) { 
+          showMsg(result.msg,!result.err);
+          setTimeout(function(){
+            window.location.reload();
+                },5000);
+         
+
+        } 
+    }); 
+  
+  });
+$(function() { 
+
+$('#sidebarCollapse').on('click', function() {
+$('#sidebar, #content').toggleClass('active');
+$('.alert').addClass("show");
+     
+});
+});
+
+const heured = document.getElementById('heured');
+const heuref = document.getElementById('heuref');
+const jour = document.getElementById('jour'); 
+const btn = document.getElementById('btn-add-date');
+
+btn.onclick = function() {
+  if(jour.value =="") {
+    showMsg("vous devez choisir le jour",false);
+    return;
+  }else if(heured.value ==""){
+    showMsg("vous devez choisir l'heure de début",false);
+return;
+  }else if(heuref.value == ""){
+    showMsg("vous devez choisir l'heure de fin",false);
+    return;  
+  }else {
+    $.ajax({
+        method: 'POST',
+        url: '/users/medecin/addWork',
+        data: {
+          'work_date' : jour.value, 
+          'starttime' : heured.value, 
+          'endtime' : heuref.value,
+          
+          
+        },
+        success: function (result) { 
+          showMsg(result.msg,!result.err);
+          setTimeout(function(){
+            window.location.reload();
+                },5000);
+        }});
+  }
+}
+
+</script>
+</html>
