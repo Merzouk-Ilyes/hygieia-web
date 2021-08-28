@@ -232,8 +232,8 @@ function login(req, res) {
                                 {
                                 IdPatient: result[0].IdPatient,
                                    NSS: result[0].NSS,
-            Firstname: result[0].Firstname,
-            Lastname: result[0].Lastname,
+            Firstname: result[0].p_Firstname,
+            Lastname: result[0].p_Lastname,
             Birthday:result[0].Birthday,
             Sexe: result[0].Sexe,
             Bloodgroup:result[0].Bloodgroup,

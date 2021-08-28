@@ -3,6 +3,7 @@ const { Account, User, Admin } = require("../models/user");
 const passwordHash = require("password-hash");
 const jwt = require("jsonwebtoken");
 const { db } = require("../util/db");
+const pool = require("../util/db").pool;
 const nodemailer  = require('nodemailer');
 const fs = require('fs');
 const ejs = require('ejs');
@@ -12,7 +13,6 @@ exports.logOut = (req,res,next)=> {
     msg: "Disconnected",
     });
 }
-
 
 exports.getLogin = (req, res, next) => {  
   if(req.headers.cookie == null ) {
@@ -243,19 +243,23 @@ db.query("SELECT * FROM ACCOUNT WHERE Email = ?",
 }
 exports.postForget = (req,res , next) => {
   const url = "http://localhost:3000";
-  db.query("SELECT * FROM Account WHERE email = ?",[req.body.email],(err,result) => {
+  console.log(req.body.email);
+  pool.getConnection(function(err,connection){
+    connection.query("SELECT * FROM Account WHERE email = ?",[req.body.email],(err,result) => {
       if(err){
           console.log('error:',err);
       }else{
+        console.log('result',result);
+        
         if(result.length == 0) {
        return res.status(200).json({
             error : "ce compte n'éxiste pas" , 
           }); 
           // check if it's not a << patient >> 
         } else {
-     db.query("Select * from patient where email = ? ",
+     connection.query("Select * from patient where email = ? ",
      [req.body.email],(err,result2)=> {
-       if(result2.length == 0) {
+       if(result2.length != 0) {
         const email = req.body.email ; 
         const token = jwt.sign(
             {email},
@@ -296,7 +300,7 @@ exports.postForget = (req,res , next) => {
                 message : "Un mail de récupération vous a été envoyé" , 
               });
             }
-          });
+          });  
        }else {
         res.status(200).json({
           error : "Ce compte n'éxiste pas" , 
@@ -304,16 +308,15 @@ exports.postForget = (req,res , next) => {
        }
      }
      )
-        }
-        
-          
+        }    
       }
         
   })
+  }); 
+
 }
 exports.postConfirm = (req,res, next)=> {
-
-const token = req.query.token;           
+const token = req.query.token;       
 return res.render('auth/resetPassword',{token : token}); 
 }
 
@@ -321,21 +324,24 @@ exports.postReset = (req,res, next)=> {
 
   const token = req.query.token;
   jwt.verify(token, process.env.JWT_SECRET_CODE,
-      (err,decodedToken)=> {
+      (err,decodedToken) => {
           if (err) {
               console.log('error',err); 
           } else {
               const email = decodedToken.email ; 
               const password = passwordHash.generate(req.body.password)
-              db.query("Update Account set password = ? where email = ? ",
-              [password,email],(err,result)=> {
-                  if(err) {
-                    console.log('error',err); 
-                  }else {
-                    res.send("Votre mot de passe est changé");
-                  }
-
-              })
+                pool.getConnection(function(err,connection){
+                  pool.query("Update Account set password = ? where email = ? ",
+                  [password,email],(err,result)=> {
+                      if(err) {
+                        console.log('error',err); 
+                      }else {
+                        res.send("Votre mot de passe est changé");
+                      }
+    
+                  });
+                });
+             
           }
 
   }); 

@@ -126,11 +126,11 @@ button {
   
     <!-- Vertical navbar -->
     <div class="row-h">
-      <button id="sidebarCollapse" type="button" class="btn-nav" style="margin-right: 20px;"><i class="fa fa-bars fa-2x"></i></button>
+      <button id="sidebarCollapse" type="button" class="btn-nav" style="margin-right: 20px;"><i class="fa fa-bars fa-2x">&nbsp Dossier Médical</i></button>
       <img src="/assets/logo.png" height="70px" width="120px" style="margin-right: 8px;"/>
     </div>
 
-  <%- include('./popupupdate.ejs')%>
+
     <div class="h-container2" id="all">
         <div class="i-item-active" id="item1">
             <h3>Bibliographie</h3>
@@ -154,8 +154,8 @@ button {
             Dossier médical du patient : &nbsp; 
         </div>
         <div class="nameDossier">
-          <%= data.Firstname %>
-          <%= data.Lastname %>
+          <%= data.p_Firstname %>
+          <%= data.p_Lastname %>
         &nbsp;  
         </div>
         <div class="typeDossier">
@@ -164,22 +164,20 @@ button {
     </div>
     <div class="w-container1">
         <div class="w-container2">
-            <div class="re-title">
+            <div class="re-title" id="place1">
                 Biographie
             </div>
             <div class="column1">
-                <div class="row2">
-                    <div class="titre">N sécurité social</div>
-                    <div class="data">
-                      <input type="text" id="nom" value="<%= data.NSS %>" required readonly />
-                      </div>
-                  </div>
                   <div class="row2">     
                     <div class="titre">N dossier :</div>
                     <div class="data">
                       <input type="text" id="nom" value="<%= data.IdPatient %>" required readonly />
-
-    
+                      </div>
+                  </div>
+                  <div class="row2">
+                    <div class="titre">N sécurité social</div>
+                    <div class="data">
+                      <input type="text" id="nom" value="<%= data.NSS %>" required readonly />
                       </div>
                   </div>
                   <div class="row2">
@@ -187,15 +185,14 @@ button {
                 
                     <div class="data">
               
-                        <input type="text" id="nom" value="<%= data.Lastname %>" required readonly />
+                        <input type="text" id="nom" value="<%= data.p_Lastname %>" required readonly />
                      
                       </div>
                   </div>
                   <div class="row2">
                     <div class="titre">Prénom :</div>
                     <div class="data">
-                        <input type="text" id="prenom" value="<%= data.Firstname %>" required readonly/>
-                     
+                        <input type="text" id="prenom" value="<%= data.p_Firstname %>" required readonly/>
                       </div>
                   </div>
                   <div class="row2">
@@ -247,13 +244,14 @@ button {
                     
                   </div>
             </div>
+            <img src= "<%=data.Picture %>" style="height:200px ;width:200px"></img>
            
               
         
-        
+
         </div>
         <div class="w-container22">
-            <div class="re-title2">
+            <div class="re-title2" id="place2">
                 Antécédent personnelles
             </div>
             <div class="titre">Intoxication :</div>
@@ -422,12 +420,12 @@ button {
                     </label>
                   </div>
               </div>
-              <button type="button" onclick="return false"  class="btn btn-primary" id="modifier-info">Modifer</button>
+              <button type="button" onclick="return false"  class="btn btn-primary" id="modifier-info">Enregistrer</button>
  
           </div>  
           <div
            class="w-container22">
-           <div class="re-title3">
+           <div class="re-title3" id="place3">
             Antécédent Médico-chirugical
         </div>
            <div class="titre">affection congénitale :</div>
@@ -513,7 +511,6 @@ button {
                         <td><%= containgeneralillnessPatient[i].name_GIllness %></td>
                         <td><%= String(containgeneralillnessPatient[i].dateillness).substring(0,16) %></td>
 
-
                         <td>
                             <button type="button" class="btn btn-danger" id="btn-delete-containgeneralillness" value="<%= containgeneralillnessPatient[i].name_GIllness%>">Supprimer</button>
                           </td>
@@ -571,6 +568,49 @@ button {
  
 
         </div>
+        <div
+           class="w-container22">
+           <div class="re-title3" id="place4">
+            Examens Médicaux
+        </div>
+        <div class="titre">Examen Médical :</div>
+
+        <table class="table table-hover" style="width:90%" id="myTable4">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Date</th>
+       
+              <th scope="col-md-3">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+           <% for (var i = 0; i < exams.length; i++) { %>
+             <tr>
+               <td><%= i+1%></td>
+               <td><%= String(exams[i].date_medicalexam).substring(0,16) %></td>
+               <td>
+                   <button type="button" class="btn btn-danger" id="btn-delete-examen" value="<%= exams[i].idpatient %>">Supprimer</button>
+                   <button type="button" class="btn btn-success" id="btn-delete-allergie" value="<%= exams[i].idpatient %>">Consulter</button>
+                   <button type="button" class="btn btn-primary" onclick="window.location.href='/users/medecin/updateMedicalExam?med=<%= exams[i].iduser%>&id=<%= exams[i].idpatient%>&date=<%= exams[i].date_medicalexam%>'" value="<%= exams[i].idpatient %>">Modifier</button>
+
+                 </td>        
+           </tr>
+           <% } %>
+         </tbody>
+        </table>
+           
+
+             
+                
+              
+     
+   
+ 
+
+        </div>
+      
+        
     </div>
     <div id="alert" class="alert hide">
 
@@ -598,7 +638,7 @@ button {
               </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+        <a href="/users/medecin/list" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
                   <i class="fa fa-address-card fa-lg" style="margin-right: 15px;"></i></i>
                   Liste des patients
               </a>

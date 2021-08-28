@@ -5,8 +5,9 @@
 --font-poppins: 'Poppins', sans-serif;
 --font-archivo: 'Archivo', sans-serif;
 }
-body {
-    padding: 5% 5%;
+
+.content {
+  padding: 5% 5%;
 }
 .top .mainTitle {
     font-family: 'Poppins';
