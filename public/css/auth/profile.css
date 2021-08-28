@@ -10,18 +10,17 @@ body {
     background-color: #F5F5F5;
     height: 100%;
     width: 100%;
-    align-items: center;
-    justify-content: center;
     display: flex;
     margin: 0px;
-    padding: 2%;
+    padding: 0px;
     flex-direction: column;
 }
 .big-card {
-margin-top : 60px;
+    margin : 9px auto;
     display : flex;
     background-color: white ; 
-  
+    align-items: center;
+    justify-content: center;
   padding: 20px 40px;
     width: 150vh ; 
     display: flex;

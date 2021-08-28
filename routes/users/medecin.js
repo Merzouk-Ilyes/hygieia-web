@@ -1,14 +1,11 @@
 const express = require('express')
 const medecinControler  = require("../../controllers/medecin"); 
+const medecinControler2  = require("../../controllers/medecin2"); 
 const router =express.Router();
 router.get('/list',medecinControler.getList);
-router.get('/examenmedical',medecinControler.getExamFile);
 router.get('/medicalFile',medecinControler.getMedicalFile); 
 router.get('/medicalfileUpdate',medecinControler.getUpdateMedicalFile);
-
-
-router.get('/medicalExam' , medecinControler.getExam)
-
+router.get('/medicalexam' , medecinControler.getExam);
 router.post('/addIntoxication', medecinControler.postIntoxication); 
 router.post('/deleteIntoxication', medecinControler.deleteIntoxication); 
 router.post('/updatePersonalHistory', medecinControler.updatePersonalHistory);
@@ -18,5 +15,14 @@ router.post('/addMaladie',medecinControler.addMaladie);
 router.post('/deleteMaladie',medecinControler.deleteMaladie);
 router.post('/addAllergy',medecinControler.addAlergie);
 router.post('/deleteAllergie',medecinControler.deleteAllergie);
-
+router.get('/getExamen',medecinControler.getMedicalExam);
+router.get('/profile',medecinControler.getProfile);
+router.get('/getExam',medecinControler.getExam);
+router.post('/changePictureFile',medecinControler.changePictureFile);
+router.post('/addWork',medecinControler2.addWork);
+router.post('/deleteWork',medecinControler2.deleteWork);
+router.post('/changePassword',medecinControler2.changePassword);
+router.post('/makePDFexam', medecinControler.postExamenMedical);
+router.post('/editExam', medecinControler.postEditExam);
+router.post('/deleteExamFile',medecinControler.deleteExamFile);
 module.exports = router ; 

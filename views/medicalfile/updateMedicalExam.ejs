@@ -10,7 +10,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
     />
-    <title>Examen Médical</title>
+    <title>Modifier Examen Médical</title>
   </head>
 
   <style>
@@ -117,14 +117,16 @@
       </div>
 
       <div class="title-header">
-        <div class="interface-title">Examen médical :</div>
+        <div class="interface-title">Modification de l'Examen médical :</div>
         <div class="patient-name">
-          <%= insertexam.p_Firstname %> <%= insertexam.p_Lastname %>
+          <%= data.p_Firstname %> <%= data.p_Lastname %>
         </div>
-        <div class="patient-role">(Étudiant)</div>
+        <div class="patient-role">(<%= data.p_role %>)</div>
       </div>
 
       <form id="myForm">
+        
+
         <div class="w-container">
           <!-- DATE -->
           <div class="title-container date-title" id="place1">
@@ -144,19 +146,19 @@
               <div class="sub-info1">
                 <div class="info-row">
                   <label class="label-niv1">Poids :</label>
-                  <input type="text" name="poids" /><label class="label-niv1"
+                  <input type="text" name="poids" value="<%= data.weight %>"/><label class="label-niv1"
                     >Kg</label
                   >
                 </div>
                 <div class="info-row">
                   <label class="label-niv1">Taille :</label>
-                  <input type="text" name="taille" /><label class="label-niv1"
+                  <input type="text" name="taille" value="<%= data.height %>"/><label class="label-niv1"
                     >Cm</label
                   >
                 </div>
                 <div class="info-row">
                   <label class="label-niv1">IMC :</label
-                  ><input type="text" name="ICM" /><label class="label-niv1"
+                  ><input type="text" name="ICM" value="<%= data.imc %>"/><label class="label-niv1" 
                     >Kg</label
                   >
                 </div>
@@ -165,13 +167,13 @@
               <div class="sub-info2">
                 <div class="info-row">
                   <label class="label-niv1">T.A : </label>
-                  <input type="text" name="TA" /><label class="label-niv1"
+                  <input type="text" name="TA" value="<%= data.TA %>"/><label class="label-niv1" 
                     >mmhg</label
                   >
                 </div>
                 <div class="info-row">
                   <label class="label-niv1">Glycémie : </label>
-                  <input type="text" name="Glycemie" /><label class="label-niv1"
+                  <input type="text" name="Glycemie" value="<%= data.blood_sugar %>"/><label class="label-niv1" 
                     >G/L</label
                   >
                 </div>
@@ -187,13 +189,13 @@
               <div class="sub-info1-half">
                 <div class="audition-info-row">
                   <label>Oreille droite: </label>
-                  <input type="text" name="Audition_OD" />
+                  <input type="text" name="Audition_OD" value="<%= data.hearing_r %>"/>
                 </div>
               </div>
               <div class="sub-info2-half">
                 <div class="audition-info-row">
                   <label>Oreille gauche:</label>
-                  <input type="text" name="Audition_OG" />
+                  <input type="text" name="Audition_OG" value="<%= data.hearing_l %>"/>
                 </div>
               </div>
             </div>
@@ -208,25 +210,25 @@
                 <label class="label-niv1">Avec correction</label>
 
                 <div class="audition-info-row">
-                  <label>Oreille droite: </label>
-                  <input type="text" name="sans_OD" />
+                  <label>Oeil droit: </label>
+                  <input type="text" name="avec_OD" value="<%= data.c_visual_r %>"/>
                 </div>
                 <label class="label-niv1">Sans correction</label>
 
                 <div class="audition-info-row">
-                  <label>Oreille droite: </label>
-                  <input type="text" name="avec_OD" />
+                  <label>Oeil droit: </label>
+                  <input type="text" name="sans_OD" value="<%= data.visual_r %>"/>
                 </div>
               </div>
 
               <div class="sub-info2-half">
                 <div class="audition-info-row">
-                  <label>Oreille gauche:</label>
-                  <input type="text" name="sans_OG" />
+                  <label>Oeil gauche:</label>
+                  <input type="text" name="avec_OG" value="<%= data.c_visual_l %>" />
                 </div>
                 <div class="audition-info-row">
-                  <label>Oreille gauche:</label>
-                  <input type="text" name="avec_OG" />
+                  <label>Oeil gauche:</label>
+                  <input type="text" name="sans_OG" value="<%= data.visual_l %>" />
                 </div>
               </div>
             </div>
@@ -242,13 +244,13 @@
                 type="radio"
                 class="form-check-input"
                 name="Affection"
-                value="1"
+                value="1" <% if (data.Skin_disorders == 1) { %> checked <% } %>
               /><label>Oui</label>
               <input
                 type="radio"
                 class="form-check-input"
                 name="Affection"
-                value="0"
+                value="0" <% if (data.Skin_disorders == 0) { %> checked <% } %>
               /><label>Non</label>
               <input
                 type="hidden"
@@ -259,13 +261,13 @@
             <div>
               <label>Autres :</label>
               <div>
-                <textarea name="affection_autre" cols="50" rows="3"></textarea>
+                <textarea name="affection_autre" cols="50" rows="3"><%= data.else_Skin_disorders %></textarea>
               </div>
             </div>
 
             <label class="label-niv1 label-niv2">examen clinique:</label>
             <div>
-              <textarea name="peau_exam" cols="90" rows="6"></textarea>
+              <textarea name="peau_exam" cols="90" rows="6"><%= data.skin_exam %></textarea>
             </div>
           </div>
 
@@ -281,13 +283,13 @@
                   type="radio"
                   class="form-check-input"
                   name="Larmoiement"
-                  value="1"
+                  value="1" <% if (data.tearing == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   class="form-check-input"
                   name="Larmoiement"
-                  value="0"
+                  value="0" <% if (data.tearing == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -301,13 +303,13 @@
                   type="radio"
                   class="form-check-input"
                   name="Douleurs"
-                  value="1"
+                  value="1" <% if (data.pain == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   class="form-check-input"
                   name="Douleurs"
-                  value="0"
+                  value="0" <% if (data.pain == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -323,13 +325,13 @@
                   type="radio"
                   class="form-check-input"
                   name="Rougeurs"
-                  value="1"
+                  value="1" <% if (data.redness == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   class="form-check-input"
                   name="Rougeurs"
-                  value="0"
+                  value="0" <% if (data.redness == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -343,13 +345,13 @@
                   type="radio"
                   class="form-check-input"
                   name="Tache"
-                  value="1"
+                  value="1" <% if (data.spot_eyes == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   class="form-check-input"
                   name="Tache"
-                  value="0"
+                  value="0" <% if (data.spot_eyes == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Tache" name="value_Tache" />
               </div>
@@ -357,13 +359,13 @@
             <div>
               <label>Autres :</label>
               <div>
-                <textarea name="ophtalmo_autre" cols="50" rows="3"></textarea>
+                <textarea name="ophtalmo_autre" cols="50" rows="3"><%= data.else_ophthalmo %></textarea>
               </div>
             </div>
 
             <label class="label-niv1 label-niv2">examen clinique:</label>
             <div>
-              <textarea name="ophtalmo_exam" cols="90" rows="6"></textarea>
+              <textarea name="ophtalmo_exam" cols="90" rows="6"><%= data.ophthalmo_exam %></textarea>
             </div>
           </div>
 
@@ -379,13 +381,13 @@
                   type="radio"
                   class="form-check-input"
                   name="Sifflements"
-                  value="1"
+                  value="1" <% if (data.whistling == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   class="form-check-input"
                   name="Sifflements"
-                  value="0"
+                  value="0" <% if (data.whistling == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -399,13 +401,13 @@
                   type="radio"
                   class="form-check-input"
                   name="Angines"
-                  value="1"
+                  value="1" <% if (data.angina == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   class="form-check-input"
                   name="Angines"
-                  value="0"
+                  value="0" <% if (data.angina == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Angines" name="value_Angines" />
               </div>
@@ -417,13 +419,13 @@
                   type="radio"
                   class="form-check-input"
                   name="Epistaxis"
-                  value="1"
+                  value="1" <% if (data.epistaxis == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   class="form-check-input"
                   name="Epistaxis"
-                  value="0"
+                  value="0" <% if (data.epistaxis == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -437,13 +439,13 @@
                   type="radio"
                   class="form-check-input"
                   name="Rhinorhee"
-                  value="1"
+                  value="1" <% if (data.rhinorrhea == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   class="form-check-input"
                   name="Rhinorhee"
-                  value="0"
+                  value="0" <% if (data.rhinorrhea == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -455,13 +457,13 @@
             <div>
               <label>Autres :</label>
               <div>
-                <textarea name="orl_autre" cols="50" rows="3"></textarea>
+                <textarea name="orl_autre" cols="50" rows="3"><%= data.else_orl %></textarea>
               </div>
             </div>
 
             <label class="label-niv1 label-niv2">examen clinique:</label>
             <div>
-              <textarea name="orl_exam" cols="90" rows="6"></textarea>
+              <textarea name="orl_exam" cols="90" rows="6"><%= data.orl_exam %></textarea>
             </div>
           </div>
 
@@ -480,13 +482,13 @@
                   type="radio"
                   class="form-check-input"
                   name="Musculaires"
-                  value="1"
+                  value="1" <% if (data.muscleache == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   class="form-check-input"
                   name="Musculaires"
-                  value="0"
+                  value="0" <% if (data.muscleache == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -500,13 +502,13 @@
                   type="radio"
                   class="form-check-input"
                   name="Articulaires"
-                  value="1"
+                  value="1" <% if (data.jointache == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   class="form-check-input"
                   name="Articulaires"
-                  value="0"
+                  value="0" <% if (data.jointache == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -522,13 +524,13 @@
                   type="radio"
                   class="form-check-input"
                   name="Vertebrales"
-                  value="1"
+                  value="1" <% if (data.spinalache == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   class="form-check-input"
                   name="Vertebrales"
-                  value="0"
+                  value="0" <% if (data.spinalache == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -542,13 +544,13 @@
                   type="radio"
                   class="form-check-input"
                   name="Neurologiques"
-                  value="1"
+                  value="1" <% if (data.Neuroloache == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   class="form-check-input"
                   name="Neurologiques"
-                  value="0"
+                  value="0" <% if (data.Neuroloache == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -564,13 +566,13 @@
                   type="radio"
                   class="form-check-input"
                   name="Mouvements"
-                  value="1"
+                  value="1" <% if (data.Movement_discomfort == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   class="form-check-input"
                   name="Mouvements"
-                  value="0"
+                  value="0" <% if (data.Movement_discomfort == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -584,13 +586,13 @@
                   type="radio"
                   class="form-check-input"
                   name="Fatigabilite"
-                  value="1"
+                  value="1" <% if (data.fatigability == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   class="form-check-input"
                   name="Fatigabilite"
-                  value="0"
+                  value="0" <% if (data.fatigability == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -602,13 +604,13 @@
             <div>
               <label>Autres :</label>
               <div>
-                <textarea name="locomo_autre" cols="50" rows="3"></textarea>
+                <textarea name="locomo_autre" cols="50" rows="3"><%= data.else_locomo %></textarea>
               </div>
             </div>
 
             <label class="label-niv1 label-niv2">examen clinique:</label>
             <div>
-              <textarea name="locomo_exam" cols="90" rows="6"></textarea>
+              <textarea name="locomo_exam" cols="90" rows="6"><%= data.locomo_exam %></textarea>
             </div>
           </div>
 
@@ -624,13 +626,13 @@
                   type="radio"
                   class="form-check-input"
                   name="Palpitation"
-                  value="1"
+                  value="1" <% if (data.palpitation == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   class="form-check-input"
                   name="Palpitation"
-                  value="0"
+                  value="0" <% if (data.palpitation == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -647,13 +649,13 @@
                   type="radio"
                   name="Marche"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.walking_pain == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Marche"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.walking_pain == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Marche" name="value_Marche" />
               </div>
@@ -663,13 +665,13 @@
                   type="radio"
                   name="Repos"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.resting_pain == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Repos"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.resting_pain == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Repos" name="value_Repos" />
               </div>
@@ -681,13 +683,13 @@
                   type="radio"
                   name="Effort"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.exertion_pain == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Effort"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.exertion_pain == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Effort" name="value_Effort" />
               </div>
@@ -697,13 +699,13 @@
                   type="radio"
                   name="Permanents"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.permanent_pain == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Permanents"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.permanent_pain == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -719,13 +721,13 @@
                   type="radio"
                   name="Oedemes"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.edema == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Oedemes"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.edema == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Oedemes" name="value_Oedemes" />
               </div>
@@ -736,11 +738,11 @@
               </div>
 
               <div>
-                <textarea name="cardio_autres" cols="50" rows="3"></textarea>
+                <textarea name="cardio_autres" cols="50" rows="3"><%= data.else_cardio %></textarea>
               </div>
             </div>
             <label class="label-niv1 label-niv2">examen clinique:</label>
-            <div><label>Pouls:</label><input type="text" name="Pouls" /></div>
+            <div><label>Pouls:</label><input type="text" name="Pouls" value="<%= data.pulse %>"/></div>
             <div>
               <div>
                 <label>Cyanose</label>
@@ -748,19 +750,19 @@
                   type="radio"
                   name="Cyanose"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.cyanosis == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Cyanose"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.cyanosis == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Cyanose" name="value_Cyanose" />
               </div>
             </div>
             <div>
-              <textarea name="cardio_exam" cols="90" rows="3"></textarea>
+              <textarea name="cardio_exam" cols="90" rows="3"><%= data.cardio_exam %></textarea>
             </div>
           </div>
 
@@ -776,13 +778,13 @@
                   type="radio"
                   name="Toux"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.cough == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Toux"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.cough == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Toux" name="value_Toux" />
               </div>
@@ -795,13 +797,13 @@
                   type="radio"
                   name="Nocturne"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.nocturn_dyspnea == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Nocturne"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.nocturn_dyspnea == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -815,13 +817,13 @@
                   type="radio"
                   name="Diurne"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.daytime_dyspnea == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Diurne"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.daytime_dyspnea == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Diurne" name="value_Diurne" />
               </div>
@@ -832,13 +834,13 @@
                 type="radio"
                 name="Expectorations"
                 class="form-check-input"
-                value="1"
+                value="1" <% if (data.expectorations == 1) { %> checked <% } %>
               /><label>Oui</label>
               <input
                 type="radio"
                 name="Expectorations"
                 class="form-check-input"
-                value="0"
+                value="0" <% if (data.expectorations == 0) { %> checked <% } %>
               /><label>Non</label>
               <input
                 type="hidden"
@@ -852,13 +854,13 @@
                 type="radio"
                 name="Thoraciques"
                 class="form-check-input"
-                value="1"
+                value="1" <% if (data.chest_pain == 1) { %> checked <% } %>
               /><label>Oui</label>
               <input
                 type="radio"
                 name="Thoraciques"
                 class="form-check-input"
-                value="0"
+                value="0" <% if (data.chest_pain == 0) { %> checked <% } %>
               /><label>Non</label>
               <input
                 type="hidden"
@@ -869,18 +871,18 @@
             <div>
               <label>Autres :</label>
               <div>
-                <textarea name="respi_autres" cols="50" rows="3"></textarea>
+                <textarea name="respi_autres" cols="50" rows="3"><%= data.else_thoracic %></textarea>
               </div>
             </div>
             <label class="label-niv1 label-niv2">examen clinique:</label>
             <div>
               <label>Fréquence Respiratoire: </label>
-              <input type="text" name="frequence" /><label class="label-niv1"
+              <input type="text" name="frequence" value="<%= data.respir_rate %>"/><label class="label-niv1"
                 >/min</label
               >
             </div>
             <div>
-              <textarea name="respi_exam" cols="90" rows="3"></textarea>
+              <textarea name="respi_exam" cols="90" rows="3"><%= data.respir_exam %></textarea>
             </div>
           </div>
           <!-- DIGESTIF -->
@@ -889,13 +891,13 @@
           </div>
           <div class="container dig-container">
             <div>
-              <label>Appétit:</label><input type="text" name="Appetit" />
+              <label>Appétit:</label><input type="text" name="Appetit" value="<%= data.appetite %>"/>
             </div>
             <div>
-              <label>Transit: </label><input type="text" name="Transit" />
+              <label>Transit: </label><input type="text" name="Transit" value="<%= data.transit %>"/>
             </div>
             <div>
-              <label>Selles: </label><input type="text" name="Selles" />
+              <label>Selles: </label><input type="text" name="Selles" value="<%= data.selles %>"/>
             </div>
             <div>
               <div>
@@ -904,13 +906,13 @@
                   type="radio"
                   name="Pyrosis"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.pyrosis == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Pyrosis"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.pyrosis == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Pyrosis" name="value_Pyrosis" />
               </div>
@@ -920,13 +922,13 @@
                   type="radio"
                   name="Vomissements"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.vomiting == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Vomissements"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.vomiting == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -937,16 +939,16 @@
             </div>
             <div>
               <label>Rectorragies:</label
-              ><input type="text" name="Rectorragies" />
+              ><input type="text" name="Rectorragies" value="<%= data.rectal_bleeding %>"/>
             </div>
             <div>
               <label>Douleur abdominales: </label
-              ><input type="text" name="DouleurAbdo" />
+              ><input type="text" name="DouleurAbdo" value="<%= data.abdo_pain %>"/>
             </div>
             <div>
               <label>Autres:</label>
               <div>
-                <textarea name="digestif_autres" cols="50" rows="3"></textarea>
+                <textarea name="digestif_autres" cols="50" rows="3"><%= data.else_digestive %></textarea>
               </div>
             </div>
 
@@ -961,13 +963,13 @@
                   type="radio"
                   name="carie"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.carie == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="carie"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.carie == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_carie" name="value_carie" />
               </div>
@@ -977,13 +979,13 @@
                   type="radio"
                   name="Gingivopathie"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.gingivopathy == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Gingivopathie"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.gingivopathy == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -995,20 +997,20 @@
 
             <div>
               <div>
-                <label>Abdomens:</label><input type="text" name="Abdomens" />
+                <label>Abdomens:</label><input type="text" name="Abdomens" value="<%= data.abdomens %>"/>
               </div>
               <div>
-                <label>Hernie: </label><input type="text" name="Hernie" />
+                <label>Hernie: </label><input type="text" name="Hernie" value="<%= data.hernie %>"/>
               </div>
             </div>
             <div>
-              <div><label>Foie: </label><input type="text" name="Foie" /></div>
+              <div><label>Foie: </label><input type="text" name="Foie" value="<%= data.liver %>"/></div>
               <div>
-                <label>Autres:</label><input type="text" name="dig_autres" />
+                <label>Autres:</label><input type="text" name="dig_autres" value="<%= data.else_dig %>"/>
               </div>
             </div>
             <div>
-              <textarea name="digestif_exam" cols="90" rows="4"></textarea>
+              <textarea name="digestif_exam" cols="90" rows="4"><%= data.digestive_exam %></textarea>
             </div>
           </div>
 
@@ -1025,13 +1027,13 @@
                   type="radio"
                   name="Pollakiurie"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.pollakiuria == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Pollakiurie"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.pollakiuria == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -1045,13 +1047,13 @@
                   type="radio"
                   name="Dysurie"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.dysurie == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Dysurie"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.dysurie == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Dysurie" name="value_Dysurie" />
               </div>
@@ -1063,13 +1065,13 @@
                   type="radio"
                   name="Hematurie"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.hematuria == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Hematurie"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.hematuria == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -1083,13 +1085,13 @@
                   type="radio"
                   name="Brulures"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.urination_burns == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Brulures"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.urination_burns == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -1104,19 +1106,19 @@
                 type="radio"
                 name="Coliques"
                 class="form-check-input"
-                value="1"
+                value="1" <% if (data.renal_colic == 1) { %> checked <% } %>
               /><label>Oui</label>
               <input
                 type="radio"
                 name="Coliques"
                 class="form-check-input"
-                value="0"
+                value="0" <% if (data.renal_colic == 0) { %> checked <% } %>
               /><label>Non</label>
               <input type="hidden" id="value_Coliques" name="value_Coliques" />
             </div>
             <div>
               <div>
-                <label>Pertes: </label><input type="text" name="Pertes" />
+                <label>Pertes: </label><input type="text" name="Pertes" value="<%= data.losses %>"/>
               </div>
               <div>
                 <label>Cycles: </label>
@@ -1124,13 +1126,13 @@
                   type="radio"
                   name="Cycles"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.cycle == 1) { %> checked <% } %>
                 /><label>Régulier</label>
                 <input
                   type="radio"
                   name="Cycles"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.cycle == 0) { %> checked <% } %>
                 /><label>Irrégulier</label>
                 <input type="hidden" id="value_Cycles" name="value_Cycles" />
               </div>
@@ -1138,22 +1140,22 @@
             <div>
               <label>Autres:</label>
               <div>
-                <textarea name="genito_autres" cols="50" rows="3"></textarea>
+                <textarea name="genito_autres" cols="50" rows="3"><%= data.else_genito %></textarea>
               </div>
             </div>
             <div>
               <label class="label-niv1 label-niv2">examen clinique:</label>
             </div>
             <div><label>Bourses:</label></div>
-            <textarea name="Bourses" cols="100" rows="3"></textarea>
+            <textarea name="Bourses" cols="100" rows="3"><%= data.bourses %></textarea>
             <div><label>Seins:</label></div>
-            <textarea name="Seins" cols="100" rows="3"></textarea>
+            <textarea name="Seins" cols="100" rows="3"><%= data.breasts %></textarea>
             <div><label>T.R:</label></div>
-            <textarea name="TR" cols="100" rows="3"></textarea>
+            <textarea name="TR" cols="100" rows="3"><%= data.tr %></textarea>
             <div><label>T.V:</label></div>
-            <textarea name="TV" cols="100" rows="3"></textarea>
+            <textarea name="TV" cols="100" rows="3"><%= data.tv %></textarea>
             <div>
-              <textarea name="genito_exam" cols="90" rows="6"></textarea>
+              <textarea name="genito_exam" cols="90" rows="6"><%= data.genito_exam %></textarea>
             </div>
           </div>
 
@@ -1164,7 +1166,7 @@
           <div class="container neur-container">
             <div>
               <div>
-                <label>Sommeil</label><input type="text" name="Sommeil" />
+                <label>Sommeil</label><input type="text" name="Sommeil" value="<%= data.sleep %>"/>
               </div>
               <div>
                 <label>Céphaliées</label>
@@ -1172,13 +1174,13 @@
                   type="radio"
                   name="Cephaliees"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.headache == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Cephaliees"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.headache == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -1194,13 +1196,13 @@
                   type="radio"
                   name="Vertiges"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.dizziness == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Vertiges"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.dizziness == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -1214,13 +1216,13 @@
                   type="radio"
                   name="Vide"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.emptiness_fear == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Vide"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.emptiness_fear == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Vide" name="value_Vide" />
               </div>
@@ -1232,13 +1234,13 @@
                   type="radio"
                   name="Connaissance"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.consciousness_loss == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Connaissance"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.consciousness_loss == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -1252,13 +1254,13 @@
                   type="radio"
                   name="Paresie"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.paresis == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Paresie"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.paresis == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Paresie" name="value_Paresie" />
               </div>
@@ -1269,13 +1271,13 @@
                 type="radio"
                 name="Paresthesie"
                 class="form-check-input"
-                value="1"
+                value="1" <% if (data.paresthesia == 1) { %> checked <% } %>
               /><label>Oui</label>
               <input
                 type="radio"
                 name="Paresthesie"
                 class="form-check-input"
-                value="0"
+                value="0" <% if (data.paresthesia == 0) { %> checked <% } %>
               /><label>Non</label>
               <input
                 type="hidden"
@@ -1286,7 +1288,7 @@
             <div>
               <label>Autres:</label>
               <div>
-                <textarea name="Neuro_autres" cols="50" rows="3"></textarea>
+                <textarea name="Neuro_autres" cols="50" rows="3"><%= data.else_neuro %></textarea>
               </div>
             </div>
 
@@ -1296,7 +1298,7 @@
             <div>
               <div>
                 <label>Tremblement:</label
-                ><input type="text" name="Tremblement" />
+                ><input type="text" name="Tremblement" value="<%= data.tremor %>"/>
               </div>
               <div>
                 <label>Romberg</label>
@@ -1304,13 +1306,13 @@
                   type="radio"
                   name="Romberg"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.romberg == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Romberg"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.romberg == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Romberg" name="value_Romberg" />
               </div>
@@ -1321,13 +1323,13 @@
                 type="radio"
                 name="Reflexes"
                 class="form-check-input"
-                value="1"
+                value="1" <% if (data.reflexes == 1) { %> checked <% } %>
               /><label>present</label>
               <input
                 type="radio"
                 name="Reflexes"
                 class="form-check-input"
-                value="0"
+                value="0" <% if (data.reflexes == 0) { %> checked <% } %>
               /><label>absent</label>
               <input type="hidden" id="value_Reflexes" name="value_Reflexes" />
             </div>
@@ -1337,13 +1339,13 @@
                 type="radio"
                 name="Coordination"
                 class="form-check-input"
-                value="1"
+                value="1" <% if (data.coordination == 1) { %> checked <% } %>
               /><label>present</label>
               <input
                 type="radio"
                 name="Coordination"
                 class="form-check-input"
-                value="0"
+                value="0" <% if (data.coordination == 0) { %> checked <% } %>
               /><label>absent</label>
               <input
                 type="hidden"
@@ -1352,7 +1354,7 @@
               />
             </div>
             <div>
-              <label>Motricité: </label><input type="text" name="Motricite" />
+              <label>Motricité: </label><input type="text" name="Motricite" value="<%= data.motor_skills %>"/>
             </div>
             <div>
               <label>Sensibilité: </label>
@@ -1360,13 +1362,13 @@
                 type="radio"
                 name="Sensibilite"
                 class="form-check-input"
-                value="1"
+                value="1" <% if (data.sensitivity == 1) { %> checked <% } %>
               /><label>Oui</label>
               <input
                 type="radio"
                 name="Sensibilite"
                 class="form-check-input"
-                value="0"
+                value="0" <% if (data.sensitivity == 0) { %> checked <% } %>
               /><label>Non</label>
               <input
                 type="hidden"
@@ -1384,13 +1386,13 @@
                   type="radio"
                   name="DAchil"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.achilles_r == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="DAchil"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.achilles_r == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_DAchil" name="value_DAchil" />
               </div>
@@ -1400,13 +1402,13 @@
                   type="radio"
                   name="GAchil"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.achilles_l == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="GAchil"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.achilles_l == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_GAchil" name="value_GAchil" />
               </div>
@@ -1421,13 +1423,13 @@
                   type="radio"
                   name="DOcul"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.oculaire_r == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="DOcul"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.oculaire_r == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_DOcul" name="value_DOcul" />
               </div>
@@ -1437,19 +1439,19 @@
                   type="radio"
                   name="GOcul"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.Oculaire_l == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="GOcul"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.Oculaire_l == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_GOcul" name="value_GOcul" />
               </div>
             </div>
             <div>
-              <textarea name="Neuro_exam" cols="90" rows="6"></textarea>
+              <textarea name="Neuro_exam" cols="90" rows="6"><%= data.neuro_exam %></textarea>
             </div>
           </div>
           <!-- HEMATOLOGIQUE -->
@@ -1464,13 +1466,13 @@
                 type="radio"
                 name="Ecchymoses"
                 class="form-check-input"
-                value="1"
+                value="1" <% if (data.ecchymose == 1) { %> checked <% } %>
               /><label>Oui</label>
               <input
                 type="radio"
                 name="Ecchymoses"
                 class="form-check-input"
-                value="0"
+                value="0" <% if (data.ecchymose == 0) { %> checked <% } %>
               /><label>Non</label>
               <input
                 type="hidden"
@@ -1484,30 +1486,30 @@
                 type="radio"
                 name="Hemo"
                 class="form-check-input"
-                value="1"
+                value="1" <% if (data.bleeding_tendencies == 1) { %> checked <% } %>
               /><label>Oui</label>
               <input
                 type="radio"
                 name="Hemo"
                 class="form-check-input"
-                value="0"
+                value="0" <% if (data.bleeding_tendencies == 0) { %> checked <% } %>
               /><label>Non</label>
               <input type="hidden" id="value_Hemo" name="value_Hemo" />
             </div>
             <div>
               <label>Autres:</label>
               <div>
-                <textarea name="Hemato_autres" cols="50" rows="3"></textarea>
+                <textarea name="Hemato_autres" cols="50" rows="3"><%= data.else_hemato %></textarea>
               </div>
             </div>
             <label class="label-niv1 label-niv2">examen clinique:</label>
             <div>
-              <label>Pétéchies: </label><input type="text" name="Petechies" />
+              <label>Pétéchies: </label><input type="text" name="Petechies" value="<%= data.petechia %>"/>
             </div>
             <div>
-              <label>Purpura: </label><input type="text" name="Purpura" />
+              <label>Purpura: </label><input type="text" name="Purpura" value="<%= data.purpura %>"/>
             </div>
-            <div><label>Rate: </label><input type="text" name="Rate" /></div>
+            <div><label>Rate: </label><input type="text" name="Rate" value="<%= data.rate %>"/></div>
 
             <label class="label-niv1">ganglion:</label>
             <div>
@@ -1517,13 +1519,13 @@
                   type="radio"
                   name="Cervicaux"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.cervical_ganglia == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Cervicaux"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.cervical_ganglia == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -1537,13 +1539,13 @@
                   type="radio"
                   name="Auxi"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.subaux_ganglia == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Auxi"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.subaux_ganglia == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Auxi" name="value_Auxi" />
               </div>
@@ -1555,13 +1557,13 @@
                   type="radio"
                   name="Clavi"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.Subclavicular_ganglia == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Clavi"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.Subclavicular_ganglia == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Clavi" name="value_Clavi" />
               </div>
@@ -1571,13 +1573,13 @@
                   type="radio"
                   name="Inguinaux"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.inguin_ganglia == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Inguinaux"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.inguin_ganglia == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input
                   type="hidden"
@@ -1587,7 +1589,7 @@
               </div>
             </div>
             <div>
-              <textarea name="hemato_exam" cols="90" rows="6"></textarea>
+              <textarea name="hemato_exam" cols="90" rows="6"><%= data.hemato_exam %></textarea>
             </div>
           </div>
 
@@ -1603,13 +1605,13 @@
                   type="radio"
                   name="Obese"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.fam_obesity == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Obese"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.fam_obesity == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Obese" name="value_Obese" />
               </div>
@@ -1619,13 +1621,13 @@
                   type="radio"
                   name="Maigre"
                   class="form-check-input"
-                  value="1"
+                  value="1" <% if (data.fam_thinness == 1) { %> checked <% } %>
                 /><label>Oui</label>
                 <input
                   type="radio"
                   name="Maigre"
                   class="form-check-input"
-                  value="0"
+                  value="0" <% if (data.fam_thinness == 0) { %> checked <% } %>
                 /><label>Non</label>
                 <input type="hidden" id="value_Maigre" name="value_Maigre" />
               </div>
@@ -1633,22 +1635,22 @@
             <div>
               <label>Autres:</label>
               <div>
-                <textarea name="Endo_autres" cols="50" rows="3"></textarea>
+                <textarea name="Endo_autres" cols="50" rows="3"><%= data.else_endo %></textarea>
               </div>
             </div>
             <label class="label-niv1 label-niv2">examen clinique:</label>
             <div>
-              <label>Tyroide:</label><input type="text" name="Tyroide" />
+              <label>Tyroide:</label><input type="text" name="Tyroide" value="<%= data.Thyroid %>"/>
             </div>
             <div>
-              <label>Testicules:</label><input type="text" name="Testicules" />
+              <label>Testicules:</label><input type="text" name="Testicules" value="<%= data.testicles %>"/>
             </div>
             <div>
               <label>Glandes mammaires:</label
-              ><input type="text" name="Glandes" />
+              ><input type="text" name="Glandes"value="<%= data.mam_glands %>" />
             </div>
             <div>
-              <textarea name="Endo_exam" cols="50" rows="3"></textarea>
+              <textarea name="Endo_exam" cols="50" rows="3"><%= data.endo_exam %></textarea>
             </div>
           </div>
 
@@ -1662,127 +1664,52 @@
               <label>Fonction Respiratoire:</label>
             </div>
             <div>
-              <textarea name="respire" cols="100" rows="3"></textarea>
+              <textarea name="respire" cols="100" rows="3"><%= data.respiratory_func %></textarea>
             </div>
             <div>
               <label>Fonction Circulatoire:</label>
             </div>
             <div>
-              <textarea name="circule" cols="100" rows="3"></textarea>
+              <textarea name="circule" cols="100" rows="3"><%= data.circulatory_func %></textarea>
             </div>
             <div>
               <label>Fonction Motrice:</label>
             </div>
             <div>
-              <textarea name="Fmotrice" cols="100" rows="3"></textarea>
+              <textarea name="Fmotrice" cols="100" rows="3"><%= data.motrice_func %></textarea>
             </div>
           </div>
 
           <div class="final-inputs">
             <div></div>
-            <button class="btn outline" type="submit">
-              Valider examen
+            <button type="submit" class="btn outline" onclick="EditExam()">
+              Modifier examen
             </button>
           </div>
         </div>
       </form>
-   
 
       <script>
-   
-         function showMsg(str,err) {
-          const msg = document.getElementById("msg");
-const icon = document.getElementById("icon-msg"); 
-           console.log(str);
-    if(err == true) {
-        icon.className = "fas fa-check"
-    }else {
-        icon.className = "fas fa-exclamation" 
-    }
-
-    msg.innerHTML = str ;
-                $('.alert').addClass("show");
-                $('.alert').removeClass("hide");
-                $('.alert').addClass("showAlert");
-                setTimeout(function(){
-                  $('.alert').removeClass("show");
-                  $('.alert').addClass("hide");
-                },5000);
-
-}
-        myForm.onsubmit = async (e) => {
-    e.preventDefault();
-
-    var data = new FormData( document.getElementById('myForm') );
-data = data.entries();              
-var obj = data.next();
-var retrieved = {};             
-while(undefined != obj.value) {    
-    retrieved[obj.value[0]] = obj.value[1];
-    obj = data.next();
-}
-console.log('retrieved:ww ',retrieved);
-var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>'  ;
-
-const map = new Map(Object.entries(retrieved));
-var form_data = new FormData();
-const map1 = new Map();
-for ( var key in retrieved ) {
-  map1.set(key,retrieved[key]);
-    form_data.append(key, retrieved[key]);
-}
-map1.set('id',parsed_data);
-console.log('map',map1);
-const result = Object.fromEntries(map);
-console.log(result);
-
-console.log(retrieved['poids']);
-$.ajax({
-                method: 'POST',
-           
-                url: '/users/medecin/makePDFexam/?id='+parsed_data,
-         
-     data :result,
-         
-
-                processData: true,
-
-        
-                success: function (result) { 
-                  console.log(result.message);
-                  showMsg(result.message,!result.err);
-             
-                }
-              }); 
-            }
-
-        var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>'  ;
-          function addExam() {
-    
-     
-         
-            var formValues = $('myForm').serialize();
-            $('myForm').find('input').attr('disabled', 'disabled'); 
-            console.log(formValues);
-             $.ajax({
-                method: 'POST',
-                url: '/users/medecin/makePDFexam',
-                data: { 
-                  "id" : parsed_data,
-                },
-                success: function (result) { 
-           
-                  if (result == "done"){
-                    showMsg("Examen médical ajouté avec succès",true);
-                  }else {
-                      if(result == "exist") {
-                          showMsg("Examen médical déja effectué",false); 
-                      }}
-                }
-              }); 
-          }
-      </script> 
-
+                    function EditExam(){
+                        var data = {
+                        }
+                      ('#myForm').submit(function(e){
+                        $.ajax({
+                          method: 'POST',
+                          url: '/users/medecin/editExam',
+                          data: {},
+                          success: function (success) { 
+                            console.log(success);
+                            showMsg("Examen médical modifié",true);
+                          },
+                          error: function (e){
+                            showMsg("Une erreur est survenue, veuillez réessayer!",false);
+                            console.log(e);
+                          }
+                        }); 
+                      });
+                      }
+      </script>
       <div class="doc-container" id="Ordonnance">
         <div class="title-container ord-title">
           <p>Ordonnance</p>
@@ -2015,13 +1942,13 @@ $.ajax({
         </div>
       </div>
     </div>
+
     <div id="alert" class="alert hide">
       <span class="msg" id="msg">Opération effectuée avec succès</span>
       <div class="close-btn">
         <span id="icon-msg" class="fas fa-check"></span>
       </div>
     </div>
- 
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="/js/exam.js"></script>
