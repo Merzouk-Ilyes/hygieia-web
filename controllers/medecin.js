@@ -1,5 +1,6 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+var dateFormat = require('dateformat');
 const db = require("../util/db").db;
 const PDFDocument = require('../util/pdfkit-tables');
 const doc = new PDFDocument({compress:false});
@@ -113,10 +114,9 @@ exports.getUpdateMedicalFile = (req,res,next)=> {
       res.redirect('/users/medecin/list');
       return; 
     }
-    console.log(result1);
+
     connection.query("Select * from medicalexam where idpatient = ? ",[req.query.id],(err,exams)=>{
-      console.log('exams');
-      console.log(exams);
+ 
       connection.query("Select * from haveintoxication where Idpersonalhistory = ?  ",
       [result1[0].Idpersonalhistory], (err,intoxicationPatient)=> {
       connection.query("Select *  from intervention",
@@ -208,7 +208,7 @@ exports.getMedicalFile = (req,res,next)=> {
         if(err) {
           console.log("error", err);
         }else{
-          console.log(dataa[0].date_exam);
+     
           res.render('medicalfile/medicalFile', { title: 'Exam Data', examdata: dataa, dataB : result1[0] ,dataC: result2,});
         }
       }
@@ -495,20 +495,28 @@ exports.addMaladie = (req,res)=>{
     exports.deleteExamFile = (req,res,next) =>{
       console.log('you are in the delete exam file');
     
-      console.log(req.body.med);
-      console.log(req.body.pat);
-      console.log(req.body.exdate);
-    
-      db.query("DELETE FROM medicalexam WHERE iduser = ? AND idpatient =? AND date_medicalexam = ?", 
-      [req.body.med,req.body.pat,req.body.exdate],
+ console.log(req.body);
+ var day=dateFormat(req.body.exdate,"yyyy-mm-dd");
+ console.log(day);
+
+      db.query("SELECT *  FROM medicalexam WHERE iduser = ? AND idpatient = ? AND date_medicalexam  = ?",[req.body.med,req.body.pat,day],(err,red)=>{
+        console.log(err);
+        console.log('red',red); 
+
+
+        db.query("DELETE FROM medicalexam WHERE iduser = ? AND idpatient =? AND date_medicalexam = ? ", 
+      [req.body.med,req.body.pat,day],
         (err, result) =>{
+          console.log(result);
           if(err){
-            console.log("error", err);
+          return res.send({'msg' : 'erreur','err':true});
           }else{
-            console.log("Medical Exam Deleted");
+            return res.send({'msg' : 'Examen médical supprimé avec succées','err':false});
           }
         }
       ); 
+      })
+      
     }
 
     exports.postExamenMedical = (req,res,next) => {
@@ -534,6 +542,7 @@ exports.addMaladie = (req,res)=>{
         insertExam(req,res,next,db_date,id_patient,id_medecin);
       });
     }
+
     function insertExam(req,res,next,db_date,id_patient,id_medecin){
       pool.getConnection(function(err, connection) {
         const rawCookies = req.headers.cookie.split('; ');
@@ -744,5 +753,5 @@ exports.addMaladie = (req,res)=>{
         });
       })
     }
-    
+ 
     

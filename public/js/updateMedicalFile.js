@@ -185,14 +185,36 @@ const patient = JSON.parse(parsed_data);
 var buttons = document.getElementsByTagName("button"); //returns a nodelist
 for (let i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener("click", function() {
-      
- 
+    
     buttonsControl(this, i);
   }, false);
 }
 
 function buttonsControl(button, i) {
-    console.log(button.id);
+    console.log(button.value);
+    if(button.id == "btn-delete-examen"){
+        const myArr = button.value.split(",");
+        $.ajax({
+            method: 'POST',
+            url: '/users/medecin/deleteExamFile',
+            data: {    
+      "med": myArr[1], 
+      "pat":myArr[0] , 
+      "exdate":myArr[2], 
+            },
+            success: function (result) { 
+                console.log("wow");
+             console.log(result);
+                
+                
+    showMsg(result.msg,result.err); 
+    // supprimer le row 
+    window.location.reload();
+                 // show success message 
+                
+        
+            }});
+    }
 if(button.id === "btn-intoxication" ) {
     addIntoxication();
 }else {

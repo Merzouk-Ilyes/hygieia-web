@@ -590,7 +590,7 @@ button {
                <td><%= i+1%></td>
                <td><%= String(exams[i].date_medicalexam).substring(0,16) %></td>
                <td>
-                   <button type="button" class="btn btn-danger" id="btn-delete-examen" value="<%= exams[i].idpatient %>">Supprimer</button>
+                   <button type="button" class="btn btn-danger" id="btn-delete-examen" value="<%= exams[i].idpatient %>,<%= exams[i].iduser%>,<%= exams[i].date_medicalexam%>" >Supprimer</button>
                    <button type="button" class="btn btn-success" id="btn-delete-allergie" value="<%= exams[i].idpatient %>">Consulter</button>
                    <button type="button" class="btn btn-primary" onclick="window.location.href='/users/medecin/updateMedicalExam?med=<%= exams[i].iduser%>&id=<%= exams[i].idpatient%>&date=<%= exams[i].date_medicalexam%>'" value="<%= exams[i].idpatient %>">Modifier</button>
 
