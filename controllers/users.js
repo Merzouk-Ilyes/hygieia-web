@@ -7,6 +7,8 @@ const pool = require("../util/db").pool;
 const nodemailer  = require('nodemailer');
 const fs = require('fs');
 const ejs = require('ejs');
+const sendNotif = require('../app');
+
 exports.logOut = (req,res,next)=> {
   res.clearCookie("jwt"); 
   return res.status(200).json({
@@ -15,6 +17,7 @@ exports.logOut = (req,res,next)=> {
 }
 
 exports.getLogin = (req, res, next) => {  
+sendNotif.sendNotif();// This will emit the event to all connected sockets
   if(req.headers.cookie == null ) {
     res.render("auth/index", {error : ""}); 
     return; 

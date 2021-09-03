@@ -10,6 +10,13 @@
   />
     <title>Liste des Patients</title>
 </head>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+ const socket = io();   
+    socket.on('new-notification', (resp) => {
+   console.log(resp);
+    });
+</script>
 <style>
   
 

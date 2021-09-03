@@ -7,13 +7,32 @@ const cookieParser = require("cookie-parser");
 const sequelize = require("./util/database");
 const usersRoutes = require("./routes/users/users");
 const { verifyToken } = require("./middleware/verifyToken");
+const socket = require("socket.io");
+
+
 
 app.set("views", "views");
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 
 const PORT = process.env.PORT || 3000;
+var server = app.listen(PORT, function () {
+  var host = server.address().address
+  var port = server.address().port
+});
+const io = socket(server);
+io.on("connection", function (socket) {
+  console.log("Made socket connection");
 
+  socket.on("disconnect", function () {
+    console.log("Made socket disconnected");
+  });
+
+  socket.on("send-notification", function (data) {
+    io.emit("new-notification", data);
+  });
+
+});
 //Required for parsing data
 
 
@@ -37,8 +56,17 @@ app.get("/protected", verifyToken, (req, res) => {
 sequelize
   .sync()
   .then((result) => {
-    app.listen(PORT);
+   
   })
   .catch((err) => {
     console.log(err);
   });
+  io.emit("send-notification", {
+    "msg" : "jfbd"
+  });
+exports.sendNotif = function(){
+  io.emit("new-notification",{
+    "titre" : "",
+     "description" : "", 
+   });
+  }

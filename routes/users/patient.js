@@ -22,10 +22,4 @@ router.post('/updateRdv',patientController2.updateRdv);
 router.post('/updateRdvanotherDate',patientController2.updateRdvanotherDate);
 router.post('/getDateProposedDate',patientController2.getDateProposedDate);
 router.post('/changeDateRdv',patientController2.changeDateRdv);
-router.get('/sendNotif',(req,res,next)=> {
-    console.log('sending');
-    notif.add("oui","koun mechi fetheddine manemchich","cbMSNtJOTgWLucuKj-sCWY:APA91bF6zeuo7cftcr2cbzA2A5Gj7jCzPjQyysBDOnffkr2iLsPlyR9SgMpnohHHZFP5H_auhGz71NlRoPzAr37YudX_QBMhYl2ZJARyozbz3YpAk8qL5ORM3YUAijVYBi86g4ZhIAYt");
-})
-
-
 module.exports = router ;
