@@ -9,10 +9,8 @@ const medecinRoutes = require('./medecin')
 const nodemailer  = require('nodemailer');
 const uploadFile = require('../../middleware/uploadFile');
 const PDFDocument = require('pdfkit');
-
-
 const ejs = require('ejs');
-
+const add = require('../../util/sendNotif');
 
 // redirected to the patient route 
 router.use("/patient" ,patientRoutes)

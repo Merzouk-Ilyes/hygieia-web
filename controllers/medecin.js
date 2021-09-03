@@ -438,27 +438,25 @@ exports.addMaladie = (req,res)=>{
     }
 
     exports.getMedicalExam = (req,res,next)=> {
-      res.render('medicalfile/updateMedicalExam');
-      return; 
-
       pool.getConnection(function(err, connection) {
-        console.log(req.query);
-    
-        id_patient = req.query.id;
-        
-        connection.query("SELECT * FROM medicalexam WHERE iduser = ? and idpatient = ? and date_medicalexam = ?"
-        ,[req.query.id, req.query.med,req.query.date],
-        (err, result) =>{
+        console.log(req.query.id);
+        console.log(req.query.med);
+        console.log(req.query.date);
+        acc_med = req.query.med;
+        acc_id = req.query.id;
+        acc_date = req.query.date;
+        connection.query("SELECT *, patient.Role as p_role FROM patient inner join medicalexam inner join users ON patient.IdPatient = medicalexam.idpatient and medicalexam.iduser = users.IdUser WHERE medicalexam.iduser = ? and medicalexam.idpatient = ? and date_medicalexam = ?"
+        ,[req.query.med, req.query.id, req.query.date], 
+        (err, resultat2) =>{
           if(err){
             console.log("error", err);
           }else{
-            console.log(result);
-            res.render('medicalfile/updateMedicalExam', { data: result });
-            
+            res.render('MedicalExam/updateMedicalExam', { title: 'Exam Data', data: resultat2[0] });
           }
         }
         );
-    })}
+    })} 
+    
     exports.getMedicalExam = (req,res,next)=> {
       pool.getConnection(function(err, connection) {
         console.log(req.query.id);
@@ -498,25 +496,19 @@ exports.addMaladie = (req,res)=>{
  console.log(req.body);
  var day=dateFormat(req.body.exdate,"yyyy-mm-dd");
  console.log(day);
-
-      db.query("SELECT *  FROM medicalexam WHERE iduser = ? AND idpatient = ? AND date_medicalexam  = ?",[req.body.med,req.body.pat,day],(err,red)=>{
-        console.log(err);
-        console.log('red',red); 
-
-
-        db.query("DELETE FROM medicalexam WHERE iduser = ? AND idpatient =? AND date_medicalexam = ? ", 
-      [req.body.med,req.body.pat,day],
-        (err, result) =>{
-          console.log(result);
-          if(err){
-          return res.send({'msg' : 'erreur','err':true});
-          }else{
-            return res.send({'msg' : 'Examen médical supprimé avec succées','err':false});
-          }
-        }
-      ); 
-      })
-      
+ db.query("DELETE FROM medicalexam WHERE iduser = ? AND idpatient =? AND date_medicalexam = ? ", 
+ [req.body.med,req.body.pat,day],
+   (err, result) =>{
+     console.log(result);
+     if(err){
+       console.log(err);
+     return res.send({'msg' : 'erreur','err':true});
+     }else{
+       return res.send({'msg' : 'Examen médical supprimé avec succées','err':false});
+     }
+   }
+ ); 
+    
     }
 
     exports.postExamenMedical = (req,res,next) => {
@@ -529,10 +521,11 @@ exports.addMaladie = (req,res)=>{
       let date = today.getDate();
       let minutes = today.getMinutes(); 
       let seconds = today.getSeconds(); 
-      let db_date = year + '-'+ month + '-' + date+'-' + minutes+seconds;
+      let db_date = year + '-'+ month + '-' + date;
       console.log('db-date',db_date); 
       id_patient = req.query.id;
       console.log('id_patient officiel', id_patient);
+      console.log(req.headers.cookie);
       const rawCookies = req.headers.cookie.split('; ');
       const parsedCookie = rawCookies[0].split('=')[1];
       jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
@@ -735,7 +728,7 @@ exports.addMaladie = (req,res)=>{
               doc.end();
               const url = await uploadFile.uploadToStorage(name_file);
               console.log(url,"this is the url");
-              connection.query("UPDATE medicalexam SET medical_exam =? WHERE iduser =? AND idpatient =? AND date_medicalexam =?",
+              connection.query("UPDATE medicalexam SET medical_exam = ? WHERE iduser =? AND idpatient =? AND date_medicalexam =?",
               [url,id_medecin, id_patient, db_date],
               (err, finalres)=>{
                 if(err){

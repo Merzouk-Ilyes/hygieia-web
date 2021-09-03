@@ -25,4 +25,5 @@ router.post('/changePassword',medecinControler2.changePassword);
 router.post('/makePDFexam', medecinControler.postExamenMedical);
 router.post('/editExam', medecinControler.postEditExam);
 router.post('/deleteExamFile',medecinControler.deleteExamFile);
+router.get('/updateMedicalExam',medecinControler.getMedicalExam);;
 module.exports = router ; 
