@@ -1,0 +1,248 @@
+<div class="hideorientation">
+    <div class="blocker" onclick="hideOrientation()"></div>
+    <div class="bcontainer2">
+        <div class="container2">
+            <div class="head1">
+                <h1 class="whitetext">Orientation </h1> 
+            </div> 
+            <form class="formexamor" >
+                <div class="flexbox1">
+                    <p>Antescedent</p>
+                    <div>
+                        <input type="text" id="antc" name='antc' class="inputorien" ><br>
+                        <small class="noterror">
+                        </small>
+                    </div>
+                </div>
+                <div class="flexbox1">
+                    <p>Signes cliniques</p>
+                    <div>
+                    <input type="text" id="consult" name='consult' class="inputorien" ><br>
+                    <small class="noterror">
+                    </small>
+                </div>
+                </div>
+                <div>
+                    <p>Type des examens complementaires</p>
+                    <div class="listm">
+                        <div>
+                            <input list="examcomps" name="typeexamen" id="examcomp" class="examcomp">
+                            <datalist id="examcomps" >
+                                <% for (var i = 0; i < exams.length; i++) { %>
+                                    <option value="<%= exams[i].name_exam %>">
+                                <% } %>
+                            </datalist><br>
+                            <small class="noterror">
+                            </small>
+                        </div>
+                        <input type="button" id="addexamco" class="addexamco" name='addexamco' value="Ajouter a la liste">
+                    </div>
+                </div>
+                    <input type="button" class="addexamlist" value="Ajoute aux examens">
+                <div>
+                    <table id="listor" name="listor" class="list">
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                    <small class="noterror">
+                    </small>
+                </div>
+                <input type="hidden" id="infoori" name="infoori">
+                <input type="button" class="valideorientation" value="Valider l'orientation">
+            </form>
+        </div>
+    </div>           
+</div>
+
+
+<script>
+
+document.querySelector(".addexamco").addEventListener("click",() => {
+
+if(examcomp.value.length < 1){
+    const parent = examcomp.parentElement;
+    const small = parent.querySelector("small");
+    small.className = "";
+    small.innerText = "Choisir un examen";
+    return;
+}else{
+    const parent = examcomp.parentElement;
+    const small = parent.querySelector("small");
+    small.className = "noterror";
+    small.innerText = null;
+}
+
+var list = document.getElementById('examcomps').options;
+
+    for (var j = 0; j < list.length; j++) { 
+        if(examcomp.value===list[j].value){
+            const parent = examcomp.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "";
+            small.innerText = "Cet examen existe deja";
+            return;
+        }else{
+            const parent = examcomp.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "noterror";
+            small.innerText = null;
+        }
+    }
+
+//traitement back
+$.ajax({
+        method: "POST",
+        url: "/users/medecin/addExamen",
+        data: {
+            "typeexamen":examcomp.value,
+        },
+        success: function (result) {
+            var data = document.getElementById('examcomps');
+
+            var op = document.createElement('option');
+            op.value = examcomp.value;
+            data.appendChild(op);
+
+            const parent = examcomp.parentElement;
+            const small = parent.querySelector("small");
+            small.style.color = 'green';
+            small.className = "";
+            small.innerText = "Examen ajoutee";
+        },
+    });
+
+
+});
+
+    document.querySelector(".addexamlist").addEventListener("click",() => {
+
+        var examcomp1 = document.getElementById('examcomp');
+
+        if(examcomp1.value.length < 1){
+        const parent = examcomp1.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Choisir un examen";
+        return;
+        }else{
+            const parent = examcomp1.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "noterror";
+            small.innerText = null;
+        }
+
+        var examcomp = document.getElementById('examcomp').value;  
+
+        var myTab = document.getElementById('listor');
+
+        for (i = 0; i < myTab.rows.length; i++) {
+                var objCells = myTab.rows.item(i).cells;
+                var val = objCells.item(0).innerText;
+
+            if(examcomp===val){
+                const parent = examcomp1.parentElement;
+                const small = parent.querySelector("small");
+                small.className = "";
+                small.innerText = "vous avez deja choisie cet examen";
+                return;
+            }
+            const parent = examcomp1.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "noterror";
+            small.innerText = null;
+        }
+
+        var tbodyRefor = document.getElementById('listor').getElementsByTagName('tbody')[0];
+        var newRowor = tbodyRefor.insertRow();
+    
+        // Insert a cell at the end of the row
+        var newCellexamcomp = newRowor.insertCell();
+        newCellexamcomp.style.border='0px';
+        newCellexamcomp.style.width='580px';
+        newCellexamcomp.classList.add("padleft");
+        var newCellbtnor = newRowor.insertCell();
+        newCellbtnor.style.border='0px';
+        // Append a text node to the cell
+        var newTextexamcomp = document.createTextNode(examcomp);
+        var btnor = document.createElement("img");
+        btnor.onclick = function () {
+            var i = this.parentNode.parentNode.rowIndex;
+            document.getElementById("listor").deleteRow(i);
+        }
+        btnor.classList.add("delete");
+        newCellexamcomp.appendChild(newTextexamcomp);
+        newCellbtnor.appendChild(btnor);
+    });
+    
+    document.querySelector(".valideorientation").addEventListener("click",() => {
+        
+        var antc = document.getElementById('antc');
+        var consult = document.getElementById('consult');
+        var myTab = document.getElementById('listor');
+
+        if(antc.value.length < 1){
+        const parent = antc.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Remplir les antescedents";
+        return;
+        }else{
+            const parent = antc.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "noterror";
+            small.innerText = null;
+        }
+        if(consult.value.length < 1){
+        const parent = consult.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Remplir les signes cliniques";
+        return;
+        }else{
+            const parent = consult.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "noterror";
+            small.innerText = null;
+        }
+        if(myTab.rows.length < 1){
+            const parent = myTab.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "";
+            small.innerText = "vous n'avez pas remplis l'orientation";
+            return;
+        }else{
+            const parent = myTab.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "noterror";
+            small.innerText = null;
+
+            for (i = 0; i < myTab.rows.length; i++) {
+            var objCells = myTab.rows.item(i).cells;
+
+                for (var j = 0; j < 1; j++) {
+                    infoori.value = infoori.value + '/' + objCells.item(j).innerHTML ;
+                }
+            }
+
+        var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>'  ;
+
+        $.ajax({
+            method: "POST",
+            url: "/users/medecin/addOrientation/?id="+parsed_data,
+            data: {
+                'antc':antc.value,
+                'consult':consult.value,
+                'infoori':infoori.value,
+                'id':id.value,
+            },
+            success: function (result) {
+                document.querySelector(".hideorientation").classList.remove("open");
+                showMsg("Orientation bien ajouter",!result.errs);   
+                document.location.reload() ; 
+            },
+        });
+    }
+    });
+    
+</script>

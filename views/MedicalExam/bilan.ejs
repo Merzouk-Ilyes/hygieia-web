@@ -1,0 +1,285 @@
+<div class="hidebilan">
+    <div class="blocker" onclick="hideBilan()"></div>
+    <div class="bcontainer2">
+        <div class="container2">
+            <div class="head2">
+                <h2 class="whitetext">Bilan </h2> 
+            </div> 
+            <form class="formexambi">
+                <div class="flexbox1">
+                    <p>CONSULTATION</p>
+                    <div>
+                        <input type="text" id="consultexam" name='consultexam' class='consultexam'><br>
+                        <small class="noterror">
+                        </small>
+                    </div>
+                </div>
+                <div class="flexbox1">
+                    <div>
+                        <p>Type des examens complementaires</p>
+                        <div class="listm">
+                            <div>
+                                <input list="typeexamens" name="typeexamen" id="typeexamen"- class="typeexamen">
+                                <datalist id="typeexamens" >
+                                    <% for (var i = 0; i < exams.length; i++) { %>
+                                        <option value="<%= exams[i].name_exam %>">
+                                    <% } %>
+                                </datalist><br>
+                                <small class="noterror">
+                                </small>
+                            </div>
+                            <input type="button" id="addexam" class="addexam" name='addexam' value="Ajouter a la liste">
+                        </div>
+                    </div>
+                    <div class="pad1">
+                        <p>Resultat de l'examen</p>
+                        <textarea id="resexamen" name='resexamen' class="resexamen"></textarea><br>
+                        <small class="noterror">
+                        </small>
+                    </div>
+                </div>
+                <input type="button" class="addbilan" value="Ajoute aux examens">
+                <div>
+                    <table id="listbilan" name="listbilan" class="listbilan">
+                        <tbody>
+                            
+                        </tbody>
+                    </table><br>
+                    <small class="noterror">
+                    </small>
+                </div>
+                <div>
+                    <div class="flexbox1">
+                        <p>Conclusion</p>
+                        <div>
+                            <textarea id="conclusioon" class="conclusioon"></textarea><br>
+                            <small class="noterror">
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="conclusioon" name="conclusioon">
+                <input type="hidden" id="infobilan" name="infobilan">
+                <input type="button" id="valideex" class="valideex" value="Valider bilan">
+            </form>
+        </div>
+    </div>           
+</div>
+
+
+<script>
+
+document.querySelector(".addexam").addEventListener("click",() => {
+
+if(typeexamen.value.length < 1){
+    const parent = typeexamen.parentElement;
+    const small = parent.querySelector("small");
+    small.className = "";
+    small.innerText = "Choisir un medecament";
+    return;
+}else{
+    const parent = typeexamen.parentElement;
+    const small = parent.querySelector("small");
+    small.className = "noterror";
+    small.innerText = null;
+}
+
+var list = document.getElementById('typeexamens').options;
+
+    for (var j = 0; j < list.length; j++) { 
+        if(typeexamen.value===list[j].value){
+            const parent = typeexamen.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "";
+            small.innerText = "Cet examen existe deja";
+            return;
+        }else{
+            const parent = typeexamen.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "noterror";
+            small.innerText = null;
+        }
+    }
+
+$.ajax({
+        method: "POST",
+        url: "/users/medecin/addExamen",
+        data: {
+            "typeexamen":typeexamen.value,
+        },
+        success: function (result) {
+            var data = document.getElementById('typeexamens');
+
+            var op = document.createElement('option');
+            op.value = typeexamen.value;
+            data.appendChild(op);
+
+            const parent = typeexamen.parentElement;
+            const small = parent.querySelector("small");
+            small.style.color = 'green';
+            small.className = "";
+            small.innerText = "Examen ajoutee";
+        },
+    });
+
+});
+
+document.querySelector(".addbilan").addEventListener("click",() => {
+
+        var typeexamen1 = document.getElementById('typeexamen');  
+        var resexamen = document.getElementById('resexamen');   
+
+        if(typeexamen1.value.length < 1){
+        const parent = typeexamen1.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Choisir le type d examen ";
+        return;
+        }else{
+            const parent = typeexamen1.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "noterror";
+            small.innerText = null;
+        }
+
+        if(resexamen.value.length < 1){
+        const parent = resexamen.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Remplir le resultat de l examen ";
+        return;
+        }else{
+            const parent = resexamen.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "noterror";
+            small.innerText = null;
+        }
+
+        
+        var typeexamen = document.getElementById('typeexamen').value;  
+        var resexamen = document.getElementById('resexamen').value; 
+
+        var myTab = document.getElementById('listbilan');
+
+        for (i = 0; i < myTab.rows.length; i++) {
+                var objCells = myTab.rows.item(i).cells;
+                var val = objCells.item(0).innerText;
+
+            if(typeexamen===val){
+                const parent = typeexamen1.parentElement;
+                const small = parent.querySelector("small");
+                small.className = "";
+                small.innerText = "vous avez deja choisie cet examen";
+                return;
+            }
+            const parent = typeexamen1.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "noterror";
+            small.innerText = null;
+        }
+    
+        var tbodyRef = document.getElementById('listbilan').getElementsByTagName('tbody')[0];
+        var newRowor = tbodyRef.insertRow();
+    
+        // Insert a cell at the end of the row
+        var newCell1 = newRowor.insertCell();
+        newCell1.style.border='0px';
+        newCell1.style.width='310px';
+        newCell1.classList.add("padleft");
+        var newCell2 = newRowor.insertCell();
+        newCell2.style.border='0px';
+        newCell2.style.width='320px';
+        var newCell3 = newRowor.insertCell();
+        newCell3.style.border='0px';
+        // Append a text node to the cell
+        var newText1 = document.createTextNode(typeexamen);
+        var newText2 = document.createTextNode(resexamen);
+        var btnbilan = document.createElement("img");
+        btnbilan.onclick = function () {
+            var i = this.parentNode.parentNode.rowIndex;
+            document.getElementById("listbilan").deleteRow(i);
+        }
+        btnbilan.classList.add("delete");
+        newCell1.appendChild(newText1);
+        newCell2.appendChild(newText2);
+        newCell3.appendChild(btnbilan);
+        
+    });
+
+document.querySelector(".valideex").addEventListener("click",() => {
+    
+        var consultexam = document.getElementById('consultexam');  
+        var conclusioon = document.getElementById('conclusioon');   
+        var infobilan = document.getElementById('infobilan');
+
+        if(consultexam.value.length < 1){
+        const parent = consultexam.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Remplir le type de consultation";
+        return;
+        }else{
+            const parent = consultexam.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "noterror";
+            small.innerText = null;
+        }
+
+        if(conclusioon.value.length < 1){
+        const parent = conclusioon.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Remplir la conclusion";
+        return;
+        }else{
+            const parent = conclusioon.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "noterror";
+            small.innerText = null;
+        }
+
+        var myTab = document.getElementById('listbilan');
+
+        if(myTab.rows.length < 1){
+            const parent = myTab.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "";
+            small.innerText = "vous n'avez pas remplis le bilan";
+            return;
+        }else{
+            const parent = myTab.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "noterror";
+            small.innerText = null;
+
+            for (i = 0; i < myTab.rows.length; i++) {
+                var objCells = myTab.rows.item(i).cells;
+
+                for (var j = 0; j < 2; j++) {
+                    infobilan.value = infobilan.value + '/' + objCells.item(j).innerHTML ;
+                }
+            }
+                
+            var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>';
+            
+            $.ajax({
+                method: "POST",
+                url: "/users/medecin/addBilan/?id="+parsed_data,
+                data: {
+                    'conclusioon':conclusioon.value,
+                    'consultexam':consultexam.value,
+                    'infobilan':infobilan.value,
+                    'id':id.value,
+                },
+                success: function (result) {
+                    document.querySelector(".hidebilan").classList.remove("open");
+                    showMsg("Bilan bien ajouter",!result.err);   
+                    document.location.reload() ; 
+                },
+            });
+        }
+   
+    });
+    
+    
+</script>

@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/css/MedicalExam/exam.css" />
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
+    />
+    <title>Examen Médical</title>
+  </head>
+
+  <style>
+    .alert {
+      font-size: 6px;
+      font-family: "Poppins";
+      background: #01559c;
+      padding: 20px 40px;
+      min-width: 420px;
+      position: fixed;
+      float: right;
+      border-radius: 4px;
+      border-left: 8px solid #3a7afe;
+      overflow: hidden;
+      opacity: 0;
+      bottom: 0;
+      right: 0;
+
+      pointer-events: none;
+    }
+    .alert.showAlert {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .alert.show {
+      animation: show_slide 1s ease forwards;
+    }
+    @keyframes show_slide {
+      0% {
+        transform: translateX(100%);
+      }
+      40% {
+        transform: translateX(-10%);
+      }
+      80% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-10px);
+      }
+    }
+    .alert.hide {
+      animation: hide_slide 1s ease forwards;
+    }
+    @keyframes hide_slide {
+      0% {
+        transform: translateX(-10px);
+      }
+      40% {
+        transform: translateX(0%);
+      }
+      80% {
+        transform: translateX(-10%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .alert .msg {
+      padding: 0px 0px 0px 4px;
+      font-size: 18px;
+      color: white;
+    }
+    .alert .close-btn {
+      position: absolute;
+      right: 0px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #3a7afe;
+      padding: 20px 18px;
+      cursor: pointer;
+    }
+    .alert .close-btn:hover {
+      background: #3a7afe;
+    }
+    .alert .close-btn .fas {
+      color: white;
+      font-size: 22px;
+      line-height: 40px;
+    }
+  </style>
+  <body>
+    <div class="b-container">
+      <div class="h-container">
+        <div class="i-item-active" id="item1">
+          <h3>Examen médical</h3>
+        </div>
+        <div class="i-item" id="item2">
+          <h3>Ordonnance</h3>
+        </div>
+        <div class="i-item" id="item3">
+          <h3>Bilan</h3>
+        </div>
+        <div class="i-item" id="item4">
+          <h3>Orientation</h3>
+        </div>
+        <div class="i-item" id="item5">
+          <h3>Évacuation</h3>
+        </div>
+        <div class="i-item" id="item6">
+          <h3>Certificat</h3>
+        </div>
+        <div class="popups">
+          <%- include('./ordanance.ejs')%>
+          <%- include('./bilan.ejs')%>
+          <%- include('./orientation.ejs')%>
+          <%- include('./certificat.ejs')%>
+          <%- include('./evacuation.ejs')%>
+          <%- include('./ordonnanceupdate.ejs')%>
+          <%- include('./bilanupdate.ejs')%>
+          <%- include('./orientationupdate.ejs')%>
+          <%- include('./certificatupdate.ejs')%>
+          <%- include('./evacuationupdate.ejs')%>
+        </div>
+      </div>
+      <form id="myForm">
+        <div id="container" class="w-container">
+          <div class="title-container date-title" id="place1">
+            <p>Examen medical</span></p>
+          </div>
+          <div class="container date-container">
+            <div class="info info1">
+              
+              <div class="sub-info">
+
+                <div>
+                  <div class="info-row">
+                    <div class="info-col">
+                      <input type="hidden" name='id' id="id" value="<%= insertexam.IdPatient %>">
+                      <label class="label-niv-end">Date du jour : </label>
+                      <input type="text" name="date" id="today_date" class="disable inputexam" disabled/>
+                      <script>
+                        let today = new Date();
+                        let month = today.getMonth() + 1;
+                        let year = today.getFullYear();
+                        let date = today.getDate();
+                        var today_date = date + "/" + month + "/" + year;
+                        document.getElementById("today_date").value = today_date;
+                      </script>
+                    </div>
+                    <div class="info-col">
+                      <label class="label-niv-end">Nom : </label>
+                      <input type="text" name="nom" value="<%= insertexam.p_Firstname %>" class="disable inputexam" disabled/>
+                    </div>
+                    <div class="info-col">
+                      <label class="label-niv-end">Prenom : </label>
+                      <input type="text" name="prenom" value="<%= insertexam.p_Lastname %>" class="disable inputexam" disabled/>
+                    </div>
+                    <div class="info-col">
+                      <label class="label-niv-end">Date de naissance : </label>
+                     <input type="text" name="dn" value="<%= insertexam.birthday %>" class="disable inputexam" disabled/>
+                    </div>
+                    <div class="info-col">
+                      <label class="label-niv-end">Poids : </label>
+                    <div>
+                      <input type="text" name="poids" id="poids" class="inputexam"/><br>
+                      <small class="noterror">
+                      </small>
+                  </div>
+                    <label class="label-niv1">Kg </label>
+                    </div>
+                    <div class="info-col">
+                      <label class="label-niv-end">Taille : </label>
+                    <div>
+                      <input type="text" name="taille" id="taille" class="inputexam"/><br>
+                    <small class="noterror">
+                    </small>
+                  </div>
+                    <label class="label-niv1 debut">Cm </label>
+                    </div>
+                    <div class="info-col">
+                    <label class="label-niv-end">IMC : </label>
+                  <div>
+                    <input type="text" name="imc" id="imc" onclick="calcule()" class="disable inputexam"/><br>
+                    <small class="noterror">
+                    </small>
+                  </div>
+                    <label class="label-niv1">Kg/Cm2</label>
+                    <script>
+                      function calcule(){
+                        var poids = document.getElementById("poids").value;
+                        var taille = document.getElementById("taille").value;
+                        var imc =document.getElementById("imc");
+                        var imc1 = poids/((taille*0.01)*(taille*0.01));
+                        if(imc1<18.5){
+                          const parent = imc.parentElement;
+                          const small = parent.querySelector("small");
+                          small.className = "bleu";
+                          small.innerText = "Insuffisante ponderale";
+                        }else{
+                          if(imc1 < 25){
+                            const parent = imc.parentElement;
+                            const small = parent.querySelector("small");
+                            small.className = "vert";
+                            small.innerText = "Corpulance normale";
+                          }else{
+                            if(imc1 < 30){
+                            const parent = imc.parentElement;
+                            const small = parent.querySelector("small");
+                            small.className = "jaune";
+                            small.innerText = "Surpoids";
+                          }else{
+                            if(imc1 < 35){
+                            const parent = imc.parentElement;
+                            const small = parent.querySelector("small");
+                            small.className = "orange";
+                            small.innerText = "Obesite moderee";
+                          }else{
+                            if(imc1 < 40){
+                            const parent = imc.parentElement;
+                            const small = parent.querySelector("small");
+                            small.className = "rougrclaire";
+                            small.innerText = "Obesete severe";
+                          }else{
+                            const parent = imc.parentElement;
+                            const small = parent.querySelector("small");
+                            small.className = "rougr";
+                            small.innerText = "Obesite morbide ou massive";
+                          }
+                          }
+                          }
+                          }
+                        }
+                        imc.value=imc1;
+                      }                   
+                    </script>
+                    </div>
+                    <div class="info-col">
+                    <label class="label-niv-end">TA : </label>
+                    <div>
+                    <input type="text" name="ta"id="ta" class="inputexam"/><br>
+                    <small class="noterror">
+                    </small>
+                  </div>
+                    <label class="label-niv1">mmhg </label>
+                    </div>
+                    
+                  </div>
+                </div>
+                
+              </div>
+
+              <div class="sub-info2">
+                <div class="info-row">
+                  <label class="label-niv2">Motif : </label>
+                  <textarea name="motif" id="motif" class="textarea"></textarea>
+                  <small class="noterror">
+                  </small>
+                  <label class="label-niv2">Signe : </label>
+                  <textarea name="signe" id="signe" class="textarea"></textarea>
+                  <small class="noterror">
+                  </small>
+                  <div class="sub-infomal">
+                    <div class="info-col">
+                      <label class="label-niv2">Nom de la maladie : </label>
+                      <input list="mals" name="mal" id="mal" required>
+                      <datalist id="mals" >                     
+                        <% for (var i = 0; i < sickness.length; i++) { %>
+                          <option value="<%= sickness[i].name_sickness %>">
+                        <% } %>
+                      </datalist>
+                      <input type="button" name='validemal' value="ajouter au diagnostic" class="validemal"/> 
+                    </div>
+                  </div>
+                  <div class="sub-infomalhidden">
+                    <div class="info-col">
+                      <label class="label-niv2">Type de la maladie : </label>
+                      <input list="typesmal" name="typemal" id="typemal" required>
+                      <datalist id="typesmal" >                     
+                        <% for (var i = 0; i < typemal.length; i++) { %>
+                          <option value="<%= typemal[i].type_sickness %>">
+                        <% } %>
+                      </datalist>
+                      <input type="hidden" id='find' name="find">
+                      <input type="button" name='addmal' value="ajouter maladie" class="addmal"/>
+                    </div>
+                  </div>
+                  <label class="label-niv2">Diagnostic : </label>
+                  <textarea name="diagnostic" id="diagnostic" class="textarea"></textarea>
+                  <small class="noterror">
+                  </small>
+                  <input type="hidden" id='listmal' name="listmal">
+                  <div>
+                </div>
+                  <input type="button" class="outline" id="valide" onclick="valideexamenmedical()" value="Valider examen">
+                </div>
+              </div>
+              <script>
+                document.querySelector(".addmal").addEventListener("click",() => {
+                  
+                  var diagnostic = document.getElementById('diagnostic');
+                  var mal = document.getElementById('mal').value;
+                  var types = document.getElementById('typesmal').options;
+                  var type = document.getElementById('typemal').value;
+                  var find = document.getElementById('find').value;
+                  var test = 0;
+
+                  for (var j = 0; j < types.length; j++) { 
+                    if(type === types[j].value){
+                      test = 1;
+                      break;
+                    }
+                  }
+
+                  find = test;
+
+                  alert(find);
+
+                  $.ajax({
+                    method: "POST",
+                    url: "/users/medecin/addSickness",
+                    data: {
+                        "type":type,
+                        "mal":mal,
+                        "find":find,
+                    },
+                    success: function (result) {
+                      const infomalhidden = document.querySelector(".sub-infomalhidden");
+                      infomalhidden.classList.remove("open"); 
+                      const container = document.getElementById("container");
+                      container.classList.remove('w-containertop'); 
+                      diagnostic.value = diagnostic.value +'\n -' + mal + ' ' ; 
+                    },
+                });                   
+              });
+
+                document.querySelector(".validemal").addEventListener("click",() => {
+
+                  var mal = document.getElementById('mal').value;
+                  var mals = document.getElementById('mals').options;
+                  var diagnostic = document.getElementById('diagnostic');
+
+                  const infomalhidden = document.querySelector(".sub-infomalhidden");
+                  const container = document.getElementById("container");
+                  container.classList.remove('w-containertop');
+                  infomalhidden.classList.remove("open");
+
+                    for (var j = 0; j < mals.length; j++) { 
+                      if(mal === mals[j].value){
+                        diagnostic.value = diagnostic.value +'\n -' + mal + ' ' ;
+                        return;
+                      }
+                    }
+                  infomalhidden.classList.add("open");
+                  container.classList.add('w-containertop');
+                                  
+                });
+              </script>
+              
+              
+            </div> 
+          </div>
+      </form>
+<script>
+
+function showMsg(str,err) {
+  const msg = document.getElementById("msg");
+  const icon = document.getElementById("icon-msg"); 
+  if(err == true) {
+    icon.className = "fas fa-check"
+  }else {
+    icon.className = "fas fa-exclamation" 
+  }
+
+  msg.innerHTML = str ;
+  $('.alert').addClass("show");
+  $('.alert').removeClass("hide");
+  $('.alert').addClass("showAlert");
+  setTimeout(function(){
+    $('.alert').removeClass("show");
+    $('.alert').addClass("hide");
+  },10000);
+}
+
+function valideexamenmedical(){
+
+var poids = document.getElementById("poids");
+  var taille = document.getElementById("taille");
+  var imc = document.getElementById("imc");
+  var ta = document.getElementById("ta");
+  var motif = document.getElementById("motif");
+  var signe = document.getElementById("signe");
+  var diagnostic = document.getElementById("diagnostic");
+
+    if(poids.value.length < 1){
+      const parent = poids.parentElement;
+      const small = parent.querySelector("small");
+      poids.className="error";
+      small.className = "";
+      small.innerText = "Entrez le poids";
+      window.scrollTo(0, poids.offsetTop -150);
+      return;
+    }else{
+        const parent = poids.parentElement;
+        const small = parent.querySelector("small");
+        poids.className="inputexam";
+        small.className = "noterror";
+        small.innerText = null;
+    }
+  
+    if(taille.value.length < 1){
+        const parent = taille.parentElement;
+        const small = parent.querySelector("small");
+        taille.className="error";
+        small.className = "";
+        small.innerText = "Entrez la taille";
+        window.scrollTo(0, taille.offsetTop -150);
+        return;
+    }else{
+        const parent = taille.parentElement;
+        const small = parent.querySelector("small");
+        taille.className="inputexam";
+        small.className = "noterror";
+        small.innerText = null;
+    }
+  
+    if(imc.value.length < 1){
+        const parent = imc.parentElement;
+        const small = parent.querySelector("small");
+        imc.className="error";
+        small.className = "";
+        small.innerText = "Clique sur le champs";
+        window.scrollTo(0, imc.offsetTop -150);
+        return;
+    }else{
+        const parent = imc.parentElement;
+        const small = parent.querySelector("small");
+        imc.className="inputexam";
+        small.className = "noterror";
+        small.innerText = null;
+    }
+  
+    if(ta.value.length < 1){
+        const parent = ta.parentElement;
+        const small = parent.querySelector("small");
+        ta.className="error";
+        small.className = "";
+        small.innerText = "Entrez la tension arterielle";
+        window.scrollTo(0, ta.offsetTop -150);
+        return;
+    }else{
+        const parent = ta.parentElement;
+        const small = parent.querySelector("small");
+        ta.className="inputexam";
+        small.className = "noterror";
+        small.innerText = null;
+    }
+  
+    if(motif.value.length < 1){
+        const parent = motif.parentElement;
+        const small = parent.querySelector("small");
+        motif.className="errorarea";
+        small.className = "";
+        small.innerText = "Remplir le motif";
+        window.scrollTo(0, motif.offsetTop -150);
+        return;
+    }else{
+        const parent = motif.parentElement;
+        const small = parent.querySelector("small");
+        motif.className="textarea";
+        small.className = "noterror";
+        small.innerText = null;
+    }
+  
+    if(signe.value.length < 1){
+        const parent = signe.parentElement;
+        const small = parent.querySelector("small");
+        signe.className="errorarea";
+        small.className = "";
+        small.innerText = "Remplir les signes";
+        window.scrollTo(0, signe.offsetTop -150);
+        return;
+    }else{
+        const parent = signe.parentElement;
+        const small = parent.querySelector("small");
+        signe.className="textarea";
+        small.className = "noterror";
+        small.innerText = null;
+    }
+  
+    if(diagnostic.value.length < 1){
+        const parent = diagnostic.parentElement;
+        const small = parent.querySelector("small");
+        diagnostic.className="errorarea";
+        small.className = "";
+        small.innerText = "Remplir le diagnostic";
+        window.scrollTo(0, diagnostic.offsetTop -150);
+        return;
+    }else{
+        const parent = diagnostic.parentElement;
+        const small = parent.querySelector("small");
+        diagnostic.className="textarea";
+        small.className = "noterror";
+        small.innerText = null;
+    }
+
+var diagnostic = document.getElementById('diagnostic').value;
+var listmal = document.getElementById('listmal');
+var mals = document.getElementById('mals').options;
+var list=diagnostic.split('-');
+var find=false;
+
+for(var i=1;i<list.length;i++){
+  var maladie=list[i].split(' ');
+  for (var j = 0; j < mals.length; j++) { 
+    if(maladie[0]===mals[j].value){
+      find = true;
+      listmal.value = listmal.value + '#' + maladie[0] ;
+
+      break;
+    }else{
+      find = false;
+    }
+  }
+} 
+if(find == false){
+  listmal.value = "";
+  if(diagnostic.length < 1){
+        const parent = diagnostic.parentElement;
+        const small = parent.querySelector("small");
+        diagnostic.className="errorarea";
+        small.className = "";
+        small.innerText = "choisir une maladie";
+        window.scrollTo(0, diagnostic.offsetTop -150);
+        return;
+    }else{
+        const parent = diagnostic.parentElement;
+        const small = parent.querySelector("small");
+        diagnostic.className="textarea";
+        small.className = "noterror";
+        small.innerText = null;
+    }
+  return
+}
+
+var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>'  ;
+var id = document.getElementById("id");
+    var poids = document.getElementById("poids");
+    var taille = document.getElementById("taille");
+    var imc = document.getElementById("imc");
+    var ta = document.getElementById("ta");
+    var motif = document.getElementById("motif");
+    var signe = document.getElementById("signe");
+    var diagnostic = document.getElementById("diagnostic");
+
+    $.ajax({
+        method: "POST",
+        url: "/users/medecin/addExam",
+        data: {
+            "id":id.value,
+            "taille":taille.value,
+            "poids":poids.value,
+            "imc":imc.value,
+            "ta":ta.value,
+            "motif":motif.value,
+            "signe":signe.value,
+            "diagnostic":diagnostic.value,
+            "listmal":listmal.value,
+        },
+        success: function (result) {
+          showMsg("Examen medical bien ajouter",!result.err); 
+          document.getElementById('valide').disabled=true;  
+        },
+    });
+  }
+</script> 
+
+      <div class="doc-container" id="Ordonnance">
+        <div class="title-container ord-title">
+          <p>Ordonnance</p>
+        </div>
+        <div class="container ord-container"> 
+          <table id="customers">
+            <tr>
+              <th>Ordonnance</th>
+              <th>Actions</th>
+            </tr>
+            <% for (var i = 0; i < ordo.length; i++) { %>
+            <tr>
+              <td>Ordonnance<%= ordo[0].date_medicalexam %></td>
+              <td>
+                <div class="grid">
+                  <input type="hidden" name='num_sick' value='<%= ordo[0].num_sick %>' id='num_sick' >
+                  <input type="button" onclick="ordananceup()" class="imprimer" value="modifier">
+                  <input type="button" onclick="ordananceimprime()" class="imprimer" value="imprimer">
+                  <input type="button" onclick="ordanancedelete()" class="deletebtn" value="supprimer">
+                </div>
+              </td>
+            </tr>
+            <% } %>
+          </table>
+        </div>
+        <div>
+          <% if (ordo.length < 1) { %>
+          <input type="button" class="btn doc-button" onclick="ordanance()" value="Ajouter Ordonnance">
+          <% }else{ %>
+            <input type="button" class="btn doc-button" value="Ajouter Ordonnance" disabled>
+          <% } %>
+        </div>
+      </div>
+      <div class="doc3-container" id="Ordonnance2">
+        <div class="title-container ord-title">
+          <p>Bilan</p>
+        </div>
+        <div class="container ord-container">
+          <table id="customers">
+            <tr>
+              <th>Bilan</th>
+              <th>Actions</th>
+            </tr>
+            <% for (var i = 0; i < bilan.length; i++) { %>
+            <tr>
+              <td>Bilan<%= bilan[0].date_medicalexam %></td>
+              <td>
+                <div class="grid">
+                  <input type="hidden" name='num_or' value='<%= bilan[0].num_ch %>' id='num_ch' >
+                  <input type="button" onclick="bilanup()" class="imprimer" value="modifier">
+                  <input type="button" onclick="bilanImprime()" class="imprimer" value="imprimer">
+                  <input type="button" onclick="bilandelete()" class="deletebtn" value="supprimer">
+                </div>
+              </td>
+            </tr>
+            <% } %>
+          </table>
+        </div>
+        <div>
+          <% if (bilan.length < 1) { %>
+            <input type="button" class="btn doc-button" onclick="bilan()" value="Ajouter Bilan">
+            <% }else{ %>
+              <input type="button" class="btn doc-button" value="Ajouter Bilan" disabled>
+            <% } %>
+          
+        </div>
+      </div>
+      <div class="doc4-container" id="Ordonnance3">
+        <div class="title-container ord-title">
+          <p>Orientation</p>
+        </div>
+        <div class="container ord-container">
+          <table id="customers">
+            <tr>
+              <th>Orientation</th>
+              <th>Actions</th>
+            </tr>
+            <% for (var i = 0; i < orientation.length; i++) { %>
+            <tr>
+              <td>Orientation<%= orientation[0].date_medicalexam %></td>
+              <td>
+                <div class="grid">
+                  <input type="hidden" name='num_or' value='<%= orientation[0].num_or %>' id='num_or' >
+                  <input type="button" onclick="orientaup()" class="imprimer"  value="modifier">
+                  <input type="button" onclick="orientaimprime()" class="imprimer"  value="imprimer">
+                  <input type="button" onclick="orientadelete()" class="deletebtn" value="supprimer">
+                </div>
+              </td>
+            </tr>
+            <% } %>
+          </table>        
+        </div>
+        <div>
+          <% if (orientation.length < 1) { %>
+            <input type="button" class="btn doc-button" onclick="orienta()" value="Ajouter Orientation">
+            <% }else{ %>
+              <input type="button" class="btn doc-button" value="Ajouter Orientation" disabled>
+            <% } %>
+        </div>
+      </div>
+      <div class="doc5-container" id="Ordonnance4">
+        <div class="title-container ord-title">
+          <p>Evacuation</p>
+        </div>
+        <div class="container ord-container">
+          <table id="customers">
+            <tr>
+              <th>Evacuation</th>
+              <th>Actions</th>
+            </tr>
+            <% for (var i = 0; i < evacuation.length; i++) { %>
+              <tr>
+                <td>Evacuation<%= evacuation[0].date_medicalexam %></td>
+                <td>
+                  <div class="grid">
+                    <input type="hidden" name='num_ev' value='<%= evacuation[0].num_ev %>' id='num_ev' >
+                    <input type="button" onclick="evacuationup()" class="imprimer"  value="modifier">
+                    <input type="button" onclick="evacuationimprime()" class="imprimer"  value="imprimer">
+                    <input type="button" onclick="evacuationdelete()" class="deletebtn"  value="supprimer">
+                  </div>
+                </td>
+              </tr>
+              <% } %>
+          </table>
+        </div>
+        <div>
+          <% if (evacuation.length < 1) { %>
+            <input type="button" class="btn doc-button" onclick="evacuation()" value="Ajouter Evacuation">
+            <% }else{ %>
+              <input type="button" class="btn doc-button" value="Ajouter Evacuation" disabled>
+            <% } %>
+          
+        </div>
+      </div>
+      <div class="doc6-container" id="Ordonnance5">
+        <div class="title-container ord-title">
+          <p>Certificat</p>
+        </div>
+        <div class="container ord-container">
+          <table id="customers">
+            <tr>
+              <th>Certificat</th>
+              <th>Actions</th>
+            </tr>
+            <% for (var i = 0; i < prescription.length; i++) { %>
+              <tr>
+                <td>Certificat_<%= prescription[0].type_prescription %><%= prescription[0].date_medicalexam %></td>
+                <td>
+                  <div class="grid">
+                    <input type="hidden" name='num_pre' value='<%= prescription[0].num_pre %>' id='num_pre' >
+                    <input type="button" onclick="certificatup()" class="imprimer"  value="modifier">
+                    <input type="button" onclick="certificatimprime()" class="imprimer"  value="imprimer">
+                    <input type="button" onclick="certificatdelete()" class="deletebtn"  value="supprimer">
+                  </div>
+                </td>
+              </tr>
+              <% } %>
+          </table>   
+        </div>
+        <div>
+          <% if (prescription.length < 1) { %>
+            <input type="button" class="btn doc-button" onclick="certificat()" value="Ajouter Certificat">
+            <% }else{ %>
+              <input type="button" class="btn doc-button" value="Ajouter Certificat" disabled>
+            <% } %>         
+        </div>
+      </div>
+    </div>
+    <div id="alert" class="alert hide">
+      <span class="msg" id="msg">Opération effectuée avec succès</span>
+      <div class="close-btn">
+        <span id="icon-msg" class="fas fa-check"></span>
+      </div>
+    </div>
+ 
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="/js/exam.js"></script>
+</html>

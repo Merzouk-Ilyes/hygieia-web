@@ -1,0 +1,195 @@
+<div class="hidecertificatup">
+    <div class="blocker" onclick="hideCertificatup()"></div>
+    <div class="bcontainer2">
+        <div class="container2cer">
+            <div class="head1">
+                <h2 class="whitetext">Certificat </h1> 
+            </div>
+            <form class="formexam">
+                <div>
+                    <p>TYPE DE CERTIFICAT MEDICALE</p>
+                    <input type="text" id="typeup" name='type' class="textcer"><br>
+                    <small class="noterror">
+                    </small>
+                </div>
+                <div id="reposdivup">
+                    <div>
+                        <p>Nombre des jours</p>
+                        <input type="text" id="nbjourup" name='nbjour' class="text"><br>
+                        <small class="noterror">
+                        </small>
+                    </div>
+                    <div class="flexbox1">
+                        <div>
+                            <p>Date debut de congie :</p>
+                            <input type="date" id="debutup" name='debut' class="textcer"><br>
+                            <small class="noterror">
+                            </small>
+                        </div>
+                        <div class="space">
+                            <p>Date fin de congie :</p>
+                            <input type="date" id="finup" name='fin' class="textcer"><br>
+                            <small class="noterror">
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            
+
+                <div id="pratiquedivup">
+                    <div>
+                        <p>La cause : </p>
+                        <textarea id="causeup" name='cause' class="textareacer"></textarea><br>
+                        <small class="noterror">
+                        </small>
+                    </div>
+                </div>
+
+                <div>
+                    <p>Etablis a :</p>
+                    <input type="text" id="desup" name='des' class="textcer"><br>
+                    <small class="noterror">
+                    </small>
+                </div>
+                <div>
+                    <input type="button" class="validecerup" value="Valide certificat">
+                </div>     
+            </form>
+        </div>
+    
+    </div>           
+</div>
+
+<script>
+
+document.querySelector(".validecerup").addEventListener("click",() => {
+
+        var nbjour = document.getElementById('nbjourup');  
+        var debut = document.getElementById('debutup');
+        var fin = document.getElementById('finup');
+        var cause = document.getElementById('causeup');
+        var des = document.getElementById('desup');
+        var num_pre = document.getElementById('num_pre');
+        var type = document.getElementById('typeup').value;
+
+       alert(type);
+
+       var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>';
+       
+       if(type === 'repos'){         
+
+           if(nbjour.value.length < 1){
+               const parent = nbjour.parentElement;
+               const small = parent.querySelector("small");
+               small.className = "";
+               small.innerText = "Entrer le nombre des jours";
+               return;
+           }else{
+               const parent = nbjour.parentElement;
+               const small = parent.querySelector("small");
+               small.className = "noterror";
+               small.innerText = null;
+           }
+           if(debut.value.length < 1){
+               const parent = debut.parentElement;
+               const small = parent.querySelector("small");
+               small.className = "";
+               small.innerText = "Entrez la date debut";
+               return;
+           }else{
+               const parent = debut.parentElement;
+               const small = parent.querySelector("small");
+               small.className = "noterror";
+               small.innerText = null;
+           }
+           if(fin.value.length < 1){
+               const parent = fin.parentElement;
+               const small = parent.querySelector("small");
+               small.className = "";
+               small.innerText = "Entrez la date fin";
+               return;
+           }else{
+               const parent = fin.parentElement;
+               const small = parent.querySelector("small");
+               small.className = "noterror";
+               small.innerText = null;
+           } 
+           if(des.value.length < 1){
+               const parent = des.parentElement;
+               const small = parent.querySelector("small");
+               small.className = "";
+               small.innerText = "Entrez la destination";
+               return;
+           }else{
+               const parent = des.parentElement;
+               const small = parent.querySelector("small");
+               small.className = "noterror";
+               small.innerText = null;
+           } 
+
+            $.ajax({
+                method: "POST",
+                url: "/users/medecin/updateCertificatRepos/?id="+parsed_data,
+                data: {
+                    "nbjour":nbjour.value,
+                    "debut":debut.value,
+                    "fin":fin.value,
+                    "des":des.value,
+                    "id":id.value,
+                    "num_pre" : num_pre.value,
+                },
+                success: function (result) {
+                    document.querySelector(".hidecertificatup").classList.remove("open");
+                    showMsg("Certificat bien modifier",!result.err);   
+                    document.location.reload() ;
+                },
+            });
+
+        }
+
+        if(type === 'pratique'){
+            if(cause.value.length < 1){
+                const parent = cause.parentElement;
+                const small = parent.querySelector("small");
+                small.className = "";
+                small.innerText = "Remplir la cause";
+                return;
+            }else{
+                const parent = cause.parentElement;
+                const small = parent.querySelector("small");
+                small.className = "noterror";
+                small.innerText = null;
+            } 
+            if(des.value.length < 1){
+                const parent = des.parentElement;
+                const small = parent.querySelector("small");
+                small.className = "";
+                small.innerText = "Entrez la destination";
+                return;
+            }else{
+                const parent = des.parentElement;
+                const small = parent.querySelector("small");
+                small.className = "noterror";
+                small.innerText = null;
+            } 
+
+           
+            $.ajax({
+                method: "POST",
+                url: "/users/medecin/updateCertificatPratique/?id="+parsed_data,
+                data: {
+                    "cause":cause.value,
+                    "des":des.value,
+                    "id":id.value,
+                    "num_pre" : num_pre.value,
+                },
+                success: function (result) {
+                    document.querySelector(".hidecertificatup").classList.remove("open");
+                    showMsg("Certificat bien modifier",!result.err);   
+                    document.location.reload() ;
+                },
+            });
+        }
+   
+    });
+</script>
