@@ -1,5 +1,7 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+var moment = require('moment');
+
 var dateFormat = require('dateformat');
 const db = require("../util/db").db;
 const PDFDocument = require('../util/pdfkit-tables');
@@ -8,6 +10,62 @@ const fs = require('fs');
 const path = require('path');
 const pool = require("../util/db").pool;
 const uploadFile = require('../middleware/uploadFile');
+exports.getAcce = (req,res,next)=> { 
+  const rawCookies = req.headers.cookie.split('; ');
+  const parsedCookie = rawCookies[0].split('=')[1];
+  jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
+    (err,decodedToken)=> {
+      pool.getConnection(function(err,connection) {
+        var rdv_today = 0 ; 
+            var rdv_reprogrammation  = 0 ; 
+        var rdv_demande = 0 ; 
+        connection.query("select * from rdv where date_rdv between date_sub(now(),INTERVAL 1 DAY) and now() and situation_rdv in ('14','3','7','19') and iduser = ? ",[decodedToken.IdUser],(err,result_today)=> {
+          console.log('rdv today',result_today,decodedToken.idUser);
+          rdv_today = result_today.length ; 
+          connection.query("select * from rdv where situation_rdv = '17' and iduser = ? ",[decodedToken.idUser],(err,result_reprogrammation)=> {
+            rdv_reprogrammation = result_reprogrammation.length ; 
+          });
+          connection.query("select * from rdv where situation_rdv = '0' and iduser = ?",[decodedToken.IdUser],(err,result_demande)=> {
+            connection.query("select * from rdv,patient where rdv.iduser = ? and  rdv.date_rdv between date_sub(now(),INTERVAL 1 DAY) and now() and rdv.situation_rdv in ('14','3','7','19') and rdv.idpatient = patient.idpatient order by rdv.date_rdv DESC limit 4 ",
+            [decodedToken.IdUser],(err,rdvs)=> {
+              console.log("rdvs",rdvs);
+              rdv_demande = result_demande.length; 
+              connection.query("select * from notification  where iduser = ? and sent_by = 'patient' order by date_notif DESC ",[decodedToken.IdUser],
+              (err,notifs)=> {
+                console.log(err);
+              connection.query("select * from notification where iduser = ? and sent_by = 'patient' and opened = 0",
+              [decodedToken.IdUser],
+              (err,notifssee)=> {
+                console.log(err);
+                connection.release(); 
+                console.log("idUser",decodedToken.IdUser);
+                res.render('home/home',{
+                  'rdv_demande':rdv_demande,
+                  'rdv_today':rdv_today, 
+                  'rdv_reprogrammation':rdv_reprogrammation, 
+                   'rdvs'  :rdvs, 
+                   'moment' : moment,
+                   'notifs' : notifs, 
+                   'iduser' : decodedToken.IdUser,
+                    'notifssee' : notifssee.length, 
+                }); 
+              })
+   
+              })
+ 
+           
+           
+           
+           
+            })
+         
+          });
+        }); 
+      })
+    });
+
+
+}
 exports.changePictureFile = (req,res,next) => {
   console.log('ds');
   console.log(req,res);
@@ -284,14 +342,34 @@ exports.getProfile = (req,res,next)=> {
 exports.getList = (req, res, next) => {
   pool.getConnection(function(err, connection) {
     connection.query("Select * from patient",(err,result)=> {
-      if(err) {
-     
-        console.log('error',err) ; 
+      const rawCookies = req.headers.cookie.split('; ');
+  const parsedCookie = rawCookies[0].split('=')[1];
+  jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
+    (err,decodedToken)=> {
+      connection.query("select * from notification where iduser = ? and sent_by = 'patient' and opened = 0",
+      [decodedToken.IdUser],
+
+      (err,notifssee)=> {
+        console.log('notifssee' , notifssee) ;
+        connection.query("select * from notification  where iduser = ? and sent_by = 'patient' order by date_notif DESC ",[decodedToken.IdUser],
+        (err,notifs)=> {
+          connection.release();
+          res.render("medicalfile/list", { 
+            listitems: result,
+            'notifssee' : notifssee.length, 
+          'notifs' : notifs,
+          'moment' :moment,
+          'iduser' :decodedToken.IdUser,
+          });
+
+        })
+
+      });
   
-      }else {
-        res.render("medicalfile/list", { listitems: result });
-  
-      }
+
+    })
+
+      
     });
   }); 
 

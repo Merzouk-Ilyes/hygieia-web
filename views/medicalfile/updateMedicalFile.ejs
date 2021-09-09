@@ -100,39 +100,26 @@ button {
     width: calc(100% - 17rem);
   }
 }
-
 .row-h {
-  
   padding: 20px 30px;
   display: flex;
   flex-direction: row;
 }
-
 </style>
 <script>
-    
-   
-
     $(function() { 
-
   $('#sidebarCollapse').on('click', function() {
     $('#sidebar, #content').toggleClass('active');
     $('.alert').addClass("show");
-         
-
   });
 });
-
 </script>
 <body id="allb">
-  
     <!-- Vertical navbar -->
     <div class="row-h">
       <button id="sidebarCollapse" type="button" class="btn-nav" style="margin-right: 20px;"><i class="fa fa-bars fa-2x">&nbsp Dossier Médical</i></button>
       <img src="/assets/logo.png" height="70px" width="120px" style="margin-right: 8px;"/>
     </div>
-
-
     <div class="h-container2" id="all">
         <div class="i-item-active" id="item1">
             <h3>Bibliographie</h3>
@@ -247,10 +234,6 @@ button {
                   </div>
             </div>
             <img src= "<%=data.Picture %>" style="height:200px ;width:200px"></img>
-           
-              
-        
-
         </div>
         <div class="w-container22">
             <div class="re-title2" id="place2">
@@ -261,12 +244,9 @@ button {
                 <div class="data">
                   <select  id="name-intoxication"  required>
                     <option value="" selected disabled hidden>Choisir l'intoxication</option>
-
                     <% for (var i = 0; i < intoxications.length; i++) { %>
                       <option value="<%= intoxications[i].name_intoxication %>"><%= intoxications[i].name_intoxication %></option>
                     <% } %>
-                   
-                   
                   </select>
                   </div>
                   <div class="data2">
@@ -667,6 +647,7 @@ button {
   </div>
 </body>
 <script>
+  
     var parsed_data = '<%- JSON.stringify(data) %>'  ;
 </script>
 

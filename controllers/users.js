@@ -10,14 +10,16 @@ const ejs = require('ejs');
 const sendNotif = require('../app');
 
 exports.logOut = (req,res,next)=> {
+  console.log("wow");
   res.clearCookie("jwt"); 
-  return res.status(200).json({
+  res.redirect('/users/login');
+ res.status(200).json({
     msg: "Disconnected",
     });
 }
 
 exports.getLogin = (req, res, next) => {  
-sendNotif.sendNotif();// This will emit the event to all connected sockets
+
   if(req.headers.cookie == null ) {
     res.render("auth/index", {error : ""}); 
     return; 
@@ -92,6 +94,7 @@ const maxAge = 3 * 24 * 60 * 60;
 let cpt = 0;
 //login controller for everyone except patient
 exports.login = (req, res) => {
+  console.log("called");
   if (cpt == 3) {
     Account.findOne({ where: { email: req.body.email } }).then((account) => {
       account.active = false;

@@ -4,13 +4,12 @@ const bodyParser = require("body-parser");
 const app = express();
 const path = require("path");
 const cookieParser = require("cookie-parser");
+
 const sequelize = require("./util/database");
 const usersRoutes = require("./routes/users/users");
 const { verifyToken } = require("./middleware/verifyToken");
 const socket = require("socket.io");
-
-
-
+var moment = require('moment');
 app.set("views", "views");
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
@@ -64,9 +63,13 @@ sequelize
   io.emit("send-notification", {
     "msg" : "jfbd"
   });
-exports.sendNotif = function(){
+exports.sendNotif = function(title,description,iduser){
+  var date = new Date(); 
+   moment(date).format('YYYY-MM-DD hh:mm') 
   io.emit("new-notification",{
-    "titre" : "",
-     "description" : "", 
+    "iduser" : iduser , 
+    "title" : title,
+     "description" : description, 
+     'date': date ,
    });
   }

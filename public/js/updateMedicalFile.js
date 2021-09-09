@@ -248,12 +248,9 @@ showMsg(" intoxication supprimer avec succés",true);
 window.location.reload();
              // show success message 
             }else {
-            
              // show error message 
             }
-    
         }});
-
 }
 if(button.id == 'btn-delete-affection') {
     $.ajax({
