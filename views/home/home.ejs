@@ -48,21 +48,22 @@
     }
     
          .vertical-nav {
+          box-shadow: 5px 0 5px -5px grey;
+
     
-    
-           margin-top: 115px;
+    height : 1000px;
+           margin-top: 0px;
       min-width: 17rem;
       width: 17rem;
-      height: 90vh;
       position: fixed;
-      top: 0;
+      top: 0;      
       left: 0;
-    
+  
       transition: all 0.4s;
     }
     .page-content {
-      width: calc(100% - 17rem);
       margin-left: 17rem;
+      height: 100%;
       transition: all 0.4s;
     } 
     input, button, submit { border:none; } 
@@ -119,7 +120,52 @@
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {}
-    
+.dropbtn2 {
+
+color: white;
+padding: 0px;
+font-size: 16px;
+border: none;
+background-color: inherit;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown2 {
+position:relative;
+
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content2 {
+display: none;
+
+position:absolute;
+
+background-color: #f1f1f1;
+width: 290px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+}
+
+/* Links inside the dropdown */
+.dropdown-content2 a {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+font-size: 10px;
+}
+.show {display:block;}
+
+/* Change color of dropdown links on hover */
+.dropdown-content2 a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown2:hover .dropbtn {}
+  
     .btn-nav {
     
       display: flex; 
@@ -152,6 +198,7 @@
       #sidebar.active {
         margin-left: 0;
         margin-top: 20px;
+        height: 100px;
       }
       #content {
         width: 100%;
@@ -174,9 +221,9 @@
  
 <body>
     <div class="nav navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid mx-5">
-            <img src="/assets/drawer.svg" id="sidebarCollapse" height="29px" width="29px" />
-            <img src="/assets/logo.png" height="60px" width="120px" style="margin-left: 20px;margin-top:5px"/>
+        <div class="container-fluid mx-2">
+            <img src="/assets/drawer.svg" id="sidebarCollapse2" height="29px" width="29px" style="margin-left: 10px;" />
+            <img src="/assets/logo.png" height="60px" width="100px" style="margin-left: 20px;margin-top:30px"/>
           <button
             class="navbar-toggler"
             type="button"
@@ -271,7 +318,7 @@
 Patients
         </div>
         <div class="tous">
-            Voir tous
+          <a href="/users/medecin/list"> Voir tous</a> 
                     </div>
                   
     </div>
@@ -295,8 +342,16 @@ Patients
         <div class="role">
             <%- rdv.Role  %>
                 </div>
-                <div class="icon-t">
-                 <img src="/assets/icon-t.svg" height="15px" width="15px" />
+                  <div class="dropdown2">
+                      <img class="dropbtn2"   onclick="myFunction2('<%=rdv.date_rdv%>')" src="/assets/icon-t.svg" height="15px" width="15px" />
+                                 <div id='<%=rdv.date_rdv%>' class="dropdown-content2">
+                      <a href="/users/medecin/medicalfileUpdate/?id=<%=rdv.IdPatient%>">Modifier dossier médical</a>
+                      <a href="#">Programer un rendez-vous</a>
+                      <a href="/users/medecin/infoExam/?id=<%= rdv.IdPatient%>">Faire un examen médical</a>
+                      <a href="/users/medecin/medicalexam/?id=<%=rdv.IdPatient%>">Faire un examen médical</a>
+                    </div>
+              
+                 
                 </div>
         </div>
       <% }); %>
@@ -342,13 +397,12 @@ Patients
             <div class="month-list"></div>
             <div class="first">
                 <%= rdv_today %> Rendez-vous aujourdhui 
-
             </div>
             <div class="container-stat">
                 <%= rdv_demande %>       Demande de rendez vous
             </div>
             <div class="container-stat">
-                <%= rdv_reprogrammation %>         Demande de reprogrammation
+                <%= rdv_reprogrammation %>      Demande de reprogrammation
     
             </div>
             <div class="container-go">
@@ -377,20 +431,20 @@ Patients
    
   
 </div>
-<div class="vertical-nav bg-white active" id="sidebar" style="position: absolute;">
-    <div class="py-4 px-3 mb-4" style="background-color: white">
-      <div class="media d-flex align-items-center" style="display: flex; align-self: start; margin: auto;">  
-        <img src="/assets/logo.png" height="60px" width="120px" style="margin:auto"/>
-
+<div class="vertical-nav active" id="sidebar" style="position: absolute;height: 100%; background-color:white">
+    <div class="py-4 px-0" style="background-color: white">
+      <div class="media d-flex align-items-center" style="display: flex; align-self: start; margin: 0px 40px;">  
+        <img src="/assets/drawer.svg" id="sidebarCollapse" height="29px" width="29px" />
+        <img src="/assets/logo.png" height="60px" width="120px" style="margin-left: 40px"/>
       </div>
     </div>
 
-    <ul class="nav" style="display: flex;align-items: start">
-        <li class="nav-item" style="margin-left: 30px;">
-            <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+    <ul class="nav" style="display: flex;align-items: start;background-color: white;  box-shadow: 0px 0px 0px 0px #888;">
+        <li class="nav-item" style="margin-left: 30px;background-color: white;margin-top: 60px;">
+            <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px; background-color:white; ">
                 <img  src="/assets/iconsDrawer/homeActive.svg" height="20px" width="20px" />
     
-                <i class="fa fa-sign-out-alt fa-lg" style="margin-right: 15px;"></i>
+                <i class="fa fa-sign-out-alt fa-lg" style="margin-right: 15px; background-color: white;"></i>
                  Accueil
                   </a>
           </li>
@@ -402,7 +456,7 @@ Patients
                      Patients
                   </a>
           </li>
-      <li class="nav-item" style="margin-left: 30px;margin-top: 20px;">
+      <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
         <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
             <img  src="/assets/iconsDrawer/rdv.svg" height="20px" width="20px" />
 
@@ -426,7 +480,9 @@ Patients
                    Profile
               </a>
       </li>
-      
+       <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+          <div class="con" style="width: 220px; height:1px;background-color: grey;"></div>
+          </li>
     
         <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
             <a  href="/users/logout" class="nav-link text-dark" style="font-size: 18px; height: 50px;" >
@@ -439,8 +495,6 @@ Patients
     </ul>  
 
   </div>
-
-   
 </body>
 <script>
     $(function() { 
@@ -449,23 +503,11 @@ Patients
     
     $('#sidebar, #content').toggleClass('active');
     $('.alert').addClass("show");
-    Toastify({
-  text: " Demande de rendez-vous \n ‘name_patient’ a demandé un rendez-vous ‘date_rdv’et est entrain d’attendre votre décision.",
-  duration: 3000,
+   
 
-  destination: "https://github.com/apvarun/toastify-js",
-  newWindow: true,
-  close: true,
-  className	: "toastStyle" ,
-  gravity: "bottom", // `top` or `bottom`
-  position: "left", // `left`, `center` or `right`
-  backgroundColor: "linear-gradient(to right, #09c6f9, #045de9)",
-  stopOnFocus: true, // Prevents dismissing of toast on hover
-  onClick: function(){} // Callback after click
-}).showToast();
 
-  });
 });
+    })
 
 </script>
 <script>
@@ -646,6 +688,42 @@ myDropdown .insertBefore(div, myDropdown.firstChild);
       
     });
 </script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js">
+
+
+</script>
+<script>
+  $(function() { 
+
+  $('#sidebarCollapse2').on('click', function() {
+    
+    $('#sidebar, #content').toggleClass('active');
+    $('.alert').addClass("show");
+    
+  });
+});
+</script>
+
+<script>
+  function myFunction2(date) {
+    console.log('here');
+  document.getElementById(date).classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn2')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content2");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
 
 </html>

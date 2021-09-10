@@ -79,7 +79,7 @@ input {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: relative;
   top: 4rem;
   
 }
@@ -104,7 +104,7 @@ input {
   clear: both;
   background-color: white;
   color: #000;
-  position: absolute;
+  position: relative;
   height: 1400%;
   width: 80%;
   margin: 0% 10%;
@@ -117,8 +117,9 @@ input {
   background: #fff;
   border-radius: 0.4rem;
   display: flex;
-  position: absolute;
-  width: 90%;
+  position: re;
+  color: black;
+  width:100%;
   border: 1px solid rgb(0, 0, 0);
 }
 .date-container {
@@ -130,7 +131,7 @@ input {
   border-radius: 0.4rem;
   transform: translate(-50%, -50%);
   background: #fff;
-  position: absolute;
+  position: relative;
   color: #184b9b;
   height: 40px;
   width: 170px;
@@ -139,6 +140,7 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
+  
   padding: 0 0.8rem;
 }
 .title-container p {
@@ -195,11 +197,10 @@ input {
 /* AUDITION SECTION */
 .audition-title {
   left: 50%;
-  top: 15rem;
+  top: 0rem;
 }
 .audition-container {
   left: 5%;
-  top: 15rem;
   height: 7rem;
 }
 .audition-container > div > div > div :nth-child(2) {
@@ -220,6 +221,7 @@ input {
   margin-left: 1rem;
 }
 .audition-info-row {
+  color : black;
   display: flex;
   flex-direction: row;
   margin-bottom: 1rem;
@@ -232,7 +234,7 @@ input {
 /* VISUELLE */
 .visuelle-title {
   left: 50%;
-  top: 25rem;
+  top: 2rem;
 }
 
 .visuelle-container {
@@ -260,14 +262,15 @@ input {
 /* PEAU */
 .peau-title {
   left: 50%;
-  top: 40rem;
-  width: 10rem;
+  top: 2rem;
+  width: 15rem;
 }
 .peau-container {
   left: 5%;
-  top: 40rem;
-  height: 20rem;
+  top: 1rem;
+
   display: block;
+  color: #000;
 }
 .peau-container > div {
   padding: 2rem 0 0 2rem;
@@ -302,12 +305,10 @@ input {
 /* OPHTALMOLOGIQUE */
 .oph-title {
   left: 50%;
-  top: 63rem;
+  top: 2rem;
 }
 .oph-container {
   left: 5%;
-  top: 63rem;
-  height: 25rem;
   display: block;
 }
 
@@ -316,7 +317,7 @@ input {
   padding: 2rem 2rem 0 2rem;
   display: flex;
   align-items: center;
-  height: 2rem;
+  height: 6rem;
   justify-content: space-between;
 }
 .oph-container > div:nth-child(2) {
@@ -419,14 +420,15 @@ margin-top: .4rem;
 
 .loco-title {
   left: 50%;
-  top: 118rem;
+  top: 2rem;
 }
 .loco-container {
+
+
   left: 5%;
-  top: 118rem;
-  height: 29rem;
+  top: 70rem;
+  
   display: block;
-  position: relative;
 }
 
 .loco-container > :nth-child(1) {
@@ -439,7 +441,7 @@ margin-top: .4rem;
   padding: 3.5rem 2rem 0 2rem;
   display: flex;
   align-items: center;
-  height: 2rem;
+  height: 4rem;
   justify-content: space-between;
 }
 .loco-container > div:nth-child(4) {
@@ -495,13 +497,13 @@ margin-top: .4rem;
 
 .cardio-title {
   left: 50%;
-  top: 152rem;
-  width: 10rem;
+  top: 2rem;
+  width:15rem;
 }
 .cardio-container {
+  
   left: 5%;
   top: 152rem;
-  height: 30rem;
   display: block;
   /* position: relative; */
 }
@@ -510,13 +512,13 @@ margin-top: .4rem;
 .cardio-container > :nth-child(3),
 .cardio-container > :nth-child(4),
 .cardio-container > :nth-child(5),
-.cardio-container > :nth-child(9),
-.cardio-container > :nth-child(10)
+.cardio-container > :nth-child(9)
+
  {
-  padding: 0.5rem 2rem 0 2rem;
+  padding: 3.5rem 2rem 0 2rem;
   display: flex;
   align-items: center;
-  height: 2rem;
+  height: 1rem;
   justify-content: space-between;
 }
 .cardio-container > :nth-child(1) {
@@ -553,13 +555,12 @@ margin-top: .4rem;
 
 .resp-title {
   left: 50%;
-  top: 187rem;
+  top: 2rem;
   width: 10rem;
 }
 .resp-container {
   left: 5%;
-  top: 187rem;
-  height: 29rem;
+
   display: block;
 }
 .resp-container > :nth-child(1),
@@ -606,13 +607,12 @@ margin-top: .4rem;
 
 .dig-title {
   left: 50%;
-  top: 220rem;
+  top: 2rem;
   width: 10rem;
 }
 .dig-container {
   left: 5%;
-  top: 220rem;
-  height: 42rem;
+
   display: block;
 }
 .dig-container > :nth-child(1),
@@ -641,7 +641,7 @@ margin-top: .4rem;
 .dig-container > :nth-child(13) {
   display: flex;
   align-items: center;
-  height: 2rem;
+
   justify-content: space-between;
 }
 
@@ -680,13 +680,13 @@ margin-top: .4rem;
 
 .gen-title {
   left: 50%;
-  top: 270rem;
+  top: 2rem;
   width: 10rem;
 }
 .gen-container {
   left: 5%;
   top: 270rem;
-  height: 48rem;
+
   display: block;
   padding-top: 2rem;
 }
@@ -749,13 +749,13 @@ margin-top: .4rem;
 /* NEUROLOGIQUE ET PSYCHISME */
 .neur-title {
   left: 50%;
-  top: 325rem;
+  top: 2rem;
   width: 18rem;
 }
 .neur-container {
   left: 5%;
   top: 325rem;
-  height: 46rem;
+
   display: block;
   padding-top: 2rem;
 }
@@ -795,13 +795,13 @@ margin-top: .4rem;
 
 .hem-title {
   left: 50%;
-  top: 376rem;
-  width: 18rem;
+  top: 2rem;
+  width: 28rem;
 }
 .hem-container {
   left: 5%;
   top: 376rem;
-  height: 34rem;
+
   display: block;
   padding-top: 2rem;
 }
@@ -833,13 +833,12 @@ margin-top: .4rem;
 
 .end-title {
   left: 50%;
-  top: 420rem;
+  top: 2rem;
   width: 13rem;
 }
 .end-container {
   left: 5%;
-  top: 420rem;
-  height: 22rem;
+
   display: block;
   padding-top: 2rem;
 }
@@ -866,13 +865,13 @@ margin-top: .4rem;
 /* EXP */
 .exp-title {
   left: 50%;
-  top: 450rem;
+  top: 2rem;
   width: 17rem;
 }
 .exp-container {
   left: 5%;
-  top: 450rem;
-  height: 23rem;
+
+ 
   display: block;
   padding-top: 2rem;
 }
@@ -919,6 +918,7 @@ margin-top: .4rem;
   text-align: center;
   text-decoration: none;
   vertical-align: middle;
+display: flex;
   cursor: pointer;
   border: 1px solid transparent;
   /* padding: .3rem 1.5rem; */

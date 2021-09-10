@@ -1694,21 +1694,7 @@
                     function EditExam(){
                         var data = {
                         }
-                      ('#myForm').submit(function(e){
-                        $.ajax({
-                          method: 'POST',
-                          url: '/users/medecin/editExam',
-                          data: {},
-                          success: function (success) { 
-                            console.log(success);
-                            showMsg("Examen médical modifié",true);
-                          },
-                          error: function (e){
-                            showMsg("Une erreur est survenue, veuillez réessayer!",false);
-                            console.log(e);
-                          }
-                        }); 
-                      });
+                   
                       }
       </script>
       <div class="doc-container" id="Ordonnance">

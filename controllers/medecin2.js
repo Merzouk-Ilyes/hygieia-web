@@ -3,8 +3,6 @@ const jwt = require("jsonwebtoken");
 const db = require("../util/db").db;
 const passwordHash = require("password-hash");
 const pool = require("../util/db").pool;
-
-
 exports.seenotifs=  (req,res,next)=>{
     const rawCookies = req.headers.cookie.split('; ');
     const parsedCookie = rawCookies[0].split('=')[1];

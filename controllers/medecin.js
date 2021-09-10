@@ -26,7 +26,7 @@ exports.getAcce = (req,res,next)=> {
             rdv_reprogrammation = result_reprogrammation.length ; 
           });
           connection.query("select * from rdv where situation_rdv = '0' and iduser = ?",[decodedToken.IdUser],(err,result_demande)=> {
-            connection.query("select * from rdv,patient where rdv.iduser = ? and  rdv.date_rdv between date_sub(now(),INTERVAL 1 DAY) and now() and rdv.situation_rdv in ('14','3','7','19') and rdv.idpatient = patient.idpatient order by rdv.date_rdv DESC limit 4 ",
+            connection.query("select * from rdv,patient where rdv.iduser = ? and rdv.situation_rdv in ('14','3','7','19') and rdv.idpatient = patient.idpatient order by rdv.date_rdv ASC limit 5 ",
             [decodedToken.IdUser],(err,rdvs)=> {
               console.log("rdvs",rdvs);
               rdv_demande = result_demande.length; 
@@ -165,18 +165,19 @@ exports.updatePersonalHistory = (req,res)=> {
 exports.getUpdateMedicalFile = (req,res,next)=> {
   pool.getConnection(function(err, connection) {
     if (err) throw err; 
-    pool.query("Select * from Patient,personalhistory where Patient.IdPatient = ? and personalhistory.IdPatient = ?",
-  [req.query.id,req.query.id,req.query.id],(err,result1)=> {
+    pool.query("Select * from Patient,personalhistory,medicalfile where Patient.IdPatient = ? and personalhistory.IdPatient = ? and medicalfile.idpatient = ? ",
+  [req.query.id,req.query.id,req.query.id,req.query.id],(err,result1)=> {
     if(err) {
       console.log(err); 
       res.redirect('/users/medecin/list');
       return; 
     }
 
-    connection.query("Select * from medicalexam where idpatient = ? ",[req.query.id],(err,exams)=>{
- 
+    connection.query("Select * from medicalexam where medicalexam.idpatient = ?  ",[req.query.id,],(err,exams)=>{
+  
       connection.query("Select * from haveintoxication where Idpersonalhistory = ?  ",
       [result1[0].Idpersonalhistory], (err,intoxicationPatient)=> {
+        
       connection.query("Select *  from intervention",
       (err,interventions)=> {
         connection.query("Select *  from intoxication",
@@ -202,6 +203,7 @@ exports.getUpdateMedicalFile = (req,res,next)=> {
                   ],(err,havecongenitalconditionPatient)=> {
                     
                     connection.query("select * from haveallergy  where Idpatient = ?",[req.query.id],(err,allergies)=>{
+                      connection.release();
                       res.render('medicalfile/updateMedicalFile', { 
                         data : result1[0],
                         exams : exams,
@@ -212,6 +214,7 @@ exports.getUpdateMedicalFile = (req,res,next)=> {
                         interventions: interventions , 
                         intoxicationPatient :intoxicationPatient,
                         drugs : drugs,
+                        idpatient : req.query.id ,
                         containsdrugPatient : containsdrugPatient,  
                         containinterventionPatient: containinterventionPatient,  
                         containgeneralillnessPatient: containgeneralillnessPatient, 
@@ -361,15 +364,9 @@ exports.getList = (req, res, next) => {
           'moment' :moment,
           'iduser' :decodedToken.IdUser,
           });
-
         })
-
       });
-  
-
-    })
-
-      
+    });
     });
   }); 
 
@@ -554,18 +551,136 @@ exports.addMaladie = (req,res)=>{
     })}
 
     exports.postEditExam = (req,res,next) =>{
-      db.query("UPDATE medicalexam SET weight = ?, height= ?, TA=?, blood_sugar= ?, imc=?, hearing_l=?, hearing_r=?, visual_l=?, visual_r=?,c_visual_l=?,c_visual_r=?, Skin_disorders=?,else_Skin_disorders=?,skin_exam=?,tearing=?,pain=?,redness=?,spot_eyes=?,else_ophthalmo=?,ophthalmo_exam=?,whistling=?,angina=?,epistaxis=?,rhinorrhea=?,else_orl=?,orl_exam=?,muscleache=?,jointache=?,spinalache=?,Neuroloache=?,else_locomo=?, Movement_discomfort=?, fatigability=?,locomo_exam=?,cough=?,nocturn_dyspnea=?,daytime_dyspnea=?,expectorations=?,chest_pain=?,else_thoracic=?,respir_rate=?,respir_exam=?,palpitation=?, edema=?, cyanosis=?, walking_pain=?, resting_pain=?, exertion_pain=?, permanent_pain=?, else_cardio=?, pulse=?, cardio_exam=?, appetite=?, transit=?, selles=?, pyrosis=?,vomiting=?, rectal_bleeding=?,abdo_pain=?, else_digestive=?, carie=?, gingivopathy=?, abdomens=?, hernie=?, liver=?, else_dig=?, digestive_exam=?, pollakiuria=?, dysurie=?, hematuria=?, urination_burns=?, renal_colic=?, losses=?, cycle=?, else_genito=?, bourses=?, breasts=?, tr=?, tv=?, genito_exam=?, sleep=?, headache=?, dizziness=?, emptiness_fear=?, consciousness_loss=?, paresis=?, paresthesia=?, else_neuro=?, tremor=?, reflexes=?, romberg=?, coordination=?, sensitivity=?, achilles_l=?, achilles_r=?, motor_skills=?, Oculaire_l=?, oculaire_r=?, neuro_exam=?, ecchymose=?, bleeding_tendencies=?, else_hemato=?, petechia=?, purpura=?, rate=?, cervical_ganglia=?, subaux_ganglia=?, Subclavicular_ganglia=?, inguin_ganglia=?, hemato_exam=?, fam_obesity=?, fam_thinness=?, else_endo=?, Thyroid=?, testicles=?, mam_glands=?, endo_exam=?, respiratory_func=?, circulatory_func=?, motrice_func=? WHERE iduser =? AND idpatient =? AND date_medicalexam =?", 
-      [req.body.poids,req.body.taille,req.body.TA, req.body.Glycemie, req.body.ICM, req.body.Audition_OG, req.body.Audition_OD, req.body.sans_OG, req.body.sans_OD, req.body.avec_OG, req.body.avec_OD, req.body.value_Affection, req.body.affection_autre, req.body.peau_exam,req.body.value_Larmoiement, req.body.value_Douleurs,req.body.value_Rougeurs, req.body.value_Tache,req.body.ophtalmo_autre,req.body.ophtalmo_exam, req.body.value_Sifflements, req.body.value_Angines, req.body.value_Epistaxis, req.body.value_Rhinorhee, req.body.orl_autre, req.body.orl_exam, req.body.value_Musculaires,req.body.value_Articulaires,req.body.value_Vertebrales,req.body.value_Neurologiques,req.body.locomo_autre,req.body.value_Mouvements,req.body.value_Fatigabilite,req.body.locomo_exam,req.body.value_Toux,req.body.value_Nocturne,req.body.value_Diurne,req.body.value_Expectorations,req.body.value_Thoraciques,req.body.respi_autres,req.body.frequence,req.body.respi_exam,req.body.value_Palpitation,req.body.value_Oedemes,req.body.value_Cyanose, req.body.value_Marche, req.body.value_Repos,req.body.value_Effort,req.body.value_Permanents,req.body.cardio_autres,req.body.Pouls,req.body.cardio_exam,req.body.Appetit,req.body.Transit,req.body.Selles,req.body.value_Pyrosis,req.body.value_Vomissements,req.body.Rectorragies,req.body.DouleurAbdo,req.body.digestif_autres,req.body.value_carie,req.body.value_Gingivopathie,req.body.Abdomens,req.body.Hernie,req.body.Foie,req.body.dig_autres,req.body.digestif_exam,req.body.value_Pollakiurie,req.body.value_Dysurie, req.body.value_Hematurie, req.body.value_Brulures,req.body.value_Coliques,req.body.Pertes,req.body.value_Cycles,req.body.genito_autres,req.body.Bourses,req.body.Seins,req.body.TR,req.body.TV,req.body.genito_exam,req.body.Sommeil,req.body.value_Cephaliees,req.body.value_Vertiges,req.body.value_Vide,req.body.value_Connaissance,req.body.value_Paresie,req.body.value_Paresthesie,req.body.Neuro_autres,req.body.Tremblement,req.body.value_Reflexes,req.body.value_Romberg,req.body.value_Coordination,req.body.value_Sensibilite,req.body.value_GAchil,req.body.value_DAchil,req.body.Motricite,req.body.value_GOcul,req.body.value_DOcul,req.body.Neuro_exam,req.body.value_Ecchymoses,req.body.value_Hemo,req.body.Hemato_autres,req.body.Petechies,req.body.Purpura,req.body.Rate,req.body.value_Cervicaux,req.body.value_Auxi,req.body.value_Clavi,req.body.value_Inguinaux,req.body.hemato_exam,req.body.value_Obese,req.body.value_Maigre,req.body.Endo_autres,req.body.Tyroide,req.body.Testicules,req.body.Glandes,req.body.Endo_exam,req.body.respire,req.body.circule,req.body.Fmotrice,acc_med, acc_id, acc_date],
+    pool.getConnection(function(err,connection) {
+      console.log(req.body.value_Affection,"hererere");
+     connection.query("UPDATE medicalfile SET weight = ?, height= ?, TA=?, blood_sugar= ?, imc=?, hearing_l=?, hearing_r=?, visual_l=?, visual_r=?,c_visual_l=?,c_visual_r=?, Skin_disorders=?,else_Skin_disorders=?,skin_exam=?,tearing=?,pain=?,redness=?,spot_eyes=?,else_ophthalmo=?,ophthalmo_exam=?,whistling=?,angina=?,epistaxis=?,rhinorrhea=?,else_orl=?,orl_exam=?,muscleache=?,jointache=?,spinalache=?,Neuroloache=?,else_locomo=?, Movement_discomfort=?, fatigability=?,locomo_exam=?,cough=?,nocturn_dyspnea=?,daytime_dyspnea=?,expectorations=?,chest_pain=?,else_thoracic=?,respir_rate=?,respir_exam=?,palpitation=?, edema=?, cyanosis=?, walking_pain=?, resting_pain=?, exertion_pain=?, permanent_pain=?, else_cardio=?, pulse=?, cardio_exam=?, appetite=?, transit=?, selles=?, pyrosis=?,vomiting=?, rectal_bleeding=?,abdo_pain=?, else_digestive=?, carie=?, gingivopathy=?, abdomens=?, hernie=?, liver=?, else_dig=?, digestive_exam=?, pollakiuria=?, dysurie=?, hematuria=?, urination_burns=?, renal_colic=?, losses=?, cycle=?, else_genito=?, bourses=?, breasts=?, tr=?, tv=?, genito_exam=?, sleep=?, headache=?, dizziness=?, emptiness_fear=?, consciousness_loss=?, paresis=?, paresthesia=?, else_neuro=?, tremor=?, reflexes=?, romberg=?, coordination=?, sensitivity=?, achilles_l=?, achilles_r=?, motor_skills=?, Oculaire_l=?, oculaire_r=?, neuro_exam=?, ecchymose=?, bleeding_tendencies=?, else_hemato=?, petechia=?, purpura=?, rate=?, cervical_ganglia=?, subaux_ganglia=?, Subclavicular_ganglia=?, inguin_ganglia=?, hemato_exam=?, fam_obesity=?, fam_thinness=?, else_endo=?, Thyroid=?, testicles=?, mam_glands=?, endo_exam=?, respiratory_func=?, circulatory_func=?, motrice_func=? WHERE idpatient =?", 
+      [req.body.poids,
+        req.body.taille,
+        req.body.TA, req.body.Glycemie, req.body.ICM,
+         req.body.Audition_OG, 
+         req.body.Audition_OD, 
+         req.body.sans_OG,
+         req.body.sans_OD, 
+         req.body.avec_OG, 
+         req.body.avec_OD, 
+         req.body.Affection,
+          req.body.affection_autre, 
+          req.body.peau_exam,req.body.Larmoiement,
+           req.body.Douleurs,req.body.Rougeurs,
+            req.body.Tache,req.body.ophtalmo_autre,
+            req.body.ophtalmo_exam,
+             req.body.Sifflements,
+              req.body.Angines,
+               req.body.Epistaxis,
+                req.body.Rhinorhee, 
+                req.body.orl_autre, 
+                req.body.orl_exam,
+                 req.body.Musculaires,
+                 req.body.Articulaires,
+                 req.body.Vertebrales,
+                 
+
+                 req.body.Neurologiques,
+                 req.body.locomo_autre,
+                 req.body.Mouvements,
+                 req.body.Fatigabilite,
+                 req.body.locomo_exam,
+                 req.body.Toux,
+                 req.body.value_Nocturne,
+                 req.body.Diurne,
+                 req.body.Expectorations,
+        req.body.Thoraciques,req.body.respi_autres,
+        req.body.frequence,
+        req.body.respi_exam,
+        req.body.value_Palpitation,
+        req.body.Oedemes,req.body.Cyanose, 
+        req.body.Marche, req.body.Repos,
+        req.body.value_Effort,req.body.Permanents,
+        req.body.cardio_autres,
+        req.body.Pouls,
+        req.body.cardio_exam,
+        req.body.Appetit,
+        req.body.Transit,
+        req.body.Selles,
+        req.body.Pyrosis,
+        req.body.Vomissements,
+        req.body.Rectorragies,
+        req.body.DouleurAbdo,
+        req.body.digestif_autres,
+        req.body.carie,
+        req.body.Gingivopathie,
+        req.body.Abdomens,
+        req.body.Hernie,
+        req.body.Foie,
+        req.body.dig_autres,
+        req.body.digestif_exam,
+        req.body.Pollakiurie,
+        req.body.Dysurie,
+        req.body.Hematurie, 
+        req.body.Brulures,
+        req.body.Coliques,
+        req.body.Pertes,
+        req.body.Cycles,
+        req.body.genito_autres,
+        req.body.Bourses,
+        req.body.Seins,
+        req.body.TR,
+        req.body.TV,
+        req.body.genito_exam,
+        req.body.Sommeil,
+        req.body.Cephaliees,
+        req.body.Vertiges,
+        req.body.Vide,
+        req.body.Connaissance,
+        req.body.Paresie,
+        req.body.Paresthesie,
+        req.body.Neuro_autres,
+        req.body.Tremblement,
+        req.body.Reflexes,
+        req.body.Romberg,req.body.Coordination,
+        req.body.Sensibilite,
+        req.body.GAchil,
+        req.body.DAchil,
+        req.body.Motricite,
+        req.body.GOcul,
+        req.body.DOcul,
+        req.body.Neuro_exam,
+        req.body.Ecchymoses,
+        req.body.Hemo,
+        req.body.Hemato_autres,
+        req.body.Petechies,
+        req.body.Purpura,
+        req.body.Rate,
+        req.body.Cervicaux,
+        req.body.Auxi,
+        req.body.Clavi,
+        req.body.Inguinaux,
+        req.body.hemato_exam,
+        req.body.Obese,
+        req.body.Maigre,
+        req.body.Endo_autres,
+        req.body.Tyroide,
+        req.body.Testicules,
+        req.body.Glandes,req.
+        body.Endo_exam,
+        req.body.respire,
+        req.body.circule,req.body.Fmotrice,req.query.idpatient],
       (err, resultat3) => {
+        
         if(err) {
+          console.log(err);
+          console.log("hi");
+         return res.send('err'); 
           console.log("error", err);
         }else{
-          console.log('medical exam data updated !');
-          console.log(acc_med);
-          console.log(acc_id);
-          console.log(acc_date);
+          return res.send('updated'); 
+      
+  
         }
       })
+    })
+   
+    
     }
     
     exports.deleteExamFile = (req,res,next) =>{

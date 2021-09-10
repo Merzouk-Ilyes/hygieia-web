@@ -23,7 +23,7 @@
 color: white;
      margin:10px 0px;
      border-radius: 5px;
-
+height: 50vh;
      padding : 30px 50px;
 
 }
@@ -51,17 +51,18 @@ color: white;
 .container-list .row {
     color: #000;
     width: 100%;
-    height : 30%;
+    height : 15%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+
+
   
 
   }
  .patient{
- flex : 8; 
-    font-size: 30px;
+ flex : 7; 
+    font-size: 20px;
     font-weight: 500;
+    margin-left: 10px;
   }
   .tous{
     flex : 1; 
@@ -70,7 +71,7 @@ color: white;
        font-weight: 400;
      }
   .container-list  .co {
-      margin: 15px 0px ;
+      margin: 5px 0px ;
       width: 100vh;
       height: 7vh;
       
@@ -79,11 +80,11 @@ color: white;
       padding-left: 40px;
       
       font-size: 12px;
-      flex: 5;
+      flex: 4;
       display: flex;
       align-items: center;
-      justify-content:center;
-      align-self: center;
+      
+ 
   
       box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
       flex-direction: row;
@@ -104,7 +105,7 @@ color: white;
 
  }
   .email {
-    flex : 2; 
+    flex : 1; 
 
   }
 .role{
@@ -357,3 +358,49 @@ border-radius: 3px;
        margin-top: 10px;
        background-color:  #184B9B;
     }
+    .dropbtn2 {
+        color: white;
+        padding: 0px;
+        font-size: 16px;
+        border: none;
+        background-color: inherit;
+        }
+        
+        /* The container <div> - needed to position the dropdown content */
+        .dropdown2 {
+        position: relative;
+        
+        }
+        
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content2 {
+        display: none;
+        position: absolute;
+        right: 13px;
+        background-color: #f1f1f1;
+        width: 290px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 2;
+        }
+        
+        /* Links inside the dropdown */
+        .dropdown-content2 a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        font-size: 10px;
+        }
+        .show {display:block;}
+        
+        /* Change color of dropdown links on hover */
+        .dropdown-content2 a:hover {background-color: #ddd;}
+        
+        /* Show the dropdown menu on hover */
+        
+        
+        /* Change the background color of the dropdown button when the dropdown content is shown */
+        .dropdown2:hover .dropbtn2 {}
+          
+        
+          

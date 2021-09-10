@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const app = express();
 const path = require("path");
 const cookieParser = require("cookie-parser");
-
 const sequelize = require("./util/database");
 const usersRoutes = require("./routes/users/users");
 const { verifyToken } = require("./middleware/verifyToken");
@@ -13,7 +12,6 @@ var moment = require('moment');
 app.set("views", "views");
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
-
 const PORT = process.env.PORT || 3000;
 var server = app.listen(PORT, function () {
   var host = server.address().address
