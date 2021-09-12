@@ -7,7 +7,7 @@
 }
 
 .content {
-  padding: 5% 5%;
+  padding: 2% 5%;
 }
 .top .mainTitle {
     font-family: 'Poppins';
@@ -19,17 +19,20 @@
 .top {
     display: flex;
    justify-content: space-between;
+   
 }
 .searchItems {
     display: flex;
     grid-auto-flow: row;
+    height: 0px;
+    padding : 10px 5px;
 }
 
 .top .searchItems .dropdown {
     background-color: #01559C;
     color:white;
     border-radius: 6px;
-    height: 38px;
+    height: 48px;
     width: 148px;
 
     margin-left: 10px;
@@ -48,6 +51,7 @@
     align-items:center;
     padding: 0.58rem 1rem;
     cursor: pointer;
+
 }
 .top .searchItems .dropdown .dropdown-list {    
 border-radius: 8px;
@@ -63,12 +67,12 @@ visibility: hidden;
 transition: opacity 0.2s linear, visibility 0.2s linear;
 }
 .top .searchItems .field  {
-height: 27px;
+height: 37px;
 
 display: flex;
 justify-content: space-between;
 align-items: center;
-padding: 5px 10px;
+padding: 10px 10px;
 width: 300px;
 border-radius: 6px;
 box-shadow: 1px 1px 1px 1px #70707036;
@@ -76,9 +80,10 @@ box-shadow: 1px 1px 1px 1px #70707036;
 }
 .top .searchItems .field input {
     border-radius: 8px;
-    padding: 0px 20px;
+    padding: 15px 20px;
     border: none;
     font-size: 13px;
+    height: 30px;
     opacity: 0.53;
     font-family: "Poppins";
 }
@@ -93,7 +98,7 @@ box-shadow: 1px 1px 1px 1px #70707036;
     
 }
 tr:nth-child(odd) {
-    background-color: #F5F5F5;
+    background-color: red;
   }
   tr {
       border-left: 1px solid  #F5F5F5;
@@ -230,4 +235,7 @@ select {
 
   .fas {
       color: #01559C;
+  }
+  input {
+    height: 10px;
   }

@@ -3,6 +3,24 @@ const jwt = require("jsonwebtoken");
 const db = require("../util/db").db;
 const passwordHash = require("password-hash");
 const pool = require("../util/db").pool;
+exports.seenotifs=  (req,res,next)=>{
+    const rawCookies = req.headers.cookie.split('; ');
+    const parsedCookie = rawCookies[0].split('=')[1];
+    jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
+      (err,decodedToken)=> {
+        pool.getConnection(function(err,connection){
+            connection.query("UPDATE notification set opened = 1 where iduser = ? ",
+            [decodedToken.IdUser],(err,result)=> {
+                console.log('err rrr',err);
+            connection.release();
+                res.send({
+                    'msg' : "success",
+                })
+
+            }); 
+        }); 
+      });
+}
 exports.addWork = (req,res,next)=>{
 
     pool.getConnection(function(err,connection){

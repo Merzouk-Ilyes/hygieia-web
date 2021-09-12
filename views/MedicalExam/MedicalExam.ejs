@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="/css/MedicalExam/exam.css" />
+    <link rel="stylesheet" href="/css/MedicalExam/exam2.css" />
 
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -114,1722 +114,514 @@
         <div class="i-item" id="item6">
           <h3>Certificat</h3>
         </div>
-      </div>
-
-      <div class="title-header">
-        <div class="interface-title">Examen médical :</div>
-        <div class="patient-name">
-          <%= insertexam.p_Firstname %> <%= insertexam.p_Lastname %>
+        <div class="popups">
+          <%- include('./ordanance.ejs')%>
+          <%- include('./bilan.ejs')%>
+          <%- include('./orientation.ejs')%>
+          <%- include('./certificat.ejs')%>
+          <%- include('./evacuation.ejs')%>
+          <%- include('./ordonnanceupdate.ejs')%>
+          <%- include('./bilanupdate.ejs')%>
+          <%- include('./orientationupdate.ejs')%>
+          <%- include('./certificatupdate.ejs')%>
+          <%- include('./evacuationupdate.ejs')%>
         </div>
-        <div class="patient-role">(Étudiant)</div>
       </div>
-
       <form id="myForm">
-        <div class="w-container">
-          <!-- DATE -->
+        <div id="container" class="w-container">
           <div class="title-container date-title" id="place1">
-            <p class="label-niv1">Date: <span id="today_date"></span></p>
-            <script>
-              let today = new Date();
-              let month = today.getMonth() + 1;
-              let year = today.getFullYear();
-              let date = today.getDate();
-              var today_date = date + "/" + month + "/" + year;
-              console.log("today_date:", today_date);
-              document.getElementById("today_date").innerHTML = today_date;
-            </script>
+            <p>Examen medical</span></p>
           </div>
           <div class="container date-container">
             <div class="info info1">
-              <div class="sub-info1">
-                <div class="info-row">
-                  <label class="label-niv1">Poids :</label>
-                  <input type="text" name="poids" /><label class="label-niv1"
-                    >Kg</label
-                  >
+              
+              <div class="sub-info">
+
+                <div>
+                  <div class="info-row">
+                    <div class="info-col">
+                      <input type="hidden" name='id' id="id" value="<%= insertexam.IdPatient %>">
+                      <label class="label-niv-end">Date du jour : </label>
+                      <input type="text" name="date" id="today_date" class="disable inputexam" disabled/>
+                      <script>
+                        let today = new Date();
+                        let month = today.getMonth() + 1;
+                        let year = today.getFullYear();
+                        let date = today.getDate();
+                        var today_date = date + "/" + month + "/" + year;
+                        document.getElementById("today_date").value = today_date;
+                      </script>
+                    </div>
+                    <div class="info-col">
+                      <label class="label-niv-end">Nom : </label>
+                      <input type="text" name="nom" value="<%= insertexam.p_Firstname %>" class="disable inputexam" disabled/>
+                    </div>
+                    <div class="info-col">
+                      <label class="label-niv-end">Prenom : </label>
+                      <input type="text" name="prenom" value="<%= insertexam.p_Lastname %>" class="disable inputexam" disabled/>
+                    </div>
+                    <div class="info-col">
+                      <label class="label-niv-end">Date de naissance : </label>
+                     <input type="text" name="dn" value="<%= insertexam.birthday %>" class="disable inputexam" disabled/>
+                    </div>
+                    <div class="info-col">
+                      <label class="label-niv-end">Poids : </label>
+                    <div>
+                      <input type="text" name="poids" id="poids" class="inputexam"/><br>
+                      <small class="noterror">
+                      </small>
+                  </div>
+                    <label class="label-niv1">Kg </label>
+                    </div>
+                    <div class="info-col">
+                      <label class="label-niv-end">Taille : </label>
+                    <div>
+                      <input type="text" name="taille" id="taille" class="inputexam"/><br>
+                    <small class="noterror">
+                    </small>
+                  </div>
+                    <label class="label-niv1 debut">Cm </label>
+                    </div>
+                    <div class="info-col">
+                    <label class="label-niv-end">IMC : </label>
+                  <div>
+                    <input type="text" name="imc" id="imc" onclick="calcule()" class="disable inputexam"/><br>
+                    <small class="noterror">
+                    </small>
+                  </div>
+                    <label class="label-niv1">Kg/Cm2</label>
+                    <script>
+                      function calcule(){
+                        var poids = document.getElementById("poids").value;
+                        var taille = document.getElementById("taille").value;
+                        var imc =document.getElementById("imc");
+                        var imc1 = poids/((taille*0.01)*(taille*0.01));
+                        if(imc1<18.5){
+                          const parent = imc.parentElement;
+                          const small = parent.querySelector("small");
+                          small.className = "bleu";
+                          small.innerText = "Insuffisante ponderale";
+                        }else{
+                          if(imc1 < 25){
+                            const parent = imc.parentElement;
+                            const small = parent.querySelector("small");
+                            small.className = "vert";
+                            small.innerText = "Corpulance normale";
+                          }else{
+                            if(imc1 < 30){
+                            const parent = imc.parentElement;
+                            const small = parent.querySelector("small");
+                            small.className = "jaune";
+                            small.innerText = "Surpoids";
+                          }else{
+                            if(imc1 < 35){
+                            const parent = imc.parentElement;
+                            const small = parent.querySelector("small");
+                            small.className = "orange";
+                            small.innerText = "Obesite moderee";
+                          }else{
+                            if(imc1 < 40){
+                            const parent = imc.parentElement;
+                            const small = parent.querySelector("small");
+                            small.className = "rougrclaire";
+                            small.innerText = "Obesete severe";
+                          }else{
+                            const parent = imc.parentElement;
+                            const small = parent.querySelector("small");
+                            small.className = "rougr";
+                            small.innerText = "Obesite morbide ou massive";
+                          }
+                          }
+                          }
+                          }
+                        }
+                        imc.value=imc1;
+                      }                   
+                    </script>
+                    </div>
+                    <div class="info-col">
+                    <label class="label-niv-end">TA : </label>
+                    <div>
+                    <input type="text" name="ta"id="ta" class="inputexam"/><br>
+                    <small class="noterror">
+                    </small>
+                  </div>
+                    <label class="label-niv1">mmhg </label>
+                    </div>
+                    
+                  </div>
                 </div>
-                <div class="info-row">
-                  <label class="label-niv1">Taille :</label>
-                  <input type="text" name="taille" /><label class="label-niv1"
-                    >Cm</label
-                  >
-                </div>
-                <div class="info-row">
-                  <label class="label-niv1">IMC :</label
-                  ><input type="text" name="ICM" /><label class="label-niv1"
-                    >Kg</label
-                  >
-                </div>
+                
               </div>
 
               <div class="sub-info2">
                 <div class="info-row">
-                  <label class="label-niv1">T.A : </label>
-                  <input type="text" name="TA" /><label class="label-niv1"
-                    >mmhg</label
-                  >
+                  <label class="label-niv2">Motif : </label>
+                  <textarea name="motif" id="motif" class="textarea"></textarea>
+                  <small class="noterror">
+                  </small>
+                  <label class="label-niv2">Signe : </label>
+                  <textarea name="signe" id="signe" class="textarea"></textarea>
+                  <small class="noterror">
+                  </small>
+                  <div class="sub-infomal">
+                    <div class="info-col">
+                      <label class="label-niv2">Nom de la maladie : </label>
+                      <input list="mals" name="mal" id="mal" required>
+                      <datalist id="mals" >                     
+                        <% for (var i = 0; i < sickness.length; i++) { %>
+                          <option value="<%= sickness[i].name_sickness %>">
+                        <% } %>
+                      </datalist>
+                      <input type="button" name='validemal' value="ajouter au diagnostic" class="validemal"/> 
+                    </div>
+                  </div>
+                  <div class="sub-infomalhidden">
+                    <div class="info-col">
+                      <label class="label-niv2">Type de la maladie : </label>
+                      <input list="typesmal" name="typemal" id="typemal" required>
+                      <datalist id="typesmal" >                     
+                        <% for (var i = 0; i < typemal.length; i++) { %>
+                          <option value="<%= typemal[i].type_sickness %>">
+                        <% } %>
+                      </datalist>
+                      <input type="hidden" id='find' name="find">
+                      <input type="button" name='addmal' value="ajouter maladie" class="addmal"/>
+                    </div>
+                  </div>
+                  <label class="label-niv2">Diagnostic : </label>
+                  <textarea name="diagnostic" id="diagnostic" class="textarea"></textarea>
+                  <small class="noterror">
+                  </small>
+                  <input type="hidden" id='listmal' name="listmal">
+                  <div>
                 </div>
-                <div class="info-row">
-                  <label class="label-niv1">Glycémie : </label>
-                  <input type="text" name="Glycemie" /><label class="label-niv1"
-                    >G/L</label
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- AUDITION -->
-          <div class="title-container audition-title">
-            <p>Audition</p>
-          </div>
-          <div class="container audition-container">
-            <div class="info info2">
-              <div class="sub-info1-half">
-                <div class="audition-info-row">
-                  <label>Oreille droite: </label>
-                  <input type="text" name="Audition_OD" />
-                </div>
-              </div>
-              <div class="sub-info2-half">
-                <div class="audition-info-row">
-                  <label>Oreille gauche:</label>
-                  <input type="text" name="Audition_OG" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- VISUELLE -->
-          <div class="title-container visuelle-title">
-            <p>Acuité visuelle</p>
-          </div>
-          <div class="container visuelle-container">
-            <div class="info info2">
-              <div class="sub-info1-half">
-                <label class="label-niv1">Avec correction</label>
-
-                <div class="audition-info-row">
-                  <label>Oreille droite: </label>
-                  <input type="text" name="sans_OD" />
-                </div>
-                <label class="label-niv1">Sans correction</label>
-
-                <div class="audition-info-row">
-                  <label>Oreille droite: </label>
-                  <input type="text" name="avec_OD" />
+                <% if (exam.length < 1) { %>
+                  <input type="button" class="outline" id="valide" onclick="valideexamenmedical()" value="Valider examen">
+                <% }else{ %>
+                  <input type="button" class="outline" id="valide" value="Valider examen" disabled>
+                <% } %>
+                  
                 </div>
               </div>
+              <script>
+                document.querySelector(".addmal").addEventListener("click",() => {
+                  
+                  var diagnostic = document.getElementById('diagnostic');
+                  var mal = document.getElementById('mal').value;
+                  var types = document.getElementById('typesmal').options;
+                  var type = document.getElementById('typemal').value;
+                  var find = document.getElementById('find').value;
+                  var test = 0;
 
-              <div class="sub-info2-half">
-                <div class="audition-info-row">
-                  <label>Oreille gauche:</label>
-                  <input type="text" name="sans_OG" />
-                </div>
-                <div class="audition-info-row">
-                  <label>Oreille gauche:</label>
-                  <input type="text" name="avec_OG" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- PEAU -->
-          <div class="title-container peau-title">
-            <p>Peau et muqueuses</p>
-          </div>
-          <div class="container peau-container">
-            <div>
-              <label>Affections cutanées:</label>
-              <input
-                type="radio"
-                class="form-check-input"
-                name="Affection"
-                value="1"
-              /><label>Oui</label>
-              <input
-                type="radio"
-                class="form-check-input"
-                name="Affection"
-                value="0"
-              /><label>Non</label>
-              <input
-                type="hidden"
-                id="value_Affection"
-                name="value_Affection"
-              />
-            </div>
-            <div>
-              <label>Autres :</label>
-              <div>
-                <textarea name="affection_autre" cols="50" rows="3"></textarea>
-              </div>
-            </div>
+                  for (var j = 0; j < types.length; j++) { 
+                    if(type === types[j].value){
+                      test = 1;
+                      break;
+                    }
+                  }
 
-            <label class="label-niv1 label-niv2">examen clinique:</label>
-            <div>
-              <textarea name="peau_exam" cols="90" rows="6"></textarea>
-            </div>
-          </div>
+                  find = test;
 
-          <!-- OPH -->
-          <div class="title-container oph-title">
-            <p>Ophtalmologique</p>
-          </div>
-          <div class="container oph-container">
-            <div>
-              <div>
-                <label>Larmoiement:</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Larmoiement"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Larmoiement"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Larmoiement"
-                  name="value_Larmoiement"
-                />
-              </div>
-              <div>
-                <label>Douleurs:</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Douleurs"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Douleurs"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Douleurs"
-                  name="value_Douleurs"
-                />
-              </div>
-            </div>
-            <div>
-              <div>
-                <label>Rougeurs:</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Rougeurs"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Rougeurs"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Rougeurs"
-                  name="value_Rougeurs"
-                />
-              </div>
-              <div>
-                <label>Tâches devant les yeux:</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Tache"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Tache"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Tache" name="value_Tache" />
-              </div>
-            </div>
-            <div>
-              <label>Autres :</label>
-              <div>
-                <textarea name="ophtalmo_autre" cols="50" rows="3"></textarea>
-              </div>
-            </div>
+                  var mal = mal.replace(/ /g,"_");
+                  alert(mal);
 
-            <label class="label-niv1 label-niv2">examen clinique:</label>
-            <div>
-              <textarea name="ophtalmo_exam" cols="90" rows="6"></textarea>
-            </div>
-          </div>
+                  $.ajax({
+                    method: "POST",
+                    url: "/users/medecin/addSickness",
+                    data: {
+                        "type":type,
+                        "mal":mal,
+                        "find":find,
+                    },
+                    success: function (result) {
+                      const infomalhidden = document.querySelector(".sub-infomalhidden");
+                      infomalhidden.classList.remove("open"); 
+                      const container = document.getElementById("container");
+                      container.classList.remove('w-containertop'); 
+                      diagnostic.value = diagnostic.value +'\n -' + mal + ' ' ; 
+                    },
+                });                   
+              });
 
-          <!-- ORL -->
-          <div class="title-container orl-title">
-            <p>ORL</p>
-          </div>
-          <div class="container orl-container">
-            <div>
-              <div>
-                <label>Sifflements:</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Sifflements"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Sifflements"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Sifflements"
-                  name="value_Sifflements"
-                />
-              </div>
-              <div>
-                <label>Angines répétées:</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Angines"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Angines"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Angines" name="value_Angines" />
-              </div>
-            </div>
-            <div>
-              <div>
-                <label>Epistaxis:</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Epistaxis"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Epistaxis"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Epistaxis"
-                  name="value_Epistaxis"
-                />
-              </div>
-              <div>
-                <label>Rhinorhée:</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Rhinorhee"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Rhinorhee"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Rhinorhee"
-                  name="value_Rhinorhee"
-                />
-              </div>
-            </div>
-            <div>
-              <label>Autres :</label>
-              <div>
-                <textarea name="orl_autre" cols="50" rows="3"></textarea>
-              </div>
-            </div>
+                document.querySelector(".validemal").addEventListener("click",() => {
 
-            <label class="label-niv1 label-niv2">examen clinique:</label>
-            <div>
-              <textarea name="orl_exam" cols="90" rows="6"></textarea>
-            </div>
-          </div>
+                  var mal = document.getElementById('mal').value;
+                  var mals = document.getElementById('mals').options;
+                  var diagnostic = document.getElementById('diagnostic');
 
-          <!-- LOCOMOTEUR -->
+                  const infomalhidden = document.querySelector(".sub-infomalhidden");
+                  const container = document.getElementById("container");
+                  container.classList.remove('w-containertop');
+                  infomalhidden.classList.remove("open");
 
-          <div class="title-container loco-title">
-            <p>LOCOMOTEUR</p>
+                    for (var j = 0; j < mals.length; j++) { 
+                      if(mal === mals[j].value){
+                        diagnostic.value = diagnostic.value +'\n -' + mal + ' ' ;
+                        return;
+                      }
+                    }
+                  infomalhidden.classList.add("open");
+                  container.classList.add('w-containertop');
+                                  
+                });
+              </script>
+              
+              
+            </div> 
           </div>
-          <div class="container loco-container">
-            <label class="label-niv1">Douleurs:</label>
-
-            <div>
-              <div>
-                <label>Musculaires:</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Musculaires"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Musculaires"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Musculaires"
-                  name="value_Musculaires"
-                />
-              </div>
-              <div>
-                <label>Articulaires:</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Articulaires"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Articulaires"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Articulaires"
-                  name="value_Articulaires"
-                />
-              </div>
-            </div>
-            <div>
-              <div>
-                <label>Vertébrales:</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Vertebrales"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Vertebrales"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Vertebrales"
-                  name="value_Vertebrales"
-                />
-              </div>
-              <div>
-                <label>Neurologiques:</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Neurologiques"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Neurologiques"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Neurologiques"
-                  name="value_Neurologiques"
-                />
-              </div>
-            </div>
-            <div>
-              <div>
-                <label>Gênée de Mouvements:</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Mouvements"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Mouvements"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Mouvements"
-                  name="value_Mouvements"
-                />
-              </div>
-              <div>
-                <label>Fatigabilité:</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Fatigabilite"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Fatigabilite"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Fatigabilite"
-                  name="value_Fatigabilite"
-                />
-              </div>
-            </div>
-            <div>
-              <label>Autres :</label>
-              <div>
-                <textarea name="locomo_autre" cols="50" rows="3"></textarea>
-              </div>
-            </div>
-
-            <label class="label-niv1 label-niv2">examen clinique:</label>
-            <div>
-              <textarea name="locomo_exam" cols="90" rows="6"></textarea>
-            </div>
-          </div>
-
-          <!-- CARDIO -->
-          <div class="title-container cardio-title">
-            <p>CARDIO-VASCULAIRE</p>
-          </div>
-          <div class="container cardio-container">
-            <div>
-              <div>
-                <label>Palpitation</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Palpitation"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="Palpitation"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Palpitation"
-                  name="value_Palpitation"
-                />
-              </div>
-            </div>
-            <label class="label-niv1">Douleurs:</label>
-            <div>
-              <div>
-                <label>À la marche</label>
-                <input
-                  type="radio"
-                  name="Marche"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Marche"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Marche" name="value_Marche" />
-              </div>
-              <div>
-                <label>Au repos</label>
-                <input
-                  type="radio"
-                  name="Repos"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Repos"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Repos" name="value_Repos" />
-              </div>
-            </div>
-            <div>
-              <div>
-                <label>À l'efforts</label>
-                <input
-                  type="radio"
-                  name="Effort"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Effort"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Effort" name="value_Effort" />
-              </div>
-              <div>
-                <label>Permanents</label>
-                <input
-                  type="radio"
-                  name="Permanents"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Permanents"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Permanents"
-                  name="value_Permanents"
-                />
-              </div>
-            </div>
-            <div>
-              <div>
-                <label>Oedèmes</label>
-                <input
-                  type="radio"
-                  name="Oedemes"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Oedemes"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Oedemes" name="value_Oedemes" />
-              </div>
-            </div>
-            <div>
-              <div>
-                <label>Autres :</label>
-              </div>
-
-              <div>
-                <textarea name="cardio_autres" cols="50" rows="3"></textarea>
-              </div>
-            </div>
-            <label class="label-niv1 label-niv2">examen clinique:</label>
-            <div><label>Pouls:</label><input type="text" name="Pouls" /></div>
-            <div>
-              <div>
-                <label>Cyanose</label>
-                <input
-                  type="radio"
-                  name="Cyanose"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Cyanose"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Cyanose" name="value_Cyanose" />
-              </div>
-            </div>
-            <div>
-              <textarea name="cardio_exam" cols="90" rows="3"></textarea>
-            </div>
-          </div>
-
-          <!-- RESPIRATOIRE -->
-          <div class="title-container resp-title">
-            <p>RESPIRATOIRE</p>
-          </div>
-          <div class="container resp-container">
-            <div>
-              <div>
-                <label>Toux</label>
-                <input
-                  type="radio"
-                  name="Toux"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Toux"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Toux" name="value_Toux" />
-              </div>
-            </div>
-            <label class="label-niv1">Dyspnée:</label>
-            <div>
-              <div>
-                <label>Nocturne:</label>
-                <input
-                  type="radio"
-                  name="Nocturne"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Nocturne"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Nocturne"
-                  name="value_Nocturne"
-                />
-              </div>
-              <div>
-                <label>Diurne:</label>
-                <input
-                  type="radio"
-                  name="Diurne"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Diurne"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Diurne" name="value_Diurne" />
-              </div>
-            </div>
-            <div>
-              <label>Expectorations:</label>
-              <input
-                type="radio"
-                name="Expectorations"
-                class="form-check-input"
-                value="1"
-              /><label>Oui</label>
-              <input
-                type="radio"
-                name="Expectorations"
-                class="form-check-input"
-                value="0"
-              /><label>Non</label>
-              <input
-                type="hidden"
-                id="value_Expectorations"
-                name="value_Expectorations"
-              />
-            </div>
-            <div>
-              <label>Douleurs Thoraciques:</label>
-              <input
-                type="radio"
-                name="Thoraciques"
-                class="form-check-input"
-                value="1"
-              /><label>Oui</label>
-              <input
-                type="radio"
-                name="Thoraciques"
-                class="form-check-input"
-                value="0"
-              /><label>Non</label>
-              <input
-                type="hidden"
-                id="value_Thoraciques"
-                name="value_Thoraciques"
-              />
-            </div>
-            <div>
-              <label>Autres :</label>
-              <div>
-                <textarea name="respi_autres" cols="50" rows="3"></textarea>
-              </div>
-            </div>
-            <label class="label-niv1 label-niv2">examen clinique:</label>
-            <div>
-              <label>Fréquence Respiratoire: </label>
-              <input type="text" name="frequence" /><label class="label-niv1"
-                >/min</label
-              >
-            </div>
-            <div>
-              <textarea name="respi_exam" cols="90" rows="3"></textarea>
-            </div>
-          </div>
-          <!-- DIGESTIF -->
-          <div class="title-container dig-title">
-            <p>DIGESTIF</p>
-          </div>
-          <div class="container dig-container">
-            <div>
-              <label>Appétit:</label><input type="text" name="Appetit" />
-            </div>
-            <div>
-              <label>Transit: </label><input type="text" name="Transit" />
-            </div>
-            <div>
-              <label>Selles: </label><input type="text" name="Selles" />
-            </div>
-            <div>
-              <div>
-                <label>Pyrosis</label>
-                <input
-                  type="radio"
-                  name="Pyrosis"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Pyrosis"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Pyrosis" name="value_Pyrosis" />
-              </div>
-              <div>
-                <label>Vomissements</label>
-                <input
-                  type="radio"
-                  name="Vomissements"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Vomissements"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Vomissements"
-                  name="value_Vomissements"
-                />
-              </div>
-            </div>
-            <div>
-              <label>Rectorragies:</label
-              ><input type="text" name="Rectorragies" />
-            </div>
-            <div>
-              <label>Douleur abdominales: </label
-              ><input type="text" name="DouleurAbdo" />
-            </div>
-            <div>
-              <label>Autres:</label>
-              <div>
-                <textarea name="digestif_autres" cols="50" rows="3"></textarea>
-              </div>
-            </div>
-
-            <div>
-              <label class="label-niv1 label-niv2">examen clinique:</label>
-            </div>
-            <div><label>Denture:</label></div>
-            <div>
-              <div>
-                <label>Carie:</label>
-                <input
-                  type="radio"
-                  name="carie"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="carie"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_carie" name="value_carie" />
-              </div>
-              <div>
-                <label>Gingivopathie: </label>
-                <input
-                  type="radio"
-                  name="Gingivopathie"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Gingivopathie"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Gingivopathie"
-                  name="value_Gingivopathie"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div>
-                <label>Abdomens:</label><input type="text" name="Abdomens" />
-              </div>
-              <div>
-                <label>Hernie: </label><input type="text" name="Hernie" />
-              </div>
-            </div>
-            <div>
-              <div><label>Foie: </label><input type="text" name="Foie" /></div>
-              <div>
-                <label>Autres:</label><input type="text" name="dig_autres" />
-              </div>
-            </div>
-            <div>
-              <textarea name="digestif_exam" cols="90" rows="4"></textarea>
-            </div>
-          </div>
-
-          <!-- GENITO -->
-          <div class="title-container gen-title">
-            <p>GENITO-URINAIRE</p>
-          </div>
-          <div class="container gen-container">
-            <label class="label-niv1">Miction</label>
-            <div>
-              <div>
-                <label>Pollakiurie:</label>
-                <input
-                  type="radio"
-                  name="Pollakiurie"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Pollakiurie"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Pollakiurie"
-                  name="value_Pollakiurie"
-                />
-              </div>
-              <div>
-                <label>Dysurie: </label>
-                <input
-                  type="radio"
-                  name="Dysurie"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Dysurie"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Dysurie" name="value_Dysurie" />
-              </div>
-            </div>
-            <div>
-              <div>
-                <label>Hématurie: </label>
-                <input
-                  type="radio"
-                  name="Hematurie"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Hematurie"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Hematurie"
-                  name="value_Hematurie"
-                />
-              </div>
-              <div>
-                <label>Brûlures mictionnelles: </label>
-                <input
-                  type="radio"
-                  name="Brulures"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Brulures"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Brulures"
-                  name="value_Brulures"
-                />
-              </div>
-            </div>
-            <div>
-              <label>Coliques néphrétiques: </label>
-              <input
-                type="radio"
-                name="Coliques"
-                class="form-check-input"
-                value="1"
-              /><label>Oui</label>
-              <input
-                type="radio"
-                name="Coliques"
-                class="form-check-input"
-                value="0"
-              /><label>Non</label>
-              <input type="hidden" id="value_Coliques" name="value_Coliques" />
-            </div>
-            <div>
-              <div>
-                <label>Pertes: </label><input type="text" name="Pertes" />
-              </div>
-              <div>
-                <label>Cycles: </label>
-                <input
-                  type="radio"
-                  name="Cycles"
-                  class="form-check-input"
-                  value="1"
-                /><label>Régulier</label>
-                <input
-                  type="radio"
-                  name="Cycles"
-                  class="form-check-input"
-                  value="0"
-                /><label>Irrégulier</label>
-                <input type="hidden" id="value_Cycles" name="value_Cycles" />
-              </div>
-            </div>
-            <div>
-              <label>Autres:</label>
-              <div>
-                <textarea name="genito_autres" cols="50" rows="3"></textarea>
-              </div>
-            </div>
-            <div>
-              <label class="label-niv1 label-niv2">examen clinique:</label>
-            </div>
-            <div><label>Bourses:</label></div>
-            <textarea name="Bourses" cols="100" rows="3"></textarea>
-            <div><label>Seins:</label></div>
-            <textarea name="Seins" cols="100" rows="3"></textarea>
-            <div><label>T.R:</label></div>
-            <textarea name="TR" cols="100" rows="3"></textarea>
-            <div><label>T.V:</label></div>
-            <textarea name="TV" cols="100" rows="3"></textarea>
-            <div>
-              <textarea name="genito_exam" cols="90" rows="6"></textarea>
-            </div>
-          </div>
-
-          <!-- Neurologique et Psychisme -->
-          <div class="title-container neur-title">
-            <p>NEUROLOGIQUE ET PSYCHISME</p>
-          </div>
-          <div class="container neur-container">
-            <div>
-              <div>
-                <label>Sommeil</label><input type="text" name="Sommeil" />
-              </div>
-              <div>
-                <label>Céphaliées</label>
-                <input
-                  type="radio"
-                  name="Cephaliees"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Cephaliees"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Cephaliees"
-                  name="value_Cephaliees"
-                />
-              </div>
-            </div>
-            <div>
-              <div>
-                <label>Vertiges</label>
-                <input
-                  type="radio"
-                  name="Vertiges"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Vertiges"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Vertiges"
-                  name="value_Vertiges"
-                />
-              </div>
-              <div>
-                <label>Peur du vide</label>
-                <input
-                  type="radio"
-                  name="Vide"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Vide"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Vide" name="value_Vide" />
-              </div>
-            </div>
-            <div>
-              <div>
-                <label>Perte de connaissance</label>
-                <input
-                  type="radio"
-                  name="Connaissance"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Connaissance"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Connaissance"
-                  name="value_Connaissance"
-                />
-              </div>
-              <div>
-                <label>Parésie</label>
-                <input
-                  type="radio"
-                  name="Paresie"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Paresie"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Paresie" name="value_Paresie" />
-              </div>
-            </div>
-            <div>
-              <label>Paresthésie</label>
-              <input
-                type="radio"
-                name="Paresthesie"
-                class="form-check-input"
-                value="1"
-              /><label>Oui</label>
-              <input
-                type="radio"
-                name="Paresthesie"
-                class="form-check-input"
-                value="0"
-              /><label>Non</label>
-              <input
-                type="hidden"
-                id="value_Paresthesie"
-                name="value_Paresthesie"
-              />
-            </div>
-            <div>
-              <label>Autres:</label>
-              <div>
-                <textarea name="Neuro_autres" cols="50" rows="3"></textarea>
-              </div>
-            </div>
-
-            <div>
-              <label class="label-niv1 label-niv2">examen clinique:</label>
-            </div>
-            <div>
-              <div>
-                <label>Tremblement:</label
-                ><input type="text" name="Tremblement" />
-              </div>
-              <div>
-                <label>Romberg</label>
-                <input
-                  type="radio"
-                  name="Romberg"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Romberg"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Romberg" name="value_Romberg" />
-              </div>
-            </div>
-            <div>
-              <label>Réflexes: </label>
-              <input
-                type="radio"
-                name="Reflexes"
-                class="form-check-input"
-                value="1"
-              /><label>present</label>
-              <input
-                type="radio"
-                name="Reflexes"
-                class="form-check-input"
-                value="0"
-              /><label>absent</label>
-              <input type="hidden" id="value_Reflexes" name="value_Reflexes" />
-            </div>
-            <div>
-              <label>Coordination: </label>
-              <input
-                type="radio"
-                name="Coordination"
-                class="form-check-input"
-                value="1"
-              /><label>present</label>
-              <input
-                type="radio"
-                name="Coordination"
-                class="form-check-input"
-                value="0"
-              /><label>absent</label>
-              <input
-                type="hidden"
-                id="value_Coordination"
-                name="value_Coordination"
-              />
-            </div>
-            <div>
-              <label>Motricité: </label><input type="text" name="Motricite" />
-            </div>
-            <div>
-              <label>Sensibilité: </label>
-              <input
-                type="radio"
-                name="Sensibilite"
-                class="form-check-input"
-                value="1"
-              /><label>Oui</label>
-              <input
-                type="radio"
-                name="Sensibilite"
-                class="form-check-input"
-                value="0"
-              /><label>Non</label>
-              <input
-                type="hidden"
-                id="value_Sensibilite"
-                name="value_Sensibilite"
-              />
-            </div>
-            <div>
-              <label class="label-niv1">Achilléen:</label>
-            </div>
-            <div>
-              <div>
-                <label>Droit:</label>
-                <input
-                  type="radio"
-                  name="DAchil"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="DAchil"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_DAchil" name="value_DAchil" />
-              </div>
-              <div>
-                <label>Gauche:</label>
-                <input
-                  type="radio"
-                  name="GAchil"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="GAchil"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_GAchil" name="value_GAchil" />
-              </div>
-            </div>
-            <div>
-              <label for="" class="label-niv1">Oculaires:</label>
-            </div>
-            <div>
-              <div>
-                <label>Droit:</label>
-                <input
-                  type="radio"
-                  name="DOcul"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="DOcul"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_DOcul" name="value_DOcul" />
-              </div>
-              <div>
-                <label>Gauche:</label>
-                <input
-                  type="radio"
-                  name="GOcul"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="GOcul"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_GOcul" name="value_GOcul" />
-              </div>
-            </div>
-            <div>
-              <textarea name="Neuro_exam" cols="90" rows="6"></textarea>
-            </div>
-          </div>
-          <!-- HEMATOLOGIQUE -->
-
-          <div class="title-container hem-title">
-            <p>HEMATOLOGIQUE ET GANGLIONNAIRE</p>
-          </div>
-          <div class="container hem-container">
-            <div>
-              <label>Ecchymoses:</label>
-              <input
-                type="radio"
-                name="Ecchymoses"
-                class="form-check-input"
-                value="1"
-              /><label>Oui</label>
-              <input
-                type="radio"
-                name="Ecchymoses"
-                class="form-check-input"
-                value="0"
-              /><label>Non</label>
-              <input
-                type="hidden"
-                id="value_Ecchymoses"
-                name="value_Ecchymoses"
-              />
-            </div>
-            <div>
-              <label>Tendances aux hémorragies:</label>
-              <input
-                type="radio"
-                name="Hemo"
-                class="form-check-input"
-                value="1"
-              /><label>Oui</label>
-              <input
-                type="radio"
-                name="Hemo"
-                class="form-check-input"
-                value="0"
-              /><label>Non</label>
-              <input type="hidden" id="value_Hemo" name="value_Hemo" />
-            </div>
-            <div>
-              <label>Autres:</label>
-              <div>
-                <textarea name="Hemato_autres" cols="50" rows="3"></textarea>
-              </div>
-            </div>
-            <label class="label-niv1 label-niv2">examen clinique:</label>
-            <div>
-              <label>Pétéchies: </label><input type="text" name="Petechies" />
-            </div>
-            <div>
-              <label>Purpura: </label><input type="text" name="Purpura" />
-            </div>
-            <div><label>Rate: </label><input type="text" name="Rate" /></div>
-
-            <label class="label-niv1">ganglion:</label>
-            <div>
-              <div>
-                <label>Cervicaux: </label>
-                <input
-                  type="radio"
-                  name="Cervicaux"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Cervicaux"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Cervicaux"
-                  name="value_Cervicaux"
-                />
-              </div>
-              <div>
-                <label>Sous Auxiliaires: </label>
-                <input
-                  type="radio"
-                  name="Auxi"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Auxi"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Auxi" name="value_Auxi" />
-              </div>
-            </div>
-            <div>
-              <div>
-                <label>Sous Claviculaires: </label>
-                <input
-                  type="radio"
-                  name="Clavi"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Clavi"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Clavi" name="value_Clavi" />
-              </div>
-              <div>
-                <label>Inguinaux: </label>
-                <input
-                  type="radio"
-                  name="Inguinaux"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Inguinaux"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input
-                  type="hidden"
-                  id="value_Inguinaux"
-                  name="value_Inguinaux"
-                />
-              </div>
-            </div>
-            <div>
-              <textarea name="hemato_exam" cols="90" rows="6"></textarea>
-            </div>
-          </div>
-
-          <!-- ENDOCRINOLOGIE -->
-          <div class="title-container end-title">
-            <p>ENDOCRINOLOGIE</p>
-          </div>
-          <div class="container end-container">
-            <div>
-              <div>
-                <label>Obésité familiale:</label>
-                <input
-                  type="radio"
-                  name="Obese"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Obese"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Obese" name="value_Obese" />
-              </div>
-              <div>
-                <label>Maigreur familiale:</label>
-                <input
-                  type="radio"
-                  name="Maigre"
-                  class="form-check-input"
-                  value="1"
-                /><label>Oui</label>
-                <input
-                  type="radio"
-                  name="Maigre"
-                  class="form-check-input"
-                  value="0"
-                /><label>Non</label>
-                <input type="hidden" id="value_Maigre" name="value_Maigre" />
-              </div>
-            </div>
-            <div>
-              <label>Autres:</label>
-              <div>
-                <textarea name="Endo_autres" cols="50" rows="3"></textarea>
-              </div>
-            </div>
-            <label class="label-niv1 label-niv2">examen clinique:</label>
-            <div>
-              <label>Tyroide:</label><input type="text" name="Tyroide" />
-            </div>
-            <div>
-              <label>Testicules:</label><input type="text" name="Testicules" />
-            </div>
-            <div>
-              <label>Glandes mammaires:</label
-              ><input type="text" name="Glandes" />
-            </div>
-            <div>
-              <textarea name="Endo_exam" cols="50" rows="3"></textarea>
-            </div>
-          </div>
-
-          <!-- Explorations Fonctionnelles -->
-
-          <div class="title-container exp-title">
-            <p>Explorations Fonctionnelles</p>
-          </div>
-          <div class="container exp-container">
-            <div>
-              <label>Fonction Respiratoire:</label>
-            </div>
-            <div>
-              <textarea name="respire" cols="100" rows="3"></textarea>
-            </div>
-            <div>
-              <label>Fonction Circulatoire:</label>
-            </div>
-            <div>
-              <textarea name="circule" cols="100" rows="3"></textarea>
-            </div>
-            <div>
-              <label>Fonction Motrice:</label>
-            </div>
-            <div>
-              <textarea name="Fmotrice" cols="100" rows="3"></textarea>
-            </div>
-          </div>
-
-          <div class="final-inputs">
-            <div></div>
-            <button class="btn outline" type="submit">
-              Valider examen
-            </button>
-          </div>
-        </div>
       </form>
-   
+<script>
 
-      <script>
-   
-         function showMsg(str,err) {
-          const msg = document.getElementById("msg");
-const icon = document.getElementById("icon-msg"); 
-           console.log(str);
-    if(err == true) {
-        icon.className = "fas fa-check"
-    }else {
-        icon.className = "fas fa-exclamation" 
+function showMsg(str,err) {
+  const msg = document.getElementById("msg");
+  const icon = document.getElementById("icon-msg"); 
+  if(err == true) {
+    icon.className = "fas fa-check"
+  }else {
+    icon.className = "fas fa-exclamation" 
+  }
+
+  msg.innerHTML = str ;
+  $('.alert').addClass("show");
+  $('.alert').removeClass("hide");
+  $('.alert').addClass("showAlert");
+  setTimeout(function(){
+    $('.alert').removeClass("show");
+    $('.alert').addClass("hide");
+  },10000);
+}
+
+function valideexamenmedical(){
+
+var poids = document.getElementById("poids");
+  var taille = document.getElementById("taille");
+  var imc = document.getElementById("imc");
+  var ta = document.getElementById("ta");
+  var motif = document.getElementById("motif");
+  var signe = document.getElementById("signe");
+  var diagnostic = document.getElementById("diagnostic");
+
+    if(poids.value.length < 1){
+      const parent = poids.parentElement;
+      const small = parent.querySelector("small");
+      poids.className="error";
+      small.className = "";
+      small.innerText = "Entrez le poids";
+      window.scrollTo(0, poids.offsetTop -150);
+      return;
+    }else{
+        const parent = poids.parentElement;
+        const small = parent.querySelector("small");
+        poids.className="inputexam";
+        small.className = "noterror";
+        small.innerText = null;
+    }
+  
+    if(taille.value.length < 1){
+        const parent = taille.parentElement;
+        const small = parent.querySelector("small");
+        taille.className="error";
+        small.className = "";
+        small.innerText = "Entrez la taille";
+        window.scrollTo(0, taille.offsetTop -150);
+        return;
+    }else{
+        const parent = taille.parentElement;
+        const small = parent.querySelector("small");
+        taille.className="inputexam";
+        small.className = "noterror";
+        small.innerText = null;
+    }
+  
+    if(imc.value.length < 1){
+        const parent = imc.parentElement;
+        const small = parent.querySelector("small");
+        imc.className="error";
+        small.className = "";
+        small.innerText = "Clique sur le champs";
+        window.scrollTo(0, imc.offsetTop -150);
+        return;
+    }else{
+        const parent = imc.parentElement;
+        const small = parent.querySelector("small");
+        imc.className="inputexam";
+        small.className = "noterror";
+        small.innerText = null;
+    }
+  
+    if(ta.value.length < 1){
+        const parent = ta.parentElement;
+        const small = parent.querySelector("small");
+        ta.className="error";
+        small.className = "";
+        small.innerText = "Entrez la tension arterielle";
+        window.scrollTo(0, ta.offsetTop -150);
+        return;
+    }else{
+        const parent = ta.parentElement;
+        const small = parent.querySelector("small");
+        ta.className="inputexam";
+        small.className = "noterror";
+        small.innerText = null;
+    }
+  
+    if(motif.value.length < 1){
+        const parent = motif.parentElement;
+        const small = parent.querySelector("small");
+        motif.className="errorarea";
+        small.className = "";
+        small.innerText = "Remplir le motif";
+        window.scrollTo(0, motif.offsetTop -150);
+        return;
+    }else{
+        const parent = motif.parentElement;
+        const small = parent.querySelector("small");
+        motif.className="textarea";
+        small.className = "noterror";
+        small.innerText = null;
+    }
+  
+    if(signe.value.length < 1){
+        const parent = signe.parentElement;
+        const small = parent.querySelector("small");
+        signe.className="errorarea";
+        small.className = "";
+        small.innerText = "Remplir les signes";
+        window.scrollTo(0, signe.offsetTop -150);
+        return;
+    }else{
+        const parent = signe.parentElement;
+        const small = parent.querySelector("small");
+        signe.className="textarea";
+        small.className = "noterror";
+        small.innerText = null;
+    }
+  
+    if(diagnostic.value.length < 1){
+        const parent = diagnostic.parentElement;
+        const small = parent.querySelector("small");
+        diagnostic.className="errorarea";
+        small.className = "";
+        small.innerText = "Remplir le diagnostic";
+        window.scrollTo(0, diagnostic.offsetTop -150);
+        return;
+    }else{
+        const parent = diagnostic.parentElement;
+        const small = parent.querySelector("small");
+        diagnostic.className="textarea";
+        small.className = "noterror";
+        small.innerText = null;
     }
 
-    msg.innerHTML = str ;
-                $('.alert').addClass("show");
-                $('.alert').removeClass("hide");
-                $('.alert').addClass("showAlert");
-                setTimeout(function(){
-                  $('.alert').removeClass("show");
-                  $('.alert').addClass("hide");
-                },5000);
+var diagnostic = document.getElementById('diagnostic').value;
+var listmal = document.getElementById('listmal');
+var mals = document.getElementById('mals').options;
+var list=diagnostic.split('-');
+var find=false;
 
+for(var i=1;i<list.length;i++){
+  var maladie=list[i].split(' ');
+  for (var j = 0; j < mals.length; j++) { 
+    if(maladie[0]===mals[j].value){
+      find = true;
+      listmal.value = listmal.value + '#' + maladie[0] ;
+
+      break;
+    }else{
+      find = false;
+    }
+  }
+} 
+if(find == false){
+  listmal.value = "";
+  if(diagnostic.length < 1){
+        const parent = diagnostic.parentElement;
+        const small = parent.querySelector("small");
+        diagnostic.className="errorarea";
+        small.className = "";
+        small.innerText = "choisir une maladie";
+        window.scrollTo(0, diagnostic.offsetTop -150);
+        return;
+    }else{
+        const parent = diagnostic.parentElement;
+        const small = parent.querySelector("small");
+        diagnostic.className="textarea";
+        small.className = "noterror";
+        small.innerText = null;
+    }
+  return
 }
-        myForm.onsubmit = async (e) => {
-    e.preventDefault();
 
-    var data = new FormData( document.getElementById('myForm') );
-data = data.entries();              
-var obj = data.next();
-var retrieved = {};             
-while(undefined != obj.value) {    
-    retrieved[obj.value[0]] = obj.value[1];
-    obj = data.next();
-}
-console.log('retrieved:ww ',retrieved);
-var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>'  ;
+var id = document.getElementById("id");
+    var poids = document.getElementById("poids");
+    var taille = document.getElementById("taille");
+    var imc = document.getElementById("imc");
+    var ta = document.getElementById("ta");
+    var motif = document.getElementById("motif");
+    var signe = document.getElementById("signe");
+    var diagnostic = document.getElementById("diagnostic");
 
-const map = new Map(Object.entries(retrieved));
-var form_data = new FormData();
-const map1 = new Map();
-for ( var key in retrieved ) {
-  map1.set(key,retrieved[key]);
-    form_data.append(key, retrieved[key]);
-}
-map1.set('id',parsed_data);
-console.log('map',map1);
-const result = Object.fromEntries(map);
-console.log(result);
-
-console.log(retrieved['poids']);
-$.ajax({
-                method: 'POST',
-           
-                url: '/users/medecin/makePDFexam/?id='+parsed_data,
-         
-     data :result,
-         
-
-                processData: true,
-
-        
-                success: function (result) { 
-                  console.log(result.message);
-                  showMsg(result.message,!result.err);
-             
-                }
-              }); 
-            }
-
-        var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>'  ;
-          function addExam() {
-    
-     
-         
-            var formValues = $('myForm').serialize();
-            $('myForm').find('input').attr('disabled', 'disabled'); 
-            console.log(formValues);
-             $.ajax({
-                method: 'POST',
-                url: '/users/medecin/makePDFexam',
-                data: { 
-                  "id" : parsed_data,
-                },
-                success: function (result) { 
-           
-                  if (result == "done"){
-                    showMsg("Examen médical ajouté avec succès",true);
-                  }else {
-                      if(result == "exist") {
-                          showMsg("Examen médical déja effectué",false); 
-                      }}
-                }
-              }); 
-          }
-      </script> 
+    $.ajax({
+        method: "POST",
+        url: "/users/medecin/addExam",
+        data: {
+            "id":id.value,
+            "taille":taille.value,
+            "poids":poids.value,
+            "imc":imc.value,
+            "ta":ta.value,
+            "motif":motif.value,
+            "signe":signe.value,
+            "diagnostic":diagnostic.value,
+            "listmal":listmal.value,
+        },
+        success: function (result) {
+          document.location.reload() ; 
+          showMsg("Examen medical bien ajouter",!result.err); 
+          document.getElementById('valide').disabled=true;  
+        },
+    });
+  }
+</script> 
 
       <div class="doc-container" id="Ordonnance">
         <div class="title-container ord-title">
           <p>Ordonnance</p>
         </div>
-        <div class="container ord-container">
+        <div class="container ord-container"> 
           <table id="customers">
             <tr>
               <th>Ordonnance</th>
               <th>Actions</th>
             </tr>
+            <% for (var i = 0; i < ordo.length; i++) { %>
             <tr>
-              <td>Titre</td>
+              <td>Ordonnance<%= ordo[0].date_medicalexam %></td>
               <td>
                 <div class="grid">
-                  <button>consulter</button>
-                  <button>imprimer</button>
-                  <button>supprimer</button>
-                  <button>modifier</button>
+                  <input type="hidden" name='num_sick' value='<%= ordo[0].num_sick %>' id='num_sick' >
+                  <input type="button" onclick="ordananceup()" class="imprimer" value="modifier">
+                  <input type="button" onclick="ordananceimprime()" class="imprimer" value="imprimer">
+                  <input type="button" onclick="ordanancedelete()" class="deletebtn" value="supprimer">
                 </div>
               </td>
             </tr>
-            <tr>
-              <td>Titre</td>
-              <td>
-                <div class="grid">
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Titre</td>
-              <td>
-                <div class="grid">
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                </div>
-              </td>
-            </tr>
+            <% } %>
           </table>
         </div>
+        <div>
+          <% if (exam.length < 1) { %>
+            <input type="button" class="btn doc-button" value="Ajouter Ordonnance" disabled>
+          <% }else{ %>
+          <% if (ordo.length < 1) { %>
+          <input type="button" class="btn doc-button" onclick="ordanance()" value="Ajouter Ordonnance">
+          <% }else{ %>
+            <input type="button" class="btn doc-button" value="Ajouter Ordonnance" disabled>
+          <% } %>
+          <% } %>
+        </div>
       </div>
-
       <div class="doc3-container" id="Ordonnance2">
         <div class="title-container ord-title">
           <p>Bilan</p>
@@ -1840,40 +632,32 @@ $.ajax({
               <th>Bilan</th>
               <th>Actions</th>
             </tr>
+            <% for (var i = 0; i < bilan.length; i++) { %>
             <tr>
-              <td>Titre</td>
+              <td>Bilan<%= bilan[0].date_medicalexam %></td>
               <td>
                 <div class="grid">
-                  <button>consulter</button>
-                  <button>imprimer</button>
-                  <button>supprimer</button>
-                  <button>modifier</button>
+                  <input type="hidden" name='num_or' value='<%= bilan[0].num_ch %>' id='num_ch' >
+                  <input type="button" onclick="bilanup()" class="imprimer" value="modifier">
+                  <input type="button" onclick="bilanImprime()" class="imprimer" value="imprimer">
+                  <input type="button" onclick="bilandelete()" class="deletebtn" value="supprimer">
                 </div>
               </td>
             </tr>
-            <tr>
-              <td>Titre</td>
-              <td>
-                <div class="grid">
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Titre</td>
-              <td>
-                <div class="grid">
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                </div>
-              </td>
-            </tr>
+            <% } %>
           </table>
+        </div>
+        <div>
+          <% if (exam.length < 1) { %>
+            <input type="button" class="btn doc-button" value="Ajouter Bilan" disabled>
+          <% }else{ %>
+          <% if (bilan.length < 1) { %>
+            <input type="button" class="btn doc-button" onclick="bilan()" value="Ajouter Bilan">
+            <% }else{ %>
+              <input type="button" class="btn doc-button" value="Ajouter Bilan" disabled>
+            <% } %>
+            <% } %>
+          
         </div>
       </div>
       <div class="doc4-container" id="Ordonnance3">
@@ -1886,40 +670,31 @@ $.ajax({
               <th>Orientation</th>
               <th>Actions</th>
             </tr>
+            <% for (var i = 0; i < orientation.length; i++) { %>
             <tr>
-              <td>Titre</td>
+              <td>Orientation<%= orientation[0].date_medicalexam %></td>
               <td>
                 <div class="grid">
-                  <button>consulter</button>
-                  <button>imprimer</button>
-                  <button>supprimer</button>
-                  <button>modifier</button>
+                  <input type="hidden" name='num_or' value='<%= orientation[0].num_or %>' id='num_or' >
+                  <input type="button" onclick="orientaup()" class="imprimer"  value="modifier">
+                  <input type="button" onclick="orientaimprime()" class="imprimer"  value="imprimer">
+                  <input type="button" onclick="orientadelete()" class="deletebtn" value="supprimer">
                 </div>
               </td>
             </tr>
-            <tr>
-              <td>Titre</td>
-              <td>
-                <div class="grid">
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Titre</td>
-              <td>
-                <div class="grid">
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                </div>
-              </td>
-            </tr>
-          </table>
+            <% } %>
+          </table>        
+        </div>
+        <div>
+          <% if (exam.length < 1) { %>
+            <input type="button" class="btn doc-button" value="Ajouter Orientation" disabled>
+          <% }else{ %>
+          <% if (orientation.length < 1) { %>
+            <input type="button" class="btn doc-button" onclick="orienta()" value="Ajouter Orientation">
+            <% }else{ %>
+              <input type="button" class="btn doc-button" value="Ajouter Orientation" disabled>
+            <% } %>
+            <% } %>
         </div>
       </div>
       <div class="doc5-container" id="Ordonnance4">
@@ -1932,40 +707,32 @@ $.ajax({
               <th>Evacuation</th>
               <th>Actions</th>
             </tr>
-            <tr>
-              <td>Titre</td>
-              <td>
-                <div class="grid">
-                  <button>consulter</button>
-                  <button>imprimer</button>
-                  <button>supprimer</button>
-                  <button>modifier</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Titre</td>
-              <td>
-                <div class="grid">
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Titre</td>
-              <td>
-                <div class="grid">
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                </div>
-              </td>
-            </tr>
+            <% for (var i = 0; i < evacuation.length; i++) { %>
+              <tr>
+                <td>Evacuation<%= evacuation[0].date_medicalexam %></td>
+                <td>
+                  <div class="grid">
+                    <input type="hidden" name='num_ev' value='<%= evacuation[0].num_ev %>' id='num_ev' >
+                    <input type="button" onclick="evacuationup()" class="imprimer"  value="modifier">
+                    <input type="button" onclick="evacuationimprime()" class="imprimer"  value="imprimer">
+                    <input type="button" onclick="evacuationdelete()" class="deletebtn"  value="supprimer">
+                  </div>
+                </td>
+              </tr>
+              <% } %>
           </table>
+        </div>
+        <div>
+          <% if (exam.length < 1) { %>
+            <input type="button" class="btn doc-button" value="Ajouter Evacuation" disabled>
+          <% }else{ %>
+          <% if (evacuation.length < 1) { %>
+            <input type="button" class="btn doc-button" onclick="evacuation()" value="Ajouter Evacuation">
+            <% }else{ %>
+              <input type="button" class="btn doc-button" value="Ajouter Evacuation" disabled>
+            <% } %>
+            <% } %>
+          
         </div>
       </div>
       <div class="doc6-container" id="Ordonnance5">
@@ -1978,40 +745,31 @@ $.ajax({
               <th>Certificat</th>
               <th>Actions</th>
             </tr>
-            <tr>
-              <td>Titre</td>
-              <td>
-                <div class="grid">
-                  <button>consulter</button>
-                  <button>imprimer</button>
-                  <button>supprimer</button>
-                  <button>modifier</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Titre</td>
-              <td>
-                <div class="grid">
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Titre</td>
-              <td>
-                <div class="grid">
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                  <button>action1</button>
-                </div>
-              </td>
-            </tr>
-          </table>
+            <% for (var i = 0; i < prescription.length; i++) { %>
+              <tr>
+                <td>Certificat_<%= prescription[0].type_prescription %><%= prescription[0].date_medicalexam %></td>
+                <td>
+                  <div class="grid">
+                    <input type="hidden" name='num_pre' value='<%= prescription[0].num_pre %>' id='num_pre' >
+                    <input type="button" onclick="certificatup()" class="imprimer"  value="modifier">
+                    <input type="button" onclick="certificatimprime()" class="imprimer"  value="imprimer">
+                    <input type="button" onclick="certificatdelete()" class="deletebtn"  value="supprimer">
+                  </div>
+                </td>
+              </tr>
+              <% } %>
+          </table>   
+        </div>
+        <div>
+          <% if (exam.length < 1) { %>
+            <input type="button" class="btn doc-button" value="Ajouter Certificat" disabled>
+          <% }else{ %>
+          <% if (prescription.length < 1) { %>
+            <input type="button" class="btn doc-button" onclick="certificat()" value="Ajouter Certificat">
+            <% }else{ %>
+              <input type="button" class="btn doc-button" value="Ajouter Certificat" disabled>
+            <% } %>    
+            <% } %>     
         </div>
       </div>
     </div>

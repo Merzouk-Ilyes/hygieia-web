@@ -1,0 +1,144 @@
+.filter-section {
+  background-color: rgba(0, 0, 0, 0.055);
+  height: 15%;
+  display: grid;
+  grid-template-columns: 29% 14% 14% 19% 24%;
+  padding: 1rem;
+}
+
+.first {
+  /* background-color:#184b9b; */
+}
+.second {
+    /* background-color: aliceblue; */
+}
+.third {
+    /* background-color: aqua; */
+}
+.fourth {
+    /* background-color:yellow ; */
+}
+.fifth {
+    /* background-color: violet; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.fifth button {
+    background-color:#3A7AFE;
+    border: none;
+    padding: .2rem 2rem;
+    color: white;
+    border-radius: .2rem;
+
+}
+
+
+.cards-list {
+  height: 64vh;
+  padding: 1rem 1.5rem;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.cards-list::-webkit-scrollbar {
+    display: none;
+}
+
+.card-item {
+  background-color: #f5f5f5;
+  height: 25%;
+  display: grid;
+  grid-template-columns: 40% 25% 30% 5%;
+  /* border-left: 10px solid #266800; */
+  margin-bottom: 1rem;
+  border-radius: .2rem;
+  padding-right: .4rem;
+}
+.card-info {
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.card-info p {
+  margin: 0 0 0.2rem 1.5rem;
+  font-size: 0.7rem;
+}
+
+.card-chat button {
+  background-color: transparent;
+}
+
+.card-decision button {
+  background-color: #3a7bfe41;
+}
+.card-chat,
+.card-decision {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card-decision button,
+.card-chat button {
+  border: none;
+  font-size: 0.7rem;
+  padding: 0.6rem 2.2rem;
+  border-radius: 0.2rem;
+  color: #184b9b;
+}
+
+.card-supprimer {
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.card-supprimer img {
+  height: 50%;
+  width: 50%;
+  margin: auto;
+}
+
+
+
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 1s;
+  box-shadow: rgba(0, 0, 0, 0.644) 1.95px 1.95px 20px;
+
+  }
+
+  .sidenav .closebtn {
+    color:black ;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 36px;
+    margin-left: 10px;
+    text-decoration: none;
+
+  }
+  .sidenav-grid {
+      background-color: white;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 45% 55%;
+  }
+  .left {
+      background-color: rgba(0, 0, 0, 0.064);
+  }
+  
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+  

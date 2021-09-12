@@ -1,0 +1,400 @@
+.principal {
+    padding: 20px 40px; 
+    width: 80%;
+     display: flex;
+     flex-direction:row ;
+     justify-content:space-between
+}
+.container-image{
+    padding : 10px 50px;
+    background-image:url("/assets/home-cover.svg")  ;
+    background-size:contain;
+      background-repeat: no-repeat;
+    
+    height: 32vh;
+    width: 110vh; 
+    border-radius: 2%;
+}
+.container-list {
+  background-color: white;
+    width: 110vh;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+color: white;
+     margin:10px 0px;
+     border-radius: 5px;
+height: 50vh;
+     padding : 30px 40px;
+
+}
+.container-rdv {
+    height: 83.5vh;
+    width: 50vh;
+    display:flex; 
+    justify-content: start;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    background-color: white;
+
+}
+.big-title {
+    font-size:27px;
+    font-weight: 900;
+    margin-top: 20px;
+}
+.container-image ul {
+    font-size:14px;
+    list-style-type: none;
+    margin-top: 20px;
+    color: rgb(0,0,0,0.59);
+}
+.container-list .row {
+    color: #000;
+    width: 100%;
+    height : 12%;
+    display: flex;
+  }
+ .patient{
+ flex : 7; 
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 10px;
+  }
+  .tous{
+    flex : 1; 
+       font-size: 17px;
+       color: rgb(0,0,0,0.59);
+       font-weight: 400;
+     }
+  .container-list  .co {
+      margin: 5px 0px ;
+      width: 100vh;
+      height: 7vh;
+      
+
+      color : #15202B;
+      padding-left: 40px;
+      
+      font-size: 12px;
+      flex: 3;
+      display: flex;
+      align-items: center;
+      
+ 
+  
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+      flex-direction: row;
+      justify-content: space-between;
+      transition: 0.3s;
+      border-radius: 3px;
+  }
+  .img-etu {
+    flex : 0.49; 
+    border-radius: 10%;
+    margin-right: 10px;
+  }
+.nom {
+    flex : 1; 
+}
+ .date {
+    flex : 1; 
+
+ }
+  .email {
+    flex : 1; 
+
+  }
+.role{
+    flex : 0.; 
+}
+.icon-t {
+    flex :2; 
+
+}
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 25px;
+    font-weight: 600;
+    color: var(--color-txt);
+    padding: 10px;
+}
+
+:root {
+    --light-body: red;
+    --light-main: red;
+    --light-second: red;
+    --light-hover: red;
+    --light-text: #151426;
+
+    --blue: #3A7AFE;
+    --white: #fff;
+    --shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+}
+
+.calendar-week-day {
+    height: 50px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-weight: 600;
+}
+
+.calendar-week-day div {
+    display: grid;
+    place-items: center;
+    color: var(--bg-second);
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    color: var(--color-txt);
+}
+
+.calendar-days div {
+    width: 30px;
+    height:30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    position: relative;
+    cursor: pointer;
+    animation: to-top 1s forwards;
+    /* border-radius: 50%; */
+}
+
+.calendar-days div span {
+    position: absolute;
+}
+
+.calendar-days div:hover span {
+    transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+}
+
+.calendar-days div span:nth-child(1),
+.calendar-days div span:nth-child(3) {
+    width: 2px;
+    height: 0;
+    background-color: var(--color-txt);
+}
+
+.calendar-days div:hover span:nth-child(1),
+.calendar-days div:hover span:nth-child(3) {
+    height: 50%;
+}
+
+.calendar-days div span:nth-child(1) {
+    bottom: 0;
+    left: 0;
+}
+
+.calendar-days div span:nth-child(3) {
+    top: 0;
+    right: 0;
+}
+
+.calendar-days div span:nth-child(2),
+.calendar-days div span:nth-child(4) {
+    width: 0;
+    height: 2px;
+    background-color: var(--color-txt);
+}
+
+.calendar-days div:hover span:nth-child(2),
+.calendar-days div:hover span:nth-child(4) {
+    width: 100%;
+}
+
+.calendar-days div span:nth-child(2) {
+    top: 0;
+    left: 0;
+}
+
+.calendar-days div span:nth-child(4) {
+    bottom: 0;
+    right: 0;
+}
+
+.calendar-days div:hover span:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.calendar-days div:hover span:nth-child(3) {
+    transition-delay: 0.4s;
+}
+
+.calendar-days div:hover span:nth-child(4) {
+    transition-delay: 0.6s;
+}
+
+.calendar-days div.curr-date,
+.calendar-days div.curr-date:hover {
+    background-color: var(--blue);
+    color: var(--white);
+    border-radius: 50%;
+}
+
+.calendar-days div.curr-date span {
+    display: none;
+}
+
+.month-picker {
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.month-picker:hover {
+    background-color: var(--color-hover);
+}
+
+.year-picker {
+    display: flex;
+    align-items: center;
+}
+
+.year-change {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.year-change:hover {
+    background-color: var(--color-hover);
+}
+
+.month-list {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    top: 0;
+    margin-bottom: 20px;
+    left: 0;
+    background-color: var(--bg-main);
+    padding: 40px 20px;
+    grid-template-columns: repeat(3, auto);
+    gap: 5px;
+    display: grid;
+    transform: scale(1.5);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.month-list.show {
+    transform: scale(1);
+    visibility: visible;
+    pointer-events: visible;
+    transition: all 0.2s ease-in-out;
+}
+
+.month-list > div {
+    display: grid;
+    place-items: center;
+}
+
+.month-list > div > div {
+    width: 100%;
+    padding: 5px 20px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--color-txt);
+}
+
+.month-list > div > div:hover {
+    background-color: var(--color-hover);
+}
+.calendar {
+    height: 200px;
+    width: max-content;
+    background-color: var(--bg-main);
+    border-radius: 30px;
+    padding: 20px;
+
+
+    /* transform: scale(1.25); */
+}
+        
+.container-stat  {
+    display :flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+border-radius: 3px; 
+    height:45%;
+   margin-top: 10px;
+   background: linear-gradient(to right, #C1DADB,#B0D8D9, #8ED2D4,#69CDCF,#61C8C9);
+}
+        
+.first {
+    display :flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background: linear-gradient(to right, #C1DADB,#B0D8D9, #8ED2D4,#69CDCF,#61C8C9);
+    border-radius: 3px; 
+    height:45%;
+   margin-top:35px;
+}
+.container-go  {
+    display :flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 3px; 
+        height:40%;
+       margin-top: 10px;
+       background-color:  #184B9B;
+    }
+    .dropbtn2 {
+        color: white;
+        padding: 0px;
+        font-size: 16px;
+        border: none;
+        background-color: inherit;
+        }
+        
+        /* The container <div> - needed to position the dropdown content */
+        .dropdown2 {
+        position: relative;
+        
+        }
+        
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content2 {
+        display: none;
+        position: absolute;
+        right: 13px;
+        background-color: #f1f1f1;
+        width: 290px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 2;
+        }
+        
+        /* Links inside the dropdown */
+        .dropdown-content2 a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        font-size: 10px;
+        }
+        .show {display:block;}
+        
+        /* Change color of dropdown links on hover */
+        .dropdown-content2 a:hover {background-color: #ddd;}
+        /* Show the dropdown menu on hover */
+        /* Change the background color of the dropdown button when the dropdown content is shown */
+        .dropdown2:hover .dropbtn2 {}
+          .name {
+            margin-right: 40px;
+            margin-left: 10px;
+          }

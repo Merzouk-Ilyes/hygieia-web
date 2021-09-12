@@ -3,152 +3,569 @@
 <head>
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="/css/MedicalExam/exam.css" />
     <link rel="stylesheet" href="/css/medicalfile/updatemedicalfile.css" />
+    
+
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
-  />
+ 
   <title>Modifier dossier médical</title>
 </head>
 <style>
-button {
-  border: none;
+  .notif-title {
+      font-size:13px;
+      color : #01559c;
+  }
+  .notif-desc {
+      font-size:11px;
+      
+  }
+  .notif-date {
+      font-size:11px;
+      color : #01559c;
+  }
+  .txt{
+  background-color:red;
+  font-size:xx-small;
+  position: absolute;
+  padding:2px;
+  top: 1px;
+  left: 1px;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
 }
-
-     .vertical-nav {
+.toastStyle {
+  font-size:12px;
+  width: 400px;
+}
+  button {
+    border: none;
+  }
   
+       .vertical-nav {
+        box-shadow: 5px 0 5px -5px grey;
 
-       margin-top: 115px;
-  min-width: 17rem;
-  width: 17rem;
-  height: 90vh;
-  position: fixed;
-  top: 0;
-  left: 0;
   
-   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1); 
-  transition: all 0.4s;
-}
-.page-content {
-  width: calc(100% - 17rem);
-  margin-left: 17rem;
-  transition: all 0.4s;
-} 
+  height : 1000px;
+         margin-top: 0px;
+    min-width: 17rem;
+    width: 17rem;
+    position: fixed;
+    top: 0;      
+    left: 0;
 
-#sidebar.active {
-  margin-left: -17rem;
-}
+    transition: all 0.4s;
+  }
+  .page-content {
+    margin-left: 17rem;
+    height: 100%;
+    transition: all 0.4s;
+  } 
+  input, button, submit { border:none; } 
 
-#content.active {
-  width: 100%;
-  margin: 0;
-}
-.fa-bars {
-  background-color: #F5F5F5;
-
-}
-.separator {
-  margin: 3rem 0;
-  border-bottom: 1px dashed #fff;
-}
-.btn-nav {
-
-  display: flex; 
-  align-self: flex-start;
-  
-}
-
-.spa {
-  margin-left: 17em;
-}
-.text-uppercase {
-  letter-spacing: 0.1em;
-}
-.text-gray {
-  color: #aaa;
-}
-.nav-link{
-    text-transform: capitalize;
-}
-.nav-link:hover{
-    background:#f3f2f2;
-}
-.text-primary{
-    color:#7579e7 !important;
-}
-@media (max-width: 768px) {
-  #sidebar {
+  #sidebar.active {
     margin-left: -17rem;
   }
-  #sidebar.active {
-    margin-left: 0;
-    margin-top: 20px;
-  }
-  #content {
+  
+  #content.active {
     width: 100%;
     margin: 0;
   }
-  #content.active {
-    margin-left: 17rem;
-    width: calc(100% - 17rem);
-  }
+  .dropbtn {
+
+color: white;
+padding: 0px;
+font-size: 16px;
+border: none;
+background-color: inherit;
 }
 
-.row-h {
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+position: relative;
+
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+display: none;
+position: absolute;
+right: 13px;
+background-color: #f1f1f1;
+width: 290px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 2;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+font-size: 10px;
+}
+.show {display:block;}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {}
+.dropbtn2 {
+
+color: white;
+padding: 0px;
+font-size: 16px;
+border: none;
+background-color: inherit;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown2 {
+position:relative;
+
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content2 {
+display: none;
+
+position:absolute;
+
+background-color: #f1f1f1;
+width: 290px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+}
+
+/* Links inside the dropdown */
+.dropdown-content2 a {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+font-size: 10px;
+}
+.show {display:block;}
+
+/* Change color of dropdown links on hover */
+.dropdown-content2 a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown2:hover .dropbtn {}
+
+  .btn-nav {
   
-  padding: 20px 30px;
-  display: flex;
-  flex-direction: row;
+    display: flex; 
+    align-self: flex-start;
+    
+  }
+  
+  .spa {
+    margin-left: 17em;
+  }
+  .text-uppercase {
+    letter-spacing: 0.1em;
+  }
+  .text-gray {
+    color: #aaa;
+  }
+  .nav-link{
+      text-transform: capitalize;
+  }
+  .nav-link:hover{
+      background:#f3f2f2;
+  }
+  .text-primary{
+      color:#7579e7 !important;
+  }
+  @media (max-width: 768px) {
+    #sidebar {
+      margin-left: -17rem;
+    }
+    #sidebar.active {
+      margin-left: 0;
+      margin-top: 20px;
+      height: 100px;
+    }
+    #content {
+      width: 100%;
+      margin: 0;
+    }
+    #content.active {
+      margin-left: 17rem;
+      width: calc(100% - 17rem);
+    }
+  }
+  
+  .row-h {
+    
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  </style>
+<style>
+  .alert {
+    font-size: 6px;
+    font-family: "Poppins";
+    background: #01559c;
+    padding: 20px 40px;
+    min-width: 420px;
+    position: fixed;
+    float: right;
+    border-radius: 4px;
+    border-left: 8px solid #3a7afe;
+    overflow: hidden;
+    opacity: 0;
+    bottom: 0;
+    right: 0;
+
+    pointer-events: none;
+  }
+  .alert.showAlert {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .alert.show {
+    animation: show_slide 1s ease forwards;
+  }
+  @keyframes show_slide {
+    0% {
+      transform: translateX(100%);
+    }
+    40% {
+      transform: translateX(-10%);
+    }
+    80% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-10px);
+    }
+  }
+  .alert.hide {
+    animation: hide_slide 1s ease forwards;
+  }
+  @keyframes hide_slide {
+    0% {
+      transform: translateX(-10px);
+    }
+    40% {
+      transform: translateX(0%);
+    }
+    80% {
+      transform: translateX(-10%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .alert .msg {
+    padding: 0px 0px 0px 4px;
+    font-size: 18px;
+    color: white;
+  }
+  .alert .close-btn {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #3a7afe;
+    padding: 20px 18px;
+    cursor: pointer;
+  }
+  .alert .close-btn:hover {
+    background: #3a7afe;
+  }
+  .alert .close-btn .fas {
+    color: white;
+    font-size: 22px;
+    line-height: 40px;
+  }
+</style>
+<style>
+  .notif-title {
+      font-size:13px;
+      color : #01559c;
+  }
+  .notif-desc {
+      font-size:11px;
+      
+  }
+  .notif-date {
+      font-size:11px;
+      color : #01559c;
+  }
+  .txt{
+  background-color:red;
+  font-size:xx-small;
+  position: absolute;
+  padding:2px;
+  top: 1px;
+  left: 1px;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+.toastStyle {
+  font-size:12px;
+  width: 400px;
+}
+  button {
+    border: none;
+  }
+  
+       .vertical-nav {
+        box-shadow: 5px 0 5px -5px grey;
+
+  
+  height : 1000px;
+         margin-top: 0px;
+    min-width: 17rem;
+    width: 17rem;
+    position: fixed;
+    top: 0;      
+    left: 0;
+
+    transition: all 0.4s;
+  }
+  .page-content {
+    margin-left: 17rem;
+    height: 100%;
+    transition: all 0.4s;
+  } 
+  input, button, submit { border:none; } 
+
+  #sidebar.active {
+    margin-left: -17rem;
+  }
+  
+  #content.active {
+    width: 100%;
+    margin: 0;
+  }
+  .dropbtn {
+
+color: white;
+padding: 0px;
+font-size: 16px;
+border: none;
+background-color: inherit;
 }
 
-</style>
-<script>
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+position: relative;
+
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+display: none;
+position: absolute;
+right: 13px;
+background-color: #f1f1f1;
+width: 290px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 2;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+font-size: 10px;
+}
+.show {display:block;}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+/* Show the dropdown menu on hover */
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {}
+.dropbtn2 {
+
+color: white;
+padding: 0px;
+font-size: 16px;
+border: none;
+background-color: inherit;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown2 {
+position:relative;
+
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content2 {
+display: none;
+
+position:absolute;
+
+background-color: #f1f1f1;
+width: 290px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+}
+
+/* Links inside the dropdown */
+.dropdown-content2 a {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+font-size: 10px;
+}
+.show {display:block;}
+
+/* Change color of dropdown links on hover */
+.dropdown-content2 a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown2:hover .dropbtn {}
+
+  .btn-nav {
+  
+    display: flex; 
+    align-self: flex-start;
     
-   
-
+  }
+  
+  .spa {
+    margin-left: 17em;
+  }
+  .text-uppercase {
+    letter-spacing: 0.1em;
+  }
+  .text-gray {
+    color: #aaa;
+  }
+  .nav-link{
+      text-transform: capitalize;
+  }
+  .nav-link:hover{
+      background:#f3f2f2;
+  }
+  .text-primary{
+      color:#7579e7 !important;
+  }
+  @media (max-width: 768px) {
+    #sidebar {
+      margin-left: -17rem;
+    }
+    #sidebar.active {
+      margin-left: 0;
+      margin-top: 20px;
+      height: 100px;
+    }
+    #content {
+      width: 100%;
+      margin: 0;
+    }
+    #content.active {
+      margin-left: 17rem;
+      width: calc(100% - 17rem);
+    }
+  }
+  
+  .row-h {
+    
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  </style>
+<script>
     $(function() { 
-
   $('#sidebarCollapse').on('click', function() {
     $('#sidebar, #content').toggleClass('active');
     $('.alert').addClass("show");
-         
-
   });
 });
-
 </script>
 <body id="allb">
-  
     <!-- Vertical navbar -->
-    <div class="row-h">
-      <button id="sidebarCollapse" type="button" class="btn-nav" style="margin-right: 20px;"><i class="fa fa-bars fa-2x">&nbsp Dossier Médical</i></button>
-      <img src="/assets/logo.png" height="70px" width="120px" style="margin-right: 8px;"/>
-    </div>
-
-
-    <div class="h-container2" id="all">
-        <div class="i-item-active" id="item1">
-            <h3>Bibliographie</h3>
-            <div class="sub-container"></div>
+    <div class="nav navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid mx-2">
+          <img src="/assets/drawer.svg" id="sidebarCollapse2" height="29px" width="29px" style="margin-left: 10px;" />
+          <img src="/assets/logo.png" height="60px" width="100px" style="margin-left: 20px;margin-top:30px"/>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon">BM</span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ms-auto">
+              <div class="dropdown">
+                  <button class="dropbtn"  onclick="myFunction()" class="dropbtn">
+                      <img src="/assets/notif.svg" height="30px" width="30px" style="margin-right: 20px;margin-top:5px"/>
+                      <div class="txt" id="txt"><%= notifssee %></div>
+                  </button>
+                  <div  id="myDropdown" class="dropdown-content">
+            
+                      <% notifs.forEach(function(notif){ %>
+                          <a>
+                              <div class="notif-title">
+                                  <%= notif.title_notif %> <br>
+                              </div>  
+                              <div class="notif-desc">
+                                  <%= notif.description_notif %> <br>
+                              </div>  
+                              <div class="notif-date">
+                            
+                                  <%=       moment(notif.date_notif).format('YYYY-MM-DD hh:mm')  %>
+                              </div>  
+                          
+                          </a>
+                
+                          <% }); %> 
+                  
+                     
+                      
+                  </div>
+                </div>
+            <li class="nav-item dropdown">
+  
+              <div class="square">BM</div>
+         
+              
+            </li>
+            <div class="name" style="margin-top:10px">Djellali</div>
+          </ul>
+  
+  
         </div>
-        <div class="i-item" id="item2">
-          <h3>A.personnelles</h3>
-          <div class="sub-container"></div>
+        
       </div>
-      <div class="i-item" id="item3">
-          <h3>A.MEDICO-chirugical</h3>
-          <div class="sub-container"></div>
-      </div>
-      <div class="i-item" id="item4">
-          <h3>Examen médicaux</h3>
-          <div class="sub-container"></div>
-      </div>
-      </div>
+    </div>
+    
       <div class="row3">
         <div class="text1">
             Dossier médical du patient : &nbsp; 
@@ -159,12 +576,12 @@ button {
         &nbsp;  
         </div>
         <div class="typeDossier">
-        (  <%= data.Role %> ) 
+        (<%= data.Role %> ) 
         </div>
     </div>
     <div class="w-container1">
         <div class="w-container2">
-            <div class="re-title" id="place1">
+            <div class="re-title2" id="place1">
                 Biographie
             </div>
             <div class="column1">
@@ -245,26 +662,22 @@ button {
                   </div>
             </div>
             <img src= "<%=data.Picture %>" style="height:200px ;width:200px"></img>
-           
-              
-        
-
         </div>
+              <!-- AUDITION -->
+          
+      
         <div class="w-container22">
             <div class="re-title2" id="place2">
-                Antécédent personnelles
+                Antécédent personnelles 
             </div>
             <div class="titre">Intoxication :</div>
             <div class="row2">
                 <div class="data">
                   <select  id="name-intoxication"  required>
                     <option value="" selected disabled hidden>Choisir l'intoxication</option>
-
                     <% for (var i = 0; i < intoxications.length; i++) { %>
                       <option value="<%= intoxications[i].name_intoxication %>"><%= intoxications[i].name_intoxication %></option>
                     <% } %>
-                   
-                   
                   </select>
                   </div>
                   <div class="data2">
@@ -425,7 +838,7 @@ button {
           </div>  
           <div
            class="w-container22">
-           <div class="re-title3" id="place3">
+           <div class="re-title2" id="place3">
             Antécédent Médico-chirugical
         </div>
            <div class="titre">affection congénitale :</div>
@@ -568,106 +981,1669 @@ button {
  
 
         </div>
-        <div
-           class="w-container22">
-           <div class="re-title3" id="place4">
-            Examens Médicaux
-        </div>
-        <div class="titre">Examen Médical :</div>
-
-        <table class="table table-hover" style="width:90%" id="myTable4">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Date</th>
-       
-              <th scope="col-md-3">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-           <% for (var i = 0; i < exams.length; i++) { %>
-             <tr>
-               <td><%= i+1%></td>
-               <td><%= String(exams[i].date_medicalexam).substring(0,16) %></td>
-               <td>
-                   <button type="button" class="btn btn-danger" id="btn-delete-examen" value="<%= exams[i].idpatient %>,<%= exams[i].iduser%>,<%= exams[i].date_medicalexam%>" >Supprimer</button>
-                   <button type="button" class="btn btn-success" id="btn-delete-allergie" value="<%= exams[i].idpatient %>">Consulter</button>
-                   <button type="button" class="btn btn-primary" onclick="window.location.href='/users/medecin/updateMedicalExam?med=<%= exams[i].iduser%>&id=<%= exams[i].idpatient%>&date=<%= exams[i].date_medicalexam%>'" value="<%= exams[i].idpatient %>">Modifier</button>
-
-                 </td>        
-           </tr>
-           <% } %>
-         </tbody>
-        </table>
-           
-
-             
-                
-              
-     
-   
- 
-
-        </div>
       
         
-    </div>
-    <div id="alert" class="alert hide">
-
-      <span class="msg" id="msg">Opération effectué avec succées</span>
-      <div class="close-btn">
-         <span id="icon-msg" class="fas fa-check"></span>
-      </div>
-   </div>
-   <div class="vertical-nav bg-white active" id="sidebar" style="position: absolute;">
-    <div class="py-4 px-3 mb-4" style="background-color: #F5F5F5;">
-      <div class="media d-flex align-items-center" style="display: flex; align-self: center; margin: auto;">
-        <img loading="lazy" src="images/p-1.png" style="margin-right: 25px; margin-left: 25px;" alt="..." width="80" height="80" class="mr-3 rounded-circle img-thumbnail shadow-sm">
-        <div class="media-body">
-          <h4 class="m-0">Djellali</h4>
-          <p class="font-weight-normal text-muted mb-0">Médecin</p>
+        <form id="myForm">
+     
+        <div class="container audition-container">
+          <div class="title-container audition-title">
+            <p>Audition</p>
+          </div>
+          <div class="info info2">
+            <div class="sub-info1-half">
+              <div class="audition-info-row">
+                <label>Oreille droite: </label>
+                <input type="text" name="Audition_OD" value="<%= data.hearing_r %>"/>
+              </div>
+            </div>
+            <div class="sub-info2-half">
+              <div class="audition-info-row">
+                <label>Oreille gauche:</label>
+                <input type="text" name="Audition_OG" value="<%= data.hearing_l %>"/>
+              </div>
+            </div>
+          </div>
         </div>
+        <div class="title-container visuelle-title">
+          <p>Acuité visuelle</p>
+        </div>
+        <div class="container visuelle-container">
+          <div class="info info2">
+            <div class="sub-info1-half">
+              <label class="label-niv1">Avec correction</label>
+
+              <div class="audition-info-row">
+                <label>Oeil droit: </label>
+                <input type="text" name="avec_OD" value="<%= data.c_visual_r %>"/>
+              </div>
+              <label class="label-niv1">Sans correction</label>
+
+              <div class="audition-info-row">
+                <label>Oeil droit: </label>
+                <input type="text" name="sans_OD" value="<%= data.visual_r %>"/>
+              </div>
+            </div>
+
+            <div class="sub-info2-half">
+              <div class="audition-info-row">
+                <label>Oeil gauche:</label>
+                <input type="text" name="avec_OG" value="<%= data.c_visual_l %>" />
+              </div>
+              <div class="audition-info-row">
+                <label>Oeil gauche:</label>
+                <input type="text" name="sans_OG" value="<%= data.visual_l %>" />
+              </div>
+            </div>
+          </div>
+        </div>
+                 <!-- PEAU -->
+                 <div class="title-container peau-title">
+                  <p>Peau et muqueuses</p>
+                </div>
+                <div class="container peau-container">
+                  <div>
+                    <label>Affections cutanées:</label>
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      name="Affection"
+                      value="1" <% if (data.Skin_disorders == 1) { %> checked <% } %>
+                    /><label>Oui</label>
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      name="Affection"
+                      value="0" <% if (data.Skin_disorders == 0) { %> checked <% } %>
+                    /><label>Non</label>
+                    <input
+                      type="hidden"
+                      id="value_Affection"
+                      name="value_Affection"
+                    />
+                  </div>
+                  <div>
+                    <label>Autres :</label>
+                    <div>
+                      <textarea name="affection_autre" cols="30" rows="2"><%= data.else_Skin_disorders %></textarea>
+                    </div>
+                  </div>
+      
+                  <label class="label-niv1 label-niv2">examen clinique:</label>
+                  <div>
+                    <textarea name="peau_exam" cols="50" rows="3"><%= data.skin_exam %></textarea>
+                  </div>
+                </div>
+                <div class="title-container oph-title">
+                  <p>Ophtalmologique</p>
+                </div>
+                <div class="container oph-container">
+                  <div>
+                    <div>
+                      <label>Larmoiement:</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Larmoiement"
+                        value="1" <% if (data.tearing == 1) { %> checked <% } %>
+                      /><label>Oui</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Larmoiement"
+                        value="0" <% if (data.tearing == 0) { %> checked <% } %>
+                      /><label>Non</label>
+                      <input
+                        type="hidden"
+                        id="value_Larmoiement"
+                        name="value_Larmoiement"
+                      />
+                    </div>
+                    <div>
+                      <label>Douleurs:</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Douleurs"
+                        value="1" <% if (data.pain == 1) { %> checked <% } %>
+                      /><label>Oui</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Douleurs"
+                        value="0" <% if (data.pain == 0) { %> checked <% } %>
+                      /><label>Non</label>
+                      <input
+                        type="hidden"
+                        id="value_Douleurs"
+                        name="value_Douleurs"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <label>Rougeurs:</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Rougeurs"
+                        value="1" <% if (data.redness == 1) { %> checked <% } %>
+                      /><label>Oui</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Rougeurs"
+                        value="0" <% if (data.redness == 0) { %> checked <% } %>
+                      /><label>Non</label>
+                      <input
+                        type="hidden"
+                        id="value_Rougeurs"
+                        name="value_Rougeurs"
+                      />
+                    </div>
+                    <div>
+                      <label>Tâches devant les yeux:</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Tache"
+                        value="1" <% if (data.spot_eyes == 1) { %> checked <% } %>
+                      /><label>Oui</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Tache"
+                        value="0" <% if (data.spot_eyes == 0) { %> checked <% } %>
+                      /><label>Non</label>
+                      <input type="hidden" id="value_Tache" name="value_Tache" />
+                    </div>
+                  </div>
+                  <div>
+                    <label>Autres :</label>
+                    <div>
+                      <textarea name="ophtalmo_autre" cols="30" rows="2"><%= data.else_ophthalmo %></textarea>
+                    </div>
+                  </div>
+      
+                  <label class="label-niv1 label-niv2">examen clinique:</label>
+                  <div>
+                    <textarea name="ophtalmo_exam" cols="50" rows="3"><%= data.ophthalmo_exam %></textarea>
+                  </div>
+                </div>
+                <div class="title-container oph-title">
+                  <p>ORL</p>
+                </div>
+                <div class="container oph-container">
+                  <div>
+                    <div>
+                      <label>Sifflements:</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Sifflements"
+                        value="1" <% if (data.whistling == 1) { %> checked <% } %>
+                      /><label>Oui</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Sifflements"
+                        value="0" <% if (data.whistling == 0) { %> checked <% } %>
+                      /><label>Non</label>
+                      <input
+                        type="hidden"
+                        id="value_Sifflements"
+                        name="value_Sifflements"
+                      />
+                    </div>
+                    <div>
+                      <label>Angines répétées:</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Angines"
+                        value="1" <% if (data.angina == 1) { %> checked <% } %>
+                      /><label>Oui</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Angines"
+                        value="0" <% if (data.angina == 0) { %> checked <% } %>
+                      /><label>Non</label>
+                      <input type="hidden" id="value_Angines" name="value_Angines" />
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <label>Epistaxis:</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Epistaxis"
+                        value="1" <% if (data.epistaxis == 1) { %> checked <% } %>
+                      /><label>Oui</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Epistaxis"
+                        value="0" <% if (data.epistaxis == 0) { %> checked <% } %>
+                      /><label>Non</label>
+                      <input
+                        type="hidden"
+                        id="value_Epistaxis"
+                        name="value_Epistaxis"
+                      />
+                    </div>
+                    <div>
+                      <label>Rhinorhée:</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Rhinorhee"
+                        value="1" <% if (data.rhinorrhea == 1) { %> checked <% } %>
+                      /><label>Oui</label>
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="Rhinorhee"
+                        value="0" <% if (data.rhinorrhea == 0) { %> checked <% } %>
+                      /><label>Non</label>
+                      <input
+                        type="hidden"
+                        id="value_Rhinorhee"
+                        name="value_Rhinorhee"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label>Autres :</label>
+                    <div>
+                      <textarea name="orl_autre" cols="40" rows="2"><%= data.else_orl %></textarea>
+                    </div>
+                  </div>
+      
+                  <label class="label-niv1 label-niv2">examen clinique:</label>
+                  <div>
+                    <textarea name="orl_exam" cols="50" rows="3"><%= data.orl_exam %></textarea>
+                  </div>
+                </div>
+                       <!-- LOCOMOTEUR -->
+
+          <div class="title-container loco-title">
+            <p>LOCOMOTEUR</p>
+          </div>
+          <div class="container loco-container">
+            <label class="label-niv1">Douleurs:</label>
+
+            <div>
+              <div>
+                <label>Musculaires:</label>
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Musculaires"
+                  value="1" <% if (data.muscleache == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Musculaires"
+                  value="0" <% if (data.muscleache == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Musculaires"
+                  name="value_Musculaires"
+                />
+              </div>
+              <div>
+                <label>Articulaires:</label>
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Articulaires"
+                  value="1" <% if (data.jointache == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Articulaires"
+                  value="0" <% if (data.jointache == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Articulaires"
+                  name="value_Articulaires"
+                />
+              </div>
+            </div>
+            <div>
+              <div>
+                <label>Vertébrales:</label>
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Vertebrales"
+                  value="1" <% if (data.spinalache == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Vertebrales"
+                  value="0" <% if (data.spinalache == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Vertebrales"
+                  name="value_Vertebrales"
+                />
+              </div>
+              <div>
+                <label>Neurologiques:</label>
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Neurologiques"
+                  value="1" <% if (data.Neuroloache == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Neurologiques"
+                  value="0" <% if (data.Neuroloache == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Neurologiques"
+                  name="value_Neurologiques"
+                />
+              </div>
+            </div>
+            <div>
+              <div>
+                <label>Gênée de Mouvements:</label>
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Mouvements"
+                  value="1" <% if (data.Movement_discomfort == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Mouvements"
+                  value="0" <% if (data.Movement_discomfort == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Mouvements"
+                  name="value_Mouvements"
+                />
+              </div>
+              <div>
+                <label>Fatigabilité:</label>
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Fatigabilite"
+                  value="1" <% if (data.fatigability == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Fatigabilite"
+                  value="0" <% if (data.fatigability == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Fatigabilite"
+                  name="value_Fatigabilite"
+                />
+              </div>
+            </div>
+            <div>
+              <label>Autres :</label>
+              <div>
+                <textarea name="locomo_autre" cols="30" rows="1"><%= data.else_locomo %></textarea>
+              </div>
+            </div>
+
+            <label class="label-niv1 label-niv2">examen clinique:</label>
+            <div>
+              <textarea name="locomo_exam" cols="50" rows="3"><%= data.locomo_exam %></textarea>
+            </div>
+          </div>
+
+          <!-- CARDIO -->
+          <div class="title-container cardio-title">
+            <p>CARDIO-VASCULAIRE</p>
+          </div>
+          <div class="container cardio-container">
+            <div>
+              <div>
+                <label>Palpitation</label>
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Palpitation"
+                  value="1" <% if (data.palpitation == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Palpitation"
+                  value="0" <% if (data.palpitation == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Palpitation"
+                  name="value_Palpitation"
+                />
+              </div>
+            </div>
+            <label class="label-niv1">Douleurs:</label>
+            <div>
+              <div>
+                <label>À la marche</label>
+                <input
+                  type="radio"
+                  name="Marche"
+                  class="form-check-input"
+                  value="1" <% if (data.walking_pain == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Marche"
+                  class="form-check-input"
+                  value="0" <% if (data.walking_pain == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_Marche" name="value_Marche" />
+              </div>
+              <div>
+                <label>Au repos</label>
+                <input
+                  type="radio"
+                  name="Repos"
+                  class="form-check-input"
+                  value="1" <% if (data.resting_pain == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Repos"
+                  class="form-check-input"
+                  value="0" <% if (data.resting_pain == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_Repos" name="value_Repos" />
+              </div>
+            </div>
+            <div>
+              <div>
+                <label>À l'efforts</label>
+                <input
+                  type="radio"
+                  name="Effort"
+                  class="form-check-input"
+                  value="1" <% if (data.exertion_pain == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Effort"
+                  class="form-check-input"
+                  value="0" <% if (data.exertion_pain == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_Effort" name="value_Effort" />
+              </div>
+              <div>
+                <label>Permanents</label>
+                <input
+                  type="radio"
+                  name="Permanents"
+                  class="form-check-input"
+                  value="1" <% if (data.permanent_pain == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Permanents"
+                  class="form-check-input"
+                  value="0" <% if (data.permanent_pain == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Permanents"
+                  name="value_Permanents"
+                />
+              </div>
+            </div>
+            <div>
+              <div>
+                <label>Oedèmes</label>
+                <input
+                  type="radio"
+                  name="Oedemes"
+                  class="form-check-input"
+                  value="1" <% if (data.edema == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Oedemes"
+                  class="form-check-input"
+                  value="0" <% if (data.edema == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_Oedemes" name="value_Oedemes" />
+              </div>
+            </div>
+            <div>
+              <div>
+                <label>Autres :</label>
+              </div>
+
+              <div>
+                <textarea name="cardio_autres" cols="50" rows="3"><%= data.else_cardio %></textarea>
+              </div>
+            </div>
+            <label class="label-niv1 label-niv2">examen clinique:</label>
+            <div><label>Pouls:</label><input type="text" name="Pouls" value="<%= data.pulse %>"/></div>
+            <div>
+              <div>
+                <label>Cyanose</label>
+                <input
+                  type="radio"
+                  name="Cyanose"
+                  class="form-check-input"
+                  value="1" <% if (data.cyanosis == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Cyanose"
+                  class="form-check-input"
+                  value="0" <% if (data.cyanosis == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_Cyanose" name="value_Cyanose" />
+              </div>
+            </div>
+            <div>
+              <textarea name="cardio_exam" cols="90" rows="3"><%= data.cardio_exam %></textarea>
+            </div>
+          </div>
+              <!-- RESPIRATOIRE -->
+              <div class="title-container resp-title">
+                <p>RESPIRATOIRE</p>
+              </div>
+              <div class="container resp-container">
+                <div>
+                  <div>
+                    <label>Toux</label>
+                    <input
+                      type="radio"
+                      name="Toux"
+                      class="form-check-input"
+                      value="1" <% if (data.cough == 1) { %> checked <% } %>
+                    /><label>Oui</label>
+                    <input
+                      type="radio"
+                      name="Toux"
+                      class="form-check-input"
+                      value="0" <% if (data.cough == 0) { %> checked <% } %>
+                    /><label>Non</label>
+                    <input type="hidden" id="value_Toux" name="value_Toux" />
+                  </div>
+                </div>
+                <label class="label-niv1">Dyspnée:</label>
+                <div>
+                  <div>
+                    <label>Nocturne:</label>
+                    <input
+                      type="radio"
+                      name="Nocturne"
+                      class="form-check-input"
+                      value="1" <% if (data.nocturn_dyspnea == 1) { %> checked <% } %>
+                    /><label>Oui</label>
+                    <input
+                      type="radio"
+                      name="Nocturne"
+                      class="form-check-input"
+                      value="0" <% if (data.nocturn_dyspnea == 0) { %> checked <% } %>
+                    /><label>Non</label>
+                    <input
+                      type="hidden"
+                      id="value_Nocturne"
+                      name="value_Nocturne"
+                    />
+                  </div>
+                  <div>
+                    <label>Diurne:</label>
+                    <input
+                      type="radio"
+                      name="Diurne"
+                      class="form-check-input"
+                      value="1" <% if (data.daytime_dyspnea == 1) { %> checked <% } %>
+                    /><label>Oui</label>
+                    <input
+                      type="radio"
+                      name="Diurne"
+                      class="form-check-input"
+                      value="0" <% if (data.daytime_dyspnea == 0) { %> checked <% } %>
+                    /><label>Non</label>
+                    <input type="hidden" id="value_Diurne" name="value_Diurne" />
+                  </div>
+                </div>
+                <div>
+                  <label>Expectorations:</label>
+                  <input
+                    type="radio"
+                    name="Expectorations"
+                    class="form-check-input"
+                    value="1" <% if (data.expectorations == 1) { %> checked <% } %>
+                  /><label>Oui</label>
+                  <input
+                    type="radio"
+                    name="Expectorations"
+                    class="form-check-input"
+                    value="0" <% if (data.expectorations == 0) { %> checked <% } %>
+                  /><label>Non</label>
+                  <input
+                    type="hidden"
+                    id="value_Expectorations"
+                    name="value_Expectorations"
+                  />
+                </div>
+                <div>
+                  <label>Douleurs Thoraciques:</label>
+                  <input
+                    type="radio"
+                    name="Thoraciques"
+                    class="form-check-input"
+                    value="1" <% if (data.chest_pain == 1) { %> checked <% } %>
+                  /><label>Oui</label>
+                  <input
+                    type="radio"
+                    name="Thoraciques"
+                    class="form-check-input"
+                    value="0" <% if (data.chest_pain == 0) { %> checked <% } %>
+                  /><label>Non</label>
+                  <input
+                    type="hidden"
+                    id="value_Thoraciques"
+                    name="value_Thoraciques"
+                  />
+                </div>
+                <div>
+                  <label>Autres :</label>
+                  <div>
+                    <textarea name="respi_autres" cols="50" rows="3"><%= data.else_thoracic %></textarea>
+                  </div>
+                </div>
+                <label class="label-niv1 label-niv2">examen clinique:</label>
+                <div>
+                  <label>Fréquence Respiratoire: </label>
+                  <input type="text" name="frequence" value="<%= data.respir_rate %>"/><label class="label-niv1"
+                    >/min</label
+                  >
+                </div>
+                <div>
+                  <textarea name="respi_exam" cols="90" rows="3"><%= data.respir_exam %></textarea>
+                </div>
+              </div>
+               <!-- DIGESTIF -->
+          <div class="title-container dig-title">
+            <p>DIGESTIF</p>
+          </div>
+          <div class="container dig-container">
+            <div>
+              <label>Appétit:</label><input type="text" name="Appetit" value="<%= data.appetite %>"/>
+            </div>
+            <div>
+              <label>Transit: </label><input type="text" name="Transit" value="<%= data.transit %>"/>
+            </div>
+            <div>
+              <label>Selles: </label><input type="text" name="Selles" value="<%= data.selles %>"/>
+            </div>
+            <div>
+              <div>
+                <label>Pyrosis</label>
+                <input
+                  type="radio"
+                  name="Pyrosis"
+                  class="form-check-input"
+                  value="1" <% if (data.pyrosis == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Pyrosis"
+                  class="form-check-input"
+                  value="0" <% if (data.pyrosis == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_Pyrosis" name="value_Pyrosis" />
+              </div>
+              <div>
+                <label>Vomissements</label>
+                <input
+                  type="radio"
+                  name="Vomissements"
+                  class="form-check-input"
+                  value="1" <% if (data.vomiting == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Vomissements"
+                  class="form-check-input"
+                  value="0" <% if (data.vomiting == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Vomissements"
+                  name="value_Vomissements"
+                />
+              </div>
+            </div>
+            <div>
+              <label>Rectorragies:</label
+              ><input type="text" name="Rectorragies" value="<%= data.rectal_bleeding %>"/>
+            </div>
+            <div>
+              <label>Douleur abdominales: </label
+              ><input type="text" name="DouleurAbdo" value="<%= data.abdo_pain %>"/>
+            </div>
+            <div>
+              <label>Autres:</label>
+              <div>
+                <textarea name="digestif_autres" cols="50" rows="3"><%= data.else_digestive %></textarea>
+              </div>
+            </div>
+
+            <div>
+              <label class="label-niv1 label-niv2">examen clinique:</label>
+            </div>
+            <div><label>Denture:</label></div>
+            <div>
+              <div>
+                <label>Carie:</label>
+                <input
+                  type="radio"
+                  name="carie"
+                  class="form-check-input"
+                  value="1" <% if (data.carie == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="carie"
+                  class="form-check-input"
+                  value="0" <% if (data.carie == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_carie" name="value_carie" />
+              </div>
+              <div>
+                <label>Gingivopathie: </label>
+                <input
+                  type="radio"
+                  name="Gingivopathie"
+                  class="form-check-input"
+                  value="1" <% if (data.gingivopathy == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Gingivopathie"
+                  class="form-check-input"
+                  value="0" <% if (data.gingivopathy == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Gingivopathie"
+                  name="value_Gingivopathie"
+                />
+              </div>
+            </div>
+
+            <div>
+              <div>
+                <label>Abdomens:</label><input type="text" name="Abdomens" value="<%= data.abdomens %>"/>
+              </div>
+              <div>
+                <label>Hernie: </label><input type="text" name="Hernie" value="<%= data.hernie %>"/>
+              </div>
+            </div>
+            <div>
+              <div><label>Foie: </label><input type="text" name="Foie" value="<%= data.liver %>"/></div>
+              <div>
+                <label>Autres:</label><input type="text" name="dig_autres" value="<%= data.else_dig %>"/>
+              </div>
+            </div>
+            <div>
+              <textarea name="digestif_exam" cols="90" rows="4"><%= data.digestive_exam %></textarea>
+            </div>
+          </div>
+          <div class="title-container gen-title">
+            <p>GENITO-URINAIRE</p>
+          </div>
+          <div class="container gen-container">
+            <label class="label-niv1">Miction</label>
+            <div>
+              <div>
+                <label>Pollakiurie:</label>
+                <input
+                  type="radio"
+                  name="Pollakiurie"
+                  class="form-check-input"
+                  value="1" <% if (data.pollakiuria == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Pollakiurie"
+                  class="form-check-input"
+                  value="0" <% if (data.pollakiuria == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Pollakiurie"
+                  name="value_Pollakiurie"
+                />
+              </div>
+              <div>
+                <label>Dysurie: </label>
+                <input
+                  type="radio"
+                  name="Dysurie"
+                  class="form-check-input"
+                  value="1" <% if (data.dysurie == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Dysurie"
+                  class="form-check-input"
+                  value="0" <% if (data.dysurie == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_Dysurie" name="value_Dysurie" />
+              </div>
+            </div>
+            <div>
+              <div>
+                <label>Hématurie: </label>
+                <input
+                  type="radio"
+                  name="Hematurie"
+                  class="form-check-input"
+                  value="1" <% if (data.hematuria == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Hematurie"
+                  class="form-check-input"
+                  value="0" <% if (data.hematuria == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Hematurie"
+                  name="value_Hematurie"
+                />
+              </div>
+              <div>
+                <label>Brûlures mictionnelles: </label>
+                <input
+                  type="radio"
+                  name="Brulures"
+                  class="form-check-input"
+                  value="1" <% if (data.urination_burns == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Brulures"
+                  class="form-check-input"
+                  value="0" <% if (data.urination_burns == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Brulures"
+                  name="value_Brulures"
+                />
+              </div>
+            </div>
+            <div>
+              <label>Coliques néphrétiques: </label>
+              <input
+                type="radio"
+                name="Coliques"
+                class="form-check-input"
+                value="1" <% if (data.renal_colic == 1) { %> checked <% } %>
+              /><label>Oui</label>
+              <input
+                type="radio"
+                name="Coliques"
+                class="form-check-input"
+                value="0" <% if (data.renal_colic == 0) { %> checked <% } %>
+              /><label>Non</label>
+              <input type="hidden" id="value_Coliques" name="value_Coliques" />
+            </div>
+            <div>
+              <div>
+                <label>Pertes: </label><input type="text" name="Pertes" value="<%= data.losses %>"/>
+              </div>
+              <div>
+                <label>Cycles: </label>
+                <input
+                  type="radio"
+                  name="Cycles"
+                  class="form-check-input"
+                  value="1" <% if (data.cycle == 1) { %> checked <% } %>
+                /><label>Régulier</label>
+                <input
+                  type="radio"
+                  name="Cycles"
+                  class="form-check-input"
+                  value="0" <% if (data.cycle == 0) { %> checked <% } %>
+                /><label>Irrégulier</label>
+                <input type="hidden" id="value_Cycles" name="value_Cycles" />
+              </div>
+            </div>
+            <div>
+              <label>Autres:</label>
+              <div>
+                <textarea name="genito_autres" cols="50" rows="3"><%= data.else_genito %></textarea>
+              </div>
+            </div>
+            <div>
+              <label class="label-niv1 label-niv2">examen clinique:</label>
+            </div>
+            <div><label>Bourses:</label></div>
+            <textarea name="Bourses" cols="100" rows="3"><%= data.bourses %></textarea>
+            <div><label>Seins:</label></div>
+            <textarea name="Seins" cols="100" rows="3"><%= data.breasts %></textarea>
+            <div><label>T.R:</label></div>
+            <textarea name="TR" cols="100" rows="3"><%= data.tr %></textarea>
+            <div><label>T.V:</label></div>
+            <textarea name="TV" cols="100" rows="3"><%= data.tv %></textarea>
+            <div>
+              <textarea name="genito_exam" cols="90" rows="6"><%= data.genito_exam %></textarea>
+            </div>
+          </div>
+          <!-- Neurologique et Psychisme -->
+          <div class="title-container neur-title">
+            <p>NEUROLOGIQUE ET PSYCHISME</p>
+          </div>
+          <div class="container neur-container">
+            <div>
+              <div>
+                <label>Sommeil</label><input type="text" name="Sommeil" value="<%= data.sleep %>"/>
+              </div>
+              <div>
+                <label>Céphaliées</label>
+                <input
+                  type="radio"
+                  name="Cephaliees"
+                  class="form-check-input"
+                  value="1" <% if (data.headache == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Cephaliees"
+                  class="form-check-input"
+                  value="0" <% if (data.headache == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Cephaliees"
+                  name="value_Cephaliees"
+                />
+              </div>
+            </div>
+            <div>
+              <div>
+                <label>Vertiges</label>
+                <input
+                  type="radio"
+                  name="Vertiges"
+                  class="form-check-input"
+                  value="1" <% if (data.dizziness == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Vertiges"
+                  class="form-check-input"
+                  value="0" <% if (data.dizziness == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Vertiges"
+                  name="value_Vertiges"
+                />
+              </div>
+              <div>
+                <label>Peur du vide</label>
+                <input
+                  type="radio"
+                  name="Vide"
+                  class="form-check-input"
+                  value="1" <% if (data.emptiness_fear == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Vide"
+                  class="form-check-input"
+                  value="0" <% if (data.emptiness_fear == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_Vide" name="value_Vide" />
+              </div>
+            </div>
+            <div>
+              <div>
+                <label>Perte de connaissance</label>
+                <input
+                  type="radio"
+                  name="Connaissance"
+                  class="form-check-input"
+                  value="1" <% if (data.consciousness_loss == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Connaissance"
+                  class="form-check-input"
+                  value="0" <% if (data.consciousness_loss == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input
+                  type="hidden"
+                  id="value_Connaissance"
+                  name="value_Connaissance"
+                />
+              </div>
+              <div>
+                <label>Parésie</label>
+                <input
+                  type="radio"
+                  name="Paresie"
+                  class="form-check-input"
+                  value="1" <% if (data.paresis == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Paresie"
+                  class="form-check-input"
+                  value="0" <% if (data.paresis == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_Paresie" name="value_Paresie" />
+              </div>
+            </div>
+            <div>
+              <label>Paresthésie</label>
+              <input
+                type="radio"
+                name="Paresthesie"
+                class="form-check-input"
+                value="1" <% if (data.paresthesia == 1) { %> checked <% } %>
+              /><label>Oui</label>
+              <input
+                type="radio"
+                name="Paresthesie"
+                class="form-check-input"
+                value="0" <% if (data.paresthesia == 0) { %> checked <% } %>
+              /><label>Non</label>
+              <input
+                type="hidden"
+                id="value_Paresthesie"
+                name="value_Paresthesie"
+              />
+            </div>
+            <div>
+              <label>Autres:</label>
+              <div>
+                <textarea name="Neuro_autres" cols="50" rows="3"><%= data.else_neuro %></textarea>
+              </div>
+            </div>
+
+            <div>
+              <label class="label-niv1 label-niv2">examen clinique:</label>
+            </div>
+            <div>
+              <div>
+                <label>Tremblement:</label
+                ><input type="text" name="Tremblement" value="<%= data.tremor %>"/>
+              </div>
+              <div>
+                <label>Romberg</label>
+                <input
+                  type="radio"
+                  name="Romberg"
+                  class="form-check-input"
+                  value="1" <% if (data.romberg == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Romberg"
+                  class="form-check-input"
+                  value="0" <% if (data.romberg == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_Romberg" name="value_Romberg" />
+              </div>
+            </div>
+            <div>
+              <label>Réflexes: </label>
+              <input
+                type="radio"
+                name="Reflexes"
+                class="form-check-input"
+                value="1" <% if (data.reflexes == 1) { %> checked <% } %>
+              /><label>present</label>
+              <input
+                type="radio"
+                name="Reflexes"
+                class="form-check-input"
+                value="0" <% if (data.reflexes == 0) { %> checked <% } %>
+              /><label>absent</label>
+              <input type="hidden" id="value_Reflexes" name="value_Reflexes" />
+            </div>
+            <div>
+              <label>Coordination: </label>
+              <input
+                type="radio"
+                name="Coordination"
+                class="form-check-input"
+                value="1" <% if (data.coordination == 1) { %> checked <% } %>
+              /><label>present</label>
+              <input
+                type="radio"
+                name="Coordination"
+                class="form-check-input"
+                value="0" <% if (data.coordination == 0) { %> checked <% } %>
+              /><label>absent</label>
+              <input
+                type="hidden"
+                id="value_Coordination"
+                name="value_Coordination"
+              />
+            </div>
+            <div>
+              <label>Motricité: </label><input type="text" name="Motricite" value="<%= data.motor_skills %>"/>
+            </div>
+            <div>
+              <label>Sensibilité: </label>
+              <input
+                type="radio"
+                name="Sensibilite"
+                class="form-check-input"
+                value="1" <% if (data.sensitivity == 1) { %> checked <% } %>
+              /><label>Oui</label>
+              <input
+                type="radio"
+                name="Sensibilite"
+                class="form-check-input"
+                value="0" <% if (data.sensitivity == 0) { %> checked <% } %>
+              /><label>Non</label>
+              <input
+                type="hidden"
+                id="value_Sensibilite"
+                name="value_Sensibilite"
+              />
+            </div>
+            <div>
+              <label class="label-niv1">Achilléen:</label>
+            </div>
+            <div>
+              <div>
+                <label>Droit:</label>
+                <input
+                  type="radio"
+                  name="DAchil"
+                  class="form-check-input"
+                  value="1" <% if (data.achilles_r == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="DAchil"
+                  class="form-check-input"
+                  value="0" <% if (data.achilles_r == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_DAchil" name="value_DAchil" />
+              </div>
+              <div>
+                <label>Gauche:</label>
+                <input
+                  type="radio"
+                  name="GAchil"
+                  class="form-check-input"
+                  value="1" <% if (data.achilles_l == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="GAchil"
+                  class="form-check-input"
+                  value="0" <% if (data.achilles_l == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_GAchil" name="value_GAchil" />
+              </div>
+            </div>
+            <div>
+              <label for="" class="label-niv1">Oculaires:</label>
+            </div>
+            <div>
+              <div>
+                <label>Droit:</label>
+                <input
+                  type="radio"
+                  name="DOcul"
+                  class="form-check-input"
+                  value="1" <% if (data.oculaire_r == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="DOcul"
+                  class="form-check-input"
+                  value="0" <% if (data.oculaire_r == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_DOcul" name="value_DOcul" />
+              </div>
+              <div>
+                <label>Gauche:</label>
+                <input
+                  type="radio"
+                  name="GOcul"
+                  class="form-check-input"
+                  value="1" <% if (data.Oculaire_l == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="GOcul"
+                  class="form-check-input"
+                  value="0" <% if (data.Oculaire_l == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_GOcul" name="value_GOcul" />
+              </div>
+            </div>
+            <div>
+              <textarea name="Neuro_exam" cols="90" rows="6"><%= data.neuro_exam %></textarea>
+            </div>
+          </div>
+              <!-- HEMATOLOGIQUE -->
+              <div class="title-container hem-title">
+                <p>HEMATOLOGIQUE ET GANGLIONNAIRE</p>
+              </div>
+              <div class="container hem-container">
+                <div>
+                  <label>Ecchymoses:</label>
+                  <input
+                    type="radio"
+                    name="Ecchymoses"
+                    class="form-check-input"
+                    value="1" <% if (data.ecchymose == 1) { %> checked <% } %>
+                  /><label>Oui</label>
+                  <input
+                    type="radio"
+                    name="Ecchymoses"
+                    class="form-check-input"
+                    value="0" <% if (data.ecchymose == 0) { %> checked <% } %>
+                  /><label>Non</label>
+                  <input
+                    type="hidden"
+                    id="value_Ecchymoses"
+                    name="value_Ecchymoses"
+                  />
+                </div>
+                <div>
+                  <label>Tendances aux hémorragies:</label>
+                  <input
+                    type="radio"
+                    name="Hemo"
+                    class="form-check-input"
+                    value="1" <% if (data.bleeding_tendencies == 1) { %> checked <% } %>
+                  /><label>Oui</label>
+                  <input
+                    type="radio"
+                    name="Hemo"
+                    class="form-check-input"
+                    value="0" <% if (data.bleeding_tendencies == 0) { %> checked <% } %>
+                  /><label>Non</label>
+                  <input type="hidden" id="value_Hemo" name="value_Hemo" />
+                </div>
+                <div>
+                  <label>Autres:</label>
+                  <div>
+                    <textarea name="Hemato_autres" cols="50" rows="3"><%= data.else_hemato %></textarea>
+                  </div>
+                </div>
+                <label class="label-niv1 label-niv2">examen clinique:</label>
+                <div>
+                  <label>Pétéchies: </label><input type="text" name="Petechies" value="<%= data.petechia %>"/>
+                </div>
+                <div>
+                  <label>Purpura: </label><input type="text" name="Purpura" value="<%= data.purpura %>"/>
+                </div>
+                <div><label>Rate: </label><input type="text" name="Rate" value="<%= data.rate %>"/></div>
+    
+                <label class="label-niv1">ganglion:</label>
+                <div>
+                  <div>
+                    <label>Cervicaux: </label>
+                    <input
+                      type="radio"
+                      name="Cervicaux"
+                      class="form-check-input"
+                      value="1" <% if (data.cervical_ganglia == 1) { %> checked <% } %>
+                    /><label>Oui</label>
+                    <input
+                      type="radio"
+                      name="Cervicaux"
+                      class="form-check-input"
+                      value="0" <% if (data.cervical_ganglia == 0) { %> checked <% } %>
+                    /><label>Non</label>
+                    <input
+                      type="hidden"
+                      id="value_Cervicaux"
+                      name="value_Cervicaux"
+                    />
+                  </div>
+                  <div>
+                    <label>Sous Auxiliaires: </label>
+                    <input
+                      type="radio"
+                      name="Auxi"
+                      class="form-check-input"
+                      value="1" <% if (data.subaux_ganglia == 1) { %> checked <% } %>
+                    /><label>Oui</label>
+                    <input
+                      type="radio"
+                      name="Auxi"
+                      class="form-check-input"
+                      value="0" <% if (data.subaux_ganglia == 0) { %> checked <% } %>
+                    /><label>Non</label>
+                    <input type="hidden" id="value_Auxi" name="value_Auxi" />
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <label>Sous Claviculaires: </label>
+                    <input
+                      type="radio"
+                      name="Clavi"
+                      class="form-check-input"
+                      value="1" <% if (data.Subclavicular_ganglia == 1) { %> checked <% } %>
+                    /><label>Oui</label>
+                    <input
+                      type="radio"
+                      name="Clavi"
+                      class="form-check-input"
+                      value="0" <% if (data.Subclavicular_ganglia == 0) { %> checked <% } %>
+                    /><label>Non</label>
+                    <input type="hidden" id="value_Clavi" name="value_Clavi" />
+                  </div>
+                  <div>
+                    <label>Inguinaux: </label>
+                    <input
+                      type="radio"
+                      name="Inguinaux"
+                      class="form-check-input"
+                      value="1" <% if (data.inguin_ganglia == 1) { %> checked <% } %>
+                    /><label>Oui</label>
+                    <input
+                      type="radio"
+                      name="Inguinaux"
+                      class="form-check-input"
+                      value="0" <% if (data.inguin_ganglia == 0) { %> checked <% } %>
+                    /><label>Non</label>
+                    <input
+                      type="hidden"
+                      id="value_Inguinaux"
+                      name="value_Inguinaux"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <textarea name="hemato_exam" cols="90" rows="6"><%= data.hemato_exam %></textarea>
+                </div>
+              </div>
+                  <!-- ENDOCRINOLOGIE -->
+          <div class="title-container end-title">
+            <p>ENDOCRINOLOGIE</p>
+          </div>
+          <div class="container end-container">
+            <div>
+              <div>
+                <label>Obésité familiale:</label>
+                <input
+                  type="radio"
+                  name="Obese"
+                  class="form-check-input"
+                  value="1" <% if (data.fam_obesity == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Obese"
+                  class="form-check-input"
+                  value="0" <% if (data.fam_obesity == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_Obese" name="value_Obese" />
+              </div>
+              <div>
+                <label>Maigreur familiale:</label>
+                <input
+                  type="radio"
+                  name="Maigre"
+                  class="form-check-input"
+                  value="1" <% if (data.fam_thinness == 1) { %> checked <% } %>
+                /><label>Oui</label>
+                <input
+                  type="radio"
+                  name="Maigre"
+                  class="form-check-input"
+                  value="0" <% if (data.fam_thinness == 0) { %> checked <% } %>
+                /><label>Non</label>
+                <input type="hidden" id="value_Maigre" name="value_Maigre" />
+              </div>
+            </div>
+            <div>
+              <label>Autres:</label>
+              <div>
+                <textarea name="Endo_autres" cols="50" rows="3"><%= data.else_endo %></textarea>
+              </div>
+            </div>
+            <label class="label-niv1 label-niv2">examen clinique:</label>
+            <div>
+              <label>Tyroide:</label><input type="text" name="Tyroide" value="<%= data.Thyroid %>"/>
+            </div>
+            <div>
+              <label>Testicules:</label><input type="text" name="Testicules" value="<%= data.testicles %>"/>
+            </div>
+            <div>
+              <label>Glandes mammaires:</label
+              ><input type="text" name="Glandes"value="<%= data.mam_glands %>" />
+            </div>
+            <div>
+              <textarea name="Endo_exam" cols="50" rows="3"><%= data.endo_exam %></textarea>
+            </div>
+          </div>
+              <!-- Explorations Fonctionnelles -->
+
+              <div class="title-container exp-title">
+                <p>Explorations Fonctionnelles</p>
+              </div>
+              <div class="container exp-container">
+                <div>
+                  <label>Fonction Respiratoire:</label>
+                </div>
+                <div>
+                  <textarea name="respire" cols="100" rows="3"><%= data.respiratory_func %></textarea>
+                </div>
+                <div>
+                  <label>Fonction Circulatoire:</label>
+                </div>
+                <div>
+                  <textarea name="circule" cols="100" rows="3"><%= data.circulatory_func %></textarea>
+                </div>
+                <div>
+                  <label>Fonction Motrice:</label>
+                </div>
+                <div>
+                  <textarea name="Fmotrice" cols="100" rows="3"><%= data.motrice_func %></textarea>
+                </div>
+              </div>
+              <button class="btn outline" onclick="EditExam()" style="margin: 10px 40%;">
+                Modifier dossier médical
+              </button>
+        </form>
+            </div>
+            <script>
+              var parsed_data = '<%- JSON.stringify(data) %>'  ;
+          </script>
+           <script src="/js/updateMedicalFile.js"></script>
+            <script>
+
+
+              $("#myForm").submit(function(e) {
+        
+                
+    e.preventDefault();
+    var frm = $('#myForm');
+    let iduser = '<%-idpatient%>'
+    console.log(iduser);
+    $.ajax({
+                          method: 'POST',
+                          url: '/users/medecin/editExam?idpatient='+iduser,
+                          data: frm.serialize(),
+                          success: function (success) { 
+                            console.log(success);
+                
+                            showMsg("Examen médical modifié",true);
+                            location.reload();
+                          },
+                          error: function (e){
+                            showMsg("Une erreur est survenue, veuillez réessayer!",false);
+                            console.log(e);
+                          }
+                        }); 
+                      });
+
+                 ('#myForm').submit(function(e){
+                        $.ajax({
+                          method: 'POST',
+                          url: '/users/medecin/editExam',
+                          data: {},
+                          success: function (success) { 
+                            console.log(success);
+                            showMsg("Examen médical modifié",true);
+                          },
+                          error: function (e){
+                            showMsg("Une erreur est survenue, veuillez réessayer!",false);
+                            console.log(e);
+                          }
+                        }); 
+                      });
+          
+          
+          </script>
+  
+  
+   <div class="vertical-nav active" id="sidebar" style="position: absolute;height: 100%; background-color:white">
+    <div class="py-4 px-0" style="background-color: white">
+      <div class="media d-flex align-items-center" style="display: flex; align-self: start; margin: 0px 40px;">  
+        <img src="/assets/drawer.svg" id="sidebarCollapse" height="29px" width="29px" />
+        <img src="/assets/logo.png" height="60px" width="120px" style="margin-left: 40px"/>
       </div>
     </div>
-    <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Menu</p>
-    <ul class="nav flex-column bg-white mb-0">
-      <li class="nav-item">
-        <a href="#" class="nav-link text-dark bg-light" style="font-size: 18px; height: 50px;">
-                  <i class="fa fa-home fa-lg" style="margin-right: 15px;"></i>
-                  Accueil
-              </a>
-      </li>
-      <li class="nav-item">
-        <a href="/users/medecin/list" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
-                  <i class="fa fa-address-card fa-lg" style="margin-right: 15px;"></i></i>
-                  Liste des patients
-              </a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
-            <i class="fa fa-calendar-alt fa-lg" style="margin-right: 15px;"></i> </i>
-                 Liste des rendez-vous
-              </a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
-            <i class="fa fa-user fa-lg" style="margin-right: 15px;"></i></i>     
-                    Mon profile
-              </a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
-            <i class="fa fa-sign-out-alt fa-lg" style="margin-right: 15px;"></i>
-             Déconnexion
-              </a>
-      </li>
-    </ul>  
-  </div>
-</body>
-<script>
-    var parsed_data = '<%- JSON.stringify(data) %>'  ;
-</script>
 
-<script src="/js/updateMedicalFile.js"></script>
+    <ul class="nav" style="display: flex;align-items: start;background-color: white;  box-shadow: 0px 0px 0px 0px #888;">
+        <li class="nav-item" style="margin-left: 30px;background-color: white;margin-top: 60px;">
+            <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px; background-color:white; ">
+                <img  src="/assets/iconsDrawer/homeActive.svg" height="20px" width="20px" />
+    
+                <i class="fa fa-sign-out-alt fa-lg" style="margin-right: 15px; background-color: white;"></i>
+                 Accueil
+                  </a>
+          </li>
+          <li class="nav-item" style="margin-left: 30px; margin-top:15px;">
+            <a href="/users/medecin/list" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+                <img  src="/assets/iconsDrawer/patient.svg" height="20px" width="20px" />
+    
+                <i class="fa fa-calendar-alt fa-lg" style="margin-right: 15px;"></i> </i>
+                     Patients
+                  </a>
+          </li>
+      <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+            <img  src="/assets/iconsDrawer/rdv.svg" height="20px" width="20px" />
+
+            <i class="fa fa-calendar-alt fa-lg" style="margin-right: 15px;"></i> </i>
+                 Rendez-vous
+              </a>
+      </li>
+      <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+            <img  src="/assets/iconsDrawer/stat.svg" height="20px" width="20px" />
+
+            <i class="fa fa-user fa-lg" style="margin-right: 15px;"></i></i>     
+                    Statistiques
+              </a>
+      </li>
+      <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+            <img  src="/assets/iconsDrawer/profile.svg" height="20px" width="20px" />
+
+            <i class="fa fa-user fa-lg" style="margin-right: 15px;"></i></i>     
+                   Profile
+              </a>
+      </li>
+       <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+          <div class="con" style="width: 220px; height:1px;background-color: grey;"></div>
+          </li>
+    
+        <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+            <a  href="/users/logout" class="nav-link text-dark" style="font-size: 18px; height: 50px;" >
+                <img  src="/assets/iconsDrawer/disconnect.svg" height="20px" width="20px" />
+    
+                <i class="fa fa-sign-out-alt fa-lg" style="margin-right: 15px;"></i>
+                 Déconnexion
+                  </a>
+          </li>
+    </ul>  
+
+  </div>
+  <div id="alert" class="alert hide">
+
+    <div id="alert" class="alert hide">
+      <span class="msg" id="msg">Opération effectuée avec succès</span>
+      <div class="close-btn">
+        <span id="icon-msg" class="fas fa-check"></span>
+      </div>
+    </div>
+ </div>
+</body>
+
+
+
+<script>
+  $(function() { 
+  $('#sidebarCollapse2').on('click', function() {
+    $('#sidebar, #content').toggleClass('active');
+    $('.alert').addClass("show");
+    
+  });
+});
+</script>
+<script>
+  function myFunction() {
+document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+
+
+  
+  $.ajax({
+      method: 'POST',
+      url: '/users/medecin/seenotifs',
+      success: function (result) { 
+       
+  if(result.msg == 'success') {
+      txt.innerHTML = 0 ; 
+  }  
+  
+      }});
+
+if (!event.target.matches('.dropbtn')) {
+  var dropdowns = document.getElementsByClassName("dropdown-content");
+  var i;
+  for (i = 0; i < dropdowns.length; i++) {
+    var openDropdown = dropdowns[i];
+    if (openDropdown.classList.contains('show')) {
+      openDropdown.classList.remove('show');
+    }
+  }
+}
+}
+</script>
 
 </html>

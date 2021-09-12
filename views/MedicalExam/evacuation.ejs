@@ -1,0 +1,130 @@
+<div class="hideevacuation">
+    <div class="blocker" onclick="hideEvacuation()"></div>
+    <div class="bcontainer2">
+        <div class="container2">
+            <div class="head1">
+                <h1 class="whitetext">Evacuation </h1> 
+            </div> 
+            <form class="formexam" >
+                <div >
+                    <p>La cause</p>
+                    <div>
+                        <textarea id="causeev" name='causeev' class="textareacer"></textarea>
+                        <small class="noterror">
+                        </small>
+                    </div>
+                </div>
+
+                <div class="flexbox1">
+                    <div>
+                        <p>La wilaya</p>
+                        <input type="text" id="wil" name='wil' class="textcer"><br>
+                        <small class="noterror">
+                        </small>
+                    </div>
+    
+                    <div class="space">
+                        <p>Nom de l'hopital</p>
+                        <input type="text" id="hopital" name='hopital' class="textcer"><br>
+                        <small class="noterror">
+                        </small>
+                    </div>
+                </div>
+
+                <div>
+                    <p>La duree</p>
+                    <div>
+                        <input type="text" id="dure" name='dure' class="textcer"><br>
+                        <small class="noterror">
+                        </small>
+                    </div>
+                </div>
+
+                <div>
+                    <input type="button" id="valideev" class="valideev" value="Valider l'evacuation">
+                </div>
+
+            </form>
+        </div>
+    </div>           
+</div>
+
+<script>
+
+document.querySelector(".valideev").addEventListener("click",() => {
+    
+    var causeev = document.getElementById('causeev') ;
+    var wil = document.getElementById('wil');
+    var hopital = document.getElementById('hopital');  
+    var dure = document.getElementById('dure');
+
+    if(causeev.value.length < 1){
+        const parent = causeev.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Remplir la cause";
+        return;
+    }else{
+        const parent = causeev.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "noterror";
+        small.innerText = null;
+    }
+    if(wil.value.length < 1){
+        const parent = wil.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Entrez la wilaya";
+        return;
+    }else{
+        const parent = wil.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "noterror";
+        small.innerText = null;
+    }
+    if(hopital.value.length < 1){
+        const parent = hopital.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Entrez l'hopital'";
+        return;
+    }else{
+        const parent = hopital.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "noterror";
+        small.innerText = null;
+    }
+    if(dure.value.length < 1){
+        const parent = dure.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Entrez la duree";
+        return;
+    }else{
+        const parent = dure.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "noterror";
+        small.innerText = null;
+    }
+        var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>';
+
+    $.ajax({
+        method: "POST",
+        url: "/users/medecin/addEvacuation/?id="+parsed_data,
+        data: {
+            "causeev":causeev.value,
+            "wil":wil.value,
+            "hopital":hopital.value,
+            "dure":dure.value,
+            "id":id.value,
+        },
+        success: function (result) {
+            document.querySelector(".hideevacuation").classList.remove("open");
+            showMsg("Evacuation bien ajouter",!result.err);   
+            document.location.reload() ;      
+        },
+    });
+});
+
+    
+</script>

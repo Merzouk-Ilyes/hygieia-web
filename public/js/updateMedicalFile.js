@@ -19,43 +19,9 @@ const nameMaladie = document.getElementById('name-maladie');
 const dateMaladie = document.getElementById('date-maladie');
 const nameDrug = document.getElementById('name-drug'); 
 const typeDrug  = document.getElementById('type-drug');
-const item1 = document.getElementById('item1'); 
-const item2 = document.getElementById('item2'); 
-const item3 = document.getElementById('item3'); 
-const item4 = document.getElementById('item4');
-item1.onclick = function() {
-  
+var msg = document.getElementById("msg");
+var  icon = document.getElementById("icon-msg");  
 
-    item1.className = "i-item-active" ; 
-    item2.className = "i-item" ; 
-    item3.className = "i-item" ; 
-    item4.className = "i-item" ; 
-    window.location.hash = "place1";
-
-}
-item2.onclick = function() {
-    item1.className = "i-item" ; 
-    item2.className = "i-item-active" ; 
-    item3.className = "i-item" ; 
-    item4.className = "i-item" ; 
-    window.location.hash = "place2";
-}
-item3.onclick = function() {
-    item1.className = "i-item" ; 
-    item2.className = "i-item" ; 
-    item3.className = "i-item-active" ; 
-    item4.className = "i-item" ; 
-    window.location.hash = "place3";
-
-}
-item4.onclick = function() {
-    item1.className = "i-item" ; 
-    item2.className = "i-item" ; 
-    item3.className = "i-item" ; 
-    item4.className = "i-item-active" ; 
-    window.location.hash = "place4";
-
-} 
 function addAffection() {
     if(nameaffection.value.length == 0) {
         showMsg( "Vous devez choisir l'affection congénitale",false)
@@ -177,8 +143,6 @@ showMsg(" Modification sauvgardé avec succées",true);
         }});
 
 }
-const msg = document.getElementById("msg");
-const icon = document.getElementById("icon-msg");  
 
 const popupupdate = document.querySelector(".popupupdate");
 const patient = JSON.parse(parsed_data);
@@ -231,7 +195,7 @@ if(button.id === "btn-intoxication" ) {
         return; 
     }
 if(button.id === "btn-delete-intoxication"){
-
+console.log("hhh");
     $.ajax({
         method: 'POST',
         url: '/users/medecin/deleteIntoxication',
@@ -248,12 +212,9 @@ showMsg(" intoxication supprimer avec succés",true);
 window.location.reload();
              // show success message 
             }else {
-            
              // show error message 
             }
-    
         }});
-
 }
 if(button.id == 'btn-delete-affection') {
     $.ajax({
@@ -388,7 +349,10 @@ showMsg(" Intoxication ajoutée avec sucées",true)
  
 }
 
+
 function showMsg(str,err) {
+  var msg = document.getElementById("msg");
+var icon = document.getElementById("icon-msg");  
     if(err == true) {
         icon.className = "fas fa-check"
     }else {

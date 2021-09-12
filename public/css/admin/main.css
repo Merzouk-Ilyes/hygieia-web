@@ -89,33 +89,9 @@ td {
 .column7 {
   width: 10%;
 }
-.column1-th {
-  width: 10%;
-  padding-left: 40px;
-}
 
-.column2-th {
-  width: 15%;
-}
-
-.column3-th {
-  width: 20%;
-}
-
-.column4-th {
-  width: 27%;
-}
-
-.column5-th {
-  width: 15%;
-}
-.column6-th {
-  width: 22%;
-}
-.column7-th {
-  width: 10%;
-}
 .table100-head th {
+
   padding-top: 18px;
   padding-bottom: 18px;
 }
@@ -131,6 +107,7 @@ td {
 }
 
 .table100-head {
+
   position: absolute;
   width: 100%;
   top: 0;
@@ -156,7 +133,6 @@ td {
   color: #000;
   line-height: 1.4;
   background-color: transparent;
-  border-bottom: 2px solid #f2f2f2;
 }
 
 .table100.ver4 .column1 .column1-th {
@@ -661,3 +637,57 @@ small .noterror {
   display: block;
 }
 
+
+.head {
+  border-bottom: 2px solid #f2f2f2;
+
+display: grid;
+grid-template-columns: 8% 6% 22.5% 8.5% 18.5% 15% 20%;
+
+
+}
+
+.column1-th {
+  
+  justify-self: center;
+}
+
+.column2-th {
+  
+  justify-self: center;
+
+  
+}
+
+.column3-th {
+  
+  justify-self: center;
+
+
+}
+
+.column4-th {
+  
+  justify-self: center;
+
+  
+}
+
+.column5-th {
+  
+  justify-self: end;
+
+  
+}
+.column6-th {
+
+  justify-self: end;
+
+
+}
+.column7-th {
+
+  justify-self: end;
+
+
+}

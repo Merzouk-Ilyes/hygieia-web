@@ -1,0 +1,48 @@
+/* LEFT SIDE */
+.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 3rem;
+}
+.left p {
+  text-align: center;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+.svg {
+  height: 35vh;
+  margin-top: 2rem;
+}
+.svg img {
+  height: 100%;
+  width: 100%;
+}
+/* RIGHT SIDE */
+.right {
+  padding-top: 3rem;
+}
+.right p:nth-child(1) {
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+}
+.right p:nth-child(2) {
+  padding-left: 2rem;
+  font-weight: bold;
+}
+
+.right p:nth-child(3) {
+  padding-left: 2rem;
+  padding-right: .5rem;
+  font-size: 0.8rem;
+}
+
+.annuler p:nth-child(4) {
+  font-size: .7rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 7rem;
+  letter-spacing: 1px;
+
+}

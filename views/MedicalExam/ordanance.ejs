@@ -1,0 +1,277 @@
+<div class="hideordonance">
+    <div class="blocker" onclick="hideOrdonance()"></div>
+    <div class="bcontainer2">
+        <div class="container2">
+            <div class="head1">
+                <h2 class="whitetext">Ordonnance </h1> 
+            </div>
+            <form class="formexam" >
+                <div>
+                    <label for='med'>Liste des medicaments</label>
+                    <div class="listm">
+                        <div>
+                            <input list="meds" name="med" id="med" class="med">
+                            <datalist id="meds"  >
+                                <% for (var i = 0; i < drugs.length; i++) { %>
+                                <option value="<%= drugs[i].name_drug %>">
+                                <% } %>
+                            </datalist><br>
+                            <small class="noterror">
+                            </small>
+                        </div>
+                        <input type="button" id="addmed" class="addmed" name='addmed' value="Ajouter a la liste">
+                    </div>
+                </div>
+                <div class="flexbox">             
+                    <p>Posologie</p>
+                    <div>
+                        <input type="text" id="poso" name='poso' class="text"><br>
+                        <small class="noterror">
+                        </small>
+                    </div>
+                    <p class="pad">Duree de traitement</p>
+                    <div>
+                        <input type="text" id="trait" name='trait' class="text"><br>
+                        <small class="noterror">
+                        </small>
+                    </div>
+                </div>
+                <input type="button" id="add" class="add" value="Ajouter a l'ordonnance">
+                <div>
+                    <table id="list" name="list" class="list">
+                        <tbody>
+                           
+                        </tbody>
+                    </table><br>
+                    <small class="noterror">
+                    </small>
+                </div>
+                <input type="hidden" id="info" name="info">
+                <input type="button" id="valide" class="valide" value="Valide l'ordonnance">
+                
+            </form>
+        </div>
+    </div>           
+</div>
+<script>
+
+document.querySelector(".addmed").addEventListener("click",() => {
+
+    var med = document.getElementById('med') ;
+
+    if(med.value.length < 1){
+        const parent = med.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Choisir un medecament";
+        return;
+    }else{
+        const parent = med.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "noterror";
+        small.innerText = null;
+
+        var list = document.getElementById('meds').options;
+
+        for (var j = 0; j < list.length; j++) { 
+            if(med.value===list[j].value){
+                const parent = med.parentElement;
+                const small = parent.querySelector("small");
+                small.className = "";
+                small.innerText = "Ce medecament existe deja";
+                return;
+            }else{
+                const parent = med.parentElement;
+                const small = parent.querySelector("small");
+                small.className = "noterror";
+                small.innerText = null;
+            }
+        }
+
+        $.ajax({
+            method: "POST",
+            url: "/users/medecin/addMedicament",
+            data: {
+                "med":med.value,
+            },
+            success: function (result) {
+                var data = document.getElementById('meds');
+
+                var op = document.createElement('option');
+                op.value = med.value;
+                data.appendChild(op);
+
+                const parent = med.parentElement;
+                const small = parent.querySelector("small");
+                small.style.color = 'green';
+                small.className = "";
+                small.innerText = "medecament ajoutee";    
+            },
+        });
+    } 
+});
+
+document.querySelector(".add").addEventListener("click",() => {
+
+    var med1 = document.getElementById('med') ;
+    var poso = document.getElementById('poso');
+    var trait = document.getElementById('trait');  
+
+    if(med1.value.length < 1){
+        const parent = med1.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Choisir un medecament";
+        return;
+    }else{
+        const parent = med1.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "noterror";
+        small.innerText = null;
+    }
+    if(poso.value.length < 1){
+        const parent = poso.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Entrez la posologie";
+        return;
+    }else{
+        const parent = poso.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "noterror";
+        small.innerText = null;
+    }
+    if(trait.value.length < 1){
+        const parent = trait.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Entrez la duree de traitement";
+        return;
+    }else{
+        const parent = trait.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "noterror";
+        small.innerText = null;
+    }
+        
+    var med = document.getElementById('med').value;
+    var poso = document.getElementById('poso').value;
+    var trait = document.getElementById('trait').value;
+
+    var list = document.getElementById('meds').options;
+    var test=false;
+        for (var j = 0; j < list.length; j++) { 
+            if(med ===list[j].value){
+                const parent = med1.parentElement;
+                const small = parent.querySelector("small");
+                small.className = "noterror";
+                small.innerText = null;
+                test =true;
+                break;
+            }
+        }
+    if(test === false){
+        const parent = med1.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Ce medecament n'existe pas";
+        return;
+    }
+
+    var tbodyRef = document.getElementById('list').getElementsByTagName('tbody')[0];
+
+    var myTab = document.getElementById('list');
+
+    for (i = 0; i < myTab.rows.length; i++) {
+            var objCells = myTab.rows.item(i).cells;
+            var val = objCells.item(0).innerText;
+
+        if(med===val){
+            const parent = med1.parentElement;
+            const small = parent.querySelector("small");
+            small.className = "";
+            small.innerText = "vous avez deja choisie ce medicament";
+            return;
+        }
+        const parent = med1.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "noterror";
+        small.innerText = null;
+    }
+
+    var newRow = tbodyRef.insertRow();
+
+    // Insert a cell at the end of the row
+    var newCellmed = newRow.insertCell();
+    newCellmed.style.border='0px';
+    newCellmed.style.width='300px';
+    newCellmed.classList.add("padleft");
+    var newCellposo = newRow.insertCell();
+    newCellposo.style.border='0px';
+    newCellposo.style.width='150px';
+    var newCelltrait = newRow.insertCell();
+    newCelltrait.style.border='0px';
+    newCelltrait.style.width='150px';
+    var newCellbtn = newRow.insertCell();
+    newCellbtn.style.border='0px';
+    // Append a text node to the cell
+    var newTextmed = document.createTextNode(med);
+    var newTextposo = document.createTextNode(poso);
+    var newTexttrait = document.createTextNode(trait);
+    var btn = document.createElement("img");
+    btn.onclick = function () {
+        var i = this.parentNode.parentNode.rowIndex;
+        document.getElementById("list").deleteRow(i);
+    }
+    btn.classList.add("delete");
+    //btn.src="../../pic2.png";
+   //btn.style.backgroundColor ='red';
+    newCellmed.appendChild(newTextmed);
+    newCellposo.appendChild(newTextposo);
+    newCelltrait.appendChild(newTexttrait);
+    newCellbtn.appendChild(btn);
+});
+
+document.querySelector(".valide").addEventListener("click",() => {
+
+    //si vous voulez ajouter d autre test
+    var info = document.getElementById('info') ;
+    var myTab = document.getElementById('list');
+    
+    if(myTab.rows.length < 1){
+        const parent = myTab.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "vous n'avez pas remplis l'ordonnance";
+        return;
+    }else{
+        const parent = myTab.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "noterror";
+        small.innerText = null;
+
+        for (i = 0; i < myTab.rows.length; i++) {
+            var objCells = myTab.rows.item(i).cells;
+
+            for (var j = 0; j < 3; j++) {
+                info.value = info.value + '#' + objCells.item(j).innerHTML ;
+            }
+        }
+
+        $.ajax({
+            method: "POST",
+            url: '/users/medecin/addSicknote',
+            data: {
+                "id":id.value,
+                "info":info.value,
+            },
+            success: function (result) {
+                document.querySelector(".hideordonance").classList.remove("open");
+                document.location.reload() ; 
+                showMsg("ordonnance bien ajouter",!result.err);   
+            },
+        });   
+    }
+});
+
+</script>

@@ -6,6 +6,7 @@ var db_config = {
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.MYSQL_DB,
+  
 };
 
 var db;
@@ -17,7 +18,7 @@ function handleDisconnect() {
   db.connect(function (err) {
     // The server is either down
     if (err) {
-      // or restarting (takes a while sometimes).
+    // or restarting (takes a while sometimes).
       console.log("error when connecting to db:", err);
       setTimeout(handleDisconnect, 0); // We introduce a delay before attempting to reconnect,
     } else {

@@ -1,0 +1,112 @@
+.svg4 {
+  height: 45vh;
+}
+.svg8 {
+  height: 55vh;
+}
+.svg24 {
+    margin-top: 10.5rem;
+    font-size: .8rem;
+}
+.radio {
+  padding-left: 4rem;
+  margin-top: 1rem;
+}
+.input-flex {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 2.5rem;
+}
+.input-flex input {
+  padding-left:  .4rem;
+  width: 8rem;
+}
+.input-flex button {
+  background-color:#184B9B;
+  border: none;
+  border-radius:.1rem;
+  padding :.2rem 1.5rem ;
+  color: white;
+  font-size: 0.7rem;
+} 
+.list {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+  margin-left: 2.2rem;
+}
+
+.list td, .list th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.list tr:nth-child(even){background-color: #f2f2f2;}
+
+.list tr:hover {background-color: #ddd;}
+
+.list th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #3A7AFE;
+  color: white;
+  font-size: .7rem;
+
+}
+td button {
+  background-color:#FF0000;
+  border: none;
+  border-radius:.1rem;
+  padding :.4rem 1rem ;
+  color: white;
+  font-size: 0.7rem;
+
+}
+.checkbox {
+  padding :.4rem 1rem ;
+  margin-left: 1.6rem;
+
+}
+.checkbox input[type=checkbox] {
+  transform: scale(1.5);
+  margin-right: .3rem;
+}
+.checkbox textarea {
+  margin-top: .2rem;
+
+}
+
+.valider {
+  margin-top: .7rem;
+  padding: .6rem 0;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+
+}
+.valider button {
+  background-color:#184B9B;
+  border: none;
+  border-radius:.2rem;
+  padding :.5rem 1.3rem ;
+  color: white;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+label {
+  font-size: 0.8rem;
+
+
+}
+textarea::placeholder {
+  font-size: .7rem;
+}
+textarea {
+  padding: .4rem ;
+}
+
+.input-flex input {
+  width: 10rem;
+
+}

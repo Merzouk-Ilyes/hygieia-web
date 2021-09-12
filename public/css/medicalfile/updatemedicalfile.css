@@ -136,13 +136,13 @@ margin-top: 5px;
   .re-title2 {
     
     top: 0;
-    height: 7%;
-    width: 400px;
+    height: 40px;
+    width: 230px;
     background-color: white;
     border: 1px solid #000;
  position:absolute;
  display: flex ; 
-
+ color: #184b9b;
  text-align: center;
  align-content: center;
  align-items: center;
@@ -151,9 +151,10 @@ margin-top: 5px;
  transform: translate(-50%, -50%);
  border-radius: 10px;
  padding: 0px 0px;
- font-size: 25px;
+
  left: 50%; 
-    color: #3A7AFE;
+ font-size: 1rem;
+
 
 }
 .re-title3 {
@@ -323,9 +324,7 @@ thead {
 .row-tabac3 .valeur {
     margin-right: 60px;
 }
-.fa {
-    color:#01559C;
-}
+
 .blocker {
     position: fixed;
     top: 0;
@@ -474,5 +473,5 @@ thead {
       }
 img {
 margin : auto;
-border-radius: 10px;
+
 }

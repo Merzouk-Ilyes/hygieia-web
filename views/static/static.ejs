@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/css/static/static.css" />
+    <title>Statistique</title>
+  </head>
+  <style>
+    .btn-primary{
+  background-color: #01559C;
+  border: none;
+  font-size: 15px;
+  }
+  .btn-danger {
+    background-color: #dc3545;
+      border-color: #dc3545;
+    font-size: 15px;
+  border: none;
+  }
+    select {
+      padding-right: 20px;
+      height: 150%;
+      width: 20%;
+      font-size: 15px;
+      padding-left: 10px;
+      background-color: #f6f2f2;
+      border-radius: 5px;
+      border: solid 1px rgb(194, 188, 188);
+    }
+    
+     .data2 input {
+      
+      height: 100%;
+      width: 200px;
+      font-size: 15px;
+      padding-left: 10px;
+      padding-right: 10px;
+      background-color: #f6f2f2;
+      border-radius: 5px;
+      border: solid 1px rgb(194, 188, 188);
+      margin-bottom: 10px;
+  
+    }
+    button {
+    border: none;
+  }
+  
+       .vertical-nav {
+    
+  
+         margin-top: 115px;
+    min-width: 17rem;
+    width: 17rem;
+    height: 90vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    
+     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1); 
+    transition: all 0.4s;
+  }
+  .page-content {
+    width: calc(100% - 17rem);
+    margin-left: 17rem;
+    transition: all 0.4s;
+  } 
+  
+  #sidebar.active {
+    margin-left: -17rem;
+  }
+  
+  #content.active {
+    width: 100%;
+    margin: 0;
+  }
+  .fa-bars {
+    background-color: #F5F5F5;
+  
+  }
+  .separator {
+    margin: 3rem 0;
+    border-bottom: 1px dashed #fff;
+  }
+  .fa {
+      color:#01559C;
+  }
+  .btn-nav {
+  
+    display: flex; 
+    align-self: flex-start;
+    
+  }
+  
+  .spa {
+    margin-left: 17em;
+  }
+  .text-uppercase {
+    letter-spacing: 0.1em;
+  }
+  .text-gray {
+    color: #aaa;
+  }
+  .nav-link{
+      text-transform: capitalize;
+  }
+  .nav-link:hover{
+      background:#f3f2f2;
+  }
+  .text-primary{
+      color:#7579e7 !important;
+  }
+  @media (max-width: 768px) {
+    #sidebar {
+      margin-left: -17rem;
+    }
+    #sidebar.active {
+      margin-left: 0;
+      margin-top: 20px;
+    }
+    #content {
+      width: 100%;
+      margin: 0;
+    }
+    #content.active {
+      margin-left: 17rem;
+      width: calc(100% - 17rem);
+    }
+  }
+  
+  .row-h {
+    
+    padding: 20px 30px;
+    display: flex;
+    height: 100px;
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-between;
+  }
+  </style>
+  <style>
+      .name {
+              margin-right: 40px;
+              margin-left: 10px;
+              margin-top: 5px;
+            }
+    .square {
+    background-color: #01559c;
+    height: 40px;
+    width: 44px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+    .notif-title {
+        font-size:13px;
+        color : #01559c;
+    }
+    .notif-desc {
+        font-size:11px;
+        
+    }
+    .notif-date {
+        font-size:11px;
+        color : #01559c;
+    }
+    .txt{
+    background-color:red;
+    font-size:xx-small;
+    position: absolute;
+    padding:2px;
+    top: 1px;
+    left: 1px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+  }
+  .toastStyle {
+    font-size:12px;
+    width: 400px;
+  }
+    button {
+      border: none;
+    }
+    
+         .vertical-nav {
+          box-shadow: 5px 0 5px -5px grey;
+  
+    
+    height : 1000px;
+           margin-top: 0px;
+      min-width: 17rem;
+      width: 17rem;
+      position: fixed;
+      top: 0;      
+      left: 0;
+  
+      transition: all 0.4s;
+    }
+    .page-content {
+      margin-left: 17rem;
+      height: 100%;
+      transition: all 0.4s;
+    } 
+    input, button, submit { border:none; } 
+  
+    #sidebar.active {
+      margin-left: -17rem;
+    }
+    
+    #content.active {
+      width: 100%;
+      margin: 0;
+    }
+    .dropbtn {
+  
+  color: white;
+  padding: 0px;
+  font-size: 16px;
+  border: none;
+  background-color: inherit;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+  position: relative;
+  
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+  display: none;
+  position: absolute;
+  right: 13px;
+  background-color: #f1f1f1;
+  width: 290px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 2;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 10px;
+  }
+  .show {display:block;}
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #ddd;}
+  /* Show the dropdown menu on hover */
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {}
+  .dropbtn2 {
+  
+  color: white;
+  padding: 0px;
+  font-size: 16px;
+  border: none;
+  background-color: inherit;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown2 {
+  position:relative;
+  
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content2 {
+  display: none;
+  
+  position:absolute;
+  
+  background-color: #f1f1f1;
+  width: 290px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content2 a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 10px;
+  }
+  .show {display:block;}
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content2 a:hover {background-color: #ddd;}
+  
+  /* Show the dropdown menu on hover */
+  
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown2:hover .dropbtn {}
+  
+    .btn-nav {
+    
+      display: flex; 
+     align-self: flex-start;  
+    }
+    .spa {
+      margin-left: 17em;
+    }
+    .text-uppercase {
+      letter-spacing: 0.1em;
+    }
+    .text-gray {
+      color: #aaa;
+    }
+    .nav-link{
+        text-transform: capitalize;
+    }
+    .nav-link:hover{
+        background:#f3f2f2;
+    }
+    .text-primary{
+        color:#7579e7 !important;
+    }
+    @media (max-width: 768px) {
+      #sidebar {
+        margin-left: -17rem;
+      }
+      #sidebar.active {
+        margin-left: 0;
+        margin-top: 20px;
+        height: 100px;
+      }
+      #content {
+        width: 100%;
+        margin: 0;
+      }
+      #content.active {
+        margin-left: 17rem;
+        width: calc(100% - 17rem);
+      }
+    }
+    .row-h {
+      padding: 20px 30px;
+      display: flex;
+      flex-direction: row;
+    }
+    </style>
+  <body>
+    <div class="nav navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid mx-2">
+            <img src="/assets/drawer.svg" id="sidebarCollapse2" height="29px" width="29px" style="margin-left: 10px;" />
+            <img src="/assets/logo.png" height="60px" width="100px" style="margin-left: 20px;margin-top:30px"/>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon">BM</span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto">
+                <div class="dropdown">
+                    <button class="dropbtn"  onclick="myFunction()" class="dropbtn">
+                        <img src="/assets/notif.svg" height="30px" width="30px" style="margin-right: 20px;margin-top:5px"/>
+                        <div class="txt" id="txt"><%= notifssee %></div>
+                    </button>
+                    <div  id="myDropdown" class="dropdown-content">
+              
+                        <% notifs.forEach(function(notif){ %>
+                            <a>
+                                <div class="notif-title">
+                                    <%= notif.title_notif %> <br>
+                                </div>  
+                                <div class="notif-desc">
+                                    <%= notif.description_notif %> <br>
+                                </div>  
+                                <div class="notif-date">
+                              
+                                    <%=       moment(notif.date_notif).format('YYYY-MM-DD hh:mm')  %>
+                                </div>  
+                            
+                            </a>
+                  
+                            <% }); %> 
+                    
+                       
+                        
+                    </div>
+                  </div>
+              <li class="nav-item dropdown">
+                <div class="square"><%= user.Lastname.substring(0,2) %></div>
+                <div class="name"><%= user.Firstname %></div>
+                <ul
+                  class="dropdown-menu"
+                  aria-labelledby="navbarDropdownMenuLink"
+                >
+                  <li><a class="dropdown-item">Se déconnecter</a></li>
+                </ul>
+              </li>
+
+            </ul>
+          </div>
+          
+        </div>
+      </div>
+    <div class="first-container">
+<!-- Statistique des etudiants -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des etudiants</div>
+                <div class="info-colgrand">
+                    <div class="courbe">
+                        <canvas id="pat" height="10rem" width="10rem"></canvas>
+                    </div> 
+                    <div class="info-row">
+                        <div class="info-col">
+                            <div class="carreblue"></div>
+                            <label class="text">Homme</label>
+                            <div>
+                                <label class="text"><%= path[0].path %> etudiants</label><br>
+                                <label class="text blue"><% if(pat[0].pat != 0){ %><%= Number.parseFloat(path[0].path*100/pat[0].pat).toFixed(2) %><%}else{%><%= path[0].path %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-col">
+                            <div class="carrerose"></div>
+                            <label class="text">Femme</label>
+                            <div>
+                                <label class="text"><%= pat[0].pat-path[0].path %> etudiants</label><br>
+                                <label class="text rose"><% if(pat[0].pat != 0){ %><%= Number.parseFloat((pat[0].pat-path[0].path)*100/pat[0].pat).toFixed(2) %><%}else{%><%= path[0].path %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-total">
+                            <label class="text gris">total : </label><label class="text"><%= pat[0].pat %> etudiants</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Statistique des etudiants de 1ere annee -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des etudiants de 1ere annee</div>
+                <div class="info-colgrand">
+                    <div class="courbe">
+                        <canvas id="patcp" height="10rem" width="10rem"></canvas>
+                    </div> 
+                    <div class="info-row">
+                        <div class="info-col">
+                            <div class="carreblue"></div>
+                            <label class="text">Homme</label>
+                            <div>
+                                <label class="text"><%= patcph[0].patcph %> etudiants</label><br>
+                                <label class="text blue"><% if(patcp[0].patcp != 0){%><%= Number.parseFloat(patcph[0].patcph*100/patcp[0].patcp).toFixed(2) %><% }else{ %><%= patcp[0].patcp %><% } %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-col">
+                            <div class="carrerose"></div>
+                            <label class="text">Femme</label>
+                            <div>
+                                <label class="text"><% if(patcp[0].patcp != 0){ %><%= patcp[0].patcp-patcph[0].patcph %><% }else{ %><%= patcp[0].patcp %><%} %> etudiants</label><br>
+                                <label class="text rose"><% if(patcp[0].patcp != 0){ %><%= ((patcp[0].patcp-patcph[0].patcph)*100/patcp[0].patcp).toFixed(2) %><% }else{ %><%= patcp[0].patcp %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-total">
+                            <label class="text gris">total : </label><label class="text"><%= patcp[0].patcp %> etudiants</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Statistique des patients fumeurs -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des patients fumeurs</div>
+                <div class="info-colgrand">
+                    <div class="courbe">
+                        <canvas id="myChart" height="10rem" width="10rem"></canvas>
+                    </div> 
+                    <div class="info-row">
+                        <div class="info-col">
+                            <div class="carreblue"></div>
+                            <label class="text">fumeur</label>
+                            <div>
+                                <label class="text"><%= smoke[0].smoke %> patients</label><br>
+                                <label class="text blue"><% if(data[0].data != 0){ %><%= Number.parseFloat(smoke[0].smoke*100/data[0].data).toFixed(2) %><%}else{%><%= smoke[0].smoke %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-col">
+                            <div class="carregris"></div>
+                            <label class="text">non fumeur</label>
+                            <div>
+                                <label class="text"><%= data[0].data-smoke[0].smoke %> patients</label><br>
+                                <label class="text gris"><% if(data[0].data != 0){ %><%= Number.parseFloat((data[0].data-smoke[0].smoke)*100/data[0].data).toFixed(2) %><%}else{%><%= smoke[0].smoke %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-total">
+                            <label class="text gris">total : </label><label class="text"><%= data[0].data %> patients</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Statistique des patients chiqueurs -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des patients chiqueurs</div>
+                <div class="info-colgrand">
+                    <div class="courbe">
+                        <canvas id="chiqueur" height="10rem" width="10rem"></canvas>
+                    </div> 
+                    <div class="info-row">
+                        <div class="info-col">
+                            <div class="carreblue"></div>
+                            <label class="text">chiqueur</label>
+                            <div>
+                                <label class="text"><%= chique[0].chique %> patients</label><br>
+                                <label class="text blue"><% if(data[0].data != 0){ %><%= Number.parseFloat(chique[0].chique*100/data[0].data).toFixed(2) %><%}else{%><%= chique[0].chique %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-col">
+                            <div class="carregris"></div>
+                            <label class="text">non chiqueur</label>
+                            <div>
+                                <label class="text"><%= data[0].data-chique[0].chique %> patients</label><br>
+                                <label class="text gris"><% if(data[0].data != 0){ %><%= Number.parseFloat((data[0].data-chique[0].chique)*100/data[0].data).toFixed(2) %><%}else{%><%= chique[0].chique %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-total">
+                            <label class="text gris">total : </label><label class="text"><%= data[0].data %> patients</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Statistique des patients prise -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des patients toxicomanes</div>
+                <div class="info-colgrand">
+                    <div class="courbe">
+                        <canvas id="token" height="10rem" width="10rem"></canvas>
+                    </div> 
+                    <div class="info-row">
+                        <div class="info-col">
+                            <div class="carreblue"></div>
+                            <label class="text">toxicomane</label>
+                            <div>
+                                <label class="text"><%= token[0].token %> patients</label><br>
+                                <label class="text blue"><% if(data[0].data != 0){ %><%= Number.parseFloat(token[0].token*100/data[0].data).toFixed(2) %><%}else{%><%= token[0].token %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-col">
+                            <div class="carregris"></div>
+                            <label class="text">non toxicomane</label>
+                            <div>
+                                <label class="text"><% if(data[0].data != 0){ %><%= data[0].data-token[0].token %><%}else{%><%= token[0].token %><%} %> patients</label><br>
+                                <label class="text gris"><% if(data[0].data != 0){ %><%= Number.parseFloat((data[0].data-token[0].token)*100/data[0].data ).toFixed(2) %><%}else{%><%= token[0].token %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-total">
+                            <label class="text gris">total : </label><label class="text"><%= data[0].data %> patients</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Statistique des patients anciens fumeurs -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des patients anciens fumeurs</div>
+                <div class="info-colgrand">
+                    <div class="courbe">
+                        <canvas id="smoked" height="10rem" width="10rem"></canvas>
+                    </div> 
+                    <div class="info-row">
+                        <div class="info-col">
+                            <div class="carreblue"></div>
+                            <label class="text">ancien fumeur</label>
+                            <div>
+                                <label class="text"><%= smoked[0].smoked %> patients</label><br>
+                                <label class="text blue"><% if(data[0].data != 0){ %><%= Number.parseFloat(smoked[0].smoked*100/data[0].data).toFixed(2) %><%}else{%><%= smoked[0].smoked %><%} %> %</label>
+                            </div>
+                        </div>
+                        <div class="info-col">
+                            <div class="carregris"></div>
+                            <label class="text">non fumeur</label>
+                            <div>
+                                <label class="text"><% if(data[0].data != 0){ %><%= data[0].data-smoked[0].smoked %><%}else{%><%= smoked[0].smoked %><%} %> patients</label><br>
+                                <label class="text gris"><% if(data[0].data != 0){ %><%= Number.parseFloat((data[0].data-smoked[0].smoked)*100/data[0].data).toFixed(2) %><%}else{%><%= smoked[0].smoked %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-total">
+                            <label class="text gris">total : </label><label class="text"><%= data[0].data %> patients</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Statistique des patients anciens alcooliques -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des patients alcooliques</div>
+                <div class="info-colgrand">
+                    <div class="courbe">
+                        <canvas id="alcohol" height="10rem" width="10rem"></canvas>
+                    </div> 
+                    <div class="info-row">
+                        <div class="info-col">
+                            <div class="carreblue"></div>
+                            <label class="text">alcoolique</label>
+                            <div>
+                                <label class="text"><%= alcohol[0].alcohol %> patients</label><br>
+                                <label class="text blue"><% if(data[0].data != 0){ %><%= Number.parseFloat(alcohol[0].alcohol*100/data[0].data).toFixed(2) %><%}else{%><%= alcohol[0].alcohol %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-col">
+                            <div class="carregris"></div>
+                            <label class="text">non alcoolique</label>
+                            <div>
+                                <label class="text"><% if(data[0].data != 0){ %><%= data[0].data-alcohol[0].alcohol %><%}else{%><%= alcohol[0].alcohol %><%} %> patients</label><br>
+                                <label class="text gris"><% if(data[0].data != 0){ %><%= Number.parseFloat((data[0].data-alcohol[0].alcohol)*100/data[0].data ).toFixed(2) %><%}else{%><%= alcohol[0].alcohol %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-total">
+                            <label class="text gris">total : </label><label class="text"><%= data[0].data %> patients</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Statistique des evacuations -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des evacuations de l'annee <%=evacuation[0].y1%>/<%=evacuation[0].y2%></div>
+                <div class="info-colgrand">
+                    <div class="courbe">
+                        <canvas id="evacuation" height="10rem" width="10rem"></canvas>
+                    </div> 
+                    <div class="info-row">
+                        <div class="info-col">
+                            <div class="carreblue"></div>
+                            <label class="text">Homme</label>
+                            <div>
+                                <label class="text"><%= evacuation[0].nombre %> patients</label><br>
+                                <label class="text blue"><% if(totalevacuation[0].total != 0){ %><%= Number.parseFloat(evacuation[0].nombre*100/totalevacuation[0].total).toFixed(2) %><%}else{%><%= evacuation[0].nombre %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-col">
+                            <div class="carrerose"></div>
+                            <label class="text">Femme</label>
+                            <div>
+                                <label class="text"><% if(totalevacuation[0].total != 0){ %><%= totalevacuation[0].total-evacuation[0].nombre %><%}else{%><%= evacuation[0].nombre %><%} %> patients</label><br>
+                                <label class="text rose"><% if(totalevacuation[0].total != 0){ %><%= Number.parseFloat((totalevacuation[0].total-evacuation[0].nombre)*100/totalevacuation[0].total).toFixed(2) %><%}else{%><%= evacuation[0].nombre %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-total">
+                            <label class="text gris">total : </label><label class="text"><%= totalevacuation[0].total %> patients</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Statistique des RDV reguliere -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des RDV reguliere de l'annee <%=rdvreguliere[0].y1%>/<%=rdvreguliere[0].y2%></div>
+                <div class="info-colgrand">
+                    <div class="courbe">
+                        <canvas id="rdvre" height="10rem" width="10rem"></canvas>
+                    </div> 
+                    <div class="info-row">
+                        <div class="info-col">
+                            <div class="carreblue"></div>
+                            <label class="text">Homme</label>
+                            <div>
+                                <label class="text"><%= rdvreguliereh[0].rdvreguliere %> patients</label><br>
+                                <label class="text blue"><% if(rdvreguliere[0].rdvreguliere != 0){ %><%= Number.parseFloat(rdvreguliereh[0].rdvreguliere*100/(rdvreguliere[0].rdvreguliere)).toFixed(2) %><%}else{%><%= rdvreguliere[0].rdvreguliere %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-col">
+                            <div class="carrerose"></div>
+                            <label class="text">femme</label>
+                            <div>
+                                <label class="text"><% if(rdvreguliere[0].rdvreguliere != 0){ %><%= rdvreguliere[0].rdvreguliere - rdvreguliereh[0].rdvreguliere %><%}else{%><%= rdvreguliere[0].rdvreguliere %><%} %> patients</label><br>
+                                <label class="text rose"><% if(rdvreguliere[0].rdvreguliere != 0){ %><%= Number.parseFloat((rdvreguliere[0].rdvreguliere - rdvreguliereh[0].rdvreguliere)*100/(rdvreguliere[0].rdvreguliere)).toFixed(2) %><%}else{%><%= rdvreguliere[0].rdvreguliere %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-total">
+                            <label class="text gris">total : </label><label class="text"><%= rdvreguliere[0].rdvreguliere %> patients</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Statistique des RDV irreguliere -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des RDV irreguliers de l'annee <%=rdvirreguliere[0].y1%>/<%=rdvirreguliere[0].y2%></div>
+                <div class="info-colgrand">
+                    <div class="courbe">
+                        <canvas id="rdvirre" height="10rem" width="10rem"></canvas>
+                    </div> 
+                    <div class="info-row">
+                        <div class="info-col">
+                            <div class="carreblue"></div>
+                            <label class="text">Homme</label>
+                            <div>
+                                <label class="text"><%= rdvirreguliereh[0].rdvirreguliere %> patients</label><br>
+                                <label class="text blue"><% if(rdvirreguliere[0].rdvirreguliere != 0){ %><%= Number.parseFloat( rdvirreguliereh[0].rdvirreguliere*100/(rdvirreguliere[0].rdvirreguliere)  ).toFixed(2) %><%}else{%><%= rdvirreguliere[0].rdvirreguliere %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-col">
+                            <div class="carrerose"></div>
+                            <label class="text">femme</label>
+                            <div>
+                                <label class="text"><% if(rdvirreguliere[0].rdvirreguliere != 0){ %><%= rdvirreguliere[0].rdvirreguliere - rdvirreguliereh[0].rdvirreguliere %><%}else{%><%= rdvirreguliere[0].rdvirreguliere %><%} %> patients</label><br>
+                                <label class="text rose"><% if(rdvirreguliere[0].rdvirreguliere != 0){ %><%= Number.parseFloat((rdvirreguliere[0].rdvirreguliere - rdvirreguliereh[0].rdvirreguliere)*100/(rdvirreguliere[0].rdvirreguliere) ).toFixed(2) %><%}else{%><%= rdvirreguliere[0].rdvirreguliere %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-total">
+                            <label class="text gris">total : </label><label class="text"><%= rdvirreguliere[0].rdvirreguliere %> patients</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Statistique des examens medicaux des nouveaux etudiants -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des examens medicaux des nouveaux etudiants </div>
+                <div class="info-colgrand">
+                    <div class="courbe">
+                        <canvas id="cp" height="10rem" width="10rem"></canvas>
+                    </div> 
+                    <div class="info-row">
+                        <div class="info-col">
+                            <div class="carreblue"></div>
+                            <label class="text">Homme</label>
+                            <div>
+                                <label class="text"><%= cp[0].cp %> etudiants</label><br>
+                                <label class="text blue"><% if(cpt[0].cpt != 0){ %><%= Number.parseFloat(cp[0].cp*100/cpt[0].cpt).toFixed(2) %><%}else{%><%= cpt[0].cpt %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-col">
+                            <div class="carrerose"></div>
+                            <label class="text">Femme</label>
+                            <div>
+                                <label class="text"><% if(cpt[0].cpt != 0){ %><%= cpt[0].cpt-cp[0].cp %><%}else{%><%= cpt[0].cpt %><%} %> etudiants</label><br>
+                                <label class="text rose"><% if(cpt[0].cpt != 0){ %><%= Number.parseFloat((cpt[0].cpt-cp[0].cp)*100/cpt[0].cpt ).toFixed(2) %><%}else{%><%= cpt[0].cpt %><%} %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-total">
+                            <label class="text gris">total : </label><label class="text"><%= cpt[0].cpt %> etudiants</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Statistique des indices de masse corporel -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des indices de masse corporel</div>
+                <div class="info-colgrand">
+                    <div class="courbe">
+                        <canvas id="ndab" height="10rem" width="10rem"></canvas>
+                    </div> 
+                    <div class="info-row">
+                        <div class="info-col">
+                            <div class="carreblue"></div>
+                            <label class="text">Insuffisante ponderale</label>
+                            <div>
+                                <label class="text"><%= rgig[0].rgig %> patients</label><br>
+                                <label class="text blue"><%= Number.parseFloat(rgig[0].rgig*100/(rgig[0].rgig + nrml[0].nrml + suppoid[0].suppoid + smin[0].smin )).toFixed(2) %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-col">
+                            <div class="carrevert"></div>
+                            <label class="text">Corpulance normale</label>
+                            <div>
+                                <label class="text"><%= nrml[0].nrml%> patients</label><br>
+                                <label class="text vert"><%= Number.parseFloat((nrml[0].nrml)*100/(rgig[0].rgig + nrml[0].nrml + suppoid[0].suppoid + smin[0].smin )).toFixed(2) %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-col">
+                            <div class="carrejaune"></div>
+                            <label class="text">Surpoids</label>
+                            <div>
+                                <label class="text"><%= suppoid[0].suppoid %> patients</label><br>
+                                <label class="text jaune"><%= Number.parseFloat(suppoid[0].suppoid*100/(rgig[0].rgig + nrml[0].nrml + suppoid[0].suppoid + smin[0].smin )).toFixed(2) %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-col">
+                            <div class="carrerouge"></div>
+                            <label class="text">Obesite</label>
+                            <div>
+                                <label class="text"><%= smin[0].smin %> patients</label><br>
+                                <label class="text rouge"><%= Number.parseFloat(smin[0].smin*100/(rgig[0].rgig + nrml[0].nrml + suppoid[0].suppoid + smin[0].smin )).toFixed(2) %>%</label>
+                            </div>
+                        </div>
+                        <div class="info-total">
+                            <label class="text gris">total : </label><label class="text"><%= (rgig[0].rgig + nrml[0].nrml + suppoid[0].suppoid + smin[0].smin ) %> patients</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Statistique des maladies chroniques -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des maladies chroniques </div>
+                <div class="info-colgrand">
+                    <div class="courbebar">
+                        <canvas id="chro" height='282px' width='1000px'></canvas>
+                    </div>
+                </div>
+                <div id="divchro">
+                    
+                </div>
+            </div>
+        </div>
+<!-- Statistique des maladies cardio -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des maladies cardio-vasculaire </div>
+                <div class="info-colgrand">
+                    <div class="courbebar">
+                        <canvas id="cardio" height='282px' width='1056px'></canvas>
+                    </div>
+                </div>
+                <div id="divcardio">
+                    
+                </div>
+            </div>
+        </div>
+        
+<!-- Statistique des maladies infectieuses -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des maladies infectieuses </div>
+                <div class="info-colgrand">
+                    <div class="courbebar">
+                        <canvas id="infectieuse" height='282px' width='1056px'></canvas>
+                    </div>
+                </div>
+                <div id="divinfectieuse">
+                    
+                </div>
+            </div>
+        </div>
+<!-- Statistique des maladies rhumatologiques -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des maladies rhumatologiques </div>
+                <div class="info-colgrand">
+                    <div class="courbebar">
+                        <canvas id="rhumatologique" height='282px' width='1056px'></canvas>
+                    </div>
+                </div>
+                <div id="divrhumatologique">
+                    
+                </div>
+            </div>
+        </div>
+<!-- Statistique des maladies digestives -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des maladies digestives </div>
+                <div class="info-colgrand">
+                    <div class="courbebar">
+                        <canvas id="digestive" height='282px' width='1056px'></canvas>
+                    </div>
+                </div>
+                <div id="divdigestive">
+                    
+                </div>
+            </div>
+        </div>
+ 
+<!-- Statistique des autres maladies -->
+        <div class="stat">
+            <div class="info-rowgrand">
+                <div class="titre">Statistique des autres maladies </div>
+                <div class="info-colgrand">
+                    <div class="courbebar">
+                        <canvas id="maladie" height='282px' width='1056px'></canvas>
+                    </div>
+                </div>
+                <div id="divmaladie">
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>    
+    <div class="vertical-nav active" id="sidebar" style="position: absolute;height: 100%; background-color:white">
+        <div class="py-4 px-0" style="background-color: white">
+          <div class="media d-flex align-items-center" style="display: flex; align-self: start; margin: 0px 40px;">  
+            <img src="/assets/drawer.svg" id="sidebarCollapse" height="29px" width="29px" />
+            <img src="/assets/logo.png" height="60px" width="120px" style="margin-left: 40px"/>
+          </div>
+        </div>
+    
+        <ul class="nav" style="display: flex;align-items: start;background-color: white;  box-shadow: 0px 0px 0px 0px #888;">
+            <li class="nav-item" style="margin-left: 30px;background-color: white;margin-top: 60px;">
+                <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px; background-color:white; ">
+                    <img  src="/assets/iconsDrawer/homeActive.svg" height="20px" width="20px" />
+        
+                    <i class="fa fa-sign-out-alt fa-lg" style="margin-right: 15px; background-color: white;"></i>
+                     Accueil
+                      </a>
+              </li>
+              <li class="nav-item" style="margin-left: 30px; margin-top:15px;">
+                <a href="/users/medecin/list" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+                    <img  src="/assets/iconsDrawer/patient.svg" height="20px" width="20px" />
+        
+                    <i class="fa fa-calendar-alt fa-lg" style="margin-right: 15px;"></i> </i>
+                         Patients
+                      </a>
+              </li>
+          <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+            <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+                <img  src="/assets/iconsDrawer/rdv.svg" height="20px" width="20px" />
+    
+                <i class="fa fa-calendar-alt fa-lg" style="margin-right: 15px;"></i> </i>
+                     Rendez-vous
+                  </a>
+          </li>
+          <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+            <a href="/users/medecin/infoStat" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+                <img  src="/assets/iconsDrawer/stat.svg" height="20px" width="20px" />
+    
+                <i class="fa fa-user fa-lg" style="margin-right: 15px;"></i></i>     
+                        Statistiques
+                  </a>
+          </li>
+          <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+            <a href="/users/medecin/profile" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+                <img  src="/assets/iconsDrawer/profile.svg" height="20px" width="20px" />
+    
+                <i class="fa fa-user fa-lg" style="margin-right: 15px;"></i></i>     
+                       Profile
+                  </a>
+          </li>
+           <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+              <div class="con" style="width: 220px; height:1px;background-color: grey;"></div>
+              </li>
+      
+            <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+                <a  href="/users/logout" class="nav-link text-dark" style="font-size: 18px; height: 50px;" >
+                    <img  src="/assets/iconsDrawer/disconnect.svg" height="20px" width="20px" />
+        
+                    <i class="fa fa-sign-out-alt fa-lg" style="margin-right: 15px;"></i>
+                     Déconnexion
+                      </a>
+              </li>
+        </ul>  
+    
+      </div>
+  </body>
+  <script>
+
+    const pat = '<%= pat[0].pat %>';
+    const path = '<%= path[0].path %>';
+    var patf = pat - path ;
+    var pat1 = document.getElementById('pat').getContext('2d');
+    var pat2 = new Chart(pat1, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                label: 'Statistique des fumeurs',
+                data: [path, patf],
+                backgroundColor: [
+                    '#004FD6',
+                    '#ff02c0',
+                ],
+                borderColor: [
+                    '#004FD6',
+                    '#ff02c0',
+                ],
+            }]
+        },
+        
+    });
+    
+    const patcp = '<%= patcp[0].patcp %>';
+    const patcph = '<%= patcph[0].patcph %>';
+    var patcpf = patcp - patcph ;
+    var patcp1 = document.getElementById('patcp').getContext('2d');
+    var patcp2 = new Chart(patcp1, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                label: 'Statistique des etudiants',
+                data: [patcph, patcpf],
+                backgroundColor: [
+                    '#004FD6',
+                    '#ff02c0',
+                ],
+                borderColor: [
+                    '#004FD6',
+                    '#ff02c0',
+                ],
+            }]
+        },
+        
+    });
+
+    const total = '<%= data[0].data %>';
+    const smoke = '<%= smoke[0].smoke %>';
+    var nosmoke = total - smoke ;
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            //labels: ['fumeur', 'non fumeur'],
+            datasets: [{
+                label: 'Statistique des fumeurs',
+                data: [smoke, nosmoke],
+                backgroundColor: [
+                    '#004FD6',
+                    '#C7BEBE',
+                ],
+                borderColor: [
+                    '#004FD6',
+                    '#C7BEBE',
+                ],
+            }]
+        },
+        
+    });
+    
+    const chique = '<%= chique[0].chique %>';
+    var nochique = total - chique ;
+    var chique1 = document.getElementById('chiqueur').getContext('2d');
+    var chique2 = new Chart(chique1, {
+        type: 'pie',
+        data: {
+            //labels: ['chique', 'non chique'],
+            datasets: [{
+                label: 'Statistique des chiqueurs',
+                data: [chique, nochique],
+                backgroundColor: [
+                    '#004FD6',
+                    '#C7BEBE',
+                ],
+                borderColor: [
+                    '#004FD6',
+                    '#C7BEBE',
+                ],
+            }]
+        },
+        
+    });
+    
+    const token = '<%= token[0].token %>';
+    var notoken = total - token ;
+    var token1 = document.getElementById('token').getContext('2d');
+    var token2 = new Chart(token1, {
+        type: 'pie',
+        data: {
+            //labels: ['chique', 'non chique'],
+            datasets: [{
+                label: 'Statistique des chiqueurs',
+                data: [token, notoken],
+                backgroundColor: [
+                    '#004FD6',
+                    '#C7BEBE',
+                ],
+                borderColor: [
+                    '#004FD6',
+                    '#C7BEBE',
+                ],
+            }]
+        },
+        
+    });
+    
+
+    const smoked = '<%= smoked[0].smoked %>';
+    var nosmoked = total - smoked ;
+    var smoked1 = document.getElementById('smoked').getContext('2d');
+    var smoked2 = new Chart(smoked1, {
+        type: 'pie',
+        data: {
+            //labels: ['chique', 'non chique'],
+            datasets: [{
+                label: 'Statistique des anciens fumeurs',
+                data: [smoked, nosmoked],
+                backgroundColor: [
+                    '#004FD6',
+                    '#C7BEBE',
+                ],
+                borderColor: [
+                    '#004FD6',
+                    '#C7BEBE',
+                ],
+            }]
+        },
+        
+    });
+    
+
+    const alcohol = '<%= alcohol[0].alcohol %>';
+    var noalcohol = total - alcohol ;
+    var alcohol1 = document.getElementById('alcohol').getContext('2d');
+    var alcohol2 = new Chart(alcohol1, {
+        type: 'pie',
+        data: {
+            //labels: ['chique', 'non chique'],
+            datasets: [{
+                label: 'Statistique des alcooliques',
+                data: [alcohol, noalcohol],
+                backgroundColor: [
+                    '#004FD6',
+                    '#C7BEBE',
+                ],
+                borderColor: [
+                    '#004FD6',
+                    '#C7BEBE',
+                ],
+            }]
+        },
+        
+    });
+    
+    const totalev = '<%= totalevacuation[0].total %>';
+    const ev = '<%= evacuation[0].nombre %>';
+    var noev = totalev - ev ;
+    var e1 = document.getElementById('evacuation').getContext('2d');
+    var e2 = new Chart(e1, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                label: 'Statistique des evacuation',
+                data: [ev, noev],
+                backgroundColor: [
+                    '#004FD6',
+                    '#ff02c0',
+                ],
+                borderColor: [
+                    '#004FD6',
+                    '#ff02c0',
+                ],
+            }]
+        },
+        
+    });
+    
+    const rdvre = '<%= rdvreguliere[0].rdvreguliere %>';
+    const rdvreh = '<%= rdvreguliereh[0].rdvreguliere %>';
+    const rdvref = rdvre - rdvreh
+    var rdvre1 = document.getElementById('rdvre').getContext('2d');
+    var rdvre2 = new Chart(rdvre1, {
+        type: 'pie',
+        data: {
+            //labels: ['fumeur', 'non fumeur'],
+            datasets: [{
+                label: 'Statistique des rdv regulier',
+                data: [rdvreh, rdvref],
+                backgroundColor: [
+                    '#004FD6',
+                    '#ff02c0',
+                ],
+                borderColor: [
+                    '#004FD6',
+                    '#ff02c0',
+                ],
+            }]
+        },
+        
+    });
+
+    const rdvirre = '<%= rdvirreguliere[0].rdvirreguliere %>';
+    const rdvirreh = '<%= rdvirreguliereh[0].rdvirreguliere %>';
+    const rdvirref = rdvirre - rdvirreh
+    var rdvirre1 = document.getElementById('rdvirre').getContext('2d');
+    var rdvirre2 = new Chart(rdvirre1, {
+        type: 'pie',
+        data: {
+            //labels: ['fumeur', 'non fumeur'],
+            datasets: [{
+                label: 'Statistique des rdv irregulier',
+                data: [rdvirreh, rdvirref],
+                backgroundColor: [
+                    '#004FD6',
+                    '#ff02c0',
+                ],
+                borderColor: [
+                    '#004FD6',
+                    '#ff02c0',
+                ],
+            }]
+        },
+        
+    });
+    
+    const cpt = '<%= cpt[0].cpt %>';
+    const cp = '<%= cp[0].cp %>';
+    var cpf = cpt - cp ;
+    var cp1 = document.getElementById('cp').getContext('2d');
+    var cp2 = new Chart(cp1, {
+        type: 'pie',
+        data: {
+            //labels: ['fumeur', 'non fumeur'],
+            datasets: [{
+                label: 'Statistique des etudiants',
+                data: [cp,cpf],
+                backgroundColor: [
+                    '#004FD6',
+                    '#ff02c0',
+                ],
+                borderColor: [
+                    '#004FD6',
+                    '#ff02c0',
+                ],
+            }]
+        },
+        
+    });
+    
+
+    const rgig = '<%= rgig[0].rgig %>';
+    const nrml = '<%= nrml[0].nrml %>';
+    const suppoid = '<%= suppoid[0].suppoid %>';
+    const smin = '<%= smin[0].smin %>';
+    var ndab1 = document.getElementById('ndab').getContext('2d');
+    var ndab2 = new Chart(ndab1, {
+        type: 'pie',
+        data: {
+            //labels: ['fumeur', 'non fumeur'],
+            datasets: [{
+                label: 'Statistique des fumeurs',
+                data: [rgig, nrml, suppoid, smin],
+                backgroundColor: [
+                    '#004FD6',
+                    '#00a529',
+                    '#fbff22',
+                    '#b40000',
+                ],
+                borderColor: [
+                    '#004FD6',
+                    '#00a529',
+                    '#fbff22',
+                    '#b40000',
+                ],
+            }]
+        },
+        
+    });
+    
+
+
+var chronique = JSON.parse('<%- decodeURIComponent(JSON.stringify(chronique)) %>');
+var cardio = JSON.parse('<%- decodeURIComponent(JSON.stringify(cardio))%>');
+var infectieuse = JSON.parse('<%- decodeURIComponent(JSON.stringify(infectieuse))%>');
+var rhumatologique = JSON.parse('<%- decodeURIComponent(JSON.stringify(rhumatologique))%>');
+var digestive = JSON.parse('<%- decodeURIComponent(JSON.stringify(digestive))%>');
+var maladie = JSON.parse('<%- decodeURIComponent(JSON.stringify(maladie))%>');
+
+var name1 = [];
+var homme1 = [];
+var femme1 = [];
+
+for(var j=0;j<chronique.length;j++){
+    const index = name1.indexOf(chronique[j].name);
+if (index == -1) {
+    name1.push(chronique[j].name);
+    if (chronique[j].sexe.toLowerCase() === 'femme') {
+        homme1.push(0);
+        femme1.push(chronique[j].occurence);
+    }
+
+    if (chronique[j].sexe.toLowerCase() === 'homme') {
+        femme1.push(0);
+        homme1.push(chronique[j].occurence);
+    }
+}
+else {
+    if (chronique[j].sexe.toLowerCase() === 'femme') {
+        femme1[index] = chronique[j].occurence;
+    }
+
+    if (chronique[j].sexe.toLowerCase() === 'homme') {
+        homme1[index] = chronique[j].occurence;
+    }
+}
+}
+var divchro=document.getElementById('divchro');
+for(var j=0;j<name1.length;j++){
+    divchro.innerHTML +='<div class="flex"><div class="info-colmal">'+
+                            '<div class="info-name littlespace"><label class="text name">'+name1[j]+'</label></div>'+
+                        '<div class="space">'+
+                            '<div class="info-colmal">'+
+                                '<div class="carreblue"></div>'+
+                                '<label class="text">Homme</label>'+
+                                '<div>'+
+                                    '<label class="text">'+homme1[j]+' etudiants</label><br>'+
+                                    '<label class="text blue">'+(homme1[j]*100/(homme1[j]+femme1[j])).toFixed(2)+'%</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="info-colmal">'+
+                                '<div class="carrerose"></div>'+
+                                '<label class="text">Femme</label>'+
+                                '<div>'+
+                                    '<label class="text">'+femme1[j]+' etudiants</label><br>'+
+                                    '<label class="text rose">'+(femme1[j]*100/(homme1[j]+femme1[j])).toFixed(2)+'%</label></div>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="littlespace">'+
+                            '<label class="text gris">total : </label><label class="text">'+(homme1[j]+femme1[j])+' patients</label></div></div>'+
+                        '</div>';
+                        '</div>'+
+                        '</div>';
+}
+let data = {
+    labels: name1,
+    datasets: [
+        {
+            label: 'Hemme',
+            data: homme1,
+            backgroundColor: "#004FD6",
+        },
+    {
+            label: 'Femme',
+            data: femme1,
+            backgroundColor: "#ff02c0",
+        }
+    ]
+};
+var chro1 = document.getElementById('chro').getContext('2d');
+var chro2 = new Chart(chro1, {
+    type: 'bar',
+    data: data,
+});
+
+
+var name2 = [];
+var homme2 = [];
+var femme2 = [];
+
+for(var j=0;j<cardio.length;j++){
+    const index = name2.indexOf(cardio[j].name);
+if (index == -1) {
+    name2.push(cardio[j].name);
+    if (cardio[j].sexe.toLowerCase() === 'femme') {
+        homme2.push(0);
+        femme2.push(cardio[j].occurence);
+    }
+
+    if (cardio[j].sexe.toLowerCase() === 'homme') {
+        femme2.push(0);
+        homme2.push(cardio[j].occurence);
+    }
+}
+else {
+    if (cardio[j].sexe.toLowerCase() === 'femme') {
+        femme2[index] = cardio[j].occurence;
+    }
+
+    if (cardio[j].sexe.toLowerCase() === 'homme') {
+        homme2[index] = cardio[j].occurence;
+    }
+}
+}
+var divcardio=document.getElementById('divcardio');
+for(var j=0;j<name2.length;j++){
+    divcardio.innerHTML +='<div class="flex"><div class="info-colmal">'+
+                            '<div class="info-name littlespace"><label class="text name">'+name2[j]+'</label></div>'+
+                        '<div class="space">'+
+                            '<div class="info-colmal">'+
+                                '<div class="carreblue"></div>'+
+                                '<label class="text">Homme</label>'+
+                                '<div>'+
+                                    '<label class="text">'+homme2[j]+' etudiants</label><br>'+
+                                    '<label class="text blue">'+(homme2[j]*100/(homme2[j]+femme2[j])).toFixed(2)+'%</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="info-colmal">'+
+                                '<div class="carrerose"></div>'+
+                                '<label class="text">Femme</label>'+
+                                '<div>'+
+                                    '<label class="text">'+femme2[j]+' etudiants</label><br>'+
+                                    '<label class="text rose">'+(femme2[j]*100/(homme2[j]+femme2[j])).toFixed(2)+'%</label></div>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="littlespace">'+
+                            '<label class="text gris">total : </label><label class="text">'+(homme2[j]+femme2[j])+' patients</label></div></div>'+
+                        '</div>';
+                        '</div>'+
+                        '</div>';
+}
+let data2 = {
+    labels: name2,
+    datasets: [
+        {
+            label: 'Hemme',
+            data: homme2,
+            backgroundColor: "#004FD6"
+        },
+    {
+            label: 'Femme',
+            data: femme2,
+            backgroundColor: "#ff02c0",
+        }
+    ]
+};
+var cardio1 = document.getElementById('cardio').getContext('2d');
+var cardio2 = new Chart(cardio1, {
+    type: 'bar',
+    data: data2,
+});
+
+
+var name3 = [];
+var homme3 = [];
+var femme3 = [];
+for(var j=0;j<infectieuse.length;j++){
+    const index = name3.indexOf(infectieuse[j].name);
+if (index == -1) {
+    name3.push(infectieuse[j].name);
+    if (infectieuse[j].sexe.toLowerCase() === 'femme') {
+        homme3.push(0);
+        femme3.push(infectieuse[j].occurence);
+    }
+
+    if (infectieuse[j].sexe.toLowerCase() === 'homme') {
+        femme3.push(0);
+        homme3.push(infectieuse[j].occurence);
+    }
+}
+else {
+    if (infectieuse[j].sexe.toLowerCase() === 'femme') {
+        femme3[index] = infectieuse[j].occurence;
+    }
+
+    if (infectieuse[j].sexe.toLowerCase() === 'homme') {
+        homme3[index] = infectieuse[j].occurence;
+    }
+}
+}
+var divinfectieuse=document.getElementById('divinfectieuse');
+for(var j=0;j<name3.length;j++){
+    divinfectieuse.innerHTML +='<div class="flex"><div class="info-colmal">'+
+                            '<div class="info-name littlespace"><label class="text name">'+name3[j]+'</label></div>'+
+                        '<div class="space">'+
+                            '<div class="info-colmal">'+
+                                '<div class="carreblue"></div>'+
+                                '<label class="text">Homme</label>'+
+                                '<div>'+
+                                    '<label class="text">'+homme3[j]+' etudiants</label><br>'+
+                                    '<label class="text blue">'+(homme3[j]*100/(homme3[j]+femme3[j])).toFixed(2)+'%</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="info-colmal">'+
+                                '<div class="carrerose"></div>'+
+                                '<label class="text">Femme</label>'+
+                                '<div>'+
+                                    '<label class="text">'+femme3[j]+' etudiants</label><br>'+
+                                    '<label class="text rose">'+(femme3[j]*100/(homme3[j]+femme3[j])).toFixed(2)+'%</label></div>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="littlespace">'+
+                            '<label class="text gris">total : </label><label class="text">'+(homme3[j]+femme3[j])+' patients</label></div></div>'+
+                        '</div>';
+                        '</div>'+
+                        '</div>';
+}
+let data3 = {
+    labels: name3,
+    datasets: [
+    {
+            label: 'Hemme',
+            data: homme3,
+            backgroundColor: "#004FD6"
+        },
+    {
+            label: 'Femme',
+            data: femme3,
+            backgroundColor: "#ff02c0",
+        }
+    ]
+};
+var infectieuse1 = document.getElementById('infectieuse').getContext('2d');
+var infectieuse2 = new Chart(infectieuse1, {
+    type: 'bar',
+    data: data3,
+});
+
+var name4 = [];
+var homme4 = [];
+var femme4 = [];
+for(var j=0;j<rhumatologique.length;j++){
+    const index = name4.indexOf(infectieuse[j].name);
+if (index == -1) {
+    name4.push(rhumatologique[j].name);
+    if (rhumatologique[j].sexe.toLowerCase() === 'femme') {
+        homme4.push(0);
+        femme4.push(rhumatologique[j].occurence);
+    }
+
+    if (rhumatologique[j].sexe.toLowerCase() === 'homme') {
+        femme4.push(0);
+        homme4.push(rhumatologique[j].occurence);
+    }
+}
+else {
+    if (rhumatologique[j].sexe.toLowerCase() === 'femme') {
+        femme4[index] = rhumatologique[j].occurence;
+    }
+
+    if (rhumatologique[j].sexe.toLowerCase() === 'homme') {
+        homme4[index] = rhumatologique[j].occurence;
+    }
+}
+}
+var divrhumatologique=document.getElementById('divrhumatologique');
+for(var j=0;j<name4.length;j++){
+    divrhumatologique.innerHTML +='<div class="flex"><div class="info-colmal">'+
+                            '<div class="info-name littlespace"><label class="text name">'+name4[j]+'</label></div>'+
+                        '<div class="space">'+
+                            '<div class="info-colmal">'+
+                                '<div class="carreblue"></div>'+
+                                '<label class="text">Homme</label>'+
+                                '<div>'+
+                                    '<label class="text">'+homme4[j]+' etudiants</label><br>'+
+                                    '<label class="text blue">'+(homme4[j]*100/(homme4[j]+femme4[j])).toFixed(2)+'%</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="info-colmal">'+
+                                '<div class="carrerose"></div>'+
+                                '<label class="text">Femme</label>'+
+                                '<div>'+
+                                    '<label class="text">'+femme4[j]+' etudiants</label><br>'+
+                                    '<label class="text rose">'+(femme4[j]*100/(homme4[j]+femme4[j])).toFixed(2)+'%</label></div>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="littlespace">'+
+                            '<label class="text gris">total : </label><label class="text">'+(homme4[j]+femme4[j])+' patients</label></div></div>'+
+                        '</div>';
+                        '</div>'+
+                        '</div>';
+}
+let data4 = {
+    labels: name4,
+    datasets: [
+    {
+            label: 'Hemme',
+            data: homme4,
+            backgroundColor: "#004FD6"
+        },
+    {
+            label: 'Femme',
+            data: femme4,
+            backgroundColor: "#ff02c0",
+        }
+    ]
+};
+for(var j=0;j<name4.length;j++){
+    divchro.innerHTML +='<div class="flex"><div class="info-colmal">'+
+                            '<div class="info-name littlespace"><label class="text name">'+name4[j]+'</label></div>'+
+                        '<div class="space">'+
+                            '<div class="info-colmal">'+
+                                '<div class="carreblue"></div>'+
+                                '<label class="text">Homme</label>'+
+                                '<div>'+
+                                    '<label class="text">'+homme4[j]+' etudiants</label><br>'+
+                                    '<label class="text blue">'+(homme4[j]*100/(homme4[j]+femme4[j])).toFixed(2)+'%</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="info-colmal">'+
+                                '<div class="carrerose"></div>'+
+                                '<label class="text">Femme</label>'+
+                                '<div>'+
+                                    '<label class="text">'+femme4[j]+' etudiants</label><br>'+
+                                    '<label class="text rose">'+(femme4[j]*100/(homme4[j]+femme4[j])).toFixed(2)+'%</label></div>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="littlespace">'+
+                            '<label class="text gris">total : </label><label class="text">'+(homme3[j]+femme3[j])+' patients</label></div></div>'+
+                        '</div>';
+                        '</div>'+
+                        '</div>';
+}
+var rhumatologique1 = document.getElementById('rhumatologique').getContext('2d');
+var rhumatologique1 = new Chart(rhumatologique1, {
+    type: 'bar',
+    data: data4,
+});
+
+var name5 = [];
+var homme5 = [];
+var femme5 = [];
+for(var j=0;j<digestive.length;j++){
+    const index = name5.indexOf(digestive[j].name);
+if (index == -1) {
+    name5.push(digestive[j].name);
+    if (digestive[j].sexe.toLowerCase() === 'femme') {
+        homme5.push(0);
+        femme5.push(digestive[j].occurence);
+    }
+
+    if (digestive[j].sexe.toLowerCase() === 'homme') {
+        femme5.push(0);
+        homme5.push(digestive[j].occurence);
+    }
+}
+else {
+    if (digestive[j].sexe.toLowerCase() === 'femme') {
+        femme5[index] = digestive[j].occurence;
+    }
+
+    if (digestive[j].sexe.toLowerCase() === 'homme') {
+        homme5[index] = digestive[j].occurence;
+    }
+}
+}
+let data5 = {
+    labels: name5,
+    datasets: [
+    {
+            label: 'Hemme',
+            data: homme5,
+            backgroundColor: "#004FD6"
+        },
+    {
+            label: 'Femme',
+            data: femme5,
+            backgroundColor: "#ff02c0",
+        }
+    ]
+};
+var divdigestive=document.getElementById('divdigestive');
+for(var j=0;j<name5.length;j++){
+    divdigestive.innerHTML +='<div class="flex"><div class="info-colmal">'+
+                            '<div class="info-name littlespace"><label class="text name">'+name5[j]+'</label></div>'+
+                        '<div class="space">'+
+                            '<div class="info-colmal">'+
+                                '<div class="carreblue"></div>'+
+                                '<label class="text">Homme</label>'+
+                                '<div>'+
+                                    '<label class="text">'+homme5[j]+' etudiants</label><br>'+
+                                    '<label class="text blue">'+(homme5[j]*100/(homme5[j]+femme5[j])).toFixed(2)+'%</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="info-colmal">'+
+                                '<div class="carrerose"></div>'+
+                                '<label class="text">Femme</label>'+
+                                '<div>'+
+                                    '<label class="text">'+femme5[j]+' etudiants</label><br>'+
+                                    '<label class="text rose">'+(femme5[j]*100/(homme5[j]+femme5[j])).toFixed(2)+'%</label></div>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="littlespace">'+
+                            '<label class="text gris">total : </label><label class="text">'+(homme5[j]+femme5[j])+' patients</label></div></div>'+
+                        '</div>';
+                        '</div>'+
+                        '</div>';
+}
+var digestive1 = document.getElementById('digestive').getContext('2d');
+var digestive2 = new Chart(digestive1, {
+    type: 'bar',
+    data: data5,
+});
+
+var name6 = [];
+var homme6 = [];
+var femme6 = [];
+for(var j=0;j<maladie.length;j++){
+    const index = name6.indexOf(maladie[j].name);
+if (index == -1) {
+    name5.push(maladie[j].name);
+    if (maladie[j].sexe.toLowerCase() === 'femme') {
+        homme6.push(0);
+        femme6.push(maladie[j].occurence);
+    }
+
+    if (maladie[j].sexe.toLowerCase() === 'homme') {
+        femme6.push(0);
+        homme6.push(maladie[j].occurence);
+    }
+}
+else {
+    if (maladie[j].sexe.toLowerCase() === 'femme') {
+        femme6[index] = maladie[j].occurence;
+    }
+
+    if (maladie[j].sexe.toLowerCase() === 'homme') {
+        homme6[index] = maladie[j].occurence;
+    }
+}
+}
+var divmaladie=document.getElementById('divmaladie');
+for(var j=0;j<name6.length;j++){
+    divmaladie.innerHTML +='<div class="flex"><div class="info-colmal">'+
+                            '<div class="info-name littlespace"><label class="text name">'+name6[j]+'</label></div>'+
+                        '<div class="space">'+
+                            '<div class="info-colmal">'+
+                                '<div class="carreblue"></div>'+
+                                '<label class="text">Homme</label>'+
+                                '<div>'+
+                                    '<label class="text">'+homme6[j]+' etudiants</label><br>'+
+                                    '<label class="text blue">'+(homme6[j]*100/(homme6[j]+femme6[j])).toFixed(2)+'%</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="info-colmal">'+
+                                '<div class="carrerose"></div>'+
+                                '<label class="text">Femme</label>'+
+                                '<div>'+
+                                    '<label class="text">'+femme6[j]+' etudiants</label><br>'+
+                                    '<label class="text rose">'+(femme6[j]*100/(homme6[j]+femme6[j])).toFixed(2)+'%</label></div>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="littlespace">'+
+                            '<label class="text gris">total : </label><label class="text">'+(homme6[j]+femme6[j])+' patients</label></div></div>'+
+                        '</div>';
+                        '</div>'+
+                        '</div>';
+}
+let data6 = {
+    labels: name6,
+    datasets: [
+    {
+            label: 'Hemme',
+            data: homme6,
+            backgroundColor: "#004FD6"
+        },
+    {
+            label: 'Femme',
+            data: femme6,
+            backgroundColor: "#ff02c0",
+        }
+    ]
+};
+var maladie1 = document.getElementById('maladie').getContext('2d');
+var maladie2 = new Chart(maladie1, {
+    type: 'bar',
+    data: data6,
+});
+    </script>
+    
+</html>
