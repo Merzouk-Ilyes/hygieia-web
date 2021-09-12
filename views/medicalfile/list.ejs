@@ -18,34 +18,13 @@
     <title>Liste des Patients</title>
 </head>
 <script src="/socket.io/socket.io.js"></script>
-<script>
-  $(function() { 
-$('#sidebarCollapse').on('click', function() {
-  
-  
 
-  Toastify({
-text: " Demande de rendez-vous \n ‘name_patient’ a demandé un rendez-vous ‘date_rdv’et est entrain d’attendre votre décision.",
-duration: 3000,
-
-destination: "https://github.com/apvarun/toastify-js",
-newWindow: true,
-close: true,
-className	: "toastStyle" ,
-gravity: "bottom", // `top` or `bottom`
-position: "left", // `left`, `center` or `right`
-backgroundColor: "linear-gradient(to right, #09c6f9, #045de9)",
-stopOnFocus: true, // Prevents dismissing of toast on hover
-onClick: function(){} // Callback after click
-}).showToast();
-  $('#sidebar, #content').toggleClass('active');
-  $('.alert').addClass("show");
-});
-});
-
-</script>
 <style>
-  
+   .name {
+     color: #000;
+            margin-right: 40px;
+            margin-left: 10px;
+          }
   .notif-title {
       font-size:13px;
       color : #01559c;
@@ -77,24 +56,25 @@ onClick: function(){} // Callback after click
     border: none;
   }
   
-       .vertical-nav {
+  .vertical-nav {
+          box-shadow: 5px 0 5px -5px grey;
+
+    
+    height : 1000px;
+           margin-top: 0px;
+      min-width: 17rem;
+      width: 17rem;
+      position: fixed;
+      top: 0;      
+      left: 0;
   
-  
-         margin-top: 115px;
-    min-width: 17rem;
-    width: 17rem;
-    height: 90vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-  
-    transition: all 0.4s;
-  }
-  .page-content {
-    width: calc(100% - 17rem);
-    margin-left: 17rem;
-    transition: all 0.4s;
-  } 
+      transition: all 0.4s;
+    }
+    .page-content {
+      margin-left: 17rem;
+      height: 100%;
+      transition: all 0.4s;
+    } 
   input, button, submit { border:none; } 
 
   #sidebar.active {
@@ -325,9 +305,9 @@ box-shadow: 1px 1px 1px 1px #70707036;
 
 <body>
   <div class="nav navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid mx-5">
-        <img src="/assets/drawer.svg" id="sidebarCollapse" height="29px" width="29px" />
-        <img src="/assets/logo.png" height="60px" width="120px" style="margin-left: 20px;margin-top:5px"/>
+    <div class="container-fluid mx-2">
+        <img src="/assets/drawer.svg" id="sidebarCollapse2" height="29px" width="29px" style="margin-left: 10px;" />
+        <img src="/assets/logo.png" height="60px" width="100px" style="margin-left: 20px;margin-top:30px"/>
       <button
         class="navbar-toggler"
         type="button"
@@ -343,7 +323,7 @@ box-shadow: 1px 1px 1px 1px #70707036;
             <div class="dropdown">
                 <button class="dropbtn"  onclick="myFunction()" class="dropbtn">
                     <img src="/assets/notif.svg" height="30px" width="30px" style="margin-right: 20px;margin-top:5px"/>
-                    <div class="txt" id="txt" style="color: white"><%= notifssee %></div>
+                    <div class="txt" id="txt"><%= notifssee %></div>
                 </button>
                 <div  id="myDropdown" class="dropdown-content">
           
@@ -356,8 +336,8 @@ box-shadow: 1px 1px 1px 1px #70707036;
                                 <%= notif.description_notif %> <br>
                             </div>  
                             <div class="notif-date">
-                        
-                                <%= moment(notif.date_notif).format('YYYY-MM-DD hh:mm')  %>
+                          
+                                <%=       moment(notif.date_notif).format('YYYY-MM-DD hh:mm')  %>
                             </div>  
                         
                         </a>
@@ -369,29 +349,30 @@ box-shadow: 1px 1px 1px 1px #70707036;
                 </div>
               </div>
           <li class="nav-item dropdown">
+
             <div class="square">BM</div>
-  
-            <ul
-              class="dropdown-menu"
-              aria-labelledby="navbarDropdownMenuLink"
-            >
-              <li><a class="dropdown-item">Se déconnecter</a></li>
-            </ul>
+       
+            
           </li>
+          <div class="name" style="margin-top:10px">Djellali</div>
         </ul>
+
+
       </div>
+      
     </div>
   </div>
+
   <div class="content">
     <div class="top">
       <div class="mainTitle">Patients</div>
       <div class="searchItems">
-          <div class="field">
+          <div class="field"  style="height:40px" >
               <input placeholder="Trouver un patient" id="myInput" onkeyup="myFunction()">
           </input>
           <i class="fa fa-search" style="font-size: 14px;"></i>
       </div>
-          <select name="Category" id="category" onChange="myFunction2()" style="background-color: #01559c;color: white;width: 200px;">
+          <select  name="Category" id="category" onChange="myFunction2()" style="background-color: #01559c;color: white;width: 200px; height:40px">
             <option value="Tous" >Tous</option>
             <option value="Etudiant">Etudiant</option>
             <option value="Ats">Ats</option>
@@ -438,6 +419,8 @@ box-shadow: 1px 1px 1px 1px #70707036;
   </table>
 </div>
   </div>
+
+  
   <script>
     const socket = io();   
        socket.on('new-notification', (resp) => {
@@ -497,6 +480,96 @@ box-shadow: 1px 1px 1px 1px #70707036;
    
 <script src="/js/listPatients.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<div class="vertical-nav active" id="sidebar" style="position: absolute;height: 100%; background-color:white">
+  <div class="py-4 px-0" style="background-color: white">
+    <div class="media d-flex align-items-center" style="display: flex; align-self: start; margin: 0px 40px;">  
+      <img src="/assets/drawer.svg" id="sidebarCollapse" height="29px" width="29px" />
+      <img src="/assets/logo.png" height="60px" width="120px" style="margin-left: 40px"/>
+    </div>
+  </div>
 
+  <ul class="nav" style="display: flex;align-items: start;background-color: white;  box-shadow: 0px 0px 0px 0px #888;">
+      <li class="nav-item" style="margin-left: 30px;background-color: white;margin-top: 60px;">
+          <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px; background-color:white; ">
+              <img  src="/assets/iconsDrawer/homeActive.svg" height="20px" style="color: #000;" width="20px" />
+  
+              <i class="" style="margin-right: 15px; background-color: white;"></i>
+               Accueil
+                </a>
+        </li>
+        <li class="nav-item" style="margin-left: 30px; margin-top:15px;">
+          <a href="/users/medecin/list" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+              <img  src="/assets/iconsDrawer/patient.svg" height="20px" width="20px" />
+  
+              <i class="" style="margin-right: 15px;"></i> </i>
+                   Patients
+                </a>
+        </li>
+    <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+      <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+          <img  src="/assets/iconsDrawer/rdv.svg" height="20px" width="20px" />
+
+          <i class="" style="margin-right: 15px;"></i> </i>
+               Rendez-vous
+            </a>
+    </li>
+    <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+      <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+          <img  src="/assets/iconsDrawer/stat.svg" height="20px" width="20px" />
+
+          <i class="" style="margin-right: 15px;"></i></i>     
+                  Statistiques
+            </a>
+    </li>
+    <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+      <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+          <img  src="/assets/iconsDrawer/profile.svg" height="20px" width="20px" />
+
+          <i class="" style="margin-right: 15px;"></i></i>     
+                 Profile
+            </a>
+    </li>
+     <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+        <div class="con" style="width: 220px; height:1px;background-color: grey;"></div>
+        </li>
+  
+      <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+          <a  href="/users/logout" class="nav-link text-dark" style="font-size: 18px; height: 50px;" >
+              <img  src="/assets/iconsDrawer/disconnect.svg" height="20px" width="20px" />
+  
+              <i class="" style="margin-right: 15px;"></i>
+               Déconnexion
+                </a>
+        </li>
+  </ul>  
+
+</div>
 </body>
+
+<script>
+  $(function() { 
+$('#sidebarCollapse').on('click', function() {
+  
+  
+  $('#sidebar, #content').toggleClass('active');
+  $('.alert').addClass("show");
+ 
+
+
+});
+  })
+
+</script>
+<script>
+  $(function() { 
+$('#sidebarCollapse2').on('click', function() {
+  
+  $('#sidebar, #content').toggleClass('active');
+  $('.alert').addClass("show");
+
+
+});
+  });
+
+</script>
 </html>

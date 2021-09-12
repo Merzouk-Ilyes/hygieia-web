@@ -266,16 +266,7 @@ font-size: 10px;
                   </div>
               <li class="nav-item dropdown">
                 <div class="square">BM</div>
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdownMenuLink"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="true"
-                >
-         
-                </a>
+                <div class="name">Djellali</div>
                 <ul
                   class="dropdown-menu"
                   aria-labelledby="navbarDropdownMenuLink"
@@ -343,7 +334,7 @@ Patients
             <%- rdv.Role  %>
                 </div>
                   <div class="dropdown2">
-                      <img class="dropbtn2"   onclick="myFunction2('<%=rdv.date_rdv%>')" src="/assets/icon-t.svg" height="15px" width="15px" />
+                      <img class="dropbtn2"   onclick="myFunction2('<%=rdv.date_rdv%>')" src="/assets/icon-t.svg" height="15px" width="105px" />
                                  <div id='<%=rdv.date_rdv%>' class="dropdown-content2">
                       <a href="/users/medecin/medicalfileUpdate/?id=<%=rdv.IdPatient%>">Modifier dossier médical</a>
                       <a href="#">Programer un rendez-vous</a>
