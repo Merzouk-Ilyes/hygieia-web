@@ -1,0 +1,148 @@
+<div id="<%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>" class="sidenav">
+  <a
+    href="javascript:void(0)"
+    class="closebtn"
+    onclick="closeNav('<%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>')"
+    >&times;</a
+  >
+  <div class="sidenav-grid">
+    <div class="left">
+      <p>l'état de rendez-vous</p>
+      <div class="svg svg4">
+        <img src="/assets/cas-svg/cas 17.svg" alt="" />
+      </div>
+    </div>
+    <div class="annuler right">
+      <p>Prendre une décision</p>
+      <p>Aide :</p>
+      <p>
+        le patient a demandé la reprogrammation du rendez-vous, car la date ne
+        le convient pas , vous pouvez soit l'annuler , soit le reprogrammer ,
+        soit le marque comme fait.
+      </p>
+      <form
+        id="formid <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+        class="preventSubmit17"
+      >
+        <input type="hidden" name="patient17" value="<%=data.idpatient %>" />
+        <input type="hidden" name="date17" value="<%=data.date_rdv %>" />
+        <div class="form-check radio">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="statesel"
+            value="reschedule"
+            id="reprogramer-input <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+            checked
+            onclick="switchCas('reprogramer-input <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','reprogramer <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','annuler-text <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','checkId <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>',1)"
+          />
+          <label class="form-check-label" for="flexRadioDefault1">
+            reprogrammer le rendez-vous
+          </label>
+        </div>
+        <div
+          class=""
+          id="reprogramer <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+          style="display: none"
+        >
+          <div class="input-flex">
+            <input
+              type="datetime-local"
+              id="rdv_date_update <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+              name="rdv_date_update"
+            />
+
+            <button
+              id="adddate <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+              class="adddate"
+              onclick="onAddRow('rdv_date_update <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','tbody <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','list <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>')"
+              type="button"
+            >
+              ajouter
+            </button>
+          </div>
+          <table
+            id="list <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+            name="list"
+            class="list"
+            onclick=""
+          >
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody
+              id="tbody <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+            ></tbody>
+          </table>
+          <input
+            type="hidden"
+            id="dates <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+            name="dates"
+            class="dates"
+          />
+        </div>
+        <div class="form-check radio">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="statesel" value="refuse"
+            id="refuser <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+            onclick="switchCas('refuser <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','annuler-text <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','reprogramer <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','checkId <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>',2)"
+          />
+          <label class="form-check-label" for="flexRadioDefault1">
+            refuser le rendez-vous
+          </label>
+        </div>
+        <textarea
+          id="annuler-text <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+          rows="2"
+          cols="30"
+          name="cas17req"
+          style="display: none; margin: 1rem 2rem"
+          placeholder="pourquoi avez-vous pris cette décision ?"
+        ></textarea>
+        <div class="form-check radio">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="statesel" value="mark"
+            id="fait <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+            onclick="switchCas('fait <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','checkId <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','annuler-text <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','reprogramer <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>',2)"
+          />
+          <label class="form-check-label" for="flexRadioDefault1">
+            marquer comme fait
+          </label>
+        </div>
+        <div
+          class="checkbox"
+          id="checkId <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+        >
+          <input
+            type="checkbox"
+            id="myCheck <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+            onclick="myFunction('myCheck <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','text <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>')"
+          />
+          <label for="myCheck">ajouter une explication</label>
+          <textarea
+            id="text <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+            rows="2"
+            cols="30"
+            name="cas17notreq"
+            style="display: none"
+          ></textarea>
+        </div>
+        <input
+        type="hidden"
+        name="nav"
+        value="<%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+      />
+      <div class="valider">
+        <button  type="submit" onclick="addCas0('dates <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','list <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>')">valider</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
