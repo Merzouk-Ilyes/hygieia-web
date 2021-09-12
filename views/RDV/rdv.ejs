@@ -1,0 +1,257 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link  rel="stylesheet"  href="/css/css/mobiscroll.javascript.min.css" />
+    <script src="/js/js/mobiscroll.javascript.min.js" defer></script>
+    <!-- JQUERY   -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- BOOTSTRAP -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    <title>Rendez-vous</title>
+   
+
+    <!-- =====  ICONS ===== -->
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css"
+    />
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/RDV/rdv.css" />
+  </head>
+  <body>
+    <div class="nav navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid mx-5">
+        <div class="drawer-toggle" id="drawer-toggler" onclick="openNav()">
+          <img src="/assets/icon drawer.svg" alt="" />
+        </div>
+        <%- include('sidenav'); %>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown">
+              <div class="square">a</div>
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                ilyes
+              </a>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <li><a class="dropdown-item" href="">Se déconnecter</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="alert alert1" id="alertId" role="alert">
+      votre rendez-vous a été programmé !
+    </div>
+    <div class="alert alert2" id="alertId2" role="alert"></div>
+    <div class="grid">
+      <div class="container1">
+        <div class="loader" id="loaderId"></div>
+
+        <div class="calendar">
+          <div id="demo-add-delete-event"></div>
+
+          <div id="demo-add-popup">
+            <div class="mbsc-form-group">
+              <label>
+                Patient
+                <input mbsc-input id="event-title" type="email" />
+              </label>
+              <label>
+                Description
+                <textarea mbsc-textarea id="event-desc"></textarea>
+              </label>
+            </div>
+            <div class="mbsc-form-group">
+              <label for="event-all-day" id="all-day">
+                Al
+                <input mbsc-switch id="event-all-day" type="checkbox" />
+              </label>
+              <label for="start-input">
+                Date
+                <input mbsc-input id="start-input" />
+              </label>
+              <!-- <label for="end-input">
+                Fin
+                <input mbsc-input id="end-input" />
+              </label> -->
+              <div id="event-date"></div>
+              <label id="show-as-busy">
+                Show as
+                <input
+                  id="event-status-busy"
+                  mbsc-segmented
+                  type="radio"
+                  name="event-status"
+                  value="busy"
+                />
+              </label>
+
+              <!-- <label>
+                Show as free
+                <input
+                  id="event-status-free"
+                  mbsc-segmented
+                  type="radio"
+                  name="event-status"
+                  value="free"
+                />
+              </label> -->
+              <div class="mbsc-button-group">
+                <button
+                  class="mbsc-button-block"
+                  id="event-delete"
+                  mbsc-button
+                  data-color="danger"
+                  data-variant="outline"
+                >
+                  Delete event
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container2">
+        <button class="btn-collect">RDV collectif</button>
+
+        <div class="big-title">
+          <p>Vos rendez-vous ce jour la</p>
+        </div>
+        <div class="scrollable-list">
+          <% if(rdvdata.length!=0){ var i=1; rdvdata.forEach(function(data){
+          i++; if(data.deleted_rdv == 0){ %>
+
+          <div class="list-item">
+            <div class="info-grid">
+              <div class="patient-pic">
+                <img
+                  src="/assets/david-rodrigo-LO14F1Yj0j0-unsplash.jpg"
+                  alt="photo patient"
+                />
+              </div>
+              <div class="patient-info">
+                <p><%=data.p_Lastname %> <%=data.p_Firstname %></p>
+                <p><%=data.p_Lastname %> <%=data.p_Firstname %></p>
+              </div>
+              <div
+                class="patient-icon"
+                id="<%=i%>"
+                onclick="collapse('<%=i%>')"
+              >
+                <img src="/assets/bleach.svg" alt="photo patient" />
+              </div>
+            </div>
+            <div class="rdv-info" id="<%=i%><%=i%>">
+              <div class="info">
+                <p>Date:</p>
+                <p><%=data.date %> <%=data.min %></p>
+              </div>
+              <div class="info">
+                <p>Type:</p>
+                <p><%=data.type_rdv %></p>
+              </div>
+              <div class="info">
+                <p>Cas:</p>
+                <p>
+                  <% if(data.situation_rdv==0){ %> Patient en attente de votre
+                  réponse <% }else{ if(data.situation_rdv==1){ %> Patient a
+                  annulé sa demande <% }else{ if(data.situation_rdv==2){ %> Vous
+                  avez refusé ce RDV <% }else{ if(data.situation_rdv==3){ %>
+                  Vous avez accepté ce RDV <% }else{ if(data.situation_rdv==4){
+                  %> Vous avez annulé après confirmation <% }else{
+                  if(data.situation_rdv==5){ %> Patient a annulé le RDV confirmé
+                  <% }else{ if(data.situation_rdv==6){ %> Vous avez proposé une
+                  reprogrammation <% }else{ if(data.situation_rdv==7){ %>
+                  Patient a selectionné une date proposée <% }else{
+                  if(data.situation_rdv==8){ %> Vous avez annulé ce RDV après
+                  selection d'une date <% }else{ if(data.situation_rdv==9){ %>
+                  Patient a annulé ce RDV après selection d'une date <% }else{
+                  if(data.situation_rdv==10){ %> Patient a annulé après
+                  proposition des dates <% }else{ if(data.situation_rdv==11){ %>
+                  Vous attendez la confirmation du patient <% }else{
+                  if(data.situation_rdv==12){ %> Vous avez annuler avant
+                  acceptation du patient <% }else{ if(data.situation_rdv==13){
+                  %> Vous avez refusé le rdv du patient <% }else{
+                  if(data.situation_rdv==14){ %> Patient a accepté le RDV <%
+                  }else{ if(data.situation_rdv==15){ %> Patient annule après
+                  confirmation <% }else{ if(data.situation_rdv==16){ %> Vous
+                  avez annulé le rdv confirmé par le patient <% }else{
+                  if(data.situation_rdv==17){ %> patient en attente de votre
+                  décision de reprogrammation <% }else{
+                  if(data.situation_rdv==18){ %> vous êtes en attente de la
+                  selection de date proposé <% }else{
+                  if(data.situation_rdv==19){ %> Patient a selectionner une date
+                  proposé <% }else{ if(data.situation_rdv==20){ %> patient a
+                  annulé après selection de date <% }else{
+                  if(data.situation_rdv==21){ %> Vous avez annulé après que le
+                  patient ait selectionné une date <% }else{
+                  if(data.situation_rdv==22){ %> Patient a annulé avant l'evoie
+                  des dates <% }else{ if(data.situation_rdv==23){ %> RDV promo
+                  confirmé <% }else{ if(data.situation_rdv==24){ %> Ce RDV est
+                  passé <%}}}}}}}}}}}}}}}}}}}}}}}}}%>
+                </p>
+              </div>
+            </div>
+            <div class="ligne"></div>
+            <div class="button-container">
+              <a
+                class="voir-button"
+                href="/users/medecin/RDVindividuel/?id=<%= data.IdPatient%>"
+                >voir tous</a
+              >
+            </div>
+          </div>
+          <%}})}%>
+        </div>
+      </div>
+    </div>
+    <div class="loader" id="loaderId"></div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/rdv.js"defer></script>
+
+    <script>
+      function openNav() {
+        document.getElementById("mySidenav").style.width = "20vw";
+      }
+
+      /* Set the width of the side navigation to 0 */
+      function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+      }
+    </script>
+  </body>
+</html>
