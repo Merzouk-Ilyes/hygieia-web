@@ -36,6 +36,7 @@ router.post('/deleteExamFile',medecinControler.deleteExamFile);
 
 
 
+
 // RDV 
 router.get('/RDV' ,medecinRDV.getRDV);
 router.get('/RdvData' ,medecinRDV.getRdvData);
@@ -51,6 +52,7 @@ router.post('/makeCas14', medecinRDV.makeCas14);
 router.post('/makeCas17', medecinRDV.makeCas17);
 router.post('/makeCas18', medecinRDV.makeCas18); 
 router.post('/makeCas19', medecinRDV.makeCas19);
+
 
 
 router.get('/updateMedicalExam',medecinControler.getMedicalExam);
@@ -104,4 +106,5 @@ router.post("/imprimeEvacuation",medecinControler3.postimprimeEvacuation);
 router.post("/imprimeCertificat",medecinControler3.postimprimeCertificat);
 const medecinControler5  = require("../../controllers/medecin5"); 
 router.get('/infoStat', medecinControler5.getStat);
+ 
 module.exports = router ; 
