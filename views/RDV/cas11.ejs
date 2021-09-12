@@ -1,0 +1,96 @@
+<div id="<%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>" class="sidenav">
+  <a
+    href="javascript:void(0)"
+    class="closebtn"
+    onclick="closeNav('<%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>')"
+    >&times;</a
+  >
+  <div class="sidenav-grid">
+    <div class="left">
+      <p>l'état de rendez-vous</p>
+      <div class="svg">
+        <img src="/assets/cas-svg/cas 11.svg" alt="" />
+      </div>
+    </div>
+    <div class="annuler right">
+      <p>Prendre une décision</p>
+      <p>Aide :</p>
+      <p>
+        le rendez-vous a été envoyé au patient ,Veuillez attendrela décision du
+        patient ou l'annuler ou le marque comme fait.
+      </p>
+      <form
+        id="formid <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+        class="preventSubmit"
+      >
+        <input type="hidden" name="patient11" value="<%=data.idpatient %>" />
+        <input type="hidden" name="date11" value="<%=data.date_rdv%>" />
+
+        <div class="form-check radio">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="cas11"
+            id="flexRadioDefault1 <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+            value="done"
+            checked
+            onclick="myFunction2('flexRadioDefault1 <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','ajouter-explication <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','annuler-text <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>')"
+          />
+          <label class="form-check-label" for="flexRadioDefault1">
+            marqué comme fait
+          </label>
+        </div>
+
+        <div class="form-check radio">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="cas11"
+            value="cancel"
+            id="flexRadioDefault <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+            onclick="myFunction2('flexRadioDefault <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','annuler-text <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','ajouter-explication <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>')"
+          />
+          <label class="form-check-label" for="flexRadioDefault1">
+            annuler le rendez-vous
+          </label>
+        </div>
+        <textarea
+          id="annuler-text <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+          rows="2"
+          cols="30"
+          name="cas11req"
+          style="display: none; margin: 1rem 2rem"
+          placeholder="pourquoi avez-vous pris cette décision ?"
+        ></textarea>
+
+        <div
+          class="checkbox"
+          id="ajouter-explication <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+        >
+          <input
+            type="checkbox"
+            id="myCheck <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+            onclick="myFunction('myCheck <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>','text <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>')"
+          />
+          <label for="myCheck">ajouter une explication</label>
+          <textarea
+            id="text <%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+            rows="2"
+            cols="30"
+            style="display: none"
+            name="cas11notreq"
+          ></textarea>
+        </div>
+        <input
+          type="hidden"
+          name="nav"
+          value="<%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>"
+        />
+
+        <div class="valider">
+          <button type="submit">valider</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
