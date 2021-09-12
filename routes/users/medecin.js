@@ -75,6 +75,8 @@ router.post("/imprimeBilan",medecinControler3.postimprimeBilan);
 router.post("/imprimeOrientation",medecinControler3.postimprimeOrientation);
 router.post("/imprimeEvacuation",medecinControler3.postimprimeEvacuation);
 router.post("/imprimeCertificat",medecinControler3.postimprimeCertificat);
+const medecinControler5  = require("../../controllers/medecin5"); 
+router.get('/infoStat', medecinControler5.getStat);
 
 
 module.exports = router ; 

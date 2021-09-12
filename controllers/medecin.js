@@ -1,7 +1,6 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 var moment = require('moment');
-
 var dateFormat = require('dateformat');
 const db = require("../util/db").db;
 const PDFDocument = require('../util/pdfkit-tables');
@@ -36,19 +35,25 @@ exports.getAcce = (req,res,next)=> {
               connection.query("select * from notification where iduser = ? and sent_by = 'patient' and opened = 0",
               [decodedToken.IdUser],
               (err,notifssee)=> {
-                console.log(err);
-                connection.release(); 
-                console.log("idUser",decodedToken.IdUser);
-                res.render('home/home',{
-                  'rdv_demande':rdv_demande,
-                  'rdv_today':rdv_today, 
-                  'rdv_reprogrammation':rdv_reprogrammation, 
-                   'rdvs'  :rdvs, 
-                   'moment' : moment,
-                   'notifs' : notifs, 
-                   'iduser' : decodedToken.IdUser,
-                    'notifssee' : notifssee.length, 
-                }); 
+                connection.query("select * from users where iduser = ?",
+                [decodedToken.IdUser],
+                (err,user)=> {
+                  console.log(err);
+                  connection.release(); 
+                  console.log("idUser",decodedToken.IdUser);
+                  res.render('home/home',{
+                    'user' : user[0], 
+                    'rdv_demande':rdv_demande,
+                    'rdv_today':rdv_today, 
+                    'rdv_reprogrammation':rdv_reprogrammation, 
+                     'rdvs'  :rdvs, 
+                     'moment' : moment,
+                     'notifs' : notifs, 
+                     'iduser' : decodedToken.IdUser,
+                      'notifssee' : notifssee.length, 
+                  }); 
+                });
+               
               })
    
               })
@@ -163,86 +168,106 @@ exports.updatePersonalHistory = (req,res)=> {
   }); 
 }
 exports.getUpdateMedicalFile = (req,res,next)=> {
-  pool.getConnection(function(err, connection) {
-    if (err) throw err; 
-    pool.query("Select * from Patient,personalhistory,medicalfile where Patient.IdPatient = ? and personalhistory.IdPatient = ? and medicalfile.idpatient = ? ",
-  [req.query.id,req.query.id,req.query.id,req.query.id],(err,result1)=> {
-    if(err) {
-      console.log(err); 
-      res.redirect('/users/medecin/list');
-      return; 
-    }
-
-    connection.query("Select * from medicalexam where medicalexam.idpatient = ?  ",[req.query.id,],(err,exams)=>{
-  
-      connection.query("Select * from haveintoxication where Idpersonalhistory = ?  ",
-      [result1[0].Idpersonalhistory], (err,intoxicationPatient)=> {
-        
-      connection.query("Select *  from intervention",
-      (err,interventions)=> {
-        connection.query("Select *  from intoxication",
-        (err,intoxications)=> {
-          connection.query("Select *  from congenitalcondition",(err,congenitalconditions)=>{
-            connection.query("Select *  from generalillness",(err,generalillness)=> {
-  
-              connection.query("Select * from drug",(err,drugs)=> {
-  
-               connection.query(" select * from containgeneralillness where Idpatient = ?",
-               [req.query.id], 
-               (err,containgeneralillnessPatient)=>{
-  
-   connection.query(" select * from containintervention where Idpatient = ?",
-   [req.query.id],
-               (err,containinterventionPatient)=>{
-                 
-                connection.query(" select * from containsdrug where num_sick = ?",
-                [req.query.id],
-                (err,containsdrugPatient)=>{
-                  connection.query("select * from havecongenitalcondition where Idpatient = ? ",[
-                    req.query.id,
-                  ],(err,havecongenitalconditionPatient)=> {
-                    
-                    connection.query("select * from haveallergy  where Idpatient = ?",[req.query.id],(err,allergies)=>{
-                      connection.release();
-                      res.render('medicalfile/updateMedicalFile', { 
-                        data : result1[0],
-                        exams : exams,
-                        allergies : allergies, 
-                        intoxications : intoxications,
-                        congenitalconditions : congenitalconditions, 
-                        generalillness : generalillness, 
-                        interventions: interventions , 
-                        intoxicationPatient :intoxicationPatient,
-                        drugs : drugs,
-                        idpatient : req.query.id ,
-                        containsdrugPatient : containsdrugPatient,  
-                        containinterventionPatient: containinterventionPatient,  
-                        containgeneralillnessPatient: containgeneralillnessPatient, 
-                        havecongenitalconditionPatient : havecongenitalconditionPatient,              
-                       });
-                    })
-                   
-                  })
-                  
-                })
-               });
-               });
-         
-              })
+  const rawCookies = req.headers.cookie.split('; ');
+  const parsedCookie = rawCookies[0].split('=')[1];
+  jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
+    (err,decodedToken)=> {
+     
+      pool.getConnection(function(err, connection) {
+        connection.query("select * from notification  where iduser = ? and sent_by = 'patient' order by date_notif DESC ",[decodedToken.IdUser],
+        (err,notifs)=> {
+          connection.query("select * from notification where iduser = ? and sent_by = 'patient' and opened = 0",
+          [decodedToken.IdUser],
+          (err,notifssee)=> {
+            connection.query("Select * from Patient,personalhistory,medicalfile where Patient.IdPatient = ? and personalhistory.IdPatient = ? and medicalfile.idpatient = ? ",
+            [req.query.id,req.query.id,req.query.id,],(err,result1)=> {
+              if(err) {
+                console.log(err); 
+                res.redirect('/users/medecin/list');
+                return; 
+              }
+          
+          
+              connection.query("Select * from medicalexam where medicalexam.idpatient = ?  ",[req.query.id,],(err,exams)=>{
             
-  
-            });
-  
+                connection.query("Select * from haveintoxication where Idpersonalhistory = ?  ",
+                [result1[0].Idpersonalhistory], (err,intoxicationPatient)=> {
+                  
+                connection.query("Select *  from intervention",
+                (err,interventions)=> {
+                  connection.query("Select *  from intoxication",
+                  (err,intoxications)=> {
+                    connection.query("Select *  from congenitalcondition",(err,congenitalconditions)=>{
+                      connection.query("Select *  from generalillness",(err,generalillness)=> {
+            
+                        connection.query("Select * from drug",(err,drugs)=> {
+            
+                         connection.query(" select * from containgeneralillness where Idpatient = ?",
+                         [req.query.id], 
+                         (err,containgeneralillnessPatient)=>{
+            
+             connection.query(" select * from containintervention where Idpatient = ?",
+             [req.query.id],
+                         (err,containinterventionPatient)=>{
+                           
+                          connection.query(" select * from containsdrug where num_sick = ?",
+                          [req.query.id],
+                          (err,containsdrugPatient)=>{
+                            connection.query("select * from havecongenitalcondition where Idpatient = ? ",[
+                              req.query.id,
+                            ],(err,havecongenitalconditionPatient)=> {
+                              
+                              connection.query("select * from haveallergy  where Idpatient = ?",[req.query.id],(err,allergies)=>{
+                                connection.release();
+                                res.render('medicalfile/updateMedicalFile', { 
+                                  data : result1[0],
+                                  exams : exams,
+                                  allergies : allergies, 
+                                  notifs:notifs,
+                                  moment:moment,
+                                  intoxications : intoxications,
+                                  congenitalconditions : congenitalconditions, 
+                                  generalillness : generalillness, 
+                                  interventions: interventions , 
+                                  intoxicationPatient :intoxicationPatient,
+                                  drugs : drugs,
+                                  notifssee : notifssee.length,
+                                  idpatient : req.query.id ,
+                                  containsdrugPatient : containsdrugPatient,  
+                                  containinterventionPatient: containinterventionPatient,  
+                                  containgeneralillnessPatient: containgeneralillnessPatient, 
+                                  havecongenitalconditionPatient : havecongenitalconditionPatient,              
+                                 });
+                              })
+                             
+                            })
+                            
+                          })
+                         });
+                         });
+                   
+                        })
+                      
+            
+                      });
+            
+                    });
+                  }
+                  ); 
+                }
+                ); 
+                });
+              })
+             
+              });
           });
-        }
-        ); 
-      }
-      ); 
-      });
-    })
-   
+        });
+      
+        if (err) throw err; 
+      
+      })
     });
-  })
+
 
   
  
@@ -321,6 +346,7 @@ exports.logout = (req,res,next)=> {
  })
 }
 exports.getProfile = (req,res,next)=> {
+
   const days  = ['dimanche','lundi','mardi','mercredi','jeudi']; 
   const heure = ['8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23',];
   const rawCookies = req.headers.cookie.split('; ');
@@ -333,7 +359,24 @@ exports.getProfile = (req,res,next)=> {
           connection.query("Select * from users where Email = ?",
           [decodedToken.email],(err,infoPer)=>{
             console.log(infoPer);
-            res.render('auth/profile',{days:days, heure:heure,infoPer:infoPer[0],workTime:workTime}); 
+            connection.query("select * from notification  where iduser = ? and sent_by = 'patient' order by date_notif DESC ",[decodedToken.IdUser],
+            (err,notifs)=> {
+              connection.query("select * from notification where iduser = ? and sent_by = 'patient' and opened = 0",
+              [decodedToken.IdUser],
+              (err,notifssee)=> {
+                res.render('auth/profile',{
+                  days:days, 
+                  heure:heure,infoPer:infoPer[0],
+                  workTime:workTime,
+                  user : infoPer[0],
+                  notifs:notifs,
+                  notifssee : notifssee.length,
+                  moment :moment,
+                }); 
+              });
+           
+            });
+           
           })
         }); 
       })

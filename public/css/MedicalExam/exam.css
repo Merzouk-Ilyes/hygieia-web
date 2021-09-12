@@ -280,7 +280,7 @@ input {
   padding: 2rem 0 0 2rem;
   display: flex;
   align-items: center;
-  height: 2rem;
+
 }
 .peau-container > div:nth-child(1) input {
   margin: 0 1.5rem;
@@ -365,9 +365,9 @@ margin-top: .4rem;
   top: 91rem;
 }
 .orl-container {
+
   left: 5%;
-  top: 91rem;
-  height: 23rem;
+ 
   display: block;
 }
 .orl-container > div:nth-child(1),
@@ -375,23 +375,23 @@ margin-top: .4rem;
   padding: 2rem 2rem 0 2rem;
   display: flex;
   align-items: center;
-  height: 2rem;
+
   justify-content: space-between;
 }
 .orl-container > div:nth-child(2) {
-  padding: 1rem 2rem;
+
 }
 
 .orl-container > div:nth-child(1) input,
 .orl-container > div:nth-child(2) input {
-  margin: 0 1.5rem;
+
 }
 
 .orl-container > div > div {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 2rem;
+  
 }
 
 .orl-container > div:nth-child(3) {
@@ -503,7 +503,7 @@ margin-top: .4rem;
 .cardio-container {
   
   left: 5%;
-  top: 152rem;
+ 
   display: block;
   /* position: relative; */
 }
@@ -518,7 +518,7 @@ margin-top: .4rem;
   padding: 3.5rem 2rem 0 2rem;
   display: flex;
   align-items: center;
-  height: 1rem;
+
   justify-content: space-between;
 }
 .cardio-container > :nth-child(1) {
@@ -548,7 +548,7 @@ margin-top: .4rem;
 .cardio-container > :nth-child(7) input ,
 .cardio-container > :nth-child(8) input 
 {
-  padding: 0.3rem;
+  padding: 1rem;
 }
 
 /* RESPIRATOIRE */
@@ -640,6 +640,7 @@ margin-top: .4rem;
 .dig-container > :nth-child(14),
 .dig-container > :nth-child(13) {
   display: flex;
+  padding:1rem;
   align-items: center;
 
   justify-content: space-between;
@@ -662,7 +663,7 @@ margin-top: .4rem;
 .dig-container > :nth-child(11) input,
 .dig-container > :nth-child(12) input,
 .dig-container > :nth-child(14) input {
-  padding: 0.3rem;
+  padding: 0.4rem;
   margin: 0 1.5rem;
 }
 .dig-container > :nth-child(n + 9) {
@@ -911,22 +912,7 @@ margin-top: .4rem;
 
 /* BUTTON */
 
-.btn {
-  color: #fff;
-  background-color: #184b9b;
-  display: inline-block;
-  text-align: center;
-  text-decoration: none;
-  vertical-align: middle;
-display: flex;
-  cursor: pointer;
-  border: 1px solid transparent;
-  /* padding: .3rem 1.5rem; */
-  font-size: 1rem;
-  border-radius: 0.3rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
+
 .outline {
   color: white;
   background-color: #184b9b;
@@ -1057,3 +1043,19 @@ display: flex;
 
 }
 
+.square {
+  background-color: #01559c;
+  height: 40px;
+  width: 44px;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.name {
+  margin-right: 40px;
+  margin-left: 10px;
+}

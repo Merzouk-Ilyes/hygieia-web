@@ -159,6 +159,26 @@ document.querySelector(".addbilan").addEventListener("click",() => {
         var typeexamen = document.getElementById('typeexamen').value;  
         var resexamen = document.getElementById('resexamen').value; 
 
+        var list = document.getElementById('typeexamens').options;
+        var test=false;
+        for (var j = 0; j < list.length; j++) { 
+            if(typeexamen ===list[j].value){
+                const parent = typeexamen1.parentElement;
+                const small = parent.querySelector("small");
+                small.className = "noterror";
+                small.innerText = null;
+                test =true;
+                break;
+            }
+        }
+    if(test === false){
+        const parent = typeexamen1.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Cet examen n'existe pas";
+        return;
+    }
+
         var myTab = document.getElementById('listbilan');
 
         for (i = 0; i < myTab.rows.length; i++) {

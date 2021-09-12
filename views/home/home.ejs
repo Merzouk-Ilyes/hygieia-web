@@ -114,10 +114,7 @@
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #ddd;}
-
 /* Show the dropdown menu on hover */
-
-
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {}
 .dropbtn2 {
@@ -265,8 +262,8 @@ font-size: 10px;
                     </div>
                   </div>
               <li class="nav-item dropdown">
-                <div class="square">BM</div>
-                <div class="name">Djellali</div>
+                <div class="square"><%= user.Lastname.substring(0,2) %></div>
+                <div class="name"><%= user.Firstname %></div>
                 <ul
                   class="dropdown-menu"
                   aria-labelledby="navbarDropdownMenuLink"
@@ -290,16 +287,30 @@ font-size: 10px;
   </div> 
   <ul>
       <li>
-        - Faire des examens médicaux 
+        <a href="/users/medecin/list" style="all: unset">
+          - Faire des examens médicaux 
+        </a>
       </li>
       <li>
-        - Consulter les dossiers médicaux
+        <a href="/users/medecin/list" style="all: unset">
+          
+          - Consulter les dossiers médicaux
+        
+        </a>
+  
       </li>
       <li>
-        - Programmer des rendez-vous
+
+        <a href="/users/medecin/list" style="all: unset">
+          - consulter les statistique des maladies
+        </a>
       </li>
       <li>
-        - consulter les statistique des maladies
+        <a href="/users/medecin/list" style="all: unset">
+          
+          - Programmer des rendez-vous
+        
+        </a>
       </li>
   </ul>
 </div>
@@ -339,7 +350,6 @@ Patients
                       <a href="/users/medecin/medicalfileUpdate/?id=<%=rdv.IdPatient%>">Modifier dossier médical</a>
                       <a href="#">Programer un rendez-vous</a>
                       <a href="/users/medecin/infoExam/?id=<%= rdv.IdPatient%>">Faire un examen médical</a>
-                      <a href="/users/medecin/medicalexam/?id=<%=rdv.IdPatient%>">Faire un examen médical</a>
                     </div>
               
                  
@@ -456,7 +466,7 @@ Patients
               </a>
       </li>
       <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
-        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+        <a href="/users/medecin/infoStat" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
             <img  src="/assets/iconsDrawer/stat.svg" height="20px" width="20px" />
 
             <i class="fa fa-user fa-lg" style="margin-right: 15px;"></i></i>     
@@ -464,7 +474,7 @@ Patients
               </a>
       </li>
       <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
-        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+        <a href="/users/medecin/profile" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
             <img  src="/assets/iconsDrawer/profile.svg" height="20px" width="20px" />
 
             <i class="fa fa-user fa-lg" style="margin-right: 15px;"></i></i>     
@@ -474,7 +484,7 @@ Patients
        <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
           <div class="con" style="width: 220px; height:1px;background-color: grey;"></div>
           </li>
-    
+  
         <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
             <a  href="/users/logout" class="nav-link text-dark" style="font-size: 18px; height: 50px;" >
                 <img  src="/assets/iconsDrawer/disconnect.svg" height="20px" width="20px" />
@@ -563,31 +573,22 @@ month_names.forEach((e, index) => {
     }
     month_list.appendChild(month)
 })
-
 let month_picker = calendar.querySelector('#month-picker')
-
 month_picker.onclick = () => {
     month_list.classList.add('show')
 }
-
 let currDate = new Date()
-
 let curr_month = {value: currDate.getMonth()}
 let curr_year = {value: currDate.getFullYear()}
-
 generateCalendar(curr_month.value, curr_year.value)
-
 document.querySelector('#prev-year').onclick = () => {
     --curr_year.value
     generateCalendar(curr_month.value, curr_year.value)
 }
-
 document.querySelector('#next-year').onclick = () => {
     ++curr_year.value
     generateCalendar(curr_month.value, curr_year.value)
 }
-
-
 </script>
 <script>
     function myFunction() {

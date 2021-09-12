@@ -1,0 +1,200 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&family=Poppins:wght@300&display=swap");
+@import url("https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css");
+
+:root {
+  --font-poppins: "Poppins", sans-serif;
+  --font-archivo: "Archivo", sans-serif;
+}
+
+html,
+body {
+
+  box-sizing: border-box;
+  margin: auto;
+  padding: 0;
+  background-color: #f5f5f5;
+  font-family: var(--font-poppins);
+}
+
+.stat{
+    background-color: white;
+    color: #000;
+    border-radius: 0.7rem;
+}
+
+/* the big white container */
+.first-container {
+    background-color: #f5f5f5;
+    color: #000;
+    position: absolute;
+    padding: 3%;
+    padding-bottom: 0px;
+}
+
+.info-colgrand{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.info-col{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.info-colmal{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: auto;
+}
+
+.info-rowgrand{
+    display: grid;
+    flex-direction: column;
+    padding: 1.5rem 1rem 1.5rem 2rem;
+    margin-bottom: 4rem;
+    width: 71.2rem;
+}
+
+.info-row{
+    display: grid;
+    flex-direction: column;
+    padding: 3rem 4rem 2rem 4rem;
+    margin-left: 6%;
+    width: 32%;
+}
+
+.courbebar{
+    background-color: white;
+    width: 200px;
+    margin: 10px;
+    border-radius: 0.7rem;
+    border: solid 1.2px #f7f7f7d9;
+    box-shadow: 0 0 3px rgb(0 0 0 / 15%);
+    width: 66rem;
+    height: 17rem;
+    padding: 1.5rem;
+}
+
+.courbe{
+    background-color: white;
+    width: 200px;
+    margin: 10px;
+    border-radius: 0.7rem;
+    border: solid 1.2px #f7f7f7d9;
+    box-shadow: 0 0 3px rgb(0 0 0 / 15%);
+    width: 12rem;
+    padding: 1.5rem;
+    padding-left: 8rem;
+    padding-right: 8rem;
+}
+
+.titre {
+    margin: auto;
+    font-size: x-large;
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.carreblue{
+    height: 30px;
+    width: 30px;
+    background: #004FD6;
+    border-radius: 3px;
+}
+
+.carrerose{
+    height: 30px;
+    width: 30px;
+    background: #ff02c0;
+    border-radius: 3px;
+}
+
+.info-total {
+    margin: auto;
+}
+
+label.text {
+    font-weight: 600;
+}
+
+.carregris{
+    height: 30px;
+    width: 30px;
+    background: #C7BEBE;
+    border-radius: 3px;
+}
+
+.carrevert{
+    height: 30px;
+    width: 30px;
+    background: #00a529;
+    border-radius: 3px;
+}
+
+.carrejaune{
+    height: 30px;
+    width: 30px;
+    background: #fbff22;
+    border-radius: 3px;
+}
+
+.carrerouge{
+    height: 30px;
+    width: 30px;
+    background: #b40000;
+    border-radius: 3px;
+}
+
+.rose{
+    color: #ff02c0;
+    font-size: large;
+}
+
+.vert{
+    color: #00a529;
+    font-size: large;
+}
+
+.jaune{
+    color: #fbff22;
+    font-size: large;
+}
+
+.rouge{
+    color: #b40000;
+    font-size: large;
+}
+
+.blue{
+    color: #004FD6;
+    font-size: large;
+}
+
+.gris{
+    color: #C7BEBE;
+    font-size: large;
+}
+.flex{
+    display: flex;
+}
+
+.space{
+    margin: 1rem;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    width: 20rem;
+}
+
+.littlespace{
+    margin: 1rem;
+    margin-left: 4rem;
+    width: 13rem;
+}
+
+.name{
+    font-size: larger;
+}

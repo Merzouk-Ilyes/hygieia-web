@@ -324,9 +324,7 @@ thead {
 .row-tabac3 .valeur {
     margin-right: 60px;
 }
-.fa {
-    color:#01559C;
-}
+
 .blocker {
     position: fixed;
     top: 0;
@@ -475,5 +473,5 @@ thead {
       }
 img {
 margin : auto;
-border-radius: 10px;
+
 }
