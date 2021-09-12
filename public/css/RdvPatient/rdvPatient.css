@@ -1,0 +1,212 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400&display=swap");
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  font-family: "Poppins", sans-serif;
+  background-color: #f5f5f5;
+}
+/* HEADER */
+.dropdown {
+  color: black;
+}
+.nav {
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.navbar-brand {
+  font-weight: 700;
+}
+.square {
+  background-color: #01559c;
+  height: 40px;
+  width: 44px;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* GENERAL GRID */
+.grid {
+  /* background-color: pink; */
+  display: grid;
+  grid-template-columns: 70% 26%;
+  height: 90vh;
+  padding: 2rem 2.5rem;
+  column-gap: 4%;
+}
+.container1 {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+  border-radius: .3rem;
+
+}
+.container2 {
+  /* background-color: blue; */
+  display: grid;
+  grid-template-rows: 67% 30%;
+  row-gap: 3%;
+  /* padding: 0rem .4rem; */
+}
+
+.stud-card {
+  background-color: white;
+  border-radius: .3rem;
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+
+}
+
+/* CLÉ CARD */
+.cle-card {
+  background-color: white;
+  display: grid;
+  grid-template-rows: repeat(3, 30%);
+  row-gap: 5%;
+  padding: 0.7rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 4px;
+  border-radius: 0.3rem;
+}
+.green {
+  /* background-color: #266800;  */
+  border-left: 10px solid #266800;
+}
+.green p {
+  color: #266800;
+}
+
+.blue {
+  border-left: 10px solid #3dc7c9;
+}
+.blue p {
+  color: #3dc7c9;
+}
+.red {
+  border-left: 10px solid #ff0000;
+}
+.red p {
+  color: #ff0000;
+}
+.green,
+.blue,
+.red {
+  display: flex;
+  align-items: center;
+}
+.green p,
+.blue p,
+.red p {
+  margin: auto 1.5rem;
+  letter-spacing: 1px;
+  font-size: .8rem;
+}
+
+/* STUDENT CARD */
+
+.patient-pic {
+  height: 15vh;
+  width: 15vh;
+  border-radius: 50%;
+  margin: 0.8rem auto;
+}
+.patient-pic img {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
+.patient-info {
+  /* background-color: aquamarine; */
+  margin: 0.6rem 1.3rem 0 1.3rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.297);
+}
+.patient-info p {
+  margin: .3rem auto;
+  font-size: 0.8rem;
+  text-align: center;
+}
+.patient-info p:nth-child(1) {
+    font-weight: bold;
+}
+.patient-info p:nth-child(2) {
+    color: rgba(0, 0, 0, 0.575);
+}
+.patient-buttons {
+    /* background-color:tomato ; */
+    display: flex;
+    flex-direction :column;
+    justify-content: space-around;
+    height: 30%;
+    margin: .5rem .8rem;
+
+}
+.ajouter ,.consulter {
+    border: none;
+    padding: .6rem 1rem;
+    border-radius:.2rem;
+    margin: auto 1.8rem;
+    font-size: 0.7rem;   
+}
+.ajouter {
+    background-color:#184B9B ;
+    color: white;
+
+    
+}
+.consulter {
+    background-color:#3a7bfe41 ;
+    color: #184B9B;
+}
+.red-border {
+  border-left: 10px solid #ff0000;
+}
+.blue-border {
+  border-left: 10px solid #3dc7c9;
+
+}
+.green-border {
+  border-left: 10px solid #266800;
+
+}
+
+.alert{
+  display: none;
+  z-index: 333;
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  width: 30%;
+  text-align: center;
+  transition: .5s;
+  color: white;
+  font-size: .8rem;
+}
+.alert1 {
+  background-color:#184B9B;
+  /* background: rgb(2,0,36); */
+/* background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(24,75,155,1) 35%, rgba(0,212,255,1) 100%); */
+
+
+}
+.alert2 {
+  background-color:#ff0000;
+  
+
+
+}
+.showAlert {
+  display: block;
+}
