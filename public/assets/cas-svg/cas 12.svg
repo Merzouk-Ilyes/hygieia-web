@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="315" height="272" viewBox="0 0 315 272">
+  <g id="Groupe_362" data-name="Groupe 362" transform="translate(-857 -194)">
+    <text id="un_rendez-vous_envoyé" data-name="un rendez-vous envoyé" transform="translate(930 315)" font-size="15" font-family="Poppins-Regular, Poppins"><tspan x="0" y="0">un rendez-vous envoyé</tspan></text>
+    <text id="vous_avez_annulé_le_rendez-vous" data-name="vous avez annulé le rendez-vous" transform="translate(938 441)" font-size="14" font-family="Poppins-SemiBold, Poppins" font-weight="600"><tspan x="0" y="0">vous avez annulé le rendez-vous</tspan></text>
+    <line id="Ligne_12" data-name="Ligne 12" y2="51.68" transform="translate(886.92 342.92)" fill="none" stroke="#707070" stroke-linecap="round" stroke-width="3"/>
+    <line id="Ligne_19" data-name="Ligne 19" y2="51.68" transform="translate(886.92 224.6)" fill="none" stroke="#707070" stroke-linecap="round" stroke-width="3"/>
+    <g id="Groupe_341" data-name="Groupe 341" transform="translate(865.16 287.84)">
+      <g id="Ellipse_244" data-name="Ellipse 244" transform="translate(-0.16 0.16)" fill="#e2f1f0" stroke="#707070" stroke-width="3">
+        <ellipse cx="22" cy="21.5" rx="22" ry="21.5" stroke="none"/>
+        <ellipse cx="22" cy="21.5" rx="20.5" ry="20" fill="none"/>
+      </g>
+      <g id="Groupe_262" data-name="Groupe 262" transform="translate(10.2 10.2)" opacity="0.66">
+        <circle id="Ellipse_14" data-name="Ellipse 14" cx="11.56" cy="11.56" r="11.56" transform="translate(0 0)" fill="#466400"/>
+        <g id="check" transform="translate(4.71 7.024)">
+          <path id="Tracé_242" data-name="Tracé 242" d="M7.116,13.968a.654.654,0,0,1-.925,0l-3.7-3.7a.981.981,0,0,1,0-1.388l.463-.463a.981.981,0,0,1,1.388,0l2.307,2.307,6.234-6.234a.981.981,0,0,1,1.388,0l.463.463a.981.981,0,0,1,0,1.388Z" transform="translate(-2.208 -4.207)" fill="#f3f5f4"/>
+        </g>
+      </g>
+    </g>
+    <g id="Ellipse_244-2" data-name="Ellipse 244" transform="translate(877 194)" fill="#707070" stroke="#707070" stroke-width="1">
+      <circle cx="9.5" cy="9.5" r="9.5" stroke="none"/>
+      <circle cx="9.5" cy="9.5" r="9" fill="none"/>
+    </g>
+    <g id="Groupe_345" data-name="Groupe 345" transform="translate(857 406.16)">
+      <g id="Ellipse_244-3" data-name="Ellipse 244" transform="translate(0 -0.16)" fill="#e2f1f0" stroke="#000" stroke-width="3">
+        <circle cx="30" cy="30" r="30" stroke="none"/>
+        <circle cx="30" cy="30" r="28.5" fill="none"/>
+      </g>
+      <g id="Groupe_364" data-name="Groupe 364" transform="translate(11.653 11.493)">
+        <circle id="Ellipse_14-2" data-name="Ellipse 14" cx="18.347" cy="18.347" r="18.347" fill="#ff1c42"/>
+        <path id="vote" d="M137.06,162.175l-4.21,4.21-4.21-4.21a2.393,2.393,0,0,0-3.385,3.385l4.21,4.21-4.21,4.21a2.393,2.393,0,1,0,3.385,3.385l4.21-4.21,4.21,4.21a2.393,2.393,0,0,0,3.385-3.385l-4.21-4.21,4.21-4.21a2.393,2.393,0,0,0-3.385-3.385Z" transform="translate(-114.41 -151.329)" fill="#f3f5f4" fill-rule="evenodd"/>
+      </g>
+    </g>
+  </g>
+</svg>
