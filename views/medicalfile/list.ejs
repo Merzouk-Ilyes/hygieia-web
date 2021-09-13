@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="/css/admin/main.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link
     rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
@@ -18,7 +17,6 @@
     <title>Liste des Patients</title>
 </head>
 <script src="/socket.io/socket.io.js"></script>
-
 <style>
    .name {
      color: #000;
@@ -307,7 +305,7 @@ box-shadow: 1px 1px 1px 1px #70707036;
   <div class="nav navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid mx-2">
         <img src="/assets/drawer.svg" id="sidebarCollapse2" height="29px" width="29px" style="margin-left: 10px;" />
-        <img src="/assets/logo.png" height="60px" width="100px" style="margin-left: 20px;margin-top:30px"/>
+        <img src="/assets/logo.png" height="50px" width="100px" style="margin-left: 20px;margin-top:10px"/>
       <button
         class="navbar-toggler"
         type="button"
@@ -344,19 +342,21 @@ box-shadow: 1px 1px 1px 1px #70707036;
               
                         <% }); %> 
                 
-                   
+             
                     
                 </div>
               </div>
-          <li class="nav-item dropdown">
-
-            <div class="square">BM</div>
-       
-            
+          <li class="nav-item dropdown" style="display:flex;flex-direction: row;">
+            <div class="square"><%= user.Lastname.substring(0,2) %></div>
+            <div class="name"><%= user.Firstname %></div>
+            <ul
+              class="dropdown-menu"
+              aria-labelledby="navbarDropdownMenuLink"
+            >
+              <li><a class="dropdown-item">Se déconnecter</a></li>
+            </ul>
           </li>
-          <div class="name" style="margin-top:10px">Djellali</div>
         </ul>
-
 
       </div>
       
@@ -407,8 +407,8 @@ box-shadow: 1px 1px 1px 1px #70707036;
               <div class="dropdown-content">
                 <a href="/users/medecin/medicalFile/?id=<%= listitems[i].IdPatient%>">Consulter dossier médical</a>
                 <a href="/users/medecin/medicalfileUpdate/?id=<%= listitems[i].IdPatient%>">Modifier dossier médical</a>
-                <a href="#">Programer un rendez-vous</a>
-                <a href="/users/medecin/medicalexam/?id=<%= listitems[i].IdPatient%>">Faire un examen médical</a>
+                <a href="/users/medecin/RDVindividuel/?id=<%= listitems[i].IdPatient%>">Programmer un rendez-vous</a>      
+                 <a href="/users/medecin/medicalexam/?id=<%= listitems[i].IdPatient%>">Faire un examen médical</a>
               </div>
             </div>
       
@@ -487,61 +487,70 @@ box-shadow: 1px 1px 1px 1px #70707036;
       <img src="/assets/logo.png" height="60px" width="120px" style="margin-left: 40px"/>
     </div>
   </div>
+  <div class="vertical-nav active" id="sidebar" style="position: absolute;height: 100%; background-color:white">
+    <div class="py-4 px-0" style="background-color: white">
+      <div class="media d-flex align-items-center" style="display: flex; align-self: start; margin: 0px 40px;">  
+        <img src="/assets/drawer.svg" id="sidebarCollapse" height="29px" width="29px" />
+        <img src="/assets/logo.png" height="60px" width="120px" style="margin-left: 40px"/>
+      </div>
+    </div>
 
-  <ul class="nav" style="display: flex;align-items: start;background-color: white;  box-shadow: 0px 0px 0px 0px #888;">
-      <li class="nav-item" style="margin-left: 30px;background-color: white;margin-top: 60px;">
-          <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px; background-color:white; ">
-              <img  src="/assets/iconsDrawer/homeActive.svg" height="20px" style="color: #000;" width="20px" />
-  
-              <i class="" style="margin-right: 15px; background-color: white;"></i>
-               Accueil
-                </a>
-        </li>
-        <li class="nav-item" style="margin-left: 30px; margin-top:15px;">
-          <a href="/users/medecin/list" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
-              <img  src="/assets/iconsDrawer/patient.svg" height="20px" width="20px" />
-  
-              <i class="" style="margin-right: 15px;"></i> </i>
-                   Patients
-                </a>
-        </li>
-    <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
-      <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
-          <img  src="/assets/iconsDrawer/rdv.svg" height="20px" width="20px" />
-
-          <i class="" style="margin-right: 15px;"></i> </i>
-               Rendez-vous
-            </a>
-    </li>
-    <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
-      <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
-          <img  src="/assets/iconsDrawer/stat.svg" height="20px" width="20px" />
-
-          <i class="" style="margin-right: 15px;"></i></i>     
-                  Statistiques
-            </a>
-    </li>
-    <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
-      <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
-          <img  src="/assets/iconsDrawer/profile.svg" height="20px" width="20px" />
-
-          <i class="" style="margin-right: 15px;"></i></i>     
-                 Profile
-            </a>
-    </li>
-     <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
-        <div class="con" style="width: 220px; height:1px;background-color: grey;"></div>
-        </li>
-  
+    <ul class="nav" style="display: flex;align-items: start;background-color: white;  box-shadow: 0px 0px 0px 0px #888;">
+        <li class="nav-item" style="margin-left: 30px;background-color: white;margin-top: 60px;">
+            <a href="/users/medecin/home" class="nav-link text-dark" style="font-size: 18px; height: 50px; background-color:white; ">
+                <img  src="/assets/icondrawer/home.svg" height="20px" width="20px" />
+    
+                <i class="fa" style="margin-right: 15px; background-color: white;"></i>
+                 Accueil
+                  </a>
+          </li>
+          <li class="nav-item" style="margin-left: 30px; margin-top:15px;">
+            <a href="/users/medecin/list" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+                <img  src="/assets/icondrawer/patient1.svg" height="20px" width="20px" />
+    
+                <i class="fa" style="margin-right: 15px;"></i> </i>
+                     Patients
+                  </a>
+          </li>
       <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
-          <a  href="/users/logout" class="nav-link text-dark" style="font-size: 18px; height: 50px;" >
-              <img  src="/assets/iconsDrawer/disconnect.svg" height="20px" width="20px" />
+        <a href="/users/medecin/RDV" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+            <img  src="/assets/iconsDrawer/rdv.svg" height="20px" width="20px" />
+
+            <i class="fa" style="margin-right: 15px;"></i> </i>
+                 Rendez-vous
+              </a>
+      </li>
+      <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+        <a href="/users/medecin/infoStat" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+            <img  src="/assets/iconsDrawer/stat.svg" height="20px" width="20px" />
+
+            <i class="fa" style="margin-right: 15px;"></i></i>     
+                    Statistiques
+              </a>
+      </li>
+      <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+        <a href="/users/medecin/profile" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+            <img  src="/assets/iconsDrawer/profile.svg" height="20px" width="20px" />
+
+            <i class="fa" style="margin-right: 15px;"></i></i>     
+                   Profile
+              </a>
+      </li>
+       <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+          <div class="con" style="width: 220px; height:1px;background-color: grey;"></div>
+          </li>
   
-              <i class="" style="margin-right: 15px;"></i>
-               Déconnexion
-                </a>
-        </li>
-  </ul>  
+        <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
+            <a  href="/users/logout" class="nav-link text-dark" style="font-size: 18px; height: 50px;" >
+                <img  src="/assets/iconsDrawer/disconnect.svg" height="20px" width="20px" />
+    
+                <i class="fa" style="margin-right: 15px;"></i>
+                 Déconnexion
+                  </a>
+          </li>
+    </ul>  
+
+  </div>
 
 </div>
 </body>

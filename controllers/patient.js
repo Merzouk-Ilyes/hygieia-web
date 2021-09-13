@@ -45,7 +45,7 @@ const signupPatient = async (req, res) => {
         } else {
           // Insert information into Patient table
           db.query(
-            "INSERT INTO patient (Firstname,Lastname,Birthday,Birthplace,Phonenumber,Email,Role,Sexe,IdEstablishment,Picture,Bloodgroup,NSS,Wilaya,Token,Address,Situation) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            "INSERT INTO patient (p_Firstname,p_Lastname,Birthday,Birthplace,Phonenumber,Email,Role,Sexe,IdEstablishment,Picture,Bloodgroup,NSS,Wilaya,Token,Address,Situation) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             [
               req.body.name,
               req.body.lastname,
@@ -222,7 +222,7 @@ function login(req, res) {
           let result = passwordHash.verify(req.body.password, account.Password);
           if (result) {
             // get the patient data from patient table
-            
+          
             Patient.findOne({ where: { Email: account.Email } })
               .then((patient) => {
                 if (patient !== null) {
@@ -307,7 +307,7 @@ const getProfile = (req,res) => {
 const updateProfile = (req,res)=> {
 pool.getConnection(function(err,connection){
  connection.query(
-    "Update patient set Firstname = ? ,Lastname = ? ,Birthday = ?,Birthplace = ? ,Phonenumber = ? ,Email = ? ,Role = ?,Sexe = ?,Picture = ? ,Bloodgroup = ?,NSS = ? ,Wilaya = ? ,token_patient = ?,Address = ? ,Situation = ?",
+    "Update patient set p_Firstname = ? ,p_Lastname = ? ,Birthday = ?,Birthplace = ? ,Phonenumber = ? ,Email = ? ,Role = ?,Sexe = ?,Picture = ? ,Bloodgroup = ?,NSS = ? ,Wilaya = ? ,token_patient = ?,Address = ? ,Situation = ?",
     [
       req.body.name,
       req.body.lastname,

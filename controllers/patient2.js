@@ -194,7 +194,7 @@ exports.getListRdv = (req,res)=> {
     console.log(id_patient); 
     pool.getConnection(function(err,connection){
         connection.query("SET  time_zone = '+0:00' ",(err,result)=> {
-            connection.query("SELECT  * from rdv,users where rdv.idpatient = ? and  users.iduser = rdv.iduser order by date_rdv DESC ",
+            connection.query("SELECT  * from rdv,users where rdv.idpatient = ? and  users.iduser = rdv.iduser order by date_rdv ASC ",
             [id_patient],(err,result)=> {
 
                 if(err) {
@@ -236,16 +236,17 @@ exports.changeDateRdv = async (req,res)=> {
                     console.log(err);
                     return res.send({"error" : err})
                 }else {
-                    connection.query("Select * from rdv,patient where date_rdv = ? and idpatient = ? and iduser = ? and patient.IdPatient=rdv.IdPatient ",
+                    connection.query("Select * from rdv,patient where date_rdv = ? and rdv.idpatient = ? and iduser = ? and patient.IdPatient = rdv.idpatient ",
                     [new_date,idPatient,idUser],(err,result)=> {
-                        var next ; 
-                     
-                        if(result[0].situation_rdv =="6") {
+                        var next ;
+                        if(result[0].situation_rdv == "6") {
+            
                             sendNotifToMedecin("Reprogrammation du rendez-vous",
                             "le rendez-vous du patient"+ result[0].p_Lastname+ "a été reprogrammé le"+ new_date,
                             req.body.idUser,req.body.idPatient); 
                         next = "7";
                         }else if(result[0].situation_rdv =="18") {
+                            
                             sendNotifToMedecin("Reprogrammation du rendez-vous",
                             "le rendez-vous du patient"+ result[0].p_Lastname+ "a été reprogrammé le"+ new_date,
                             req.body.idUser,req.body.idPatient); 
@@ -344,27 +345,27 @@ exports.updateRdv  =async (req,res)=> {
                 next = "1"; 
             }else if(result[0].situation_rdv == "3"){
                 
-                sendNotifToMedecin("Annulation de rendez-vous","le rendez-vous que vous avez confirmé avec "+result2[0].p_lastname +" a été annulé.",
+                sendNotifToMedecin("Annulation de rendez-vous","le rendez-vous que vous avez confirmé avec "+result[0].p_lastname +" a été annulé.",
            req.body.idUser,req.body.idPatient);
                 next = "5"; 
             }else if(result[0].situation_rdv == "6"){
-                sendNotifToMedecin("Annulation de rendez-vous","le rendez-vous dont vous avez proposé une reprogrammation avec "+result2[0].p_lastname +" été annulé."
+                sendNotifToMedecin("Annulation de rendez-vous","le rendez-vous dont vous avez proposé une reprogrammation avec "+result[0].p_lastname +" été annulé."
     ,req.body.idUser,req.body.idPatient);
                 next = "10";
             }else if(result[0].situation_rdv == "7"){
                 sendNotifToMedecin("Annulation du rendez-vous reprogrammé",
-                "le rendez-vous reprogrammé le" +date+ "avec le patient"+result2[0].p_lastname +" été annulé."
+                "le rendez-vous reprogrammé le" +date+ "avec le patient"+result[0].p_lastname +" été annulé."
                 ,req.body.idUser,req.body.idPatient);
                 next = "9"; 
             }else if(result[0].situation_rdv == "11"){
                 sendNotifToMedecin("Annulation du rendez-vous",
-                "le rendez-vous vous avez programmé le" +date+ "avec le patient"+result2[0].p_Lastname +" été annulé."
+                "le rendez-vous vous avez programmé le" +date+ "avec le patient"+result[0].p_Lastname +" été annulé."
                 ,req.body.idUser,req.body.idPatient);
                 next = "13"; 
             }else if(result[0].situation_rdv == "14"){
                 sendNotifToMedecin("Annulation du rendez-vous",
                 "Le rendez-vous confirmé que vous avez programmé"+
-                "le"+date+ "avec"+  result2[0].p_Lastname + "a été annulé"
+                "le"+date+ "avec"+  result[0].p_Lastname + "a été annulé"
                                 ,req.body.idUser,req.body.idPatient);
                 next = "15" ;
             }else if(result[0].situation_rdv == "19"){
@@ -456,4 +457,18 @@ function sendNotifToMedecin(title,description,idUser,idPatient) {
 
     
 
+}
+exports.getNotification = (req,res,next)=> {
+    const idPatient = req.body.IdPatient;
+    pool.getConnection(function (err,connection){
+        connection.query("select * from notification where idpatient = ? and sent_by = 'médecin'",[idPatient], 
+        (err,result)=>{
+
+            console.log("notis",result,idPatient);
+            return res.send({
+                "result" : result,
+            })
+        });
+
+    })
 }

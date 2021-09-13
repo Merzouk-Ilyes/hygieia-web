@@ -22,4 +22,6 @@ router.post('/updateRdv',patientController2.updateRdv);
 router.post('/updateRdvanotherDate',patientController2.updateRdvanotherDate);
 router.post('/getDateProposedDate',patientController2.getDateProposedDate);
 router.post('/changeDateRdv',patientController2.changeDateRdv);
+router.post('/getNotification',patientController2.getNotification);
+
 module.exports = router ;

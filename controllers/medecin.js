@@ -388,27 +388,34 @@ exports.getProfile = (req,res,next)=> {
 exports.getList = (req, res, next) => {
   pool.getConnection(function(err, connection) {
     connection.query("Select * from patient",(err,result)=> {
+
       const rawCookies = req.headers.cookie.split('; ');
   const parsedCookie = rawCookies[0].split('=')[1];
+  
   jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     (err,decodedToken)=> {
-      connection.query("select * from notification where iduser = ? and sent_by = 'patient' and opened = 0",
-      [decodedToken.IdUser],
-
-      (err,notifssee)=> {
-        console.log('notifssee' , notifssee) ;
-        connection.query("select * from notification  where iduser = ? and sent_by = 'patient' order by date_notif DESC ",[decodedToken.IdUser],
-        (err,notifs)=> {
-          connection.release();
-          res.render("medicalfile/list", { 
-            listitems: result,
-            'notifssee' : notifssee.length, 
-          'notifs' : notifs,
-          'moment' :moment,
-          'iduser' :decodedToken.IdUser,
-          });
-        })
-      });
+      connection.query("select * from users where iduser = ? ",[decodedToken.IdUser],(err,user)=>
+       {
+        connection.query("select * from notification where iduser = ? and sent_by = 'patient' and opened = 0",
+        [decodedToken.IdUser],
+  
+        (err,notifssee)=> {
+          console.log('notifssee' , notifssee) ;
+          connection.query("select * from notification  where iduser = ? and sent_by = 'patient' order by date_notif DESC ",[decodedToken.IdUser],
+          (err,notifs)=> {
+            connection.release();
+            res.render("medicalfile/list", { 
+              'user': user[0],
+              listitems: result,
+              'notifssee' : notifssee.length, 
+            'notifs' : notifs,
+            'moment' :moment,
+            'iduser' :decodedToken.IdUser,
+            });
+          })
+        });
+      })
+    
     });
     });
   }); 
