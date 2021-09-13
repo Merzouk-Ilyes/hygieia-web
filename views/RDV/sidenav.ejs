@@ -1,13 +1,24 @@
 <div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <!-- <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> -->
 
-  <div class="logo">
-    <img src="/assets/icon drawer.svg" alt="">
-    <img src="/assets/logo_login.png" alt="" />
+  <div class="logo" onclick="closeNav()">
+    <img
+      src="/assets/drawer.svg"
+      
+      height="20px"
+      width="20px"
+      style="margin-left: 20px"
+    />
+    <img
+      src="/assets/logo.png"
+      height="100px"
+      width="120px"
+      style="margin-left: 20px"
+    />
   </div>
   <div class="drawer-list">
     <a href="#" class="drawer-item">
-      <img src="/assets/home.svg" alt="" />
+      <img src="/assets/home-1.svg" alt="" />
       <p>Acceuil</p>
     </a>
     <a href="#" class="drawer-item">
@@ -15,7 +26,7 @@
       <p>Patiens</p>
     </a>
     <a href="#" class="drawer-item">
-      <img src="/assets/rendezvos.svg" alt="" />
+      <img src="/assets/rendezvous1.svg" alt="" />
       <p>Rendez-vous</p>
     </a>
     <a href="#" class="drawer-item">
@@ -27,7 +38,7 @@
       <p>Profil</p>
     </a>
     <div class="ligne"></div>
-    <a href="#" class="drawer-item">
+    <a href="/users/admin/logout" class="drawer-item">
       <img src="/assets/logout.svg" alt="" />
       <p>Déconnecter</p>
     </a>

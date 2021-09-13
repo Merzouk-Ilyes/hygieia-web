@@ -33,15 +33,13 @@ router.post('/deleteExamFile',medecinControler.deleteExamFile);
 
 
 
-
-
-
-
 // RDV 
 router.get('/RDV' ,medecinRDV.getRDV);
 router.get('/RdvData' ,medecinRDV.getRdvData);
 router.post('/makeRDV', medecinRDV.postRDV); 
 router.get('/formtest' ,medecinRDV.getform);
+router.post('/delRow', medecinRDV.delRow);
+router.post('/makeRDVind', medecinRDV.postRDVind);
 router.get('/RDVindividuel', medecinRDV.getRDVindividuel);
 router.post('/makeCas0', medecinRDV.makeCas0);
 router.post('/makeCas3', medecinRDV.makeCas3); 

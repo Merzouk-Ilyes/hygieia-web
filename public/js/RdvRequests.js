@@ -1,5 +1,7 @@
 $(document).ready(function () {
   $(".preventSubmit").submit(function (e) {
+    $("#loaderId").css("display", "block");
+
     console.log($(this).serializeArray());
     var arrayData = $(this).serializeArray();
 
@@ -34,6 +36,8 @@ $(document).ready(function () {
       data: formData,
 
       success: function (data) {
+        $("#loaderId").css("display", "none");
+
         //code here
         console.log("success !!!!", data.message);
         closeNav(arrayData[5].value);
@@ -68,18 +72,18 @@ $(document).ready(function () {
     // breaks this
   });
 
-  
   // CAS0 & CAS17
   $(".preventSubmit2").submit(function (e) {
-    
+    $("#loaderId").css("display", "block");
+
     console.log($(this).serializeArray());
     var arrayData = $(this).serializeArray();
 
-    var url="/users/medecin/makeCas0";
-    
+    var url = "/users/medecin/makeCas0";
+
     // if (arrayData[0].name == "patient14") {
     //   url = "/users/medecin/makeCas14";
-    // } 
+    // }
     // /users/medecin/makeCas0
     console.log(url);
     var formData = {
@@ -91,7 +95,6 @@ $(document).ready(function () {
       [arrayData[5].name]: arrayData[5].value,
       [arrayData[6].name]: arrayData[6].value,
       [arrayData[7].name]: arrayData[7].value,
-      
     };
     console.log(arrayData);
 
@@ -101,6 +104,8 @@ $(document).ready(function () {
       data: formData,
 
       success: function (data) {
+        $("#loaderId").css("display", "none");
+
         //code here
         console.log("success !!!!", data);
         closeNav(arrayData[7].value);
@@ -120,13 +125,12 @@ $(document).ready(function () {
             document.getElementById("alertId").classList.remove("showAlert");
           }, 2000);
           setTimeout(function () {
-
             document.location.reload();
           }, 2000);
         }
       },
       error: function (error) {
-        console.log("error !!!!",error);
+        console.log("error !!!!", error);
         document.getElementById("alertId2").classList.add("showAlert");
 
         setTimeout(function () {
@@ -143,12 +147,13 @@ $(document).ready(function () {
   });
 
   $(".preventSubmit17").submit(function (e) {
-    
+    $("#loaderId").css("display", "block");
+
     console.log($(this).serializeArray());
     var arrayData = $(this).serializeArray();
 
-    var url="/users/medecin/makeCas17";
-    
+    var url = "/users/medecin/makeCas17";
+
     console.log(url);
     var formData = {
       [arrayData[0].name]: arrayData[0].value,
@@ -159,7 +164,6 @@ $(document).ready(function () {
       [arrayData[5].name]: arrayData[5].value,
       [arrayData[6].name]: arrayData[6].value,
       [arrayData[7].name]: arrayData[7].value,
-      
     };
     console.log(arrayData);
 
@@ -169,6 +173,8 @@ $(document).ready(function () {
       data: formData,
 
       success: function (data) {
+        $("#loaderId").css("display", "none");
+
         //code here
         console.log("success !!!!", data);
         closeNav(arrayData[7].value);
@@ -188,13 +194,142 @@ $(document).ready(function () {
             document.getElementById("alertId").classList.remove("showAlert");
           }, 2000);
           setTimeout(function () {
-
             document.location.reload();
           }, 2000);
         }
       },
       error: function (error) {
-        console.log("error !!!!",error);
+        console.log("error !!!!", error);
+        document.getElementById("alertId2").classList.add("showAlert");
+
+        setTimeout(function () {
+          document.getElementById("alertId2").classList.remove("showAlert");
+        }, 2000);
+        setTimeout(function () {
+          document.location.reload();
+        }, 2000);
+      },
+    });
+
+    e.preventDefault();
+    // breaks this
+  });
+
+  $(".deleteSubmit").submit(function (e) {
+    $("#loaderId").css("display", "block");
+
+    console.log($(this).serializeArray());
+    var arrayData = $(this).serializeArray();
+
+    var url = "/users/medecin/delRow";
+
+    console.log(url);
+    var formData = {
+      [arrayData[0].name]: arrayData[0].value,
+      [arrayData[1].name]: arrayData[1].value,
+    };
+    console.log(arrayData);
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: formData,
+
+      success: function (data) {
+        $("#loaderId").css("display", "none");
+
+        //code here
+        console.log("success !!!!", data);
+
+        if (data.message == "error") {
+          document.getElementById("alertId2").classList.add("showAlert");
+
+          setTimeout(function () {
+            document.getElementById("alertId2").classList.remove("showAlert");
+          }, 2000);
+          // setTimeout(function () {
+          //   document.location.reload();
+          // }, 2000);
+        } else {
+          document.getElementById("alertId").classList.add("showAlert");
+
+          setTimeout(function () {
+            document.getElementById("alertId").classList.remove("showAlert");
+          }, 2000);
+          setTimeout(function () {
+            document.location.reload();
+          }, 2000);
+        }
+      },
+      error: function (error) {
+        console.log("error !!!!", error);
+        document.getElementById("alertId2").classList.add("showAlert");
+
+        setTimeout(function () {
+          document.getElementById("alertId2").classList.remove("showAlert");
+        }, 2000);
+        setTimeout(function () {
+          document.location.reload();
+        }, 2000);
+      },
+    });
+
+    e.preventDefault();
+    // breaks this
+  });
+
+  $(".submitModal").submit(function (e) {
+    $("#modalLoader").css("display", "block");
+    console.log($(this).serializeArray());
+    var arrayData = $(this).serializeArray();
+
+    var url = `/users/medecin/makeRDVind?id=${arrayData[2].value}`;
+
+    console.log(url);
+    var formData = {
+      [arrayData[0].name]: arrayData[0].value,
+      [arrayData[1].name]: arrayData[1].value,
+      [arrayData[2].name]: arrayData[2].value,
+    };
+    console.log(arrayData);
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: formData,
+
+      success: function (data) {
+        $("#modalLoader").css("display", "none");
+        //code here
+        console.log("success !!!!", data);
+
+        if (data.message == "error") {
+          if ($("#modalAlert2").is(":empty")) {
+            document.getElementById("modalAlert2").append(data.error);
+          }
+          document.getElementById("modalAlert2").classList.add("showAlert");
+
+          setTimeout(function () {
+            document
+              .getElementById("modalAlert2")
+              .classList.remove("showAlert");
+          }, 2000);
+          // setTimeout(function () {
+          //   document.location.reload();
+          // }, 2000);
+        } else {
+          document.getElementById("modalAlert").classList.add("showAlert");
+
+          setTimeout(function () {
+            document.getElementById("modalAlert").classList.remove("showAlert");
+          }, 2000);
+          setTimeout(function () {
+            document.location.reload();
+          }, 2000);
+        }
+      },
+      error: function (error) {
+        console.log("error !!!!", error);
         document.getElementById("alertId2").classList.add("showAlert");
 
         setTimeout(function () {

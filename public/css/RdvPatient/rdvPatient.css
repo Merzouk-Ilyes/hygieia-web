@@ -210,3 +210,53 @@ html {
 .showAlert {
   display: block;
 }
+
+.card-supprimer button {
+  border: none;
+  background-color: transparent;
+}
+.modal-footer{
+  justify-content: center;
+}
+.modal-footer button {
+  background-color: #184B9B;
+  font-size: 1rem;
+  color: white;
+  padding: .5rem 5rem;
+
+}
+
+.loader {
+  display: none;
+  border: 16px solid transparent;
+  border-radius: 50%;
+  border-top: 16px solid #184B9B;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

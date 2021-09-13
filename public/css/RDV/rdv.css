@@ -17,6 +17,7 @@ html {
 }
 .nav {
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  padding: 1rem 0;
 }
 .navbar-brand {
   font-weight: 700;
@@ -372,9 +373,14 @@ html {
   width: 1.1rem;
 }
 .logo {
-  margin: 1.5rem 0.5rem;
+  margin: 1.5rem 1rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   height: 2rem;
+
+}
+.logo img {
+  height: 100%;
+  width: 100%;
 }
