@@ -1,0 +1,54 @@
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ajouter rendez-vous</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+       
+        <form class="submitModal">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Date:</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              id="recipient-name"
+              name="rdv_date"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label"
+              >Description:</label
+            >
+            <textarea class="form-control" id="message-text" name="rdv_description"></textarea>
+          </div>
+        
+      </div>
+      <input type="hidden"  name="idpatient" value=" <%=data.idpatient%>" />
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-lg" data-bs-dismiss="modal">Ajouter</button>
+      </div>
+    </form>
+   
+    </div>
+  </div>
+  
+</div>
+<div class="loader" id="modalLoader"></div>
+
+<div class="alert alert1" id="modalAlert" role="alert">
+  Votre action a été effectuée avec succès !
+</div>
+<div class="alert alert2" id="modalAlert2" role="alert"></div>

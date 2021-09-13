@@ -3,8 +3,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <!-- JQUERY   -->
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- JQUERY   -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- BOOTSTRAP -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
@@ -22,11 +22,9 @@
     <link rel="stylesheet" href="/css/RdvPatient/list.css" />
     <link rel="stylesheet" href="/css/RdvPatient/cas.css" />
     <link rel="stylesheet" href="/css/RdvPatient/cas-special.css" />
-    <style>
-
-    </style>
+    <style></style>
   </head>
-  <body  >
+  <body>
     <div class="nav navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid mx-5">
         <a class="navbar-brand" href="#">Rendez-vous Patient</a>
@@ -44,7 +42,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
-              <div class="square">a</div>
+              <div class="square"><%=first[0]%></div>
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -53,7 +51,7 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                ilyes
+              <%=first%>
               </a>
               <ul
                 class="dropdown-menu"
@@ -75,164 +73,122 @@
     <div class="grid">
       <div class="container1">
         <div class="filter-section">
-            <div class="first"></div>
-            <div class="second"></div>
-            <div class="third"></div>
-            <div class="fourth"></div>
-            <div class="fifth">
-                <button>Filtrer</button>
-            </div>
+          <div class="first"></div>
+          <div class="second"></div>
+          <div class="third"></div>
+          <div class="fourth"></div>
+          <div class="fifth">
+            <button>Filtrer</button>
+          </div>
         </div>
         <div class="cards-list">
-         
-          <% if(rdvind.length!=0){ 
-            var i=1;var couleur; rdvind.forEach(function(data){ 
-              
-              if(data.situation_rdv == 1 || data.situation_rdv == 2 || data.situation_rdv == 4 || data.situation_rdv == 5 || data.situation_rdv == 8 || data.situation_rdv == 9 || data.situation_rdv == 10 || data.situation_rdv == 12 || data.situation_rdv == 13
-              || data.situation_rdv == 15 || data.situation_rdv == 16 || data.situation_rdv == 20 || data.situation_rdv == 21 || data.situation_rdv == 22 ) {
-                couleur = "red-border";
-              }else  if(data.situation_rdv == 0 || data.situation_rdv == 6 || data.situation_rdv == 7 || data.situation_rdv == 11 || data.situation_rdv == 17 || data.situation_rdv == 18){
-                couleur = "blue-border";
-              }else if(data.situation_rdv == 3 || data.situation_rdv == 14 || data.situation_rdv == 19 || data.situation_rdv == 23 || data.situation_rdv == 24) {
-                couleur = "green-border";
-              }
-              %>
-              
+          <% if(rdvind.length!=0){ var i=1;var couleur;
+          rdvind.forEach(function(data){
+            if (data.deleted_rdv == 0 ) {
             
-          <div class="card-item <%=couleur%>" >
+            if(data.situation_rdv == 1 ||
+          data.situation_rdv == 2 || data.situation_rdv == 4 ||
+          data.situation_rdv == 5 || data.situation_rdv == 8 ||
+          data.situation_rdv == 9 || data.situation_rdv == 10 ||
+          data.situation_rdv == 12 || data.situation_rdv == 13 ||
+          data.situation_rdv == 15 || data.situation_rdv == 16 ||
+          data.situation_rdv == 20 || data.situation_rdv == 21 ||
+          data.situation_rdv == 22 ) { couleur = "red-border"; }else
+          if(data.situation_rdv == 0 || data.situation_rdv == 6 ||
+          data.situation_rdv == 7 || data.situation_rdv == 11 ||
+          data.situation_rdv == 17 || data.situation_rdv == 18){ couleur =
+          "blue-border"; }else if(data.situation_rdv == 3 || data.situation_rdv
+          == 14 || data.situation_rdv == 19 || data.situation_rdv == 23 ||
+          data.situation_rdv == 24) { couleur = "green-border"; } %>
+
+          <div class="card-item <%=couleur%>">
             <div class="card-info">
               <p><%=data.displayeddate%>, <%=data.hours%></p>
               <p>type : <%=data.type_rdv%></p>
-              <p>demandé part le  <%=data.created_by%></p>
+              <p>demandé part le <%=data.created_by%></p>
             </div>
             <div class="card-chat">
               <button>consulter le chat</button>
             </div>
             <div class="card-decision">
-              <button onclick="openNav('<%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>')">prendre une décision</button>
+              <button
+                onclick="openNav('<%=data.iduser%><%=data.idpatient%><%=data.date_rdv%>')"
+              >
+                prendre une décision
+              </button>
             </div>
             <div class="card-supprimer">
-              <img src="/assets/trash.svg" alt="" />
+              <form class="deleteSubmit"> 
+                <input
+                  type="hidden"
+                  name="del_pat"
+                  value="<%=data.idpatient %>"
+                />
+                <input
+                  type="hidden"
+                  name="del_date"
+                  value="<%=data.date_rdv %>"
+                />
+                <button type="submit">
+                  <img src="/assets/trash.svg" alt="" />
+                </button>
+              </form>
             </div>
-            <% if(data.situation_rdv==0){ %>
-              
-              <%- include('cas0', {data:data }); %>
-            <% }else{ if(data.situation_rdv==1){ %>
-              
-              <%- include('cas1', {data:data }); %>
-            <% }else{ if(data.situation_rdv==2){ %>
-              
-              <%- include('cas2', {data:data }); %>
-              
-            <% }else{ if(data.situation_rdv==3){ %>
-              
-              <%- include('cas3', {data:data }); %>
-              
-            <% }else{ if(data.situation_rdv==4){ %>
-              <%- include('cas4', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==5){ %>
-              <%- include('cas5', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==6){ %>
-              <%- include('cas6', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==7){ %>
-              <%- include('cas7', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==8){ %>
-              <%- include('cas8', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==9){ %>
-              <%- include('cas9', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==10){ %>
-              <%- include('cas10', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==11){ %>
-              <%- include('cas11', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==12){ %>
-              <%- include('cas12', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==13){ %>
-              <%- include('cas13', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==14){ %>
-              <%- include('cas14', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==15){ %>
-              <%- include('cas15', {data:data }); %>
-              
-
-            <% }else{ if(data.situation_rdv==16){ %>
-              <%- include('cas16', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==17){ %>
-              
-              
-              <%- include('cas17', {data:data }); %>
-              
-            <% }else{ if(data.situation_rdv==18){ %>
-              <%- include('cas18', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==19){ %>
-              <%- include('cas19', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==20){ %>
-              <%- include('cas20', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==21){ %>
-              <%- include('cas21', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==22){ %>
-              <%- include('cas22', {data:data }); %>
-              
-              
-            <% }else{ if(data.situation_rdv==23){ %>
-              
-              
-            <% }else{ if(data.situation_rdv==24){ %>
-              <%- include('cas24', {data:data }); %>
-              
-              
-            <%}}}}}}}}}}}}}}}}}}}}}}}}}%>
+            <% if(data.situation_rdv==0){ %> <%- include('cas0', {data:data });
+            %> <% }else{ if(data.situation_rdv==1){ %> <%- include('cas1',
+            {data:data }); %> <% }else{ if(data.situation_rdv==2){ %> <%-
+            include('cas2', {data:data }); %> <% }else{
+            if(data.situation_rdv==3){ %> <%- include('cas3', {data:data }); %>
+            <% }else{ if(data.situation_rdv==4){ %> <%- include('cas4',
+            {data:data }); %> <% }else{ if(data.situation_rdv==5){ %> <%-
+            include('cas5', {data:data }); %> <% }else{
+            if(data.situation_rdv==6){ %> <%- include('cas6', {data:data }); %>
+            <% }else{ if(data.situation_rdv==7){ %> <%- include('cas7',
+            {data:data }); %> <% }else{ if(data.situation_rdv==8){ %> <%-
+            include('cas8', {data:data }); %> <% }else{
+            if(data.situation_rdv==9){ %> <%- include('cas9', {data:data }); %>
+            <% }else{ if(data.situation_rdv==10){ %> <%- include('cas10',
+            {data:data }); %> <% }else{ if(data.situation_rdv==11){ %> <%-
+            include('cas11', {data:data }); %> <% }else{
+            if(data.situation_rdv==12){ %> <%- include('cas12', {data:data });
+            %> <% }else{ if(data.situation_rdv==13){ %> <%- include('cas13',
+            {data:data }); %> <% }else{ if(data.situation_rdv==14){ %> <%-
+            include('cas14', {data:data }); %> <% }else{
+            if(data.situation_rdv==15){ %> <%- include('cas15', {data:data });
+            %> <% }else{ if(data.situation_rdv==16){ %> <%- include('cas16',
+            {data:data }); %> <% }else{ if(data.situation_rdv==17){ %> <%-
+            include('cas17', {data:data }); %> <% }else{
+            if(data.situation_rdv==18){ %> <%- include('cas18', {data:data });
+            %> <% }else{ if(data.situation_rdv==19){ %> <%- include('cas19',
+            {data:data }); %> <% }else{ if(data.situation_rdv==20){ %> <%-
+            include('cas20', {data:data }); %> <% }else{
+            if(data.situation_rdv==21){ %> <%- include('cas21', {data:data });
+            %> <% }else{ if(data.situation_rdv==22){ %> <%- include('cas22',
+            {data:data }); %> <% }else{ if(data.situation_rdv==23){ %> <% }else{
+            if(data.situation_rdv==24){ %> <%- include('cas24', {data:data });
+            %> <%}}}}}}}}}}}}}}}}}}}}}}}}}%>
           </div>
-          <%})}%>
-          
+          <%}})}%>
         </div>
       </div>
       <div class="container2">
         <div class="stud-card">
           <div class="patient-pic">
-            <img
-              src="<%=studinfo[0].Picture%> " 
-              alt="patient"
-            />
+            <img src="<%=studinfo[0].Picture%> " alt="patient" />
           </div>
           <div class="patient-info">
-            <p><%=studinfo[0].p_Firstname%> <%=studinfo[0].p_Lastname%> (<%=studinfo[0].Role%>)</p>
+            <p>
+              <%=studinfo[0].p_Firstname%> <%=studinfo[0].p_Lastname%>
+              (<%=studinfo[0].Role%>)
+            </p>
             <p><%=studinfo[0].Email%></p>
             <p><%=studinfo[0].birth%> <%=studinfo[0].Birthplace%></p>
           </div>
           <div class="patient-buttons">
-            <button class="ajouter">ajouter un rendez-vous</button>
+            <button class="ajouter"  type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal">ajouter un rendez-vous</button>
+            <%- include('ajouterModal', {data:rdvind[0] });%>
             <button class="consulter">consulter dossier médical</button>
           </div>
         </div>
@@ -249,14 +205,14 @@
         </div>
       </div>
     </div>
+    <div class="loader" id="loaderId"></div>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
       crossorigin="anonymous"
     ></script>
-    <script src="/js/cas.js">
-    </script>
+    <script src="/js/cas.js"></script>
     <script src="/js/RdvRequests.js"></script>
   </body>
 </html>

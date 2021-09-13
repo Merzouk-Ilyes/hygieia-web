@@ -3,7 +3,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link  rel="stylesheet"  href="/css/css/mobiscroll.javascript.min.css" />
+    <link rel="stylesheet" href="/css/css/mobiscroll.javascript.min.css" />
     <script src="/js/js/mobiscroll.javascript.min.js" defer></script>
     <!-- JQUERY   -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -15,7 +15,6 @@
       crossorigin="anonymous"
     />
     <title>Rendez-vous</title>
-   
 
     <!-- =====  ICONS ===== -->
     <link
@@ -32,37 +31,20 @@
           <img src="/assets/icon drawer.svg" alt="" />
         </div>
         <%- include('sidenav'); %>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
+
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
-              <div class="square">a</div>
+              <div class="square"><%=first[0]%></div>
               <a
-                class="nav-link dropdown-toggle"
+                class="nav-link"
                 href="#"
                 id="navbarDropdownMenuLink"
                 role="button"
-                data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                ilyes
+              <%=first%>
               </a>
-              <ul
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <li><a class="dropdown-item" href="">Se déconnecter</a></li>
-              </ul>
             </li>
           </ul>
         </div>
@@ -241,7 +223,7 @@
       integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
       crossorigin="anonymous"
     ></script>
-    <script src="/js/rdv.js"defer></script>
+    <script src="/js/rdv.js" defer></script>
 
     <script>
       function openNav() {
