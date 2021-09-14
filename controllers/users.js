@@ -3,14 +3,23 @@ const { Account, User, Admin } = require("../models/user");
 const passwordHash = require("password-hash");
 const jwt = require("jsonwebtoken");
 const { db } = require("../util/db");
+const pool = require("../util/db").pool;
 const nodemailer  = require('nodemailer');
 const fs = require('fs');
 const ejs = require('ejs');
+const sendNotif = require('../app');
 
+exports.logOut = (req,res,next)=> {
+  console.log("wow");
+  res.clearCookie("jwt"); 
+  res.redirect('/users/login');
+ res.status(200).json({
+    msg: "Disconnected",
+    });
+}
 
+exports.getLogin = (req, res, next) => {  
 
-exports.getLogin = (req, res, next) => {
-  
   if(req.headers.cookie == null ) {
     res.render("auth/index", {error : ""}); 
     return; 
@@ -23,22 +32,20 @@ exports.getLogin = (req, res, next) => {
     return; 
   }
   // user connected ;
-
   jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     (err,decodedToken)=> {
       console.log(decodedToken);
     if(decodedToken.role == "administrateur")  {
     // res.redirect('/users/home'); admin home 
-    res.redirect('/users/admin/gestion');
+ return   res.redirect('/users/admin/gestion');
       }else if (decodedToken.role == "médecin") {
-      // medecin home provisoire ; 
-          res.redirect('/users/medecin/list'); 
+   return     res.redirect('/users/medecin/list'); 
     }else if(decodedToken.role =="rh" ) {
       // redirect home rh 
-          res.send('<h1> interface rh</h1>'); 
+      res.redirect('/users/medecin/infoStat'); 
     }else if(decodedToken.role = "aide-soignant") {
       // redirect home aide 
-      res.send('<h1> interface aide soignant</h1>'); 
+      return res.redirect('/users/medecin/list2'); 
     }else {
       res.render("auth/index", {error : ""}); 
     }
@@ -69,11 +76,11 @@ exports.getHome = (req,res,next) => {
     if(decodedToken.role == "administrateur")  {
       res.redirect('/users/admin/gestion'); 
     }else if (decodedToken.role == "médecin") {
-          res.redirect('/users/medecin/list'); 
+     res.redirect('/users/medecin/home'); 
     }else if(decodedToken.role =="rh" ) {
-          res.send('<h1> interface rh</h1>'); 
+      res.redirect('/users/medecin/infoStat'); 
     }else if(decodedToken.role = "aide-soignant") {
-      res.send('<h1> interface aide soignant</h1>'); 
+      return res.redirect('/users/medecin/list2'); 
     }else {
       res.redirect('/users/login'); 
     }
@@ -87,6 +94,7 @@ const maxAge = 3 * 24 * 60 * 60;
 let cpt = 0;
 //login controller for everyone except patient
 exports.login = (req, res) => {
+  console.log("called");
   if (cpt == 3) {
     Account.findOne({ where: { email: req.body.email } }).then((account) => {
       account.active = false;
@@ -104,8 +112,16 @@ exports.login = (req, res) => {
         });
       } else {
         if (account.active) {
-         let result = passwordHash.verify(req.body.password, account.Password);
-          // let result = req.body.password == account.Password ; 
+
+         
+          
+
+          
+          let result = req.body.password == account.Password ; 
+         if(!result ) {
+          result = passwordHash.verify(req.body.password, account.Password);
+         }
+
           if (result) {
             // check if it's a normal user (médecin ,aide-soignant ou RH)
             User.findOne({ where: { Email: account.Email } })
@@ -233,19 +249,23 @@ db.query("SELECT * FROM ACCOUNT WHERE Email = ?",
 }
 exports.postForget = (req,res , next) => {
   const url = "http://localhost:3000";
-  db.query("SELECT * FROM Account WHERE email = ?",[req.body.email],(err,result) => {
+  console.log(req.body.email);
+  pool.getConnection(function(err,connection){
+    connection.query("SELECT * FROM Account WHERE email = ?",[req.body.email],(err,result) => {
       if(err){
           console.log('error:',err);
       }else{
+        console.log('result',result);
+        
         if(result.length == 0) {
        return res.status(200).json({
             error : "ce compte n'éxiste pas" , 
           }); 
           // check if it's not a << patient >> 
         } else {
-     db.query("Select * from patient where email = ? ",
+     connection.query("Select * from patient where email = ? ",
      [req.body.email],(err,result2)=> {
-       if(result2.length == 0) {
+       if(result2.length != 0) {
         const email = req.body.email ; 
         const token = jwt.sign(
             {email},
@@ -286,7 +306,7 @@ exports.postForget = (req,res , next) => {
                 message : "Un mail de récupération vous a été envoyé" , 
               });
             }
-          });
+          });  
        }else {
         res.status(200).json({
           error : "Ce compte n'éxiste pas" , 
@@ -294,16 +314,15 @@ exports.postForget = (req,res , next) => {
        }
      }
      )
-        }
-        
-          
+        }    
       }
         
   })
+  }); 
+
 }
 exports.postConfirm = (req,res, next)=> {
-
-const token = req.query.token;           
+const token = req.query.token;       
 return res.render('auth/resetPassword',{token : token}); 
 }
 
@@ -311,21 +330,24 @@ exports.postReset = (req,res, next)=> {
 
   const token = req.query.token;
   jwt.verify(token, process.env.JWT_SECRET_CODE,
-      (err,decodedToken)=> {
+      (err,decodedToken) => {
           if (err) {
               console.log('error',err); 
           } else {
               const email = decodedToken.email ; 
               const password = passwordHash.generate(req.body.password)
-              db.query("Update Account set password = ? where email = ? ",
-              [password,email],(err,result)=> {
-                  if(err) {
-                    console.log('error',err); 
-                  }else {
-                    res.send("Votre mot de passe est changé");
-                  }
-
-              })
+                pool.getConnection(function(err,connection){
+                  pool.query("Update Account set password = ? where email = ? ",
+                  [password,email],(err,result)=> {
+                      if(err) {
+                        console.log('error',err); 
+                      }else {
+                        res.send("Votre mot de passe est changé");
+                      }
+    
+                  });
+                });
+             
           }
 
   }); 

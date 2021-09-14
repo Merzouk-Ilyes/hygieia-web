@@ -159,6 +159,26 @@ document.querySelector(".addup").addEventListener("click",() => {
     var poso = document.getElementById('posoup').value;
     var trait = document.getElementById('traitup').value;
 
+    var list = document.getElementById('medsup').options;
+    var test=false;
+        for (var j = 0; j < list.length; j++) { 
+            if(med ===list[j].value){
+                const parent = med1.parentElement;
+                const small = parent.querySelector("small");
+                small.className = "noterror";
+                small.innerText = null;
+                test =true;
+                break;
+            }
+        }
+    if(test === false){
+        const parent = med1.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Ce medecament n'existe pas";
+        return;
+    }
+
     var myTab = document.getElementById('listup');
 
     for (i = 0; i < myTab.rows.length; i++) {
@@ -236,6 +256,7 @@ document.querySelector(".valideup").addEventListener("click",() => {
         }
 
         var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>';
+        var today_date = document.getElementById("today_date");
 
         $.ajax({
         method: "POST",
@@ -244,6 +265,7 @@ document.querySelector(".valideup").addEventListener("click",() => {
             "id":id.value,
             "info":infoup.value,
             "num_sick":num_sick.value,
+            "today_date":today_date.value,
         },
         success: function (result) {
             document.querySelector(".hideordonanceup").classList.remove("open");

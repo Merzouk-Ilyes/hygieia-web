@@ -71,8 +71,7 @@ document.querySelector(".validecerup").addEventListener("click",() => {
         var des = document.getElementById('desup');
         var num_pre = document.getElementById('num_pre');
         var type = document.getElementById('typeup').value;
-
-       alert(type);
+        var today_date = document.getElementById('today_date');
 
        var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>';
        
@@ -137,6 +136,7 @@ document.querySelector(".validecerup").addEventListener("click",() => {
                     "des":des.value,
                     "id":id.value,
                     "num_pre" : num_pre.value,
+                    "today_date":today_date.value,
                 },
                 success: function (result) {
                     document.querySelector(".hidecertificatup").classList.remove("open");
@@ -182,6 +182,7 @@ document.querySelector(".validecerup").addEventListener("click",() => {
                     "des":des.value,
                     "id":id.value,
                     "num_pre" : num_pre.value,
+                    "today_date":today_date.value,
                 },
                 success: function (result) {
                     document.querySelector(".hidecertificatup").classList.remove("open");

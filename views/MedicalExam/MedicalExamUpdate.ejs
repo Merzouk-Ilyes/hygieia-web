@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="/css/MedicalExam/exam.css" />
+    <link rel="stylesheet" href="/css/MedicalExam/exam2.css" />
 
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -142,7 +142,7 @@
                     <div class="info-col">
                       <input type="hidden" name='id' id="id" value="<%= insertexam.IdPatient %>">
                       <label class="label-niv-end">Date du jour : </label>
-                      <input type="text" name="date" id="date" value="<%= update[0].date_medicalexam %>" class="disable inputexam" disabled/>
+                      <input type="text" name="today_date" id="date" value="<%= update[0].date_medicalexam %>" class="disable inputexam" disabled/>
                     </div>
                     <div class="info-col">
                       <label class="label-niv-end">Nom : </label>
@@ -181,13 +181,13 @@
                     <small class="noterror">
                     </small>
                   </div>
-                    <label class="label-niv1">Kg/Cm2</label>
+                    <label class="label-niv1">Kg/Cm²</label>
                     <script>
                       function calcule(){
                         var poids = document.getElementById("poids").value;
                         var taille = document.getElementById("taille").value;
                         var imc =document.getElementById("imc");
-                        var imc1 = poids/((taille*0.01)*(taille*0.01));
+                        var imc1 = poids/((taille*0.01)*(taille*0.01)).toFixed(2);
                         if(imc1<18.5){
                           const parent = imc.parentElement;
                           const small = parent.querySelector("small");
@@ -555,7 +555,7 @@ var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>'  ;
         url: "/users/medecin/updateExam",
         data: {
             "id":id.value,
-            "date":date.value,
+            "today_date":date.value,
             "taille":taille.value,
             "poids":poids.value,
             "imc":imc.value,
@@ -713,5 +713,5 @@ var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>'  ;
  
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="/js/exam.js"></script>
+  <script src="/js/exam2.js"></script>
 </html>

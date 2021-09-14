@@ -108,7 +108,9 @@ $.ajax({
             "typeexamen":typeexamenup.value,
         },
         success: function (result) {
+            alert('result');
             var data = document.getElementById('typeexamensup');
+            var typeexamenup = document.getElementById('typeexamenup');
 
             var op = document.createElement('option');
             op.value = typeexamenup.value;
@@ -158,6 +160,26 @@ $.ajax({
         
         var typeexamen = document.getElementById('typeexamenup').value;  
         var resexamen = document.getElementById('resexamenup').value; 
+
+        var list = document.getElementById('typeexamensup').options;
+        var test=false;
+        for (var j = 0; j < list.length; j++) { 
+            if(typeexamen ===list[j].value){
+                const parent = typeexamen1.parentElement;
+                const small = parent.querySelector("small");
+                small.className = "noterror";
+                small.innerText = null;
+                test =true;
+                break;
+            }
+        }
+    if(test === false){
+        const parent = typeexamen1.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Cet examen n'existe pas";
+        return;
+    }
 
         var myTab = document.getElementById('listbilanup');
 
@@ -260,7 +282,7 @@ $.ajax({
                     }
                 }
 
-                var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>';
+                var today_date = document.getElementById('today_date');
                 conclusioon.value = document.getElementById('conclusioonup').value;
             $.ajax({
                 method: "POST",
@@ -271,6 +293,7 @@ $.ajax({
                     'infobilan':infobilanup.value,
                     'num_ch' : num_ch.value,
                     'id':id.value,
+                    'today_date' : today_date.value,
                 },
                 success: function (result) {
                     document.querySelector(".hidebilanup").classList.remove("open");

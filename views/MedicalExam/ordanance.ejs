@@ -158,6 +158,26 @@ document.querySelector(".add").addEventListener("click",() => {
     var poso = document.getElementById('poso').value;
     var trait = document.getElementById('trait').value;
 
+    var list = document.getElementById('meds').options;
+    var test=false;
+        for (var j = 0; j < list.length; j++) { 
+            if(med ===list[j].value){
+                const parent = med1.parentElement;
+                const small = parent.querySelector("small");
+                small.className = "noterror";
+                small.innerText = null;
+                test =true;
+                break;
+            }
+        }
+    if(test === false){
+        const parent = med1.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Ce medecament n'existe pas";
+        return;
+    }
+
     var tbodyRef = document.getElementById('list').getElementsByTagName('tbody')[0];
 
     var myTab = document.getElementById('list');
@@ -237,15 +257,16 @@ document.querySelector(".valide").addEventListener("click",() => {
                 info.value = info.value + '#' + objCells.item(j).innerHTML ;
             }
         }
-
-        var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>';
+        var today_date = document.getElementById("today_date");
+        document.getElementById('valide').disabled=true;
 
         $.ajax({
             method: "POST",
-            url: '/users/medecin/addSicknote/?id='+parsed_data,
+            url: '/users/medecin/addSicknote',
             data: {
                 "id":id.value,
                 "info":info.value,
+                "today_date":today_date.value,
             },
             success: function (result) {
                 document.querySelector(".hideordonance").classList.remove("open");

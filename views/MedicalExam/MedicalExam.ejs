@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="/css/MedicalExam/exam.css" />
+    <link rel="stylesheet" href="/css/MedicalExam/exam2.css" />
 
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -145,9 +145,9 @@
                       <input type="text" name="date" id="today_date" class="disable inputexam" disabled/>
                       <script>
                         let today = new Date();
-                        let month = today.getMonth() + 1;
+                        let month = ('0'+(today.getMonth() + 1)).slice(-2);
                         let year = today.getFullYear();
-                        let date = today.getDate();
+                        let date = ('0'+(today.getDate())).slice(-2);
                         var today_date = date + "/" + month + "/" + year;
                         document.getElementById("today_date").value = today_date;
                       </script>
@@ -189,13 +189,13 @@
                     <small class="noterror">
                     </small>
                   </div>
-                    <label class="label-niv1">Kg/Cm2</label>
+                    <label class="label-niv1">Kg/Cm²</label>
                     <script>
                       function calcule(){
                         var poids = document.getElementById("poids").value;
                         var taille = document.getElementById("taille").value;
                         var imc =document.getElementById("imc");
-                        var imc1 = poids/((taille*0.01)*(taille*0.01));
+                        var imc1 = poids/((taille*0.01)*(taille*0.01)).toFixed(2);
                         if(imc1<18.5){
                           const parent = imc.parentElement;
                           const small = parent.querySelector("small");
@@ -296,8 +296,11 @@
                   <input type="hidden" id='listmal' name="listmal">
                   <div>
                 </div>
+                <% if (exam.length < 1) { %>
                   <input type="button" class="outline" id="valide" onclick="valideexamenmedical()" value="Valider examen">
-                </div>
+                <% }else{ %>
+                  <input type="button" class="outline" id="valide" onclick="created()" value="Valider examen" >
+                <% } %></div>
               </div>
               <script>
                 document.querySelector(".addmal").addEventListener("click",() => {
@@ -318,7 +321,7 @@
 
                   find = test;
 
-                  alert(find);
+                  var mal = mal.replace(/ /g,"_");
 
                   $.ajax({
                     method: "POST",
@@ -383,8 +386,15 @@ function showMsg(str,err) {
   setTimeout(function(){
     $('.alert').removeClass("show");
     $('.alert').addClass("hide");
-  },10000);
+  },5000);
 }
+
+function created(){
+        alert("Vous avez deja creer un !"); 
+      }
+      function validedabord(){
+        alert("Vous devrai d'abord valider l'examen !");
+      }
 
 function valideexamenmedical(){
 
@@ -527,27 +537,7 @@ for(var i=1;i<list.length;i++){
     }
   }
 } 
-if(find == false){
-  listmal.value = "";
-  if(diagnostic.length < 1){
-        const parent = diagnostic.parentElement;
-        const small = parent.querySelector("small");
-        diagnostic.className="errorarea";
-        small.className = "";
-        small.innerText = "choisir une maladie";
-        window.scrollTo(0, diagnostic.offsetTop -150);
-        return;
-    }else{
-        const parent = diagnostic.parentElement;
-        const small = parent.querySelector("small");
-        diagnostic.className="textarea";
-        small.className = "noterror";
-        small.innerText = null;
-    }
-  return
-}
 
-var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>'  ;
 var id = document.getElementById("id");
     var poids = document.getElementById("poids");
     var taille = document.getElementById("taille");
@@ -556,6 +546,7 @@ var id = document.getElementById("id");
     var motif = document.getElementById("motif");
     var signe = document.getElementById("signe");
     var diagnostic = document.getElementById("diagnostic");
+    var today_date = document.getElementById("today_date");
 
     $.ajax({
         method: "POST",
@@ -570,10 +561,11 @@ var id = document.getElementById("id");
             "signe":signe.value,
             "diagnostic":diagnostic.value,
             "listmal":listmal.value,
+            "today_date":today_date.value,
         },
         success: function (result) {
+          document.location.reload() ; 
           showMsg("Examen medical bien ajouter",!result.err); 
-          document.getElementById('valide').disabled=true;  
         },
     });
   }
@@ -605,10 +597,14 @@ var id = document.getElementById("id");
           </table>
         </div>
         <div>
+          <% if (exam.length < 1) { %>
+            <input type="button" class="btn doc-button" onclick="validedabord()" value="Ajouter Ordonnance" >
+          <% }else{ %>
           <% if (ordo.length < 1) { %>
           <input type="button" class="btn doc-button" onclick="ordanance()" value="Ajouter Ordonnance">
           <% }else{ %>
-            <input type="button" class="btn doc-button" value="Ajouter Ordonnance" disabled>
+            <input type="button" class="btn doc-button" onclick="created()" value="Ajouter Ordonnance" >
+          <% } %>
           <% } %>
         </div>
       </div>
@@ -638,10 +634,14 @@ var id = document.getElementById("id");
           </table>
         </div>
         <div>
+          <% if (exam.length < 1) { %>
+            <input type="button" class="btn doc-button" onclick="validedabord()" value="Ajouter Bilan" >
+          <% }else{ %>
           <% if (bilan.length < 1) { %>
             <input type="button" class="btn doc-button" onclick="bilan()" value="Ajouter Bilan">
             <% }else{ %>
-              <input type="button" class="btn doc-button" value="Ajouter Bilan" disabled>
+              <input type="button" class="btn doc-button" onclick="created()" value="Ajouter Bilan" >
+            <% } %>
             <% } %>
           
         </div>
@@ -672,10 +672,14 @@ var id = document.getElementById("id");
           </table>        
         </div>
         <div>
+          <% if (exam.length < 1) { %>
+            <input type="button" class="btn doc-button" onclick="validedabord()" value="Ajouter Orientation" >
+          <% }else{ %>
           <% if (orientation.length < 1) { %>
             <input type="button" class="btn doc-button" onclick="orienta()" value="Ajouter Orientation">
             <% }else{ %>
-              <input type="button" class="btn doc-button" value="Ajouter Orientation" disabled>
+              <input type="button" class="btn doc-button" onclick="created()" value="Ajouter Orientation" >
+            <% } %>
             <% } %>
         </div>
       </div>
@@ -705,12 +709,15 @@ var id = document.getElementById("id");
           </table>
         </div>
         <div>
+          <% if (exam.length < 1) { %>
+            <input type="button" class="btn doc-button" onclick="validedabord()" value="Ajouter Evacuation" >
+          <% }else{ %>
           <% if (evacuation.length < 1) { %>
             <input type="button" class="btn doc-button" onclick="evacuation()" value="Ajouter Evacuation">
             <% }else{ %>
-              <input type="button" class="btn doc-button" value="Ajouter Evacuation" disabled>
+              <input type="button" class="btn doc-button" onclick="created()" value="Ajouter Evacuation" >
             <% } %>
-          
+            <% } %>
         </div>
       </div>
       <div class="doc6-container" id="Ordonnance5">
@@ -739,11 +746,15 @@ var id = document.getElementById("id");
           </table>   
         </div>
         <div>
+          <% if (exam.length < 1) { %>
+            <input type="button" class="btn doc-button" onclick="validedabord()" value="Ajouter Certificat" >
+          <% }else{ %>
           <% if (prescription.length < 1) { %>
             <input type="button" class="btn doc-button" onclick="certificat()" value="Ajouter Certificat">
             <% }else{ %>
-              <input type="button" class="btn doc-button" value="Ajouter Certificat" disabled>
-            <% } %>         
+              <input type="button" class="btn doc-button" onclick="created()" value="Ajouter Certificat" >
+            <% } %>    
+            <% } %>          
         </div>
       </div>
     </div>
@@ -756,5 +767,5 @@ var id = document.getElementById("id");
  
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="/js/exam.js"></script>
+  <script src="/js/exam2.js"></script>
 </html>

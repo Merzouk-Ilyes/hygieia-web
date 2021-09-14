@@ -9,19 +9,18 @@ const fs = require('fs');
 const path = require('path');
 const pool = require("../util/db").pool;
 const uploadFile = require('../middleware/uploadFile');
-const ptp = require('pdf-to-printer');
+const open = require('open');
 
 // ------------------------------------- examen medical ----------------------------------------------
 exports.getinfoUpdateExam = (req,res,next) => {
-  var id_medecin ='185';
 
-    /*const rawCookies = req.headers.cookie.split('; ');
+    const rawCookies = req.headers.cookie.split('; ');
     const parsedCookie = rawCookies[0].split('=')[1];
     jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     async (err,decodedToken)=>   {
       console.log(decodedToken,'token of ordo');
       id_medecin = decodedToken.IdUser;
-    });*/
+    });
  
   let today = new Date();
    let month = today.getMonth() +1;
@@ -139,15 +138,14 @@ exports.getinfoUpdateExam = (req,res,next) => {
 }
 
 exports.getinfoExam = (req,res,next) => {
-    var id_medecin ='185';
-  
-      /*const rawCookies = req.headers.cookie.split('; ');
+
+      const rawCookies = req.headers.cookie.split('; ');
       const parsedCookie = rawCookies[0].split('=')[1];
       jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
       async (err,decodedToken)=>   {
         console.log(decodedToken,'token of ordo');
         id_medecin = decodedToken.IdUser;
-      });*/
+      });
    
     let today = new Date();
      let month = today.getMonth() +1;
@@ -211,6 +209,12 @@ exports.getinfoExam = (req,res,next) => {
                                                         if(err) {
                                                           console.log("error", err);
                                                         }else{
+                                                          db.query("SELECT * FROM medicalexam where iduser = ? and idpatient = ? and date_medicalexam = ?",[id_medecin,req.query.id,db_date],
+                                                      (err,exam)=> {
+                                                        console.log(result);
+                                                        if(err) {
+                                                          console.log("error", err);
+                                                        }else{
                                                           res.render('MedicalExam/MedicalExam', {
                                                             title: 'Exam insertion',
                                                             insertexam: result[0],
@@ -223,8 +227,12 @@ exports.getinfoExam = (req,res,next) => {
                                                             evacuation : evacuation,
                                                             prescription : prescription,
                                                             typemal : typemal,
+                                                            exam : exam,
                                                           }
                                                         );
+                                                        
+                                                        }
+                                                      });
                                                         
                                                         }
                                                       });
@@ -258,14 +266,13 @@ exports.getinfoExam = (req,res,next) => {
 
 exports.postaddExam = (req,res,next) => {
 
-  var id_medecin ='185';
-  /*const rawCookies = req.headers.cookie.split('; ');
+  const rawCookies = req.headers.cookie.split('; ');
   const parsedCookie = rawCookies[0].split('=')[1];
   jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
   async (err,decodedToken)=>   {
     console.log(decodedToken,'token of ordo');
     id_medecin = decodedToken.IdUser;
-  });*/
+  });
   id_patient = req.body.id;
   let today = new Date();
   let month = today.getMonth() +1;
@@ -308,15 +315,13 @@ exports.postaddExam = (req,res,next) => {
 
 exports.postupdateExam = (req,res,next) => {
 
-  var id_medecin ='185';
-
-    /*const rawCookies = req.headers.cookie.split('; ');
+    const rawCookies = req.headers.cookie.split('; ');
     const parsedCookie = rawCookies[0].split('=')[1];
     jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     async (err,decodedToken)=>   {
       console.log(decodedToken,'token of ordo');
       id_medecin = decodedToken.IdUser;
-    });*/
+    });
 
   let mot = req.body.listmal;
   const list = mot.split("#");
@@ -424,23 +429,20 @@ if(find == 0){
    //--- CREATE SICKNOTE ---//
   exports.postSicknote = (req,result,next) => {
 
-    var id_medecin ='185';
-    /*const rawCookies = req.headers.cookie.split('; ');
+    const rawCookies = req.headers.cookie.split('; ');
     const parsedCookie = rawCookies[0].split('=')[1];
     jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     async (err,decodedToken)=>   {
       console.log(decodedToken,'token of ordo');
       id_medecin = decodedToken.IdUser;
-    });*/
+    });
     id_patient = req.body.id;
-    
-   let today = new Date();
-   let month = today.getMonth() +1;
-   let year = today.getFullYear();
-   let date = today.getDate();
-   let day = year + '-'+ month + '-' + date;
-   var db_date=dateFormat(day,"yyyy-mm-dd");
-  
+
+   var date=req.body.today_date;
+   const d = date.split("/");
+   var db_date=d[2]+'-'+d[1]+'-'+d[0];
+   year=d[2];
+
    let mot = req.body.info;
    const list = mot.split("#");
    
@@ -490,12 +492,13 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
     if(err) {
       console.log("error", err);
     }else{
-      db.query("SELECT * FROM users WHERE IdUser = ?",[id_medecin],
+      db.query("SELECT * FROM users u inner join doctor d on u.IdUser=d.Iduser WHERE d.Iduser = ?",[id_medecin],
        (err, res1) => {
           if(err) {
             console.log("error", err);
           }else{
      
+          var specialite = res1[0].speciality ;
           var nommed = res1[0].Lastname ;
           var prenommed = res1[0].Firstname ;
           var nom = res[0].p_Lastname ;
@@ -505,7 +508,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
           
 
           const doc = new PDFDocument({compress:false});
-          name_file = 'Ordonnance'+db_date+'.pdf';
+          name_file = 'Ordonnance'+id_patient+'_'+id_medecin+db_date+'.pdf';
           
           const file = fs.createWriteStream(name_file); 
           
@@ -522,12 +525,12 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
           doc
             .font('Times-Roman')
             .fontSize(12)
-            .text('Ouahrani abdelkader ecole \n     Oued Ramane Alger \n\nTel : +213 48 749 452 \nFax : 0216039329 \nE-mail : contact@esi-sba.dz', 60 , 125,{width: 230 , align: 'centre'});
+            .text('BP 73 Bureau de poste ELWIAM, Sidi Djillali \n           Sidi Bel Abbés 22016, Algérie\n\n    Tél : +213 48 74 94 52 \n    Fax : +213 48 74 94 50 \n    E-mail : contact@esi-sba.dz', 60 , 125,{width: 230 , align: 'centre'});
             
           doc
             .font('Times-Roman')
             .fontSize(13)
-            .text(' Dr: '+nommed+' '+prenommed+' \n    Cardiologue \n\n Sidi Bel Abbès\n Le: '+db_date, 390, 130,{width: 200 , align: 'centre', valign: 'right'});
+            .text(' Dr: '+nommed+' '+prenommed+' \n    '+specialite+' \n\n Sidi Bel Abbès\n Le: '+db_date, 390, 130,{width: 200 , align: 'centre', valign: 'right'});
             
           doc.moveDown();
  
@@ -554,7 +557,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
             .font('Times-Roman')
             .fontSize(15)
             .fillColor('black')
-            .text('Prenom: '+prenom, 260, 255,{width:150, align: 'centre', valign: 'centre'});
+            .text('Prénom: '+prenom, 260, 255,{width:150, align: 'centre', valign: 'centre'});
             
             doc
             .font('Times-Roman')
@@ -633,22 +636,19 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
    //--- CREATE ORIENTATION ---//
   exports.postOrientation = (req,result,next) => {
 
-    var id_medecin ='185';
-    /*const rawCookies = req.headers.cookie.split('; ');
+    const rawCookies = req.headers.cookie.split('; ');
     const parsedCookie = rawCookies[0].split('=')[1];
     jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     async (err,decodedToken)=>   {
       console.log(decodedToken,'token of ordo');
       id_medecin = decodedToken.IdUser;
-    });*/
+    });
     id_patient = req.body.id;
 
-    let today = new Date();
-    let month = today.getMonth() +1;
-    let year = today.getFullYear();
-    let date = today.getDate();
-    let day = year + '-'+ month + '-' + date;
-    var db_date=dateFormat(day,"yyyy-mm-dd");
+   var date=req.body.today_date;
+   const d = date.split("/");
+   var db_date=d[2]+'-'+d[1]+'-'+d[0];
+   year=d[2];
    
     let mot = req.body.infoori;
     const list = mot.split("/");
@@ -694,7 +694,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
   function createpdforientation(req,re,next,db_date,list,year,id_patient,id_medecin,numor){
 
     const doc = new PDFDocument({compress:false});
-  name_file = 'Orientation'+db_date+'.pdf';
+  name_file = 'Orientation'+id_patient+'_'+id_medecin+db_date+'.pdf';
    
   const file = fs.createWriteStream(name_file); 
   try {
@@ -711,12 +711,13 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
       if(err) {
         console.log("error", err);
       }else{
-        db.query("SELECT * FROM users WHERE IdUser = ?",[id_medecin],
-         (err, res1) => {
-            if(err) {
-              console.log("error", err);
-            }else{
-       
+        db.query("SELECT * FROM users u inner join doctor d on u.IdUser=d.Iduser WHERE d.Iduser = ?",[id_medecin],
+       (err, res1) => {
+          if(err) {
+            console.log("error", err);
+          }else{
+     
+            var specialite = res1[0].speciality ;
             var nommed = res1[0].Lastname ;
             var prenommed = res1[0].Firstname ;
             var nom = res[0].p_Lastname ;
@@ -735,12 +736,12 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
             doc
               .font('Times-Roman')
               .fontSize(12)
-              .text('Ouahrani abdelkader ecole \n     Oued Ramane Alger \n\nTel : +213 48 749 452 \nFax : 0216039329 \nE-mail : contact@esi-sba.dz', 60 , 125,{width: 230 , align: 'centre'});
+              .text('BP 73 Bureau de poste ELWIAM, Sidi Djillali \n           Sidi Bel Abbés 22016, Algérie\n\n    Tél : +213 48 74 94 52 \n    Fax : +213 48 74 94 50 \n    E-mail : contact@esi-sba.dz', 60 , 125,{width: 230 , align: 'centre'});
               
             doc
               .font('Times-Roman')
               .fontSize(13)
-              .text(' Dr: '+nommed+' '+prenommed+' \n    Cardiologue \n\n Sidi Bel Abbès\n Le: '+db_date, 390, 130,{width: 200 , align: 'centre', valign: 'right'});
+              .text(' Dr: '+nommed+' '+prenommed+' \n    '+specialite+' \n\n Sidi Bel Abbès\n Le: '+db_date, 390, 130,{width: 200 , align: 'centre', valign: 'right'});
               
             doc.moveDown();
    
@@ -767,7 +768,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
               .font('Times-Roman')
               .fontSize(15)
               .fillColor('black')
-              .text('Prenom: '+prenom, 260, 255,{width:150, align: 'centre', valign: 'centre'});
+              .text('Prénom: '+prenom, 260, 255,{width:150, align: 'centre', valign: 'centre'});
               
               doc
               .font('Times-Roman')
@@ -789,9 +790,9 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
               .font('Times-Roman')
               .fontSize(15)
               .fillColor('black')
-              .text('Chere confrere ;\n\n Permettez moi de vous adresser le patient '
-              +nom+' '+prenom+' agee de '+age+
-              ' ans, aux antcd de '+req.body.antc+' qui a consulte a notre service pour '+req.body.consult+' \n\n Je vous le confie pour faire l\'(les) examen suivant :',
+              .text('Chèr confrère ;\n\n Permettez moi de vous adresser le patient '
+              +nom+' '+prenom+' âgé de '+age+
+              ' ans, aux antcd de '+req.body.antc+' qui consulte a notre service pour '+req.body.consult+' \n\n Je vous le confie pour faire l\'(les) examen(s) suivant(s) :',
               80,350,{ align: 'centre', valign: 'centre'});
   
               doc.moveDown();
@@ -842,22 +843,19 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
    //--- CREATE BILAN ---//
   exports.postBilan = (req,result,next) => {
   
-    var id_medecin ='185';
-    /*const rawCookies = req.headers.cookie.split('; ');
+    const rawCookies = req.headers.cookie.split('; ');
     const parsedCookie = rawCookies[0].split('=')[1];
     jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     async (err,decodedToken)=>   {
       console.log(decodedToken,'token of ordo');
       id_medecin = decodedToken.IdUser;
-    });*/
+    });
     id_patient = req.body.id;
 
-    let today = new Date();
-    let month = today.getMonth() +1;
-    let year = today.getFullYear();
-    let date = today.getDate();
-    let day = year + '-'+ month + '-' + date;
-    var db_date=dateFormat(day,"yyyy-mm-dd");
+   var date=req.body.today_date;
+   const d = date.split("/");
+   var db_date=d[2]+'-'+d[1]+'-'+d[0];
+   year=d[2];
    
     let mot = req.body.infobilan;
     const list = mot.split("/"); 
@@ -902,7 +900,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
   function createpdfbilan(req,re,next,db_date,list,year,id_patient,id_medecin,numbi){
 
     const doc = new PDFDocument({compress:false});
-    name_file = 'Bilan'+db_date+'.pdf';
+    name_file = 'Bilan'+id_patient+'_'+id_medecin+db_date+'.pdf';
     
     const file = fs.createWriteStream(name_file); 
     try {
@@ -918,12 +916,13 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
      if(err) {
        console.log("error", err);
      }else{
-       db.query("SELECT * FROM users WHERE IdUser = ?",[id_medecin],
-        (err, res1) => {
-           if(err) {
-             console.log("error", err);
-           }else{
-      
+      db.query("SELECT * FROM users u inner join doctor d on u.IdUser=d.Iduser WHERE d.Iduser = ?",[id_medecin],
+      (err, res1) => {
+         if(err) {
+           console.log("error", err);
+         }else{
+    
+           var specialite = res1[0].speciality ;
            var nommed = res1[0].Lastname ;
            var prenommed = res1[0].Firstname ;
            var nom = res[0].p_Lastname ;
@@ -942,12 +941,12 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
            doc
              .font('Times-Roman')
              .fontSize(12)
-             .text('Ouahrani abdelkader ecole \n     Oued Ramane Alger \n\nTel : +213 48 749 452 \nFax : 0216039329 \nE-mail : contact@esi-sba.dz', 60 , 125,{width: 230 , align: 'centre'});
+             .text('BP 73 Bureau de poste ELWIAM, Sidi Djillali \n           Sidi Bel Abbés 22016, Algérie\n\n    Tél : +213 48 74 94 52 \n    Fax : +213 48 74 94 50 \n    E-mail : contact@esi-sba.dz', 60 , 125,{width: 230 , align: 'centre'});
              
            doc
              .font('Times-Roman')
              .fontSize(13)
-             .text(' Dr: '+nommed+' '+prenommed+' \n    Cardiologue \n\n Sidi Bel Abbès\n Le: '+db_date, 390, 130,{width: 200 , align: 'centre', valign: 'right'});
+             .text(' Dr: '+nommed+' '+prenommed+' \n    '+specialite+' \n\n Sidi Bel Abbès\n Le: '+db_date, 390, 130,{width: 200 , align: 'centre', valign: 'right'});
              
            doc.moveDown();
   
@@ -973,7 +972,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
              .font('Times-Roman')
              .fontSize(15)
              .fillColor('black')
-             .text('Prenom: '+prenom, 260, 255,{width:150, align: 'centre', valign: 'centre'});
+             .text('Prénom: '+prenom, 260, 255,{width:150, align: 'centre', valign: 'centre'});
              
              doc
              .font('Times-Roman')
@@ -995,7 +994,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
            .fontSize(15)
            .fillColor('black')
           .text('Compte rendu du patient '
-          +nom+' '+prenom+' agee de '+age+' ans, consulte pour '+req.body.consultexam,80, 350,{ align: 'centre'});
+          +nom+' '+prenom+' âgé de '+age+' ans, consulte pour '+req.body.consultexam,80, 350,{ align: 'centre'});
           
           doc.moveDown();
           
@@ -1003,7 +1002,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
            .font('Times-Roman')
            .fontSize(15)
            .fillColor('black')
-          .text('Apres la realisation des examens sus-cite : ',80, 390,{ align: 'centre', valign: 'centre'});
+          .text('Apres la realisation des examens sus-cité : ',80, 390,{ align: 'centre', valign: 'centre'});
           
           doc.moveDown();
  
@@ -1021,7 +1020,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
           .font('Times-Roman')
           .fontSize(15)
           .fillColor('black')
-         .text(' Le diagnostic conclue pour le malade est : '+req.body.conclusioon,{ align: 'centre', valign: 'centre'});
+         .text(' On conclue : '+req.body.conclusioon,{ align: 'centre', valign: 'centre'});
          
            doc.end();
 
@@ -1059,22 +1058,19 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
    //--- CREATE EVACUATION ---//
   exports.postEvacuation = (req,res,next) => {
   
-    var id_medecin ='185';
-    /*const rawCookies = req.headers.cookie.split('; ');
+    const rawCookies = req.headers.cookie.split('; ');
     const parsedCookie = rawCookies[0].split('=')[1];
     jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     async (err,decodedToken)=>   {
       console.log(decodedToken,'token of ordo');
       id_medecin = decodedToken.IdUser;
-    });*/
+    });
     id_patient = req.body.id;
 
-    let today = new Date();
-    let month = today.getMonth() +1;
-    let year = today.getFullYear();
-    let date = today.getDate();
-    let day = year + '-'+ month + '-' + date;
-    var db_date=dateFormat(day,"yyyy-mm-dd");
+   var date=req.body.today_date;
+   const d = date.split("/");
+   var db_date=d[2]+'-'+d[1]+'-'+d[0];
+   year=d[2];
 
     db.query("INSERT INTO evacuation ( `cause_evacuation`, `place_evacuation`, `hospital`, `duration_evacuation`, `iduser`, `idpatient`, `date_medicalexam`) VALUES (?, ?, ?, ?, ?, ?, ?);",[
       req.body.causeev,req.body.wil,req.body.hopital,req.body.dure,id_medecin,id_patient,db_date],
@@ -1103,7 +1099,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
   function createpdfevacuation(req,re,next,db_date,year,id_patient,id_medecin,numev){
 
     const doc = new PDFDocument({compress:false});
-    name_file = 'Evacuation'+db_date+'.pdf';
+    name_file = 'Evacuation'+id_patient+'_'+id_medecin+db_date+'.pdf';
     
     const file = fs.createWriteStream(name_file); 
     try {
@@ -1119,12 +1115,13 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
      if(err) {
        console.log("error", err);
      }else{
-       db.query("SELECT * FROM users WHERE IdUser = ?",[id_medecin],
-        (err, res1) => {
-           if(err) {
-             console.log("error", err);
-           }else{
-      
+      db.query("SELECT * FROM users u inner join doctor d on u.IdUser=d.Iduser WHERE d.Iduser = ?",[id_medecin],
+      (err, res1) => {
+         if(err) {
+           console.log("error", err);
+         }else{
+    
+           var specialite = res1[0].speciality ;
            var nommed = res1[0].Lastname ;
            var prenommed = res1[0].Firstname ;
            var nom = res[0].p_Lastname ;
@@ -1143,12 +1140,12 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
            doc
              .font('Times-Roman')
              .fontSize(12)
-             .text('Ouahrani abdelkader ecole \n     Oued Ramane Alger \n\nTel : +213 48 749 452 \nFax : 0216039329 \nE-mail : contact@esi-sba.dz', 60 , 125,{width: 230 , align: 'centre'});
+             .text('BP 73 Bureau de poste ELWIAM, Sidi Djillali \n           Sidi Bel Abbés 22016, Algérie\n\n    Tél : +213 48 74 94 52 \n    Fax : +213 48 74 94 50 \n    E-mail : contact@esi-sba.dz', 60 , 125,{width: 230 , align: 'centre'});
              
            doc
              .font('Times-Roman')
              .fontSize(13)
-             .text(' Dr: '+nommed+' '+prenommed+' \n    Cardiologue \n\n Sidi Bel Abbès\n Le: '+db_date, 390, 130,{width: 200 , align: 'centre', valign: 'right'});
+             .text(' Dr: '+nommed+' '+prenommed+' \n    '+specialite+' \n\n Sidi Bel Abbès\n Le: '+db_date, 390, 130,{width: 200 , align: 'centre', valign: 'right'});
              
            doc.moveDown();
   
@@ -1175,7 +1172,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
              .font('Times-Roman')
              .fontSize(15)
              .fillColor('black')
-             .text('Prenom: '+prenom, 260, 255,{width:150, align: 'centre', valign: 'centre'});
+             .text('Prénom: '+prenom, 260, 255,{width:150, align: 'centre', valign: 'centre'});
              
              doc
              .font('Times-Roman')
@@ -1198,9 +1195,12 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
             .font('Times-Roman')
             .fontSize(15)
             .fillColor('black')
-            .text('Chere confrere ;\n\n Permettez moi de vous adresser le patient '
-            +nom+' '+prenom+' agee de '+age+
-            ' ans, aux antcd de '+req.body.antcev+' qui a consulte a notre service pour '+req.body.consultev+' \n\n ..............................',
+            .text('Chèr confrère ;\n\n Permettez moi de vous adresser le patient '
+            +nom+' '+prenom+' âgé de '+age+
+            ' ans, pour la prise en charge de soins à l\'hopital '+req.body.hopital+' à '+req.body.wil+'.\n\n'+
+            'En effet, la situation médical de mon malade ('+req.body.causeev+') nécessite des soins chez vous pour une durée de '+req.body.dure+
+            ' \n\n Etablis par : Dr '+nommed+' '+prenommed+' de l\'Ecole Nationale Supérieure d\'Informatique de Sidi Bel Abbès'+
+             '\n\n                                                                                   Le : '+db_date,
             80,350,{ align: 'centre', valign: 'centre'});
  
             doc.moveDown();
@@ -1239,22 +1239,19 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
    //--- CREATE CERTIFICAT ---//
   exports.postCertificatRepos = (req,re,next) => {
   
-    var id_medecin ='185';
-    /*const rawCookies = req.headers.cookie.split('; ');
+    const rawCookies = req.headers.cookie.split('; ');
     const parsedCookie = rawCookies[0].split('=')[1];
     jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     async (err,decodedToken)=>   {
       console.log(decodedToken,'token of ordo');
       id_medecin = decodedToken.IdUser;
-    });*/
+    });
     id_patient = req.body.id;
 
-    let today = new Date();
-    let month = today.getMonth() +1;
-    let year = today.getFullYear();
-    let date = today.getDate();
-    let day = year + '-'+ month + '-' + date;
-   var db_date=dateFormat(day,"yyyy-mm-dd");
+   var date=req.body.today_date;
+   const d = date.split("/");
+   var db_date=d[2]+'-'+d[1]+'-'+d[0];
+   year=d[2];
 
     db.query("INSERT INTO prescription (`type_prescription`, `iduser`, `idpatient`, `date_medicalexam`) VALUES ('repos', ?, ?, ?);",[
       id_medecin,id_patient,db_date],
@@ -1302,7 +1299,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
   function createpdfcertificatropos(req,re,next,db_date,year,id_patient,id_medecin,numpre){
 
     const doc = new PDFDocument({compress:false});
-    name_file = 'Certificat_repos'+db_date+'.pdf';
+    name_file = 'Certificat_repos'+id_patient+'_'+id_medecin+db_date+'.pdf';
     
     const file = fs.createWriteStream(name_file); 
     try {
@@ -1318,38 +1315,39 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
       if(err) {
         console.log("error", err);
       }else{
-        db.query("SELECT * FROM users WHERE IdUser = ?",[id_medecin],
-         (err, res1) => {
-            if(err) {
-              console.log("error", err);
-            }else{
-       
-            var nommed = res1[0].Lastname ;
-            var prenommed = res1[0].Firstname ;
-            var nom = res[0].p_Lastname ;
-            var prenom = res[0].p_Firstname ;
-            var nee = res[0].yearB;
-            var age = year - nee;
-            
-            doc.image('public/assets/Logo-Complet-ESI-SBA.png', 495, 30, {fit: [80, 80], align: 'centre'});
-            doc
-              .font('Times-Bold')
-              .fontSize(18)
-              .text('UMP de l\'Ecole Nationale Supérieure d\'Informatique de Sidi Bel Abbès', 155, 50 ,{width: 300,
-               align: 'center'});
-              
-              doc.moveDown();
-            doc
-              .font('Times-Roman')
-              .fontSize(12)
-              .text('Ouahrani abdelkader ecole \n     Oued Ramane Alger \n\nTel : +213 48 749 452 \nFax : 0216039329 \nE-mail : contact@esi-sba.dz', 60 , 125,{width: 230 , align: 'centre'});
-              
-            doc
-              .font('Times-Roman')
-              .fontSize(13)
-              .text(' Dr: '+nommed+' '+prenommed+' \n    Cardiologue \n\n Sidi Bel Abbès\n Le: '+db_date, 390, 130,{width: 200 , align: 'centre', valign: 'right'});
-              
-            doc.moveDown();
+        db.query("SELECT * FROM users u inner join doctor d on u.IdUser=d.Iduser WHERE d.Iduser = ?",[id_medecin],
+        (err, res1) => {
+           if(err) {
+             console.log("error", err);
+           }else{
+      
+             var specialite = res1[0].speciality ;
+             var nommed = res1[0].Lastname ;
+             var prenommed = res1[0].Firstname ;
+             var nom = res[0].p_Lastname ;
+             var prenom = res[0].p_Firstname ;
+             var nee = res[0].yearB;
+             var age = year - nee;
+             
+             doc.image('public/assets/Logo-Complet-ESI-SBA.png', 495, 30, {fit: [80, 80], align: 'centre'});
+             doc
+               .font('Times-Bold')
+               .fontSize(18)
+               .text('UMP de l\'Ecole Nationale Supérieure d\'Informatique de Sidi Bel Abbès', 155, 50 ,{width: 300,
+                align: 'center'});
+               
+               doc.moveDown();
+             doc
+               .font('Times-Roman')
+               .fontSize(12)
+               .text('BP 73 Bureau de poste ELWIAM, Sidi Djillali \n           Sidi Bel Abbés 22016, Algérie\n\n    Tél : +213 48 74 94 52 \n    Fax : +213 48 74 94 50 \n    E-mail : contact@esi-sba.dz', 60 , 125,{width: 230 , align: 'centre'});
+               
+             doc
+               .font('Times-Roman')
+               .fontSize(13)
+               .text(' Dr: '+nommed+' '+prenommed+' \n    '+specialite+' \n\n Sidi Bel Abbès\n Le: '+db_date, 390, 130,{width: 200 , align: 'centre', valign: 'right'});
+               
+             doc.moveDown();
    
             const entete = {
               headers: ['',''],
@@ -1374,7 +1372,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
               .font('Times-Roman')
               .fontSize(15)
               .fillColor('black')
-              .text('Prenom: '+prenom, 260, 255,{width:150, align: 'centre', valign: 'centre'});
+              .text('Prénom: '+prenom, 260, 255,{width:150, align: 'centre', valign: 'centre'});
               
               doc
               .font('Times-Roman')
@@ -1397,10 +1395,10 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
              .font('Times-Roman')
              .fontSize(15)
              .fillColor('black')
-             .text('Je soussigne Docteur '+nommed+' '+prenommed+' \n\nCertifier que l\'etat de M/Mme '+nom+' '+prenom+' agee de '+age+
-             ' ans, \nnecessite un repos (ou prolongation de repos) de : '+req.body.nbjour+' jours sauf complication, a compter du : '+req.body.debut+
-             ' \n\nLe patient pourra reprendre ses activites a compter du : '+req.body.fin+
-             ' \n\n\n\n                                                                                   Fait a : '+req.body.des+
+             .text('Je soussigne Docteur '+nommed+' '+prenommed+' \n\nCertifier que l\'état de M/Mme '+nom+' '+prenom+' âgé de '+age+
+             ' ans, \nnécessite un repos (ou prolongation de repos) de : '+req.body.nbjour+' jours sauf complication, à compter du : '+req.body.debut+
+             ' \n\nLe patient pourra reprendre ses activités à compter du : '+req.body.fin+
+             ' \n\n\n\n                                                                                   Fait à : '+req.body.des+
              '\n                                                                                   Le : '+db_date,
              80,370,{ align: 'centre', valign: 'centre'});
   
@@ -1440,22 +1438,19 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
   
   exports.postCertificatPratique = (req,re,next) => {
   
-    var id_medecin ='185';
-    /*const rawCookies = req.headers.cookie.split('; ');
+    const rawCookies = req.headers.cookie.split('; ');
     const parsedCookie = rawCookies[0].split('=')[1];
     jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     async (err,decodedToken)=>   {
       console.log(decodedToken,'token of ordo');
       id_medecin = decodedToken.IdUser;
-    });*/
+    });
     id_patient = req.body.id;
 
-    let today = new Date();
-    let month = today.getMonth() +1;
-    let year = today.getFullYear();
-    let date = today.getDate();
-    let day = year + '-'+ month + '-' + date;
-   var db_date=dateFormat(day,"yyyy-mm-dd");
+   var date=req.body.today_date;
+   const d = date.split("/");
+   var db_date=d[2]+'-'+d[1]+'-'+d[0];
+   year=d[2];
 
     db.query("INSERT INTO prescription (`type_prescription`, `iduser`, `idpatient`, `date_medicalexam`) VALUES ('pratique', ?, ?, ?);",[
       id_medecin,id_patient,db_date],
@@ -1504,7 +1499,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
    function createpdfcertificatpratique(req,re,next,db_date,year,id_patient,id_medecin,numpre){
 
     const doc = new PDFDocument({compress:false});
-    name_file = 'Certificat_pratique'+db_date+'.pdf';
+    name_file = 'Certificat_pratique'+id_patient+'_'+id_medecin+db_date+'.pdf';
     
     const file = fs.createWriteStream(name_file); 
     try {
@@ -1521,12 +1516,13 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
      if(err) {
        console.log("error", err);
      }else{
-       db.query("SELECT * FROM users WHERE IdUser = ?",[id_medecin],
-        (err, res1) => {
-           if(err) {
-             console.log("error", err);
-           }else{
-      
+      db.query("SELECT * FROM users u inner join doctor d on u.IdUser=d.Iduser WHERE d.Iduser = ?",[id_medecin],
+      (err, res1) => {
+         if(err) {
+           console.log("error", err);
+         }else{
+    
+           var specialite = res1[0].speciality ;
            var nommed = res1[0].Lastname ;
            var prenommed = res1[0].Firstname ;
            var nom = res[0].p_Lastname ;
@@ -1545,15 +1541,15 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
            doc
              .font('Times-Roman')
              .fontSize(12)
-             .text('Ouahrani abdelkader ecole \n     Oued Ramane Alger \n\nTel : +213 48 749 452 \nFax : 0216039329 \nE-mail : contact@esi-sba.dz', 60 , 125,{width: 230 , align: 'centre'});
+             .text('BP 73 Bureau de poste ELWIAM, Sidi Djillali \n           Sidi Bel Abbés 22016, Algérie\n\n    Tél : +213 48 74 94 52 \n    Fax : +213 48 74 94 50 \n    E-mail : contact@esi-sba.dz', 60 , 125,{width: 230 , align: 'centre'});
              
            doc
              .font('Times-Roman')
              .fontSize(13)
-             .text(' Dr: '+nommed+' '+prenommed+' \n    Cardiologue \n\n Sidi Bel Abbès\n Le: '+db_date, 390, 130,{width: 200 , align: 'centre', valign: 'right'});
+             .text(' Dr: '+nommed+' '+prenommed+' \n    '+specialite+' \n\n Sidi Bel Abbès\n Le: '+db_date, 390, 130,{width: 200 , align: 'centre', valign: 'right'});
              
            doc.moveDown();
-  
+
            const entete = {
              headers: ['',''],
              rows: [['','']]
@@ -1600,9 +1596,9 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
             .font('Times-Roman')
             .fontSize(15)
             .fillColor('black')
-            .text('Je soussigne Docteur '+nommed+' '+prenommed+' \n\n Certifier que l\'etat de M/Mme '+nom+' '+prenom+' agee de '+age+
-            ' ans, \nne revele pas de contre-indication a la pratique du '+req.body.cause+
-            ' \n\n\nEtanlis a : '+req.body.des+
+            .text('Je soussigne Docteur '+nommed+' '+prenommed+' \n\n Certifier que l\'état de M/Mme '+nom+' '+prenom+' âgé de '+age+
+            ' ans, \nne révèle pas de contre-indication à la pratique du '+req.body.cause+
+            ' \n\n\nEtablis à : '+req.body.des+
             '\n\n\n\n                                                                                   Le : '+db_date,
             80,370,{ align: 'centre', valign: 'centre'});
  
@@ -1642,17 +1638,18 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
     //--- UPDATE SICKNOTE ---//
   exports.postupdateSicknote = (req,re,next) => {
   
-    let today = new Date();
-    let year = today.getFullYear();
-    var id_medecin ='185';
-    /*const rawCookies = req.headers.cookie.split('; ');
+    const rawCookies = req.headers.cookie.split('; ');
     const parsedCookie = rawCookies[0].split('=')[1];
     jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     async (err,decodedToken)=>   {
       console.log(decodedToken,'token of ordo');
       id_medecin = decodedToken.IdUser;
-    });*/
+    });
     id_patient = req.body.id;
+
+   var date=req.body.today_date;
+   const d = date.split("/");
+   year=d[2];
 
     let mot = req.body.info;
     const list = mot.split("#");
@@ -1698,18 +1695,18 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
     //--- UPDATE ORIENTATION ---//
   exports.postupdateOrientation = (req,res,next) => {
 
-    var id_medecin ='185';
-    /*const rawCookies = req.headers.cookie.split('; ');
+    const rawCookies = req.headers.cookie.split('; ');
     const parsedCookie = rawCookies[0].split('=')[1];
     jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     async (err,decodedToken)=>   {
       console.log(decodedToken,'token of ordo');
       id_medecin = decodedToken.IdUser;
-    });*/
+    });
     id_patient = req.body.id;
 
-    let today = new Date();
-    let year = today.getFullYear();
+   var date=req.body.today_date;
+   const d = date.split("/");
+   year=d[2];
    
     let mot = req.body.infoori;
     const list = mot.split("/");
@@ -1768,18 +1765,18 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
     //--- UPDATE BILAN ---//
   exports.postupdateBilan = (req,re,next) => {
 
-    var id_medecin ='185';
-    /*const rawCookies = req.headers.cookie.split('; ');
+    const rawCookies = req.headers.cookie.split('; ');
     const parsedCookie = rawCookies[0].split('=')[1];
     jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     async (err,decodedToken)=>   {
       console.log(decodedToken,'token of ordo');
       id_medecin = decodedToken.IdUser;
-    });*/
+    });
     id_patient = req.body.id;
 
-    let today = new Date();
-    let year = today.getFullYear();
+   var date=req.body.today_date;
+   const d = date.split("/");
+   year=d[2];
    
     let mot = req.body.infobilan;
     const list = mot.split("/"); 
@@ -1841,18 +1838,18 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
     //--- UPDATE EVACUATION ---//
   exports.postupdateEvacuation = (req,res,next) => {
 
-    var id_medecin ='185';
-    /*const rawCookies = req.headers.cookie.split('; ');
+    const rawCookies = req.headers.cookie.split('; ');
     const parsedCookie = rawCookies[0].split('=')[1];
     jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     async (err,decodedToken)=>   {
       console.log(decodedToken,'token of ordo');
       id_medecin = decodedToken.IdUser;
-    });*/
+    });
     id_patient = req.body.id;
 
-    let today = new Date();
-    let year = today.getFullYear();
+   var date=req.body.today_date;
+   const d = date.split("/");
+   year=d[2];
   
     pool.getConnection(function(err, connection) {
       connection.query("update evacuation set cause_evacuation = ? , place_evacuation = ? , hospital = ? , duration_evacuation = ? where num_ev = ?",[
@@ -1885,22 +1882,19 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
     //--- UPDATE CERTIFICARCAT REPOS ---//
   exports.postupdateCertificatRepos = (req,re,next) => {
 
-    var id_medecin ='185';
-    /*const rawCookies = req.headers.cookie.split('; ');
+    const rawCookies = req.headers.cookie.split('; ');
     const parsedCookie = rawCookies[0].split('=')[1];
     jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     async (err,decodedToken)=>   {
       console.log(decodedToken,'token of ordo');
       id_medecin = decodedToken.IdUser;
-    });*/
+    });
     id_patient = req.body.id;
 
-    console.log('==============================================');
+   var date=req.body.today_date;
+   const d = date.split("/");
+   year=d[2];
 
-    console.log(req.body.num_pre);
-
-    let today = new Date();
-    let year = today.getFullYear();
 
             pool.getConnection(function(err, connection) {
               connection.query("update rest set nb_day = ? , date_start_rest = ? , date_end_rest = ? , destination_rest = ? where num_pre = ?",[
@@ -1931,18 +1925,18 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
     //--- UPDATE CERTIFICAT PRATIQUE ---//
   exports.postupdateCertificatPratique = (req,res,next) => {
 
-    var id_medecin ='185';
-    /*const rawCookies = req.headers.cookie.split('; ');
+    const rawCookies = req.headers.cookie.split('; ');
     const parsedCookie = rawCookies[0].split('=')[1];
     jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
     async (err,decodedToken)=>   {
       console.log(decodedToken,'token of ordo');
       id_medecin = decodedToken.IdUser;
-    });*/
+    });
     id_patient = req.body.id;
 
-    let today = new Date();
-    let year = today.getFullYear();
+   var date=req.body.today_date;
+   const d = date.split("/");
+   year=d[2];
 
           pool.getConnection(function(err, connection) {
             connection.query("update rest set cause_practice = ? , destination_rest = ? where num_pre = ?",[
@@ -1983,13 +1977,24 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
           return res.send('error'); 
         }else{
           pool.getConnection(function(err, connection) {
-            connection.query("delete from sicknote where num_sick =? ",[req.body.num_sick],
-            (err, result1) => {
+            connection.query("SELECT *,DATE_FORMAT(date_medicalexam,'%Y-%m-%d') as date FROM sicknote WHERE  num_sick = ?",
+            [req.body.num_sick],
+            (err, pre) => {
               console.log(err);
               if(err) {
                 return res.send('error'); 
               }else{
-                return res.send('succes');
+                connection.query("delete from sicknote where num_sick =? ",[req.body.num_sick],
+                (err,pp)=> {
+                  if(err) {
+                    console.log("error", err);
+                  }else{
+                    fs.unlink("Ordonnance"+pre[0].idpatient+"_"+pre[0].iduser+pre[0].date+".pdf", function(err){
+                      if(err) throw err;
+                    });
+                    return res.send('succes'); 
+                  }
+                });
               }
             }
             );
@@ -2009,12 +2014,23 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
           return res.send('error'); 
         }else{
           pool.getConnection(function(err, connection) {
-            connection.query("delete from orientation where num_or =? ",[req.body.num_or],
-            (err, result1) => {
+            connection.query("SELECT *,DATE_FORMAT(date_medicalexam,'%Y-%m-%d') as date FROM orientation WHERE  num_or = ?",
+            [req.body.num_or],
+            (err, pre) => {
               console.log(err);
               if(err) {
                 return res.send('error'); 
               }else{
+                connection.query("delete from orientation where num_or =? ",[req.body.num_or],
+                (err,tt)=> {
+                  if(err) {
+                    console.log("error", err);
+                  }else{
+                    fs.unlink("Orientation"+pre[0].idpatient+"_"+pre[0].iduser+pre[0].date+".pdf", function(err){
+                      if(err) throw err;
+                    });
+                  }
+                });
                 return res.send('succes');
               }
             }
@@ -2035,12 +2051,23 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
           return res.send('error'); 
         }else{
           pool.getConnection(function(err, connection) {
-            connection.query("delete from medical_checkup where num_ch =? ",[req.body.num_ch],
-            (err, result1) => {
+            connection.query("SELECT *,DATE_FORMAT(date_medicalexam,'%Y-%m-%d') as date FROM medical_checkup WHERE  num_ch = ?",
+            [req.body.num_ch],
+            (err, pre) => {
               console.log(err);
               if(err) {
                 return res.send('error'); 
               }else{
+                connection.query("delete from medical_checkup where num_ch =? ",[req.body.num_ch],
+                (err,r)=> {
+                  if(err) {
+                    console.log("error", err);
+                  }else{
+                    fs.unlink("Bilan"+pre[0].idpatient+"_"+pre[0].iduser+pre[0].date+".pdf", function(err){
+                      if(err) throw err;
+                    });
+                  }
+                });
                 return res.send('succes');
               }
             }
@@ -2055,16 +2082,27 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
     //--- DELETE EVACUATION ---//
   exports.postdeleteEvacuation = (req,res,next) => {
     pool.getConnection(function(err, connection) {
-      connection.query("delete from evacuation where num_ev =? ",[req.body.num_ev],
-      (err, result1) => {
-        console.log(err);
+      connection.query("SELECT *,DATE_FORMAT(date_medicalexam,'%Y-%m-%d') as date FROM evacuation WHERE  num_ev = ?",
+      [req.body.num_ev],
+      (err,pre)=> {
         if(err) {
-          return res.send('error'); 
+          console.log("error", err);
         }else{
-          return res.send('succes');
+          connection.query("delete from evacuation where num_ev =? ",[req.body.num_ev],
+          (err, result1) => {
+            console.log(err);
+            if(err) {
+              return res.send('error'); 
+            }else{
+              fs.unlink("Evacuation"+pre[0].idpatient+"_"+pre[0].iduser+pre[0].date+".pdf", function(err){
+                if(err) throw err;
+              });
+              return res.send('succes');
+            }
+          }
+          );
         }
-      }
-      );
+      });
     });
   }
   
@@ -2090,6 +2128,9 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
                       if(err) {
                         console.log('error'); 
                       }else{
+                        fs.unlink("Certificat_repos"+pre[0].idpatient+"_"+pre[0].iduser+pre[0].date+".pdf", function(err){
+                          if(err) throw err;
+                        });
                         re.send('succes');
                       }
                     }
@@ -2112,6 +2153,9 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
                       if(err) {
                         console.log('error'); 
                       }else{
+                        fs.unlink("Certificat_pratique"+pre[0].idpatient+"_"+pre[0].iduser+pre[0].date+".pdf", function(err){
+                          if(err) throw err;
+                        });
                         re.send('succes');
                       }
                     }
@@ -2274,20 +2318,16 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
         }
       });
   }
-  
 
   exports.postimprimeSicknote = (req,result,next) => {
-    console.log(req.body.num_sick);
-    db.query("SELECT DATE_FORMAT(date_medicalexam,'%Y-%m-%d') as date FROM sicknote WHERE  num_sick = ?",
+
+    db.query("SELECT *,DATE_FORMAT(date_medicalexam,'%Y-%m-%d') as date FROM sicknote WHERE  num_sick = ?",
     [req.body.num_sick],
     (err,pre)=> {
       if(err) {
         console.log("error", err);
       }else{
-        ptp
-        .print("Ordonnance"+pre[0].date+".pdf")
-        .then(console.log)
-        .catch(console.error);
+        open("Ordonnance"+pre[0].idpatient+"_"+pre[0].iduser+pre[0].date+".pdf");
       }
     });
 
@@ -2304,46 +2344,37 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
 
   exports.postimprimeBilan = (req,result,next) => {
 
-    db.query("SELECT DATE_FORMAT(date_medicalexam,'%Y-%m-%d') as date FROM medical_checkup WHERE  num_ch = ?",
+    db.query("SELECT *,DATE_FORMAT(date_medicalexam,'%Y-%m-%d') as date FROM medical_checkup WHERE  num_ch = ?",
     [req.body.num_ch],
     (err,pre)=> {
       if(err) {
         console.log("error", err);
       }else{
-        ptp
-        .print("Bilan"+pre[0].date+".pdf")
-        .then(console.log)
-        .catch(console.error);
+        open("Bilan"+pre[0].idpatient+"_"+pre[0].iduser+pre[0].date+".pdf");
       }
     });
   }
 
   exports.postimprimeOrientation = (req,result,next) => {
-    db.query("SELECT DATE_FORMAT(date_medicalexam,'%Y-%m-%d') as date FROM orientation WHERE  num_or = ?",
+    db.query("SELECT *,DATE_FORMAT(date_medicalexam,'%Y-%m-%d') as date FROM orientation WHERE  num_or = ?",
     [req.body.num_or],
     (err,pre)=> {
       if(err) {
         console.log("error", err);
       }else{
-        ptp
-        .print("Orientation"+pre[0].date+".pdf")
-        .then(console.log)
-        .catch(console.error);
+        open("Orientation"+pre[0].idpatient+"_"+pre[0].iduser+pre[0].date+".pdf")
       }
     });
   }
 
   exports.postimprimeEvacuation = (req,result,next) => {
-    db.query("SELECT DATE_FORMAT(date_medicalexam,'%Y-%m-%d') as date FROM evacuation WHERE  num_ev = ?",
+    db.query("SELECT *,DATE_FORMAT(date_medicalexam,'%Y-%m-%d') as date FROM evacuation WHERE  num_ev = ?",
     [req.body.num_ev],
     (err,pre)=> {
       if(err) {
         console.log("error", err);
       }else{
-        ptp
-        .print("Evacuation"+pre[0].date+".pdf")
-        .then(console.log)
-        .catch(console.error);
+        open("Evacuation"+pre[0].idpatient+"_"+pre[0].iduser+pre[0].date+".pdf");
       }
     });
   }
@@ -2356,16 +2387,10 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
         console.log("error", err);
       }else{
         if(pre[0].type_prescription == 'repos'){
-          ptp
-          .print("Certificat_repos"+pre[0].date+".pdf")
-          .then(console.log)
-          .catch(console.error);
+          open("Certificat_repos"+pre[0].idpatient+"_"+pre[0].iduser+pre[0].date+".pdf");
         }
         if(pre[0].type_prescription == 'pratique'){
-          ptp
-          .print("Certificat_pratique"+pre[0].date+".pdf")
-          .then(console.log)
-          .catch(console.error);
+          open("Certificat_pratique"+pre[0].idpatient+"_"+pre[0].iduser+pre[0].date+".pdf");
         }
       }
     });

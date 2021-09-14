@@ -49,7 +49,7 @@
                     </small>
                 </div>
                 <input type="hidden" id="infoori" name="infoori">
-                <input type="button" class="valideorientation" value="Valider l'orientation">
+                <input type="button" id="valideorientation" class="valideorientation" value="Valider l'orientation">
             </form>
         </div>
     </div>           
@@ -133,6 +133,26 @@ $.ajax({
         }
 
         var examcomp = document.getElementById('examcomp').value;  
+
+        var list = document.getElementById('examcomps').options;
+        var test=false;
+        for (var j = 0; j < list.length; j++) { 
+            if(examcomp ===list[j].value){
+                const parent = examcomp1.parentElement;
+                const small = parent.querySelector("small");
+                small.className = "noterror";
+                small.innerText = null;
+                test =true;
+                break;
+            }
+        }
+    if(test === false){
+        const parent = examcomp1.parentElement;
+        const small = parent.querySelector("small");
+        small.className = "";
+        small.innerText = "Cet examen n'existe pas";
+        return;
+    }
 
         var myTab = document.getElementById('listor');
 
@@ -226,6 +246,9 @@ $.ajax({
             }
 
         var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>'  ;
+        var today_date = document.getElementById("today_date");
+
+        document.getElementById('valideorientation').disabled=true;
 
         $.ajax({
             method: "POST",
@@ -235,6 +258,7 @@ $.ajax({
                 'consult':consult.value,
                 'infoori':infoori.value,
                 'id':id.value,
+                "today_date":today_date.value,
             },
             success: function (result) {
                 document.querySelector(".hideorientation").classList.remove("open");
