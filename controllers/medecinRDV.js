@@ -9,6 +9,7 @@ exports.getRDVindividuel = (req, res, next) => {
   console.log("get rdv individuel");
   const rawCookies = req.headers.cookie.split("; ");
   const parsedCookie = rawCookies[0].split("=")[1];
+  var idpatient = req.query.id;
   jwt.verify(
     parsedCookie,
     process.env.JWT_SECRET_CODE,
@@ -32,6 +33,7 @@ exports.getRDVindividuel = (req, res, next) => {
                     res.render("RDV/rdvPatient", {
                       rdvind: result,
                       studinfo: result2,
+                      id:idpatient,
                       first:decodedToken.firstname
                     });
                     connection.release();
