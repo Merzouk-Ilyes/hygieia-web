@@ -7,6 +7,7 @@ const notif = require('../../util/sendNotif');
 router.post("/signup",  patientController.signupPatient);
 // executing activate controller POST request (postActivate)
 router.get("/activate", patientController.activatePatientAccount); 
+router.post('/validateRdv',patientController2.validateRdv);
 // executing login for patient 
 router.post("/login" ,patientController.login);
 router.post("/getProfile" ,patientController.getProfile);
@@ -23,5 +24,6 @@ router.post('/updateRdvanotherDate',patientController2.updateRdvanotherDate);
 router.post('/getDateProposedDate',patientController2.getDateProposedDate);
 router.post('/changeDateRdv',patientController2.changeDateRdv);
 router.post('/getNotification',patientController2.getNotification);
+
 
 module.exports = router ;

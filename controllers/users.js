@@ -209,42 +209,49 @@ exports.changePassword= (req,res)=> {
   res.render('auth/changePassword');
 }
 exports.changePasswordPost = (req,res)=> {
+  console.log("mabakich bezzaf");
+  console.log(req.body);
 
- if(req.body.password.length == 0  || req.body.password2.length == 0 ) {
+ if(req.body.password.length == 0  || req.body.passowrd2.length == 0 ) {
 
  return res.send({
   "message" :"error", 
   "error": "invalid input", 
 })
  } else {
-db.query("SELECT * FROM ACCOUNT WHERE Email = ?",
-["f.djellali@esi-sba.dz"] , (err,result)=> {
-  if(result.length == 0) {
-    return res.send({
-      "message" :"error", 
-      "error": "Account d'ont exists", 
-    })
-  }else {
-    const old_password = result[0].Password ; 
-    if(old_password != req.body.password) {
-      return res.send({
-        "message" :"error", 
-        "error": "invalid old password", 
-      });
-     
-    }else {
-      db.query("UPDATE Account SET Password = ?   where Email = ? ",
-      [req.body.password2,req.body.email],(err,result) =>{
-        console.log(err);
+   pool.getConnection(function(err, connection){
+    connection.query("SELECT * FROM ACCOUNT WHERE Email = ?",
+    [req.body.email] , (err,result)=> {
+      if(result.length == 0) {
+        console.log("you here 1"); 
         return res.send({
-          "message" :"success", 
-          "error": "mot de passe changé avec succées", 
-        });
-      })
+          "message" :"error", 
+          "error": "Account d'ont exists", 
+        })
+      }else {
+        const old_password = result[0].Password ; 
+        if(old_password != req.body.password) {
+          console.log("you here 2"); 
+          return res.send({
+            "message" :"error", 
+            "error": "invalid old password", 
+          });
+        }else {
+          connection.query("UPDATE Account SET Password = ?   where Email = ? ",
+          [req.body.password2,req.body.email],(err,result) =>{
+            console.log(err);
+            console.log("you here 3"); 
+            return res.send({
+              "message" :"success", 
+              "error": "mot de passe changé avec succées", 
+            });
+          })
+        }
+      }
     }
-  }
-}
-)
+    )
+   })
+
  }
 }
 exports.postForget = (req,res , next) => {
@@ -354,3 +361,15 @@ exports.postReset = (req,res, next)=> {
 
 }
 
+
+exports.download = (req, res) => {
+  const fileName = req.params.name;
+  const directoryPath = __basedir + "resources/static/assets/";
+  res.download(directoryPath + fileName, fileName, (err) => {
+    if (err) {
+      res.status(500).send({
+        message: "Could not download the file. " + err,
+      });
+    }
+  });
+};

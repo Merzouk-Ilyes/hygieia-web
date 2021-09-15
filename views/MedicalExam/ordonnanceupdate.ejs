@@ -256,6 +256,7 @@ document.querySelector(".valideup").addEventListener("click",() => {
         }
 
         var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>';
+        var today_date = document.getElementById("today_date");
 
         $.ajax({
         method: "POST",
@@ -264,6 +265,7 @@ document.querySelector(".valideup").addEventListener("click",() => {
             "id":id.value,
             "info":infoup.value,
             "num_sick":num_sick.value,
+            "today_date":today_date.value,
         },
         success: function (result) {
             document.querySelector(".hideordonanceup").classList.remove("open");

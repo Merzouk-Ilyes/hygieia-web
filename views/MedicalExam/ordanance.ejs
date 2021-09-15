@@ -257,6 +257,8 @@ document.querySelector(".valide").addEventListener("click",() => {
                 info.value = info.value + '#' + objCells.item(j).innerHTML ;
             }
         }
+        var today_date = document.getElementById("today_date");
+        document.getElementById('valide').disabled=true;
 
         $.ajax({
             method: "POST",
@@ -264,6 +266,7 @@ document.querySelector(".valide").addEventListener("click",() => {
             data: {
                 "id":id.value,
                 "info":info.value,
+                "today_date":today_date.value,
             },
             success: function (result) {
                 document.querySelector(".hideordonance").classList.remove("open");

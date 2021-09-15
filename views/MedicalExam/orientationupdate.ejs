@@ -246,6 +246,7 @@ $.ajax({
             }
 
             var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>'  ;
+            var today_date = document.getElementById("today_date");
 
             $.ajax({
                 method: "POST",
@@ -256,6 +257,7 @@ $.ajax({
                     'infoori':infooriup.value,
                     'id':id.value,
                     "num_or":num_or.value,
+                    "today_date":today_date.value,
                 },
                 success: function (result) {
                     document.querySelector(".hideorientationup").classList.remove("open");

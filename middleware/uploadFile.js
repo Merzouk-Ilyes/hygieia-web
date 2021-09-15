@@ -4,16 +4,17 @@ const PDFDocument = require('pdfkit');
 const doc = new PDFDocument;
 
 const storage = new Storage({
-    keyFilename: "hygeia-312122-firebase-adminsdk-2d6g4-54fa815f71.json"
+    keyFilename: "hygeia-312122-firebase-adminsdk-2d6g4-54fa815f71.json",
+    bucketName : 'hygeia-312122.appspot.com'
 });
 let bucketName = 'hygeia-312122.appspot.com';
 // trés important car aprés on va l'utiliser pour écraser ou supprimer il doit étre sauvgardé aussi dans la bdd pour la manipulation
 
 //let filename = 'IdPatient-typeDocument-date(AAAA-MM-JJ).pdf';
 //let filename = 'output.pdf'; 
-
 function uploadToStorage(filename) {
-    return new Promise(function (resolve, reject){
+    return new Promise(async function (resolve, reject){
+      await storage.bucket(bucketName).makePublic();
 
       storage.bucket(bucketName).upload(filename, {
             metadata: {},
@@ -21,7 +22,8 @@ function uploadToStorage(filename) {
                 file = storage.bucket(bucketName).file(filename);
                 file.getSignedUrl({
                   action: 'read',
-                  expires: '03-09-2491'
+              
+                  expires: '03-09-2091',
                 }).then(signedUrls => {
                     console.log(signedUrls);
                     resolve(signedUrls[0]);

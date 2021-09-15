@@ -2,6 +2,7 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 var dateFormat = require('dateformat');
 const db = require("../util/db").db;
+const uploadPic = require('../middleware/uploadFile');
 const PDFDocument = require('../util/pdfkit-tables');
 const doc = new PDFDocument({compress:false});
 const fs = require('fs');
@@ -281,3 +282,12 @@ exports.getStat = (req,res,next) => {
 
 
     }
+
+
+  exports.postProfileUploadSingle =
+  async function (req, res, next) {
+    // req.file is the `profile-file` file
+    // req.body will hold the text fields, if there were any
+    
+
+  }

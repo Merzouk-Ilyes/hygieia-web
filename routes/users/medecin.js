@@ -1,9 +1,20 @@
+var multer  = require('multer');
 const express = require('express')
 const medecinControler  = require("../../controllers/medecin"); 
 const medecinControler3  = require("../../controllers/medecin3"); 
 const medecinControler2  = require("../../controllers/medecin2"); 
 const medecinRDV  = require("../../controllers/medecinRDV");
+const uploadFile = require('../../middleware/uploadFile');
 
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+})
+var upload = multer({ storage: storage })
 const router =express.Router();
 router.get('/list',medecinControler.getList);
 router.get('/medicalFile',medecinControler.getMedicalFile); 
@@ -104,5 +115,14 @@ router.post("/imprimeEvacuation",medecinControler3.postimprimeEvacuation);
 router.post("/imprimeCertificat",medecinControler3.postimprimeCertificat);
 const medecinControler5  = require("../../controllers/medecin5"); 
 router.get('/infoStat', medecinControler5.getStat);
+router.post('/profile_upload_single', upload.single('profile-file'),async  function (req, res, next) {
+    // req.file is the `profile-file` file
+    // req.body will hold the text fields, if there were any
+    console.log(JSON.stringify(req.file))
+  
+    console.log(req.file.path);
  
+    const url = await uploadFile.uploadToStorage(req.file.path);
+
+  })
 module.exports = router ; 

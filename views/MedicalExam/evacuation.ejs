@@ -108,6 +108,8 @@ document.querySelector(".valideev").addEventListener("click",() => {
     }
         var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>';
 
+        document.getElementById('valideev').disabled=true;
+
     $.ajax({
         method: "POST",
         url: "/users/medecin/addEvacuation/?id="+parsed_data,

@@ -240,7 +240,6 @@ exports.changeDateRdv = async (req,res)=> {
                     [new_date,idPatient,idUser],(err,result)=> {
                         var next ;
                         if(result[0].situation_rdv == "6") {
-            
                             sendNotifToMedecin("Reprogrammation du rendez-vous",
                             "le rendez-vous du patient"+ result[0].p_Lastname+ "a été reprogrammé le"+ new_date,
                             req.body.idUser,req.body.idPatient); 
@@ -295,16 +294,17 @@ exports.updateRdvanotherDate  =async (req,res)=> {
     console.log('hi');
     console.log(req.body,idPatient,idUser,date);
     pool.getConnection(function(err,connection){
-        connection.query("select * from rdv,patient where date_rdv = ? and idpatient = ? and iduser = ? and patient.IdPatient= rdv.IdPatient",
+        connection.query("select * from rdv,patient where date_rdv = ? and rdv.idpatient = ? and iduser = ? and patient.IdPatient= rdv.IdPatient",
 
         [date,idPatient,idUser], 
-        (err,result)=>{
-            console.log(result);
+        (err,result2)=>{
+            console.log(err);
+ 
               connection.query("update rdv set situation_rdv = '17' where idpatient = ? and iduser = ? and date_rdv = ?",
                 [idPatient,idUser,date],(err,result)=> {
 
                     sendNotifToMedecin("Demande de reprogrammation",
-                    "Le patient"+ result[0].p_Firstname +"vous demande une" +
+                    "Le patient"+ result2[0].p_Firstname +"vous demande une" +
 "reprogrammation et est entrain d’attendre vos propositions"
 
                     ,req.body.iduser,req.body.idpatient); 
@@ -318,9 +318,37 @@ exports.updateRdvanotherDate  =async (req,res)=> {
 
            
         })
-      
+    }) ; 
+}
+exports.validateRdv  =async (req,res)=> {
+    const idPatient = req.body.idPatient; 
+    const idUser = req.body.idUser; 
+    const date = req.body.date;
+    console.log('hi');
+    console.log(req.body,idPatient,idUser,date);
+    pool.getConnection(function(err,connection){
+        connection.query("select * from rdv,patient where date_rdv = ? and rdv.idpatient = ? and iduser = ? and patient.IdPatient= rdv.IdPatient",
 
+        [date,idPatient,idUser], 
+        (err,result2)=>{
+            console.log(err);
+ 
+              connection.query("update rdv set situation_rdv = '14' where idpatient = ? and iduser = ? and date_rdv = ?",
+                [idPatient,idUser,date],(err,result)=> {
+                    sendNotifToMedecin("rendez-vous validée",
+                    "Le patient"+ result2[0].p_Firstname +"a validé" +
+"son rendez-vous"
+                    ,req.body.iduser,req.body.idpatient); 
+                    if(err){
+                        return res.send({"error" : err})
+                    }else {
+                        return res.send({"success" : err})
+                    }
+                })
+        
 
+           
+        })
     }) ; 
 }
 exports.updateRdv  =async (req,res)=> {
@@ -378,12 +406,14 @@ exports.updateRdv  =async (req,res)=> {
                 next = "20" ;
             }else if(result[0].situation_rdv == "18"){
                 sendNotifToMedecin("Annulation du rendez-vous reprogrammé.",
-                
                 "Le patient" +  result[0].p_Lastname +  "a annulé le rendez-vous reprogrammé"
-              
-        
                                 ,req.body.idUser,req.body.idPatient);
                 next = "22" ;
+            }else if(result[0].situation_rdv == "17"){
+                sendNotifToMedecin("Annulation du rendez-vous reprogrammé.",
+                "Le patient" +  result[0].p_Lastname +  "a annulé le rendez-vous qui l'a demander reprogrammé"
+                                ,req.body.idUser,req.body.idPatient);
+                next = "20" ;
             }
             connection.query("update rdv set situation_rdv = ? where idpatient = ? and iduser = ? and date_rdv = ?",
             [next,idPatient,idUser,date],(err,result)=> {

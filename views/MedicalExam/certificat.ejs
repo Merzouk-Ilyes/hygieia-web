@@ -145,6 +145,9 @@
                 small.innerText = null;
             } 
 
+            document.getElementById('validecer').disabled=true;
+            var today_date = document.getElementById('today_date');
+
             $.ajax({
                 method: "POST",
                 url: "/users/medecin/addCertificatRepos/?id="+parsed_data,
@@ -154,6 +157,7 @@
                     "fin":fin.value,
                     "des":des.value,
                     "id":id.value,
+                    "tpday_date":today_date.value,
                 },
                 success: function (result) {
                     document.querySelector(".hidecertificat").classList.remove("open");
@@ -191,6 +195,8 @@
                 small.innerText = null;
             } 
 
+            document.getElementById('validecer').disabled=true;
+            var today_date = document.getElementById('today_date');
 
             $.ajax({
                 method: "POST",
@@ -199,6 +205,7 @@
                     "cause":cause.value,
                     "des":des.value,
                     "id":id.value,
+                    "today_date":today_date.value,
                 },
                 success: function (result) {
                     document.querySelector(".hidecertificat").classList.remove("open");

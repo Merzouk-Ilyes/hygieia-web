@@ -75,7 +75,7 @@ if(typeexamen.value.length < 1){
     const parent = typeexamen.parentElement;
     const small = parent.querySelector("small");
     small.className = "";
-    small.innerText = "Choisir un medecament";
+    small.innerText = "Choisir un examen";
     return;
 }else{
     const parent = typeexamen.parentElement;
@@ -227,10 +227,11 @@ document.querySelector(".addbilan").addEventListener("click",() => {
     });
 
 document.querySelector(".valideex").addEventListener("click",() => {
-    
+
         var consultexam = document.getElementById('consultexam');  
         var conclusioon = document.getElementById('conclusioon');   
         var infobilan = document.getElementById('infobilan');
+        var today_date = document.getElementById('today_date');
 
         if(consultexam.value.length < 1){
         const parent = consultexam.parentElement;
@@ -280,8 +281,8 @@ document.querySelector(".valideex").addEventListener("click",() => {
                 }
             }
                 
-            var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>';
             
+            document.getElementById('valideex').disabled=true;
             $.ajax({
                 method: "POST",
                 url: "/users/medecin/addBilan/?id="+parsed_data,
@@ -290,6 +291,7 @@ document.querySelector(".valideex").addEventListener("click",() => {
                     'consultexam':consultexam.value,
                     'infobilan':infobilan.value,
                     'id':id.value,
+                    "today_date":today_date.value,
                 },
                 success: function (result) {
                     document.querySelector(".hidebilan").classList.remove("open");

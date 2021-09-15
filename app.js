@@ -11,7 +11,10 @@ const socket = require("socket.io");
 var moment = require('moment');
 app.set("views", "views");
 app.set("view engine", "ejs");
+
 app.use(express.static(path.join(__dirname, "public")));
+app.use('/uploads', express.static('uploads'));
+
 const PORT = process.env.PORT || 3000;
 var server = app.listen(PORT, function (){
   var host = server.address().address
@@ -42,6 +45,21 @@ app.use(cookieParser());
 
 // redirected to the users route
 //(ALL FUNCTIONS CONCERNING AUTHENTICATION & ACCOUNT MANAGEMENT)
+app.get('/download', (req, res)=> {
+  console.log("you are here");
+  // const fileName = req.body.name;
+  const directoryPath = __dirname + "/public/uploads/Dr.médecin_Fouad_2021-8-28-51.pdf";
+
+  res.download(directoryPath ,'Dr.médecin_Fouad_2021-8-28-51.pdf', (err) => {
+    if (err) {
+      res.status(500).send({
+        message: "Could not download the file. " + err,
+      });
+    }
+  });
+
+});
+
 app.use("/users", usersRoutes);
 app.get("/protected", verifyToken, (req, res) => {
   res.json({
@@ -71,3 +89,11 @@ exports.sendNotif = function(title,description,iduser){
      'date': date ,
    });
   }
+
+
+/*
+app.use('/a',express.static('/b'));
+Above line would serve all files/folders inside of the 'b' directory
+And make them accessible through http://localhost:3000/a.
+*/
+

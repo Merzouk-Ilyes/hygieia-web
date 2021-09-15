@@ -108,7 +108,9 @@ $.ajax({
             "typeexamen":typeexamenup.value,
         },
         success: function (result) {
+            alert('result');
             var data = document.getElementById('typeexamensup');
+            var typeexamenup = document.getElementById('typeexamenup');
 
             var op = document.createElement('option');
             op.value = typeexamenup.value;
@@ -280,7 +282,7 @@ $.ajax({
                     }
                 }
 
-                var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>';
+                var today_date = document.getElementById('today_date');
                 conclusioon.value = document.getElementById('conclusioonup').value;
             $.ajax({
                 method: "POST",
@@ -291,6 +293,7 @@ $.ajax({
                     'infobilan':infobilanup.value,
                     'num_ch' : num_ch.value,
                     'id':id.value,
+                    'today_date' : today_date.value,
                 },
                 success: function (result) {
                     document.querySelector(".hidebilanup").classList.remove("open");

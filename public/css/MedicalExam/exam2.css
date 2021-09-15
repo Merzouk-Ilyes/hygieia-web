@@ -128,7 +128,7 @@ input {
   border: 1px solid rgb(0, 0, 0);
 }
 .date-container {
-  margin: 5% 5%;
+  margin: 2% 5% 5%;;
 }
 /* the title of the borered container */
 .title-container {
@@ -156,12 +156,9 @@ input {
 }
 
 .date-title {
-  top: 2.5rem;
+  top: 3.8rem;
   left: 50%;
   width: 17rem;
-}
-.date-container {
-  margin: 5% 5%;
 }
 
 /* the info container inside the bordered container */

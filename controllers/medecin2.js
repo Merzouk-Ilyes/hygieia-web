@@ -28,27 +28,63 @@ exports.addWork = (req,res,next)=>{
         const parsedCookie = rawCookies[0].split('=')[1];
         jwt.verify(parsedCookie, process.env.JWT_SECRET_CODE,
           (err,decodedToken)=> {
-                connection.query("SELECT * FROM WORK WHERE iduser = ? and work_date = ? ",[decodedToken.IdUser,req.body.work_date],(err,result)=>{
-                    if(result.length > 0) {
-                        return res.send({msg: 'Cette date éxiste déja',err :true});
-                    }
-                    connection.query("INSERT INTO WORK (iduser,work_date,starttime,endtime) values (?,?,?,?)"
-                    ,[decodedToken.IdUser,req.body.work_date,req.body.starttime+":00:00",req.body.endtime+":00:00"],
-                    (err,result)=>{
-                        if(err) {
-                            if(err.code== 'ER_DUP_ENTRY'){
-                                res.send('exist');
-                            }
-                            console.log('error'); 
-                            console.log(err);
-                            return res.send({msg: 'Erreur',err :true});
-                        }else {
-                            return res.send({msg: 'Date ajouté avec succées',err :false});
-                     
+              connection.query("SELECT * from doctor where iduser = ?",[decodedToken.IdUser],(err,te)=> 
+              {
+                  if(te.length > 0) {
+                    connection.query("SELECT * FROM WORK WHERE iduser = ? and work_date = ? ",[decodedToken.IdUser,req.body.work_date],(err,result)=>{
+                        if(result.length > 0) {
+                            return res.send({msg: 'Cette date éxiste déja',err :true});
                         }
-                    }
-                    )    
-                }); 
+                        connection.query("INSERT INTO WORK (iduser,work_date,starttime,endtime) values (?,?,?,?)"
+                        ,[decodedToken.IdUser,req.body.work_date,req.body.starttime+":00:00",req.body.endtime+":00:00"],
+                        (err,result)=>{
+                            if(err) {
+                                if(err.code== 'ER_DUP_ENTRY'){
+                                    res.send('exist');
+                                }
+                                connection.release(); 
+                                console.log('error'); 
+                                console.log(err);
+                                return res.send({msg: 'Erreur',err :true});
+                            }else {
+                                return res.send({msg: 'Date ajouté avec succées',err :false});
+                         
+                            }
+                        }
+                        )    
+                    }); 
+                  }else {
+                                        connection.query(
+                        "insert into doctor values (?,?,?)  ",[decodedToken.IdUser,"",""],(err,result)=>{
+                            connection.query("SELECT * FROM WORK WHERE iduser = ? and work_date = ? ",[decodedToken.IdUser,req.body.work_date],(err,result)=>{
+                                if(result.length > 0) {
+                                    connection.release(); 
+                                    return res.send({msg: 'Cette date éxiste déja',err :true});
+                                }
+                                connection.query("INSERT INTO WORK (iduser,work_date,starttime,endtime) values (?,?,?,?)"
+                                ,[decodedToken.IdUser,req.body.work_date,req.body.starttime+":00:00",req.body.endtime+":00:00"],
+                                (err,result)=>{
+                                    if(err) {
+                                        if(err.code== 'ER_DUP_ENTRY'){
+                                            res.send('exist');
+                                        }
+                                        connection.release(); 
+                                        console.log('error'); 
+                                        console.log(err);
+                                        return res.send({msg: 'Erreur',err :true});
+                                    }else {
+                                        return res.send({msg: 'Date ajouté avec succées',err :false});
+                                 
+                                    }
+                                }
+                                )    
+                            }); 
+
+                                        });
+
+                  }
+              })
+             
                
           });
       

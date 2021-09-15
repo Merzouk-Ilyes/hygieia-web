@@ -11,7 +11,10 @@ const uploadFile = require('../../middleware/uploadFile');
 const PDFDocument = require('pdfkit');
 const ejs = require('ejs');
 const jwt = require("jsonwebtoken");
+
 const add = require('../../util/sendNotif');
+router.get('/changePassword',usersController.changePassword);
+router.post('/changePassword',usersController.changePasswordPost);
 router.use("/patient" ,patientRoutes);
 router.get("/login" ,usersController.getLogin)
 router.post("/login" ,usersController.login)
@@ -85,4 +88,5 @@ router.get('/upload',async (req,res,next)=> {
 const url = await uploadFile.uploadToStorage(filename);
 console.log(url);
 });
+
 module.exports = router 

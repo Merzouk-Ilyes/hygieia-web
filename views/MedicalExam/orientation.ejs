@@ -49,7 +49,7 @@
                     </small>
                 </div>
                 <input type="hidden" id="infoori" name="infoori">
-                <input type="button" class="valideorientation" value="Valider l'orientation">
+                <input type="button" id="valideorientation" class="valideorientation" value="Valider l'orientation">
             </form>
         </div>
     </div>           
@@ -246,6 +246,9 @@ $.ajax({
             }
 
         var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>'  ;
+        var today_date = document.getElementById("today_date");
+
+        document.getElementById('valideorientation').disabled=true;
 
         $.ajax({
             method: "POST",
@@ -255,6 +258,7 @@ $.ajax({
                 'consult':consult.value,
                 'infoori':infoori.value,
                 'id':id.value,
+                "today_date":today_date.value,
             },
             success: function (result) {
                 document.querySelector(".hideorientation").classList.remove("open");

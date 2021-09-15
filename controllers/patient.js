@@ -12,8 +12,8 @@ const ejs = require('ejs');
  
 
 const uploadPicture = (req,res)=> {
-  const image = req.body.image ; 
-  const email = req.body.email ; 
+  const image = req.body.image; 
+  const email = req.body.email; 
   pool.getConnection(function(err,connection){
     connection.query("Update Patient Set Picture = ? where Email = ? ",
     [image,email],(err,result)=> {
@@ -28,145 +28,153 @@ const uploadPicture = (req,res)=> {
 const signupPatient = async (req, res) => {
   console.log(req.body);
   console.log("we are here");
-
-  // check if user already exist
-
-  var exist = await checkIfUserAlreadyexists(req.body.email);
-  if (!exist) {
-    return res.status(404).send("Ce compte existe déja");
-  } else {
-    // Insert information into Account table
-    db.query(
-      "INSERT INTO Account (Email,Password,active) VALUES (?,?,?)",
-      [req.body.email, passwordHash.generate(req.body.password), 0],
-      (err, result) => {
-        if (err) {
-          console.log("error", err);
-        } else {
-          // Insert information into Patient table
-          db.query(
-            "INSERT INTO patient (p_Firstname,p_Lastname,Birthday,Birthplace,Phonenumber,Email,Role,Sexe,IdEstablishment,Picture,Bloodgroup,NSS,Wilaya,Token,Address,Situation) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            [
-              req.body.name,
-              req.body.lastname,
-              req.body.birthday,
-              req.body.birthplace,
-              req.body.phonenumber,
-              req.body.email,
-              req.body.role,
-              req.body.sexe,
-              5, 
-              "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg", 
-              req.body.bloodgroupe, 
-              "", 
-              req.body.wilaya , 
-              "", 
-              req.body.adresse, 
-              req.body.situation, 
-            ],
-            (err, result) => {
-              res
-              .status(200)
-              .send("Votre compte a été créé avec succès");
-              db.query("Select IdPatient from Patient where Email =  ? ",
-              [req.body.email],(err,IdPatient)=>{
-                if (err) {
-                  console.log("error", err);
-                } else {
-                  console.log("Id Patient",IdPatient[0].IdPatient); 
-                  db.query("INSERT INTO personalhistory(Smoke,Cigarette,Chiquer,Boxchique,Token,Boxtoken,Ageoftoken,Smoked,duration,alcohol,other,IdPatient) VALUES (? , ? ,?,?,?,?,?,?,?,?,?,?)",[
-                    0,
-                    0,
-                    0,
-                    0, 
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    "",
-                    IdPatient[0].IdPatient,] 
-                    ,(err,res)=> {
-                
-                 
-                      if(err) {
-                        console.log(err); 
-                      }
-                       // Send confirmation email
-                  const { email, password } = req.body;
-                  const token = jwt.sign(
-                    { email, password },
-                    process.env.JWT_SECRET_CODE,
-                    { expiresIn: "3d" }
-                  );
-                  const template = fs.readFileSync("views/mail/mailTemplate.ejs").toString();
-                  const url = "http://localhost:3000/";
-                  const html = ejs.render(template,{
-                      "name": req.body.name, 
-                      "lastname":req.body.lastname, 
-                      "title": "Bienvenue a hygieia",
-                      "text": "Vous avez enregistré un compte sur Hygieia, avant de pouvoir utiliser votre compte,vous devez vérifier qu'il s'agit bien de votre adresse e-mail" , 
-                      "action": url+"users/patient/activate?token="+token, 
-                      "value" : token,
-                  });
-                  var transporter = nodemailer.createTransport({
-                    service: "gmail",
-                    auth: {
-                      user: process.env.HYGIEA_EMAIL,
-                      pass: process.env.HYGIEA_EMAIL_PASSWORD,
-                    },
-                  });
-                  var mailOptions = {
-                    from: process.env.HYGIEA_EMAIL,
-                    to: req.body.email,
-                    subject: "Email de confirmation",
-                    html: html, 
-                  };
-                  transporter.sendMail(mailOptions, function (error, info) {
-                    if (error) {
-                      console.log(error);
-                    } else {
-                      console.log("finaly")
-                     
-                    }
-                  });
-                    }
-                  )
-                 
-                 
-                  // create transporter
-                 
-                  // adding mailOptions
-                 
-                  // send confirmation email using transporter and mailOptions
-                 
-                }
-              })
-              console.log(result);
+pool.getConnection(function(err, connection){
+  connection.query("select * from Account where Email = ?",
+  [req.body.email],(err,resu)=>{
+    if(resu.length > 0) {
+      return res.status(404).send("Ce compte existe déja");
+    }else {
+      connection.query(
+        "INSERT INTO Account (Email,Password,active,img) VALUES (?,?,?,?)",
+        [req.body.email, passwordHash.generate(req.body.password), 0,"https://firebasestorage.googleapis.com/v0/b/hygeia-312122.appspot.com/o/defaultuser.png?alt=media&token=b5b986cd-c0fa-4dc7-875d-5c3b48ac9368"],
+        (err, result) => {
+          if (err) {
+            console.log("error", err);
+          } else {
+            // Insert information into Patient table
+            connection.query(
+              "INSERT INTO patient (p_Firstname,p_Lastname,Birthday,Birthplace,Phonenumber,Email,Role,Sexe,IdEstablishment,Bloodgroup,NSS,Wilaya,token_patient,Address,Situation) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+              [
+                req.body.name,
+                req.body.lastname,
+                req.body.birthday,
+                req.body.birthplace,
+                req.body.phonenumber,
+                req.body.email,
+                req.body.role,
+                req.body.sexe,
+                5, 
+                req.body.bloodgroupe, 
+                "", 
+                req.body.wilaya , 
+                req.body.token , 
+                req.body.adresse, 
+                req.body.situation, 
               
-            }
-          );
-         
-          // Patient.findOne({where : {Email :req.body.email}}).then(patient => {
-          //   if(patient !==null) {
-          //     Medical_File.create({IdPatient :patient.IdPatient ,
-          //        Adddate: Date.now()}).then(result => {
-          //          console.log(result.toJSON())
-          //        }).catch(err => {
-          //          console.log(err)
-          //        })
-        
-        
-          //   }
-          // }).catch(err => {
-          //   console.log(err)
-          // })
-
+              ],
+              (err, result) => {
+                if(err){
+                  console.log('error',err); 
+                  return;
+                }
+                res
+                .status(200)
+                .send("Votre compte a été créé avec succès");
+                connection.query("Select IdPatient from Patient where Email =  ? ",
+                [req.body.email],(err,IdPatient)=>{
+                  if (err) {
+                    console.log("error", err);
+                  } else {
+                    console.log("Id Patient",IdPatient[0].IdPatient); 
+                    connection.query("INSERT INTO personalhistory(Smoke,Cigarette,Chiquer,Boxchique,Token,Boxtoken,Ageoftoken,Smoked,duration,alcohol,other,IdPatient) VALUES (? , ? ,?,?,?,?,?,?,?,?,?,?)",[
+                      0,
+                      0,
+                      0,
+                      0, 
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      "",
+                      IdPatient[0].IdPatient,] 
+                      ,(err,res)=> {
+                        connection.release(); 
+                  
+                   
+                        if(err) {
+                          console.log(err); 
+                        }
+                         // Send confirmation email
+                    const { email, password } = req.body;
+                    const token = jwt.sign(
+                      { email, password },
+                      process.env.JWT_SECRET_CODE,
+                      { expiresIn: "3d" }
+                    );
+                    const template = fs.readFileSync("views/mail/mailTemplate.ejs").toString();
+                    const url = "http://localhost:3000/";
+                    const html = ejs.render(template,{
+                        "name": req.body.name, 
+                        "lastname":req.body.lastname, 
+                        "title": "Bienvenue a hygieia",
+                        "text": "Vous avez enregistré un compte sur Hygieia, avant de pouvoir utiliser votre compte,vous devez vérifier qu'il s'agit bien de votre adresse e-mail" , 
+                        "action": url+"users/patient/activate?token="+token, 
+                        "value" : token,
+                    });
+                    var transporter = nodemailer.createTransport({
+                      service: "gmail",
+                      auth: {
+                        user: process.env.HYGIEA_EMAIL,
+                        pass: process.env.HYGIEA_EMAIL_PASSWORD,
+                      },
+                    });
+                    var mailOptions = {
+                      from: process.env.HYGIEA_EMAIL,
+                      to: req.body.email,
+                      subject: "Email de confirmation",
+                      html: html, 
+                    };
+                    transporter.sendMail(mailOptions, function (error, info) {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        console.log("finaly")
+                       
+                      }
+                    });
+                      }
+                    )
+                   
+                   
+                    // create transporter
+                   
+                    // adding mailOptions
+                   
+                    // send confirmation email using transporter and mailOptions
+                   
+                  }
+                })
+                console.log(result);
+                
+              }
+            );
+           
+            // Patient.findOne({where : {Email :req.body.email}}).then(patient => {
+            //   if(patient !==null) {
+            //     Medical_File.create({IdPatient :patient.IdPatient ,
+            //        Adddate: Date.now()}).then(result => {
+            //          console.log(result.toJSON())
+            //        }).catch(err => {
+            //          console.log(err)
+            //        })
+          
+          
+            //   }
+            // }).catch(err => {
+            //   console.log(err)
+            // })
+  
+          }
         }
-      }
-    );
-  }
+      );
+
+    }
+
+  })
+})
+ 
 };
 const activatePatientAccount = async (req, res) => {
   // read token value
@@ -177,25 +185,28 @@ const activatePatientAccount = async (req, res) => {
       console.log("error", err);
       res.send("Lien expire, vous devez demander un autre lien d'activation.")
     } else {
-      db.query(
-        "UPDATE account SET active = 1 WHERE Email = ?",
-        [decodedToken.email],
-        (err, result) => {
-          if (err) {
-            console.log("error", err);
-            res.status(404).send("ERROR");
-          } else {
-            res.send("Votre compte a été activé avec succès");
+      pool.getConnection(function(err, connection) {
+        connection.query(
+          "UPDATE account SET active = 1 WHERE Email = ?",
+          [decodedToken.email],
+          (err, result) => {
+            if (err) {
+              console.log("error", err);
+              res.status(404).send("ERROR");
+            } else {
+              res.send("Votre compte a été activé avec succès");
+            }
           }
-        }
-      );
+        );
+      })
+    
     }
   });
 };
 async function checkIfUserAlreadyexists(email) {
   return new Promise(function (resolve, reject) {
     db.query(
-      "SELECT * FROM account WHERE email = ?",
+      "SELECT * FROM Account WHERE Email = ?",
       [email],
       function (err, rows) {
         if (rows === undefined) {
@@ -226,7 +237,7 @@ function login(req, res) {
             Patient.findOne({ where: { Email: account.Email } })
               .then((patient) => {
                 if (patient !== null) {
-                  connection.query("Select * from patient where Email = ? ", [req.body.email],(err,result)=>{
+                  connection.query("Select * from patient,Account where patient.Email = ? and Account.Email = ?", [req.body.email,req.body.email],(err,result)=>{
                     console.log(result[0]);
                               const token = jwt.sign(
                                 {
@@ -243,7 +254,7 @@ function login(req, res) {
             Role:result[0].Role,
             token_patient:result[0].token_patient,
             Phonenumber:result[0].Phonenumber,
-            Picture:result[0].Picture,
+            Picture:result[0].img,
             Email:result[0].Email,
             Birthplace:result[0]. Birthplace,
             IdEstablishment:result[0].IdEstablishment},
