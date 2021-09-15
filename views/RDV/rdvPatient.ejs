@@ -108,7 +108,7 @@
               <p>demandé part le <%=data.created_by%></p>
             </div>
             <div class="card-chat">
-              <button>consulter le chat</button>
+              <button></button>
             </div>
             <div class="card-decision">
               <button
@@ -118,6 +118,15 @@
               </button>
             </div>
             <div class="card-supprimer">
+              <% if(data.situation_rdv == 1 ||
+              data.situation_rdv == 2 || data.situation_rdv == 4 ||
+              data.situation_rdv == 5 || data.situation_rdv == 8 ||
+              data.situation_rdv == 9 || data.situation_rdv == 10 ||
+              data.situation_rdv == 12 || data.situation_rdv == 13 ||
+              data.situation_rdv == 15 || data.situation_rdv == 16 ||
+              data.situation_rdv == 20 || data.situation_rdv == 21 ||
+              data.situation_rdv == 22 ) { 
+              %>
               <form class="deleteSubmit"> 
                 <input
                   type="hidden"
@@ -133,6 +142,7 @@
                   <img src="/assets/trash.svg" alt="" />
                 </button>
               </form>
+              <% }%>
             </div>
             <% if(data.situation_rdv==0){ %> <%- include('cas0', {data:data });
             %> <% }else{ if(data.situation_rdv==1){ %> <%- include('cas1',
@@ -188,7 +198,7 @@
             <button class="ajouter"  type="button"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal">ajouter un rendez-vous</button>
-            <%- include('ajouterModal', {data:rdvind[0] });%>
+            <%- include('ajouterModal', {data:id });%>
             <button class="consulter">consulter dossier médical</button>
           </div>
         </div>

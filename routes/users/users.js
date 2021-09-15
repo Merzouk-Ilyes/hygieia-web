@@ -15,6 +15,7 @@ const add = require('../../util/sendNotif');
 router.use("/patient" ,patientRoutes);
 router.get("/login" ,usersController.getLogin)
 router.post("/login" ,usersController.login)
+router.use("/admin" ,adminRoutes)
 router.all('/*',(req,res,next)=> {
     if(req.headers.cookie == null ) {
         res.redirect('/users/login')
@@ -34,7 +35,7 @@ router.all('/*',(req,res,next)=> {
           // medecin home provisoire ; 
       next();
         }else {
-            console.log("another user"); 
+          res.redirect('/users/admin/gestion')
         }
             }); 
 
@@ -43,7 +44,7 @@ router.all('/*',(req,res,next)=> {
 
 
 //redirected to the admin route
-router.use("/admin" ,adminRoutes)
+
 
 
 router.use('/medecin',medecinRoutes)
@@ -84,4 +85,4 @@ router.get('/upload',async (req,res,next)=> {
 const url = await uploadFile.uploadToStorage(filename);
 console.log(url);
 });
-module.exports = router 
+module.exports = router
