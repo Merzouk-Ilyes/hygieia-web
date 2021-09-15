@@ -519,14 +519,14 @@ exports.makeCas11 = (req, res, next) => {
                                     console.log("Error : ", err);
                                   } else {
                                     console.log("done"); //render
-                                    deleteRDV(
-                                      req,
-                                      res,
-                                      next,
-                                      decodedToken.IdUser,
-                                      req.body.patient11,
-                                      db_date
-                                    );
+                                    // deleteRDV(
+                                    //   req,
+                                    //   res,
+                                    //   next,
+                                    //   decodedToken.IdUser,
+                                    //   req.body.patient11,
+                                    //   db_date
+                                    // );
                                     res.json({
                                       message: "done",
                                     });
@@ -675,14 +675,14 @@ exports.makeCas14 = (req, res, next) => {
                             } else {
                               console.log("done!");
 
-                              deleteRDV(
-                                req,
-                                res,
-                                next,
-                                decodedToken.IdUser,
-                                req.body.patient14,
-                                db_date
-                              );
+                              // deleteRDV(
+                              //   req,
+                              //   res,
+                              //   next,
+                              //   decodedToken.IdUser,
+                              //   req.body.patient14,
+                              //   db_date
+                              // );
                               res.json({
                                 message: "done",
                               });
@@ -854,14 +854,14 @@ exports.makeCas18 = (req, res, next) => {
                                   } else {
                                     console.log("done!");
 
-                                    deleteRDV(
-                                      req,
-                                      res,
-                                      next,
-                                      decodedToken.IdUser,
-                                      req.body.patient18,
-                                      db_date
-                                    );
+                                    // deleteRDV(
+                                    //   req,
+                                    //   res,
+                                    //   next,
+                                    //   decodedToken.IdUser,
+                                    //   req.body.patient18,
+                                    //   db_date
+                                    // );
                                     res.json({
                                       message: "done",
                                     });
@@ -1025,14 +1025,14 @@ exports.makeCas19 = (req, res, next) => {
                               res.json({
                                 message: "done",
                               });
-                              deleteRDV(
-                                req,
-                                res,
-                                next,
-                                decodedToken.IdUser,
-                                req.body.patient19,
-                                db_date
-                              );
+                              // deleteRDV(
+                              //   req,
+                              //   res,
+                              //   next,
+                              //   decodedToken.IdUser,
+                              //   req.body.patient19,
+                              //   db_date
+                              // );
                             }
                           }
                         );
@@ -1193,14 +1193,14 @@ exports.makeCas3 = (req, res, next) => {
                               res.json({
                                 message: "done",
                               }); //render
-                              deleteRDV(
-                                req,
-                                res,
-                                next,
-                                decodedToken.IdUser,
-                                req.body.patient3,
-                                db_date
-                              );
+                              // deleteRDV(
+                              //   req,
+                              //   res,
+                              //   next,
+                              //   decodedToken.IdUser,
+                              //   req.body.patient3,
+                              //   db_date
+                              // );
                             }
                           }
                         );
@@ -1355,14 +1355,14 @@ exports.makeCas6 = (req, res, next) => {
                               console.log("Error : ", err);
                             } else {
                               console.log("done!"); //render
-                              deleteRDV(
-                                req,
-                                res,
-                                next,
-                                decodedToken.IdUser,
-                                req.body.patient6,
-                                db_date
-                              );
+                              // deleteRDV(
+                              //   req,
+                              //   res,
+                              //   next,
+                              //   decodedToken.IdUser,
+                              //   req.body.patient6,
+                              //   db_date
+                              // );
                               res.json({
                                 message: "done",
                               });
@@ -1522,14 +1522,14 @@ exports.makeCas7 = (req, res, next) => {
                               console.log(
                                 "Votre rendez-vous a été programmé avec succès!"
                               ); //render
-                              deleteRDV(
-                                req,
-                                res,
-                                next,
-                                decodedToken.IdUser,
-                                req.body.patient7,
-                                db_date
-                              );
+                              // deleteRDV(
+                              //   req,
+                              //   res,
+                              //   next,
+                              //   decodedToken.IdUser,
+                              //   req.body.patient7,
+                              //   db_date
+                              // );
                               res.json({
                                 message: "done",
                               });
@@ -2015,14 +2015,14 @@ exports.makeCas0 = (req, res, next) => {
                                     });
                                   } else {
                                     console.log("refused!");
-                                    deleteRDV(
-                                      req,
-                                      res,
-                                      next,
-                                      decodedToken.IdUser,
-                                      req.body.patient0,
-                                      db_date
-                                    );
+                                    // deleteRDV(
+                                    //   req,
+                                    //   res,
+                                    //   next,
+                                    //   decodedToken.IdUser,
+                                    //   req.body.patient0,
+                                    //   db_date
+                                    // );
                                     res.json({
                                       message: "deleted",
                                     });
@@ -2445,14 +2445,14 @@ exports.makeCas17 = (req, res, next) => {
                                 });
                               } else {
                                 console.log("refused!");
-                                deleteRDV(
-                                  req,
-                                  res,
-                                  next,
-                                  decodedToken.IdUser,
-                                  req.body.patient17,
-                                  db_date
-                                );
+                                // deleteRDV(
+                                //   req,
+                                //   res,
+                                //   next,
+                                //   decodedToken.IdUser,
+                                //   req.body.patient17,
+                                //   db_date
+                                // );
                                 console.log(
                                   "Vous avez refusé le rendez-vous !"
                                 );
