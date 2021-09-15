@@ -125,6 +125,7 @@ function createAddPopup(elm) {
           // THIS IS WHERE WE GONNA ADD THE DATA INCHALLAH (POST)
           ajouterData = tempEvent;
           console.log("AJOUTER DATA =>>", ajouterData);
+          $("#loaderId").css("display", "block");
 
           $.ajax({
             type: "POST",
@@ -136,6 +137,8 @@ function createAddPopup(elm) {
             },
 
             success: function (data) {
+              $("#loaderId").css("display", "none");
+
               //code here
               console.log("success !!!!", data);
               // closeNav(arrayData[5].value);

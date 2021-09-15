@@ -283,7 +283,7 @@ $(document).ready(function () {
     console.log($(this).serializeArray());
     var arrayData = $(this).serializeArray();
 
-    var url = `/users/medecin/makeRDVind?id=${arrayData[2].value}`;
+    var url = `/users/medecin/makeRDVind/?id=${arrayData[2].value}`;
 
     console.log(url);
     var formData = {

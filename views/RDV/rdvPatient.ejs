@@ -51,7 +51,7 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-              <%=first%>
+                <%=first%>
               </a>
               <ul
                 class="dropdown-menu"
@@ -72,30 +72,19 @@
     </div>
     <div class="grid">
       <div class="container1">
-        <div class="filter-section">
-          <div class="first"></div>
-          <div class="second"></div>
-          <div class="third"></div>
-          <div class="fourth"></div>
-          <div class="fifth">
-            <button>Filtrer</button>
-          </div>
-        </div>
+       
         <div class="cards-list">
           <% if(rdvind.length!=0){ var i=1;var couleur;
-          rdvind.forEach(function(data){
-            if (data.deleted_rdv == 0 ) {
-            
-            if(data.situation_rdv == 1 ||
-          data.situation_rdv == 2 || data.situation_rdv == 4 ||
-          data.situation_rdv == 5 || data.situation_rdv == 8 ||
-          data.situation_rdv == 9 || data.situation_rdv == 10 ||
-          data.situation_rdv == 12 || data.situation_rdv == 13 ||
-          data.situation_rdv == 15 || data.situation_rdv == 16 ||
-          data.situation_rdv == 20 || data.situation_rdv == 21 ||
-          data.situation_rdv == 22 ) { couleur = "red-border"; }else
-          if(data.situation_rdv == 0 || data.situation_rdv == 6 ||
-          data.situation_rdv == 7 || data.situation_rdv == 11 ||
+          rdvind.forEach(function(data){ if (data.deleted_rdv == 0 ) {
+          if(data.situation_rdv == 1 || data.situation_rdv == 2 ||
+          data.situation_rdv == 4 || data.situation_rdv == 5 ||
+          data.situation_rdv == 8 || data.situation_rdv == 9 ||
+          data.situation_rdv == 10 || data.situation_rdv == 12 ||
+          data.situation_rdv == 13 || data.situation_rdv == 15 ||
+          data.situation_rdv == 16 || data.situation_rdv == 20 ||
+          data.situation_rdv == 21 || data.situation_rdv == 22 ) { couleur =
+          "red-border"; }else if(data.situation_rdv == 0 || data.situation_rdv
+          == 6 || data.situation_rdv == 7 || data.situation_rdv == 11 ||
           data.situation_rdv == 17 || data.situation_rdv == 18){ couleur =
           "blue-border"; }else if(data.situation_rdv == 3 || data.situation_rdv
           == 14 || data.situation_rdv == 19 || data.situation_rdv == 23 ||
@@ -118,16 +107,14 @@
               </button>
             </div>
             <div class="card-supprimer">
-              <% if(data.situation_rdv == 1 ||
-              data.situation_rdv == 2 || data.situation_rdv == 4 ||
-              data.situation_rdv == 5 || data.situation_rdv == 8 ||
-              data.situation_rdv == 9 || data.situation_rdv == 10 ||
-              data.situation_rdv == 12 || data.situation_rdv == 13 ||
-              data.situation_rdv == 15 || data.situation_rdv == 16 ||
-              data.situation_rdv == 20 || data.situation_rdv == 21 ||
-              data.situation_rdv == 22 ) { 
-              %>
-              <form class="deleteSubmit"> 
+              <% if(data.situation_rdv == 1 || data.situation_rdv == 2 ||
+              data.situation_rdv == 4 || data.situation_rdv == 5 ||
+              data.situation_rdv == 8 || data.situation_rdv == 9 ||
+              data.situation_rdv == 10 || data.situation_rdv == 12 ||
+              data.situation_rdv == 13 || data.situation_rdv == 15 ||
+              data.situation_rdv == 16 || data.situation_rdv == 20 ||
+              data.situation_rdv == 21 || data.situation_rdv == 22 ) { %>
+              <form class="deleteSubmit">
                 <input
                   type="hidden"
                   name="del_pat"
@@ -195,16 +182,21 @@
             <p><%=studinfo[0].birth%> <%=studinfo[0].Birthplace%></p>
           </div>
           <div class="patient-buttons">
-            <button class="ajouter"  type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal">ajouter un rendez-vous</button>
+            <button
+              class="ajouter"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              ajouter un rendez-vous
+            </button>
             <%- include('ajouterModal', {data:id });%>
             <button class="consulter">consulter dossier médical</button>
           </div>
         </div>
         <div class="cle-card">
           <div class="green">
-            <p>Rendez vous validé</p>
+            <p>Rendez vous fait</p>
           </div>
           <div class="blue">
             <p>Rendez vous en attent</p>

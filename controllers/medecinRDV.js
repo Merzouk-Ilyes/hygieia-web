@@ -10,6 +10,7 @@ exports.getRDVindividuel = (req, res, next) => {
   const rawCookies = req.headers.cookie.split("; ");
   const parsedCookie = rawCookies[0].split("=")[1];
   var idpatient = req.query.id;
+  console.log("===>>>>",idpatient)
   jwt.verify(
     parsedCookie,
     process.env.JWT_SECRET_CODE,
@@ -2101,9 +2102,7 @@ exports.makeCas0 = (req, res, next) => {
   }
 };
 
-exports.getform = (req, res, next) => {
-  res.render("RDV/formtest");
-};
+
 
 //cas 17
 exports.makeCas17 = (req, res, next) => {
@@ -2569,7 +2568,7 @@ exports.delRow = (req, res, next) => {
 
 exports.postRDVind = (req, res, next) => {
   console.log("post insert");
-  console.log(req.query.id);
+  console.log("==<<<>>",req.query.id);
   const rawCookies = req.headers.cookie.split("; ");
   const parsedCookie = rawCookies[0].split("=")[1];
   jwt.verify(
@@ -2710,7 +2709,7 @@ exports.postRDVind = (req, res, next) => {
                             (err, res3) => {
                               if (err) {
                                 console.log(
-                                  "Erreur, veuillez Réessayer ultérieuement"
+                                  "Erreur, veuillez Réessayer ultérieuement",err
                                 );
                                 res.json({
                                   message: "error",

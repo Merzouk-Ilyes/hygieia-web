@@ -271,6 +271,7 @@ html {
   top: 40%;
   left: 40%;
   transform: translate(-50%, -50%);
+  z-index: 1000;
 }
 
 /* Safari */

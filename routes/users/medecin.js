@@ -48,7 +48,6 @@ router.post('/deleteExamFile',medecinControler.deleteExamFile);
 router.get('/RDV' ,medecinRDV.getRDV);
 router.get('/RdvData' ,medecinRDV.getRdvData);
 router.post('/makeRDV', medecinRDV.postRDV); 
-router.get('/formtest' ,medecinRDV.getform);
 router.post('/delRow', medecinRDV.delRow);
 router.post('/makeRDVind', medecinRDV.postRDVind);
 router.get('/RDVindividuel', medecinRDV.getRDVindividuel);
