@@ -76,7 +76,7 @@ exports.getHome = (req,res,next) => {
     if(decodedToken.role == "administrateur")  {
       res.redirect('/users/admin/gestion'); 
     }else if (decodedToken.role == "médecin") {
-     res.redirect('/users/medecin/list'); 
+     res.redirect('/users/medecin/home'); 
     }else if(decodedToken.role =="rh" ) {
           res.send('<h1> interface rh</h1>'); 
     }else if(decodedToken.role = "aide-soignant") {
