@@ -439,17 +439,8 @@ font-size: 10px;
         <div class="title2">Vos informations personnelles</div>
         <hr style="width:100%;text-align:left;margin-left:0px;" ></hr>
         <div class="column-info">
-          <form method="POST" action="/users/medecin/profile_upload_single" enctype="multipart/form-data">
-            <div>
-                <label>Upload profile picture</label>
-                <input type="file" name="profile-file" required/>
-            </div>
-            <div>
-              <button type="submit" value="Upload" id="submit" class="btn3 btn-primary">Changer la photo</button>
-            </div>
-        </form>
           <div class="info-per">
-            <div class="name"><%= infoPer.Firstname %> <%= infoPer.Lastname %></div>  
+            <div class="job" style="font-weight: bold;"><%= infoPer.Firstname %> <%= infoPer.Lastname %></div>  
             <div class="job"><%= infoPer.Role %></div>
             <div class="date"><%= String(infoPer.Birthday).substring(0,16) %></div>
             <script>
@@ -584,7 +575,7 @@ font-size: 10px;
           <a href="/users/medecin/home" class="nav-link text-dark" style="font-size: 18px; height: 50px; background-color:white; ">
               <img  src="/assets/icondrawer/home.svg" height="20px" width="20px" />
   
-              <i class="fa fa-sign-out-alt fa-lg" style="margin-right: 15px; background-color: white;"></i>
+              <i class="" style="margin-right: 15px; background-color: white;"></i>
                Accueil
                 </a>
         </li>
@@ -599,7 +590,6 @@ font-size: 10px;
     <li class="nav-item" style="margin-left: 30px;margin-top: 15px;">
       <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
           <img  src="/assets/iconsDrawer/rdv.svg" height="20px" width="20px" />
-
           <i class="fa" style="margin-right: 15px;"></i> </i>
                Rendez-vous
             </a>
@@ -651,7 +641,7 @@ btn3.onclick = function() {
   const password2 = document.getElementById("password2");
   const password3 = document.getElementById("password3");  
   if(password1.value.length < 6) {
-    showMsg("vous devez entreer un mot de passe correct"); 
+    showMsg("vous devez entrer un mot de passe correct"); 
     return ; 
   }
   if(password2.value.length < 6) {
@@ -662,6 +652,7 @@ btn3.onclick = function() {
     showMsg("vous devez confirmer votre nouveau mot de passe"); 
     return; 
   }
+
   $.ajax({
       method: 'POST',
         url: '/users/medecin/changePassword',

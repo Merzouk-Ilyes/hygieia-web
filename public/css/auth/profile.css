@@ -30,8 +30,6 @@ body {
     border-radius: 10px;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.02);
 }
-
-
 #img {
     background-color: white;
     height:400px; 
@@ -48,7 +46,7 @@ body {
     margin-left: 30px;
 }
 .name {
-    font-size: 15px;
+    font-size: 10px;
     font-family: "Poppins";
 }
 .info {

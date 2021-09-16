@@ -10,13 +10,16 @@ html,
 body {
 
   box-sizing: border-box;
-  margin: auto;
+
+
+
   padding: 0;
   background-color: #f5f5f5;
   font-family: var(--font-poppins);
 }
 
 .stat{
+    margin: 0 50px;
     background-color: white;
     color: #000;
     border-radius: 0.7rem;
@@ -198,3 +201,90 @@ label.text {
 .name{
     font-size: larger;
 }
+
+.divfiltre{
+    
+    margin-left: auto;
+    padding-right: 2rem;
+    /* font-size: x-large; */
+    font-weight: bold;
+
+}
+
+.filtre{
+    width: 10rem;
+    background-color: #184b9b;
+    color: white;
+}
+.name {
+    color: #000;
+    margin-right: 40px;
+    margin-left: 10px;
+}
+
+.headdiv{
+    background: #f7f7f7;
+    display: flex;
+    height: 4.5rem;
+    margin-bottom: 2rem;
+    /* width: 100%; */
+    box-shadow: 3px 4px 5px #ddd;
+    padding-left: 3rem;
+}
+
+.btn{
+    border-radius: 15px;
+    background: #FFF;
+    width: 10rem;
+    background-color: #184b9b;
+    color: white;
+    height: 30px;
+    border-radius: 6px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px 1px #70707036;
+    height: 37px;
+    border-radius: 5px;
+    border: none;
+    font-family: "Poppins";
+    font-weight: bold;
+    font-size: 15px;
+    text-indent: 4px;
+}
+
+.dateinput{
+    height: 33px;
+    box-shadow: #70707036;
+    box-shadow: 1px 1px 1px 1px #70707036;
+    height: 37px;
+    border-radius: 5px;
+    border: none;
+    font-family: "Poppins";
+    font-weight: bold;
+    font-size: 15px;
+    text-indent: 4px;
+    width: 14rem;
+    margin: auto;
+    margin-bottom: 14px;
+    margin-right: 1rem;
+}
+
+
+.square {
+    background-color: #01559c;
+    height: 40px;
+    width: 44px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .center{
+    margin: auto;
+    font-weight: bold;
+  }

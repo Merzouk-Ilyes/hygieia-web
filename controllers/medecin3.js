@@ -22,11 +22,8 @@ exports.getinfoUpdateExam = (req,res,next) => {
       id_medecin = decodedToken.IdUser;
     });
  
-  let today = new Date();
-   let month = today.getMonth() +1;
-   let year = today.getFullYear();
-   let date = today.getDate();
-   let db_date = year + '-'+ month + '-' + date;
+   let db_date = req.query.date;
+   //req.query.id
    pool.getConnection(function(err, db) {
     db.query("Select * from drug",(err,drugs)=> {
       if(err) {
@@ -219,9 +216,11 @@ console.log("drugs",drugs);
                                                             db.query("SELECT * FROM medicalexam where iduser = ? and idpatient = ? and date_medicalexam = ?",[id_medecin,req.query.id,db_date],
                                                         (err,exam)=> {
                                                           console.log(result);
+                                                          db.release();
                                                           if(err) {
                                                             console.log("error", err);
                                                           }else{
+                                                            
                                                             res.render('MedicalExam/MedicalExam', {
                                                               title: 'Exam insertion',
                                                               insertexam: result[0],
@@ -483,6 +482,7 @@ pool.getConnection(function(err, db){
                     numordo,list[i],list[i+1],list[i+2]],
                     (err, res2) => {
                       if(err) {
+                        db.release();
                         console.log("error", err);
                       }else{
                         console.log('medicament ajoute');
@@ -628,10 +628,11 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
               return next(err);
             }
             re.setHeader('Content-Type', 'application/pdf');
-            pool.getConnection(function(err, connection) {
-            connection.query("UPDATE sicknote SET `sicknote` = ? WHERE (`num_sick` = ?);",
+           console.log("namefile",name_file);
+            db.query("UPDATE sicknote SET `sicknote` = ? WHERE (`num_sick` = ?);",
                 [name_file, numordo],
                 (err, result)=>{
+                  db.release();
                   if(err){
                     console.log("error", err);
                   }else{
@@ -640,7 +641,6 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
                     })
                   }}
                 )
-                });
             });
           })().catch( e => { console.error(e) })
 
@@ -841,7 +841,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
               re.setHeader('Content-Type', 'application/pdf');
               
               db.query("UPDATE orientation SET `orientation` = ? WHERE (`num_or` = ?);",
-                  [data, numor],
+                  [name_file, numor],
                   (err, result)=>{
                     if(err){
                       console.log("error", err);
@@ -1065,7 +1065,7 @@ function createpdfordonnance(req,re,next,db_date,list,year,id_patient,id_medecin
                re.setHeader('Content-Type', 'application/pdf');
                pool.getConnection(function(err, connection) {
                connection.query("UPDATE medical_checkup SET `checkup` = ? WHERE (`num_ch` = ?);",
-                   [data, numbi],
+                   [name_file, numbi],
                    (err, result)=>{
                      if(err){
                        console.log("error", err);
@@ -1251,7 +1251,7 @@ pool.getConnection(function (err,db) {
              }
              re.setHeader('Content-Type', 'application/pdf');
              db.query("UPDATE evacuation SET `evacuation` = ? WHERE (`num_ev` = ?);",
-                 [data, numev],
+                 [name_file, numev],
                  (err, result)=>{
                    if(err){
                      console.log("error", err);
@@ -1283,7 +1283,7 @@ pool.getConnection(function (err,db) {
       id_medecin = decodedToken.IdUser;
     });
     id_patient = req.body.id;
-
+console.log("dattee", req.body);
    var date=req.body.today_date;
    const d = date.split("/");
    var db_date=d[2]+'-'+d[1]+'-'+d[0];
@@ -1454,7 +1454,7 @@ pool.getConnection(function (err,db) {
             }
             re.setHeader('Content-Type', 'application/pdf');
             db.query("UPDATE prescription SET `prescription` = ? WHERE (`num_pre` = ?);",
-                [data, numpre],
+                [name_file, numpre],
                 (err, result)=>{
                   if(err){
                     console.log("error", err);
@@ -1659,7 +1659,7 @@ pool.getConnection(function (err,db) {
                }
                re.setHeader('Content-Type', 'application/pdf');
                db.query("UPDATE prescription SET `prescription` = ? WHERE (`num_pre` = ?);",
-                   [data, numpre],
+                   [name_file, numpre],
                    (err, result)=>{
                      if(err){
                        console.log("error", err);

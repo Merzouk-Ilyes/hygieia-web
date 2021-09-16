@@ -123,11 +123,12 @@ exports.changePassword  = (req,res,next) => {
               [decodedToken.email],(err,result)=>{
                   console.log(decodedToken);
                   console.log(req.body);
-                  console.log(result);
-                let equal = passwordHash.verify(result.Password,req.body.password1,);
+                  console.log("re",result);
+                let equal = passwordHash.verify(req.body.password1,result[0].Password,);
+                console.log(equal);
                 if(equal){
                connection.query("UPDATE ACCOUNT SET PASSOWRD = ? WHERE Email = ?",[
-                req.body.password2,
+                passwordHash.generate(req.body.password2),
                 decodedToken.Email,
                ],(err,result)=>{
                    connection.release();

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/css/rdv/collectif.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Liste des Rendez-vous Collectifs</title>
+</head>
+<style>
+  .alert {
+    font-size: 6px;
+    font-family: "Poppins";
+    background: #01559c;
+    padding: 20px 40px;
+    min-width: 420px;
+    position: fixed;
+    float: right;
+    border-radius: 4px;
+    border-left: 8px solid #3a7afe;
+    overflow: hidden;
+    opacity: 0;
+    bottom: 0;
+    right: 0;
+
+    pointer-events: none;
+  }
+  .alert.showAlert {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .alert.show {
+    animation: show_slide 1s ease forwards;
+  }
+  @keyframes show_slide {
+    0% {
+      transform: translateX(100%);
+    }
+    40% {
+      transform: translateX(-10%);
+    }
+    80% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-10px);
+    }
+  }
+  .alert.hide {
+    animation: hide_slide 1s ease forwards;
+  }
+  @keyframes hide_slide {
+    0% {
+      transform: translateX(-10px);
+    }
+    40% {
+      transform: translateX(0%);
+    }
+    80% {
+      transform: translateX(-10%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .alert .msg {
+    padding: 0px 0px 0px 4px;
+    font-size: 18px;
+    color: white;
+  }
+  .alert .close-btn {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #3a7afe;
+    padding: 20px 18px;
+    cursor: pointer;
+  }
+  .alert .close-btn:hover {
+    background: #3a7afe;
+  }
+  .alert .close-btn .fas {
+    color: white;
+    font-size: 22px;
+    line-height: 40px;
+  }
+</style>
+<body>
+<div class="content">
+    <div class="top">
+        <div class="mainTitle">Liste des Rendez-vous Collectifs</div>
+        <div id="category">
+          <!-- add button -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Ajouter un rendez-vous Collectif</button>
+        </div>
+    </div>
+    <div class="container">
+    <table id="table">
+        <tr>
+          <th>Date</th>
+          <th>Débute à</th>
+          <th>Termine à</th>
+          <th>Description</th>
+          <th>Promo</th>
+          <th>Durée avec chaque patient</th>
+          <th>Actions</th>
+        </tr>
+        <% for (var i = 0; i < promoinfo.length; i++) { 
+           if (promoinfo[i].deleted_rdv == 0){
+        %>
+
+          <tr>
+            <td><%= promoinfo[i].date %></td>
+            <td><%= promoinfo[i].min %></td>
+            <td><%= promoinfo[i].max %></td>
+            <td><%= promoinfo[i].description_rdv %></td>
+            <td><%= promoinfo[i].promo %></td>
+            <td><%= promoinfo[i].duration_promo %></td>
+            <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2<%= i %>">Modifier</button>
+
+                <!-- EDIT RDV -->
+<div class="modal fade" id="exampleModal2<%= i %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modifier le rendez-vous collectif</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <input type="hidden" name="med" id="medup" value="<%=promoinfo[0].iduser %>">
+            <label class="col-form-label">Promo:</label>
+              <select class="form-control" name="rdv_promo" id="rdv_promoup">
+                <option value="1CP" <% if (promoinfo[i].promo == '1CP') { %> selected <% } %>>1CP</option>
+                <option value="2CP" <% if (promoinfo[i].promo == '2CP') { %> selected <% } %>>2CP</option>
+                <option value="1CS" <% if (promoinfo[i].promo == '1CS') { %> selected <% } %>>1CS</option>
+                <option value="2CS" <% if (promoinfo[i].promo == '2CS') { %> selected <% } %>>2CS</option>
+                <option value="3CS" <% if (promoinfo[i].promo == '3CS') { %> selected <% } %>>3CS</option>
+              </select> <br>
+            <label class="col-form-label">Groupes:</label>
+            <input type="text" class="form-control" name="sel_groups" id="sel_groupsup" value="<%= promoinfo[i].group_p %>" placeholder="exemple : 1,2,3..">
+            
+            <label class="col-form-label">Date</label>
+            <input name="rdv_date" id="rdv_dateup" class="form-control" type="datetime-local" value="<%=promoinfo[0].localdate %>" required><br>
+            <div style="display: none;">
+              <input name="exdate" id="exdateup" class="form-control" type="datetime-local" value="<%=promoinfo[0].localdate %>">
+            </div>
+
+            <label class="col-form-label">Durée</label>
+            <input type="time" class="form-control" max="00:59" name="dur_rdv" id="dur_rdvup" required value="<%=promoinfo[0].duration_promo %>"> minutes<br>
+
+          </div>
+          <div class="form-group">
+            <label class="col-form-label">Description:</label>
+            <textarea class="form-control" id="rdv_descriptionup" name="rdv_description" ><%= promoinfo[i].description_rdv %></textarea>
+          </div>
+          <div class="modal-footer">
+              <input type="button" class="btn btn-primary" onclick="editRDV()" value="Modifier rendez-vous">
+            </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                  Annuler
+                </button>
+
+<!-- DELETE RDV -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Annuler le RDV</h5>
+        <button class="close" data-dismiss="modal" aria-label="close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <input type="hidden" name="user" id="user" value="<%= promoinfo[i].iduser %>">
+          <input type="hidden" name="date" id="date" value="<%= promoinfo[i].date2 %>">
+          Voulez-vous vraiment annuler le rendez-vous promo du <%= promoinfo[i].date %> ?
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Fermer">
+          <input type="button" class="btn btn-primary" onclick="deleteRDV()" value="Annuler Rendez-vous">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+            </td>
+          </tr>
+
+
+        <% }} %>
+    </table>
+</div>
+</div>
+
+<!-- ADD RDV -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajouter un rendez-vous collectif</h5>
+          <button class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label class="col-form-label">Promo:</label>
+                <select class="form-control" name="rdv_promo" id="rdv_promo">
+                    <option value="1CP">1CP</option>
+                    <option value="2CP">2CP</option>
+                    <option value="1CS">1CS</option>
+                    <option value="2CS">2CS</option>
+                    <option value="3CS">3CS</option>
+                </select> <br>
+              <label class="col-form-label">Groupes:</label>
+              <input type="text" class="form-control" name="sel_groups" id="sel_groups" placeholder="exemple : 1,2,3..">
+              
+              <label class="col-form-label">Date</label>
+              <input id="rdv_date" name="rdv_date" class="form-control" type="datetime-local" required><br>
+
+              <label class="col-form-label">Durée</label>
+              <input type="time" class="form-control" max="00:59" id="dur_rdv" name="dur_rdv" required> minutes<br>
+  
+            </div>
+            <div class="form-group">
+              <label class="col-form-label">Description:</label>
+              <textarea class="form-control" id="rdv_description" name="rdv_description"></textarea>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-primary" id="btn-addRDV" onclick="addRDV()" value="Programmer">
+              </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+</div>
+
+<div id="alert" class="alert hide">
+  <span class="msg" id="msg">Opération effectuée avec succès</span>
+  <div class="close-btn">
+    <span id="icon-msg" class="fas fa-check"></span>
+  </div>
+</div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script>
+function showMsg(str,err) {
+  const msg = document.getElementById("msg");
+  const icon = document.getElementById("icon-msg"); 
+  if(err == true) {
+    icon.className = "fas fa-check"
+  }else {
+    icon.className = "fas fa-exclamation" 
+  }
+
+  msg.innerHTML = str ;
+  $('.alert').addClass("show");
+  $('.alert').removeClass("hide");
+  $('.alert').addClass("showAlert");
+  setTimeout(function(){
+    $('.alert').removeClass("show");
+    $('.alert').addClass("hide");
+  },10000);
+}
+
+function addRDV () {
+    var rdv_promo = document.getElementById('rdv_promo');
+    var sel_groups = document.getElementById('sel_groups');
+    var rdv_description = document.getElementById('rdv_description');
+    var rdv_date = document.getElementById('rdv_date');
+    var dur_rdv = document.getElementById('dur_rdv');
+  $.ajax({
+      method: "POST",
+      url: "/users/medecin/makeRDVpromo",
+      data: {
+          "rdv_promo":rdv_promo.value,
+          "sel_groups":sel_groups.value,
+          "rdv_description":rdv_description.value,
+          "rdv_date":rdv_date.value,
+          "dur_rdv":dur_rdv.value,
+      },
+      success: function (data) {
+        document.location.reload() ; 
+        if(data === 'pasdispo'){
+          showMsg("Vous n\'êtes pas disponible cette journée");
+        }
+        if(data === 'nowork'){
+          showMsg("Vous ne travaillez pas en ces heures, veuillez selectionner une autre heure");
+        }
+        if(data.termin === 'termine'){
+          showMsg("Vous avez dépasse vos heures de travail, selectionnez moins de groupes");
+        }
+        if(data === 'success'){
+          showMsg("Votre rendez-vous a été programmé avec succès!");
+        }
+        if(data === 'stop1'){
+          showMsg("Vous avez déjà un rendez-vous programmé cette journée! Veuillez le supprimer ou selectionner une autre date");
+        }
+      },
+  });  
+}
+
+function editRDV () {
+    var rdv_promo = document.getElementById('rdv_promoup');
+    var sel_groups = document.getElementById('sel_groupsup');
+    var rdv_description = document.getElementById('rdv_descriptionup');
+    var rdv_date = document.getElementById('rdv_dateup');
+    var dur_rdv = document.getElementById('dur_rdvup');
+    var exdate = document.getElementById('exdateup');
+    var med = document.getElementById('medup');
+  $.ajax({
+      method: "POST",
+      url: "/users/medecin/editRDVpromo",
+      data: {
+          "rdv_promo" : rdv_promo.value,
+          "sel_groups" : sel_groups.value,
+          "rdv_description" : rdv_description.value,
+          "rdv_date" : rdv_date.value,
+          "dur_rdv" : dur_rdv.value,
+          "exdate" : exdate.value,
+          "med" : med.value,
+      },
+      success: function (data) {
+        document.location.reload() ; 
+        if(data === 'youcant'){
+          showMsg("Vous avez déjà un rendez-vous programmé cette journée! Veuillez le supprimer ou selectionner une autre date",!result.err);
+        }
+        if(data === 'succes'){
+          showMsg("Votre rendez-vous a été modifié avec succès!");
+        }
+        if(data === 'dontwork'){
+          showMsg("Vous ne travaillez pas en ces heures, veuillez selectionner une autre heure");
+        }
+        if(data === 'pasdispo'){
+          showMsg("Vous n\'êtes pas disponible cette journée");
+        }
+        if(data === 'youcant'){
+          showMsg("Vous avez déjà un rendez-vous programmé cette journée! Veuillez le supprimer ou selectionner une autre date");
+        }
+
+      },
+  });  
+};
+
+function deleteRDV(){
+  alert('hiiiiiiiiii');
+  var date = document.getElementById('date');
+  var user = document.getElementById('user');
+
+  $.ajax({
+      method: "POST",
+      url: "/users/medecin/cancelRDVpromo",
+      data: {
+          "date" : date.value,
+          "user" : user.value,
+      },
+      success: function (data) {
+        document.location.reload() ; 
+        showMsg("RDV promo canceled"); 
+      },
+  });  
+}
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</html>

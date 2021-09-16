@@ -1,10 +1,10 @@
 const pool = require("../util/db").pool;
 const jwt = require("jsonwebtoken");
+const sendNotif = require('../util/sendNotif');
 process.on("uncaughtException", function (err) {
   console.error(err);
   console.log("Node NOT Exiting...");
 });
-
 exports.getRDVindividuel = (req, res, next) => {
   console.log("get rdv individuel");
   const rawCookies = req.headers.cookie.split("; ");
@@ -146,6 +146,7 @@ function deleteRDV(req, res, next, id_medecin, id_patient, db_date) {
     );
   });
 }
+
 exports.postRDV = (req, res, next) => {
   console.log("You are officially in the post RDV");
 
@@ -326,7 +327,6 @@ exports.postRDV = (req, res, next) => {
                                           var desc =
                                             " Vous avez un rendez-vous programmé le " +
                                             rdv_date3;
-
                                           connection.query(
                                             "INSERT INTO notification(iduser,idpatient,date_notif,title_notif, description_notif, sent_by) VALUES (?,?,?,?,?,?)",
                                             [
@@ -338,6 +338,7 @@ exports.postRDV = (req, res, next) => {
                                               "medecin",
                                             ],
                                             (err, res5) => {
+                                              sendNotif.add("Rendez-vous programmé",desc,res3[0].token_patient);
                                               if (err) {
                                                 console.log("Error : ", err);
                                               } else {
@@ -485,7 +486,6 @@ exports.makeCas11 = (req, res, next) => {
                         console.log("error", err);
                       } else {
                         console.log("reason inserted");
-
                         connection.query(
                           "SELECT * FROM users WHERE IdUser = ?",
                           [decodedToken.IdUser],
@@ -515,6 +515,10 @@ exports.makeCas11 = (req, res, next) => {
                                   "medecin",
                                 ],
                                 (err, res4) => {
+                                  connection.query("select * from patient where IdPatient = ?",[req.body.patient11],(err,patient)=>{
+                                    sendNotif.add("Annulation de rendez-vous",desc,patient[0].token_patient);
+                                  }); 
+
                                   if (err) {
                                     console.log("Error : ", err);
                                   } else {
@@ -589,7 +593,6 @@ exports.makeCas14 = (req, res, next) => {
         if (radioValue == "done") {
           var expdone = req.body.cas14notreq;
           console.log("hedi expdone", expdone);
-
           connection.query(
             "UPDATE rdv SET situation_rdv = ? WHERE iduser =? AND idpatient =? AND date_rdv = ?",
             [24, decodedToken.IdUser, req.body.patient14, db_date],
@@ -631,7 +634,7 @@ exports.makeCas14 = (req, res, next) => {
             });
           } else {
             connection.query(
-              "UPDATE rdv SET situation_rdv = ? WHERE iduser =? AND idpatient =? AND date_rdv = ?",
+              "UPDATE rdv SET situation_rdv = ? WHERE iduser = ? AND idpatient = ? AND date_rdv = ?",
               [16, decodedToken.IdUser, req.body.patient14, db_date],
               (err, res1) => {
                 if (err) {
@@ -670,6 +673,11 @@ exports.makeCas14 = (req, res, next) => {
                             "medecin",
                           ],
                           (err, res4) => {
+                            connection.query("select * from patient where IdPatient = ?",[req.body.patient14],(err,patient)=>{
+                              sendNotif.add("Annulation de rendez-vous",desc,patient[0].token_patient);
+                            }); 
+
+
                             if (err) {
                               console.log("Error : ", err);
                             } else {
@@ -849,6 +857,9 @@ exports.makeCas18 = (req, res, next) => {
                                   "medecin",
                                 ],
                                 (err, res4) => {
+                                  connection.query("select * from patient where IdPatient = ?",[req.body.patient18],(err,patient)=>{
+                                    sendNotif.add("Annulation du rendez-vous reprogrammé",desc,patient[0].token_patient);
+                                  }); 
                                   if (err) {
                                     console.log("Error : ", err);
                                   } else {
@@ -1018,6 +1029,9 @@ exports.makeCas19 = (req, res, next) => {
                             "medecin",
                           ],
                           (err, res4) => {
+                            connection.query("select * from patient where IdPatient = ?",[req.body.patient19],(err,patient)=>{
+                              sendNotif.add("Annulation de rendez-vous",desc,patient[0].token_patient);
+                            }); 
                             if (err) {
                               console.log("Error : ", err);
                             } else {
@@ -1183,6 +1197,9 @@ exports.makeCas3 = (req, res, next) => {
                             "medecin",
                           ],
                           (err, res4) => {
+                            connection.query("select * from patient where IdPatient = ?",[req.body.patient3],(err,patient)=>{
+                              sendNotif.add("Rendez-vous annulé",desc,patient[0].token_patient);
+                            }); 
                             if (err) {
                               console.log("Error : ", err);
                               res.json({
@@ -1348,6 +1365,9 @@ exports.makeCas6 = (req, res, next) => {
                             "medecin",
                           ],
                           (err, res4) => {
+                            connection.query("select * from patient where IdPatient = ?",[req.body.patient6],(err,patient)=>{
+                              sendNotif.add("Annulation du rendez-vous reprogrammé",desc,patient[0].token_patient);
+                            }); 
                             if (err) {
                               res.json({
                                 message: "error",
@@ -1425,7 +1445,7 @@ exports.makeCas7 = (req, res, next) => {
           console.log("hedi expdone", expdone);
 
           connection.query(
-            "UPDATE rdv SET situation_rdv = ? WHERE iduser =? AND idpatient =? AND date_rdv = ?",
+            "UPDATE rdv SET situation_rdv = ? WHERE iduser = ? AND idpatient =? AND date_rdv = ?",
             [24, decodedToken.IdUser, req.body.patient7, db_date],
             (err, res1) => {
               if (err) {
@@ -1513,6 +1533,9 @@ exports.makeCas7 = (req, res, next) => {
                             "medecin",
                           ],
                           (err, res4) => {
+                            connection.query("select * from patient where IdPatient = ?",[req.body.patient7],(err,patient)=>{
+                              sendNotif.add("Annulation du rendez-vous reprogrammé",desc,patient[0].token_patient);
+                            }); 
                             if (err) {
                               res.json({
                                 message: "error",
@@ -1592,7 +1615,6 @@ exports.makeCas0 = (req, res, next) => {
             console.log("accept case");
             var expdone = req.body.cas0notreq;
             console.log(expdone);
-
             connection.query(
               "UPDATE rdv SET situation_rdv = ? WHERE iduser =? AND idpatient =? AND date_rdv = ?",
               [3, decodedToken.IdUser, req.body.patient0, db_date],
@@ -1641,6 +1663,9 @@ exports.makeCas0 = (req, res, next) => {
                               "medecin",
                             ],
                             (err, res3) => {
+                              connection.query("select * from patient where IdPatient = ?",[req.body.patient0],(err,patient)=>{
+                                sendNotif.add("Demande Acceptée",desc,patient[0].token_patient);
+                              }); 
                               if (err) {
                                 console.log("Error : ", err);
                                 res.json({
@@ -1679,6 +1704,9 @@ exports.makeCas0 = (req, res, next) => {
                         "medecin",
                       ],
                       (err, res3) => {
+                        connection.query("select * from patient where IdPatient = ?",[req.body.patient0],(err,patient)=>{
+                          sendNotif.add("Demande Acceptée",desc,patient[0].token_patient);
+                        }); 
                         if (err) {
                           console.log("Error : ", err);
                           res.json({
@@ -1938,6 +1966,9 @@ exports.makeCas0 = (req, res, next) => {
                         "medecin",
                       ],
                       (err, res6) => {
+                        connection.query("select * from patient where IdPatient = ?",[req.body.patient0],(err,patient)=>{
+                          sendNotif.add("Proposition de reprogrammation",desc,patient[0].token_patient);
+                        }); 
                         if (err) {
                           console.log("Error : ", err);
                         } else {
@@ -2006,6 +2037,9 @@ exports.makeCas0 = (req, res, next) => {
                                   "medecin",
                                 ],
                                 (err, res6) => {
+                                  connection.query("select * from patient where IdPatient = ?",[req.body.patient0],(err,patient)=>{
+                                    sendNotif.add("Annulation de rendez-vous",desc,patient[0].token_patient);
+                                  }); 
                                   if (err) {
                                     console.log("Error : ", err);
                                     res.json({
@@ -2359,6 +2393,9 @@ exports.makeCas17 = (req, res, next) => {
                     "medecin",
                   ],
                   (err, res6) => {
+                    connection.query("select * from patient where IdPatient = ?",[req.body.patient17],(err,patient)=>{
+                      sendNotif.add("Reprogrammation du rendez-vous",desc,patient[0].token_patient);
+                    }); 
                     if (err) {
                       console.log("Erreur, veuillez Réessayer ultérieuement");
                       res.json({
@@ -2436,6 +2473,9 @@ exports.makeCas17 = (req, res, next) => {
                               "medecin",
                             ],
                             (err, res6) => {
+                              connection.query("select * from patient where IdPatient = ?",[req.body.patient17],(err,patient)=>{
+                                sendNotif.add("Annulation de rendez-vous",desc,patient[0].token_patient);
+                              }); 
                               if (err) {
                                 console.log("Error : ", err);
                                 res.json({
@@ -2707,6 +2747,7 @@ exports.postRDVind = (req, res, next) => {
                               "medecin",
                             ],
                             (err, res3) => {
+                            
                               if (err) {
                                 console.log(
                                   "Erreur, veuillez Réessayer ultérieuement",err
@@ -2772,6 +2813,9 @@ exports.postRDVind = (req, res, next) => {
                                           "medecin",
                                         ],
                                         (err, res5) => {
+                                          connection.query("select * from patient where IdPatient = ?",[req.query.id],(err,patient)=>{
+                                            sendNotif.add("Rendez-vous programmé",desc,patient[0].token_patient);
+                                          }); 
                                           if (err) {
                                             console.log("Error : ", err);
                                             res.json({

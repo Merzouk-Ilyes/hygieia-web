@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/css/medicalfile/list.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
+  />
+    <title>Liste des Patients</title>
+</head>
+<style>
+  
+
+  .vertical-nav {
+  
+
+  margin-top: 115px;
+min-width: 17rem;
+width: 17rem;
+height: 90vh;
+position: fixed;
+top: 0;
+left: 0;
+
+box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1); 
+transition: all 0.4s;
+}
+.page-content {
+width: calc(100% - 17rem);
+margin-left: 17rem;
+transition: all 0.4s;
+} 
+
+#sidebar.active {
+margin-left: -17rem;
+}
+
+#content.active {
+width: 100%;
+margin: 0;
+}
+.fa-bars {
+background-color: #F5F5F5;
+
+}
+.separator {
+margin: 3rem 0;
+border-bottom: 1px dashed #fff;
+}
+.btn-nav {
+
+display: flex; 
+align-self: flex-start;
+
+}
+
+.spa {
+margin-left: 17em;
+}
+.text-uppercase {
+letter-spacing: 0.1em;
+}
+.text-gray {
+color: #aaa;
+}
+.nav-link{
+text-transform: capitalize;
+}
+.nav-link:hover{
+background:#f3f2f2;
+}
+.text-primary{
+color:#7579e7 !important;
+}
+@media (max-width: 768px) {
+#sidebar {
+margin-left: -17rem;
+}
+#sidebar.active {
+margin-left: 0;
+margin-top: 20px;
+}
+#content {
+width: 100%;
+margin: 0;
+}
+#content.active {
+margin-left: 17rem;
+width: calc(100% - 17rem);
+}
+}
+</style>
+<body>
+  <div class="vertical-nav bg-white active" id="sidebar" style="position: absolute;">
+    <div class="py-4 px-3 mb-4" style="background-color: #F5F5F5;">
+      <div class="media d-flex align-items-center" style="display: flex; align-self: center; margin: auto;">
+        <img loading="lazy" src="images/p-1.png" style="margin-right: 25px; margin-left: 25px;" alt="..." width="80" height="80" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+        <div class="media-body">
+          <h4 class="m-0">Djellali</h4>
+          <p class="font-weight-normal text-muted mb-0">Médecin</p>
+        </div>
+      </div>
+    </div>
+    <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Menu</p>
+    <ul class="nav flex-column bg-white mb-0">
+      <li class="nav-item">
+        <a href="#" class="nav-link text-dark bg-light" style="font-size: 18px; height: 50px;">
+                  <i class="fa fa-home fa-lg" style="margin-right: 15px;"></i>
+                  Accueil
+              </a>
+      </li>
+      <li class="nav-item">
+        <a href="/users/medecin/list" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+                  <i class="fa fa-address-card fa-lg" style="margin-right: 15px;"></i></i>
+                  Liste des patients
+              </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+            <i class="fa fa-calendar-alt fa-lg" style="margin-right: 15px;"></i> </i>
+                 Liste des rendez-vous
+              </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+            <i class="fa fa-user fa-lg" style="margin-right: 15px;"></i></i>     
+                    Mon profile
+              </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link text-dark" style="font-size: 18px; height: 50px;">
+            <i class="fa fa-sign-out-alt fa-lg" style="margin-right: 15px;"></i>
+             Déconnexion
+              </a>
+      </li>
+    </ul>  
+  </div>
+  <div class="content">
+    <div class="top">
+      <div class="mainTitle">Patients</div>
+      <div class="searchItems">
+          <div class="field">
+              <input placeholder="Patient par nom" id="myInput" onkeyup="myFunction()">
+          </input>
+          <i class="fa fa-search" style="font-size: 14px;"></i>
+      </div>
+          <select name="Category" id="category" onChange="myFunction2()">
+            <option value="Tous" >Tous</option>
+            <option value="Etudiant">Etudiant</option>
+            <option value="Ats">Ats</option>
+            <option value="Professeur">Professeur</option>
+          </select>
+      </div>
+  </div>
+<div class="container">
+  <table id="table">
+      <tr>
+        <th class="pictureAtt">Photo</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>D.naissance</th>
+        <th>Email</th>
+        <th style="width: 15%;">Rôle</th>
+        <th></th>
+      </tr>
+      <% for (var i = 0; i < listitems.length; i++) { %>
+        <tr>
+          <td><img src= "<%=listitems[i].Picture %>"></td>
+          <td><%= listitems[i].p_Firstname %></td>
+          <td><%= listitems[i].p_Lastname %></td>
+          <td><%= listitems[i].Email %></td>
+          <td><%= listitems[i].Role %></td>
+          <td>
+            <div class="dropdown">
+              <button class="dropbtn">
+                <i class="fas fa-ellipsis-v"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="/users/medecin/RDVindividuel/?id=<%= listitems[i].IdPatient%>">Programmer un rendez-vous</a>
+              </div>
+            </div>
+      
+            </td>
+        </tr>
+        <tr>    
+    <% } %> 
+  </table>
+</div>
+  </div>
+   
+<script src="/js/listPatients.js"></script>
+</body>
+</html>

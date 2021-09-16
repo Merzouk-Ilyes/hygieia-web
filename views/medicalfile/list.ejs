@@ -393,10 +393,10 @@ box-shadow: 1px 1px 1px 1px #70707036;
       </tr>
       <% for (var i = 0; i < listitems.length; i++) { %>
         <tr>
-          <td><img src= "<%=listitems[i].Picture %>"></td>
+          <td><img src= "<%=listitems[i].img %>"></td>
           <td><%= listitems[i].p_Firstname %></td>
           <td><%= listitems[i].p_Lastname %></td>
-          <td> 17-11-2000 </td>
+          <td>  <%= moment(listitems[i].Birthday).format('YYYY-MM-DD') %> </td>
           <td><%= listitems[i].Email %></td>
           <td><%= listitems[i].Role %></td>
           <td>
@@ -405,13 +405,11 @@ box-shadow: 1px 1px 1px 1px #70707036;
                 <i class="fas fa-ellipsis-v"></i>
               </button>
               <div class="dropdown-content">
-                <a href="/users/medecin/medicalFile/?id=<%= listitems[i].IdPatient%>">Consulter dossier médical</a>
                 <a href="/users/medecin/medicalfileUpdate/?id=<%= listitems[i].IdPatient%>">Modifier dossier médical</a>
                 <a href="/users/medecin/RDVindividuel/?id=<%= listitems[i].IdPatient%>">Programmer un rendez-vous</a>      
                  <a href="/users/medecin/infoExam/?id=<%= listitems[i].IdPatient%>">Faire un examen médical</a>
               </div>
             </div>
-      
             </td>
         </tr>
         <tr>    

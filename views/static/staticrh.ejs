@@ -295,7 +295,7 @@
 <body>
 
     <div class='headdiv'>
-        <img src="/assets/logo.png" height="50px" width="100px" style="margin-left: 20px;margin-top:10px" onclick="window.location.href='/users/medecin/home'"/>
+        <img src="/assets/logo.png" height="50px" width="100px" style="margin-left: 20px;margin-top:10px"/>
         <div style="display: flex;
         flex-direction: row;
         margin-left: auto;
@@ -304,6 +304,9 @@
         margin-right: 20px;">
             <div class="square"><%= user.Lastname.substring(0,2) %></div>
             <div class="name"><%= user.Firstname %></div>
+            <div style="margin-top: auto;margin-bottom: auto;">
+                <img  src="/assets/iconsDrawer/disconnect.svg" id="cnx" height="20px" width="20px" onclick="window.location.href='/users/logout'"/>
+            </div>
         </div>
     </div>
 

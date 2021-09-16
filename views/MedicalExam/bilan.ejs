@@ -272,20 +272,16 @@ document.querySelector(".valideex").addEventListener("click",() => {
             const small = parent.querySelector("small");
             small.className = "noterror";
             small.innerText = null;
-
             for (i = 0; i < myTab.rows.length; i++) {
                 var objCells = myTab.rows.item(i).cells;
-
                 for (var j = 0; j < 2; j++) {
                     infobilan.value = infobilan.value + '/' + objCells.item(j).innerHTML ;
                 }
             }
-                
-            
             document.getElementById('valideex').disabled=true;
             $.ajax({
                 method: "POST",
-                url: "/users/medecin/addBilan/?id="+parsed_data,
+                url: "/users/medecin/addBilan",
                 data: {
                     'conclusioon':conclusioon.value,
                     'consultexam':consultexam.value,

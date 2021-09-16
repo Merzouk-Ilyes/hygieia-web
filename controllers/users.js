@@ -251,7 +251,6 @@ exports.changePasswordPost = (req,res)=> {
     }
     )
    })
-
  }
 }
 exports.postForget = (req,res , next) => {
@@ -277,7 +276,7 @@ exports.postForget = (req,res , next) => {
         const token = jwt.sign(
             {email},
             process.env.JWT_SECRET_CODE,
-            { expiresIn: "3d" }
+            { expiresIn: "7d" }
           );      
           const template = fs.readFileSync("views/mail/mailTemplate.ejs").toString();
           const url = "http://localhost:3000/";
@@ -332,9 +331,8 @@ exports.postConfirm = (req,res, next)=> {
 const token = req.query.token;       
 return res.render('auth/resetPassword',{token : token}); 
 }
-
 exports.postReset = (req,res, next)=> {
-
+console.log("rak hna");
   const token = req.query.token;
   jwt.verify(token, process.env.JWT_SECRET_CODE,
       (err,decodedToken) => {
@@ -360,8 +358,6 @@ exports.postReset = (req,res, next)=> {
   }); 
 
 }
-
-
 exports.download = (req, res) => {
   const fileName = req.params.name;
   const directoryPath = __basedir + "resources/static/assets/";

@@ -176,7 +176,7 @@ document.querySelector(".validecerup").addEventListener("click",() => {
            
             $.ajax({
                 method: "POST",
-                url: "/users/medecin/updateCertificatPratique/?id="+parsed_data,
+                url: "/users/medecin/updateCertificatPratique",
                 data: {
                     "cause":cause.value,
                     "des":des.value,

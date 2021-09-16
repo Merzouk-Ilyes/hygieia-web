@@ -108,10 +108,11 @@ document.querySelector(".valideevup").addEventListener("click",() => {
     }
 
     var parsed_data = '<%- JSON.stringify(insertexam.IdPatient) %>';
+    var today_date = document.getElementById('today_date');
 
     $.ajax({
         method: "POST",
-        url: "/users/medecin/updateEvacuation/?id="+parsed_data,
+        url: "/users/medecin/updateEvacuation",
         data: {
             "causeev":causeev.value,
             "wil":wil.value,
@@ -119,6 +120,7 @@ document.querySelector(".valideevup").addEventListener("click",() => {
             "dure":dure.value,
             "id":id.value,
             "num_ev" : num_ev.value,
+            'today_date' : today_date.value,
         },
         success: function (result) {
             document.querySelector(".hideevacuationup").classList.remove("open");

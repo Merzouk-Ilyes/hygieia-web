@@ -44,8 +44,8 @@ exports.getExamMedicalPatient = async (req,res) => {
              [id_patient],(err,result)=> {
                 connection.query("SELECT  * from orientation where idpatient = ?",
                 [id_patient],(err,orientation)=> {
-                    connection.query("SELECT  * from evacuation where idpatient = ?",
-                    [id_patient],(err,evacuation)=> {
+                    connection.query("SELECT  * from medical_checkup where idpatient = ?",
+                    [id_patient],(err,medical_checkup)=> {
                         connection.query("SELECT  * from prescription where idpatient = ?",
        [id_patient],(err,prescription)=> {
            if(err) {
@@ -55,13 +55,13 @@ exports.getExamMedicalPatient = async (req,res) => {
          
 connection.release(); 
 console.log( 'result' , result, 
-'evacuation' , evacuation, 
+'medical_checkup' , medical_checkup, 
 'orientation' , orientation,
 'prescription' , prescription, 
 'sicknote'  ,sickNote, )
            return res.send({
            'result' : result, 
-           'evacuation' : evacuation, 
+           'medical_checkup' : medical_checkup, 
            'orientation' : orientation,
            'prescription' : prescription, 
            'sicknote' : sickNote, 

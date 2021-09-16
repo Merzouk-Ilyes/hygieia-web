@@ -11,7 +11,6 @@ const socket = require("socket.io");
 var moment = require('moment');
 app.set("views", "views");
 app.set("view engine", "ejs");
-
 app.use(express.static(path.join(__dirname, "public")));
 app.use('/uploads', express.static('uploads'));
 
@@ -48,9 +47,9 @@ app.use(cookieParser());
 app.get('/download', (req, res)=> {
   console.log("you are here");
   // const fileName = req.body.name;
-  const directoryPath = __dirname + "/public/uploads/Dr.médecin_Fouad_2021-8-28-51.pdf";
-
-  res.download(directoryPath ,'Dr.médecin_Fouad_2021-8-28-51.pdf', (err) => {
+  console.log("hi hi captain");
+  const directoryPath = __dirname + "/"+req.query.fileName;
+  res.download(directoryPath ,req.query.fileName, (err) => {
     if (err) {
       res.status(500).send({
         message: "Could not download the file. " + err,

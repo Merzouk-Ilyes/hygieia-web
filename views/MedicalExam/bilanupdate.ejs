@@ -286,7 +286,7 @@ $.ajax({
                 conclusioon.value = document.getElementById('conclusioonup').value;
             $.ajax({
                 method: "POST",
-                url: "/users/medecin/updateBilan/?id="+parsed_data,
+                url: "/users/medecin/updateBilan",
                 data: {
                     'conclusioon':conclusioonup.value,
                     'consultexam':consultexamup.value,

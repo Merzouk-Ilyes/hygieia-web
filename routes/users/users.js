@@ -19,6 +19,10 @@ router.use("/patient" ,patientRoutes);
 router.get("/login" ,usersController.getLogin)
 router.post("/login" ,usersController.login)
 router.use("/admin" ,adminRoutes)
+router.post("/forget" ,usersController.postForget);
+router.get("/Confirm", usersController.postConfirm);
+router.use("/medecin" ,medecinRoutes);
+router.post("/reset", usersController.postReset);
 router.all('/*',(req,res,next)=> {
     if(req.headers.cookie == null ) {
         res.redirect('/users/login')
@@ -37,7 +41,7 @@ router.all('/*',(req,res,next)=> {
        if (decodedToken.role == "médecin") {
           // medecin home provisoire ; 
       next();
-        }else {
+        }else  if(decodedToken.role == "administrateur"){
           res.redirect('/users/admin/gestion')
         }
             }); 
@@ -66,11 +70,10 @@ router.get("/forget" ,usersController.getForget)
 //executing  the forget password controller POST  request (postForget)
 router.get('/changePassword',usersController.changePassword);
 router.post('/changePassword',usersController.changePasswordPost);
-router.post("/forget" ,usersController.postForget);
+
 //executing  the forget password controller POST  request (postForget)
 //router.post("/postConfirm" ,usersController.postForget);
-router.get("/Confirm", usersController.postConfirm);
-router.post("/reset", usersController.postReset);
+
 
 router.get("/logout", usersController.logOut);
 
@@ -89,7 +92,4 @@ const url = await uploadFile.uploadToStorage(filename);
 console.log(url);
 });
 
-
 module.exports = router 
-
-

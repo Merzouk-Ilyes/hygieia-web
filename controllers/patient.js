@@ -27,7 +27,7 @@ const uploadPicture = (req,res)=> {
 }
 const signupPatient = async (req, res) => {
   console.log(req.body);
-  console.log("we are here");
+  console.log("we rare here");
 pool.getConnection(function(err, connection){
   connection.query("select * from Account where Email = ?",
   [req.body.email],(err,resu)=>{
@@ -63,6 +63,7 @@ pool.getConnection(function(err, connection){
               
               ],
               (err, result) => {
+            
                 if(err){
                   console.log('error',err); 
                   return;
@@ -70,11 +71,17 @@ pool.getConnection(function(err, connection){
                 res
                 .status(200)
                 .send("Votre compte a été créé avec succès");
+                
                 connection.query("Select IdPatient from Patient where Email =  ? ",
                 [req.body.email],(err,IdPatient)=>{
                   if (err) {
                     console.log("error", err);
                   } else {
+                    console.log("Role",req.body.role);
+                    if(req.body.role =="Etudiant" ){
+                      connection.query("insert into student values(?,?,?)",
+                      [IdPatient[0].IdPatient,req.body.add,req.body.groupe],);
+                    }
                     console.log("Id Patient",IdPatient[0].IdPatient); 
                     connection.query("INSERT INTO personalhistory(Smoke,Cigarette,Chiquer,Boxchique,Token,Boxtoken,Ageoftoken,Smoked,duration,alcohol,other,IdPatient) VALUES (? , ? ,?,?,?,?,?,?,?,?,?,?)",[
                       0,
@@ -221,6 +228,7 @@ async function checkIfUserAlreadyexists(email) {
 // cookie will expire in 3 days
 const maxAge = 3 * 24 * 60 * 60;
 function login(req, res) {
+  console.log('we were');
   pool.getConnection(function(err,connection) {
     Account.findOne({ where: { email: req.body.email } })
     .then((account) => {

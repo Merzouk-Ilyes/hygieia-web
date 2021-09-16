@@ -8,9 +8,7 @@ btn.addEventListener('click', (e) => {
 var password = document.getElementById("password");
 var confirmPassword = document.getElementById("confirmpassword");
 function onClickBtn() {
-
-
-
+    console.log(form);
     if( password.value.length < 8 ) {
         const parent = password.parentElement.parentElement;
         const small = parent.querySelector('small');
@@ -63,29 +61,39 @@ function onClickBtn() {
 const eye = document.getElementById('eye'); 
 const eye2 = document.getElementById('eye2'); 
 eye.addEventListener('click', (e) => {
+    console.log('eye1'); 
+   
     // toggle the type attribute
     const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
     password.setAttribute('type', type);
     // toggle the eye slash icon
     if( type==='password' ) {
-        eye.classList.remove('fi-rr-eye-crossed');
-        eye.classList.toggle('fi-rr-eye');
+        console.log('a'); 
+        console.log('b'); 
+        eye.classList.toggle('far fa-eye-slash');
+        eye.classList.remove('far fa-eye');
+      
+       
     } else { 
-        eye.classList.remove('fi-rr-eye');
-        eye.classList.toggle('fi-rr-eye-crossed');  
+        eye.classList.remove('far fa-eye');
+        eye.classList.toggle('far fa-eye-slash');
+      
     }
 
 });
 eye2.addEventListener('click', (e) => {
+    console.log('eye2'); 
     // toggle the type attribute
     const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
     confirmPassword.setAttribute('type', type);
     // toggle the eye slash icon
     if( type==='password' ) {
-        eye2.classList.remove('fi-rr-eye-crossed');
-        eye2.classList.toggle('fi-rr-eye');
+     
+        eye2.classList.remove('far fa-eye');
+        eye2.classList.toggle('far fa-eye-slash');
     } else { 
-        eye2.classList.remove('fi-rr-eye');
-        eye2.classList.toggle('fi-rr-eye-crossed');  
+        eye2.classList.remove('far fa-eye-slash');
+        eye2.classList.toggle('far fa-eye');
+
     }
 });

@@ -42,19 +42,18 @@ router.post('/deleteExamFile',medecinControler.deleteExamFile);
 
 
 
-
-
 // RDV 
 router.get('/RDV' ,medecinRDV.getRDV);
 router.get('/RdvData' ,medecinRDV.getRdvData);
 router.post('/makeRDV', medecinRDV.postRDV); 
+
 router.post('/delRow', medecinRDV.delRow);
 router.post('/makeRDVind', medecinRDV.postRDVind);
 router.get('/RDVindividuel', medecinRDV.getRDVindividuel);
 router.post('/makeCas0', medecinRDV.makeCas0);
 router.post('/makeCas3', medecinRDV.makeCas3); 
 router.post('/makeCas6', medecinRDV.makeCas6); 
-router.post('/makeCas7', medecinRDV.makeCas7); 
+router.post('/makeCas7', medecinRDV.makeCas7);
 router.post('/makeCas11', medecinRDV.makeCas11);
 router.post('/makeCas14', medecinRDV.makeCas14); 
 router.post('/makeCas17', medecinRDV.makeCas17);
@@ -74,8 +73,6 @@ router.get("/infoUpdateExam",medecinControler3.getinfoUpdateExam);
 router.post("/addExam",medecinControler3.postaddExam);
 router.post("/updateExam",medecinControler3.postupdateExam);
 router.post("/addSickness",medecinControler3.postaddSickness);
-
-
 
 //examen complemantaire
 router.post("/addMedicament",medecinControler3.postMedicament);
@@ -112,7 +109,10 @@ router.post("/imprimeBilan",medecinControler3.postimprimeBilan);
 router.post("/imprimeOrientation",medecinControler3.postimprimeOrientation);
 router.post("/imprimeEvacuation",medecinControler3.postimprimeEvacuation);
 router.post("/imprimeCertificat",medecinControler3.postimprimeCertificat);
+
 const medecinControler5  = require("../../controllers/medecin5"); 
+router.get('/infoStatrh', medecinControler5.getStatrh);
+
 router.get('/infoStat', medecinControler5.getStat);
 router.post('/profile_upload_single', upload.single('profile-file'),async  function (req, res, next) {
     // req.file is the `profile-file` file
@@ -124,4 +124,14 @@ router.post('/profile_upload_single', upload.single('profile-file'),async  funct
     const url = await uploadFile.uploadToStorage(req.file.path);
 
   })
+  router.post('/FiltreEtudiant', medecinControler5.postFiltreEtudiant);
+router.post('/FiltrePatient', medecinControler5.postFiltrePatient);
+router.post('/FiltreEvacuation', medecinControler5.postFiltreEvacuation);
+router.post('/FiltreRegulier', medecinControler5.postFiltreRegulier);
+router.post('/FiltreIrregulier', medecinControler5.postFiltreIrregulier);
+router.post('/FiltreFumeur', medecinControler5.postFiltreFumeur);
+router.get('/RDVpromo', medecinControler5.getRDVpromo);
+router.post('/makeRDVpromo', medecinControler5.postRDVpromo);
+router.post('/editRDVpromo', medecinControler5.editRDVpromo);
+router.post('/cancelRDVpromo', medecinControler5.cancelRDVpromo);
 module.exports = router ; 

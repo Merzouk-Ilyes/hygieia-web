@@ -150,14 +150,14 @@
 
             $.ajax({
                 method: "POST",
-                url: "/users/medecin/addCertificatRepos/?id="+parsed_data,
+                url: "/users/medecin/addCertificatRepos",
                 data: {
                     "nbjour":nbjour.value,
                     "debut":debut.value,
                     "fin":fin.value,
                     "des":des.value,
                     "id":id.value,
-                    "tpday_date":today_date.value,
+                    "today_date":today_date.value,
                 },
                 success: function (result) {
                     document.querySelector(".hidecertificat").classList.remove("open");
@@ -200,12 +200,13 @@
 
             $.ajax({
                 method: "POST",
-                url: "/users/medecin/addCertificatPratique/?id="+parsed_data,
+                url: "/users/medecin/addCertificatPratique",
                 data: {
                     "cause":cause.value,
                     "des":des.value,
                     "id":id.value,
                     "today_date":today_date.value,
+
                 },
                 success: function (result) {
                     document.querySelector(".hidecertificat").classList.remove("open");

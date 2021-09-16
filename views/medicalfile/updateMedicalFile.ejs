@@ -2481,7 +2481,52 @@ font-size: 10px;
                 Modifier dossier médical
               </button>
         </form>
+
+
+        <div class="w-container1">
+          <div class="w-container2">
+              <div class="re-title2" id="place1">
+                  Examens Médicaux
+              </div>
+              <table id="myTable" class="table table-hover" style="width:90%">
+                <thead>
+                  <tr>
+                    <th scope="col">Examen Médical</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%
+            
+                  if(examdata.length!=0){
+            
+                  var i=1;
+            
+                  examdata.forEach(function(dataa){
+            
+                  %>
+            
+                  <tr>          
+                      <td><%=dataa.date_exam %></td>
+                      <td>
+                        <button onclick="window.location.href='/users/medecin/infoUpdateExam/?id=<%= dataa.idpatient%>&date=<%= dataa.date_exam%>'">modifier</button>
+                    
+                      </td>
+                  </tr>
+            
+                  <%  i++; }) %>
+                  <% } else{ %>
+            
+                  <tr>
+                      <td colspan="7">Ce patient n'a aucun examen médical</td>
+                  </tr>
+                  <% } %>
+              
+                </tbody>
+              </table>
             </div>
+            </div>
+
             <script>
               var parsed_data = '<%- JSON.stringify(data) %>'  ;
           </script>

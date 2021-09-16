@@ -6,7 +6,6 @@ admin.initializeApp({
 });
 const db = admin.firestore();
 exports.add = async function(title,description,token){
-
     const docRef = db.collection('notifuser'); 
     await docRef.add({
         title: title,
