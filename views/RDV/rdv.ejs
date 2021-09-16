@@ -28,7 +28,13 @@
     <div class="nav navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid mx-5">
         <div class="drawer-toggle" id="drawer-toggler" onclick="openNav()">
-          <img src="/assets/icon drawer.svg" alt="" />
+          <img src="/assets/drawer.svg" height="29px" width="29px" />
+          <img
+            src="/assets/logo.png"
+            height="50px"
+            width="100px"
+            style="margin-left: 20px"
+          />
         </div>
         <%- include('sidenav'); %>
 
@@ -43,7 +49,7 @@
                 role="button"
                 aria-expanded="false"
               >
-              <%=first%>
+                <%=first%>
               </a>
             </li>
           </ul>
@@ -123,7 +129,12 @@
         </div>
       </div>
       <div class="container2">
-        <button class="btn-collect" onclick="window.location.href='/users/medecin/RDVpromo'">RDV collectif</button>
+        <button
+          class="btn-collect"
+          onclick="window.location.href='/users/medecin/RDVpromo'"
+        >
+          RDV collectif
+        </button>
 
         <div class="big-title">
           <p>Vos rendez-vous ce jour la</p>
@@ -227,7 +238,7 @@
 
     <script>
       function openNav() {
-        document.getElementById("mySidenav").style.width = "20vw";
+        document.getElementById("mySidenav").style.width = "23vw";
       }
 
       /* Set the width of the side navigation to 0 */
